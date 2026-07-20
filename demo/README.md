@@ -18,3 +18,4 @@ Vercel → Add New… → Project → import `Studio-Goud/CapeVerdeMobilia` →
 All content is fictional. Djarvista does not provide legal advice.
 
 <!-- deploy: trigger production build for djarvista.com -->
+<!-- build trigger: 2026-07-20T16:52:14Z -->
