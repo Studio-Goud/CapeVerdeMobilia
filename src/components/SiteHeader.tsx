@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { t, type Locale, type UIKey } from '@/i18n';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { useAuth } from './Auth';
+import { Logo } from './Logo';
 
 interface NavItem { key: UIKey; href: string; soon?: boolean }
 interface NavGroup { key: UIKey; items: NavItem[] }
@@ -33,6 +34,8 @@ function groups(locale: Locale): NavGroup[] {
       { key: 'nav.info', href: p('/info') },
       { key: 'nav.procedimentos', href: p('/procedimentos') },
       { key: 'nav.verification', href: p('/verificacao') },
+      { key: 'nav.governo', href: p('/governo') },
+      { key: 'nav.investir', href: p('/investir') },
     ] },
   ];
 }
@@ -77,8 +80,8 @@ export function SiteHeader({ locale }: { locale: Locale }): JSX.Element {
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3">
         <Link href={`/${locale}`} onClick={close} className="flex items-center gap-2 text-lg font-bold text-brand">
-          <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-brand text-sm text-white">D</span>
-          Djarvista
+          <Logo size={28} />
+          <span className="tracking-tightish">Djarvista</span>
         </Link>
 
         {/* Desktop nav */}

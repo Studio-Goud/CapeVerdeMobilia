@@ -38,6 +38,9 @@ const UI = {
   'nav.login': { pt: 'Entrar', en: 'Log in', nl: 'Inloggen' },
   'nav.register': { pt: 'Criar conta', en: 'Sign up', nl: 'Account maken' },
   'nav.dashboard': { pt: 'O meu painel', en: 'My dashboard', nl: 'Mijn dashboard' },
+  'nav.investir': { pt: 'Investidores', en: 'Investors', nl: 'Investeerders' },
+  'nav.governo': { pt: 'Para entidades públicas', en: 'For public bodies', nl: 'Voor overheden' },
+  'nav.admin': { pt: 'Administração', en: 'Admin', nl: 'Beheer' },
   'nav.logout': { pt: 'Sair', en: 'Log out', nl: 'Uitloggen' },
   'nav.menu': { pt: 'Menu', en: 'Menu', nl: 'Menu' },
   'nav.close': { pt: 'Fechar', en: 'Close', nl: 'Sluiten' },
@@ -454,3 +457,4 @@ export function searchListings(opts: { q?: string; kind?: string; islandCode?: s
 }
 export const getListing = (slug: string): Listing | undefined => LISTINGS.find((l) => l.slug === slug);
 export const getProcedure = (slug: string): Procedure | undefined => PROCEDURES.find((p) => p.slug === slug);
+export const getProfessional = (slug: string): Professional | undefined => PROFESSIONALS.find((p) => p.slug === slug);

@@ -70,6 +70,29 @@ export const SUPPLIERS: Supplier[] = [
     island: 'São Vicente', verified: true, priceFrom: { pt: 'Retroescavadora desde 18.000 CVE/dia', en: 'Excavator from 18,000 CVE/day', nl: 'Graafmachine vanaf 18.000 CVE/dag' } },
 ];
 
+export interface Review { author: string; rating: number; verified: boolean; date: string; body: TL }
+/** Fictional reviews keyed by professional id (p1..p6). */
+export const REVIEWS: Record<string, Review[]> = {
+  p1: [
+    { author: 'M. Tavares', rating: 5, verified: true, date: '2026-05-18',
+      body: { pt: 'Obra entregue no prazo e dentro do orçamento. Boa comunicação.', en: 'Delivered on time and on budget. Good communication.', nl: 'Op tijd en binnen budget opgeleverd. Goede communicatie.' } },
+    { author: 'J. Andrade', rating: 4, verified: true, date: '2026-04-02',
+      body: { pt: 'Bom trabalho, pequenos atrasos nos acabamentos.', en: 'Good work, minor delays in the finishing.', nl: 'Goed werk, kleine vertraging bij de afwerking.' } },
+  ],
+  p2: [
+    { author: 'S. Lopes', rating: 5, verified: true, date: '2026-06-01',
+      body: { pt: 'Projeto de arquitetura excelente e licenciamento sem problemas.', en: 'Excellent architecture project and smooth permitting.', nl: 'Uitstekend architectuurontwerp en vlotte vergunning.' } },
+  ],
+  p5: [
+    { author: 'R. Monteiro', rating: 5, verified: true, date: '2026-03-22',
+      body: { pt: 'Levantamento topográfico rigoroso, entregue rápido.', en: 'Precise topographic survey, delivered quickly.', nl: 'Nauwkeurige opmeting, snel geleverd.' } },
+  ],
+  p6: [
+    { author: 'K. Fortes', rating: 5, verified: true, date: '2026-05-30',
+      body: { pt: 'Due diligence muito completa antes da escritura.', en: 'Very thorough due diligence before the deed.', nl: 'Zeer grondige due diligence vóór de akte.' } },
+  ],
+};
+
 // Verification levels with the proof each requires (fictional/indicative).
 export const VERIFICATION_LEVELS: { code: string; level: VerificationLevel; proof: TL }[] = [
   { code: 'L0', level: 'L0_NONE', proof: { pt: 'Apenas conta base, email confirmado.', en: 'Basic account only, email confirmed.', nl: 'Alleen basisaccount, e-mail bevestigd.' } },

@@ -1,7 +1,11 @@
 import { notFound } from 'next/navigation';
-import { getListing, t, tr, formatPrice, formatDate, docLabel, type Locale } from '@/i18n';
-import { OfficialTag } from '@/components/ui';
+import { getListing, LISTINGS, t, tr, formatPrice, formatDate, docLabel, type Locale, type TL } from '@/i18n';
+import { OfficialTag, ListingCard, SectionHead } from '@/components/ui';
 import { LeadForm } from '@/components/LeadForm';
+
+const SIMILAR: TL = { pt: 'Imóveis semelhantes', en: 'Similar properties', nl: 'Vergelijkbaar aanbod' };
+const LOCATION: TL = { pt: 'Localização', en: 'Location', nl: 'Locatie' };
+const MAP_SOON: TL = { pt: 'Mapa interativo em breve', en: 'Interactive map coming soon', nl: 'Interactieve kaart binnenkort' };
 
 export default function ListingDetailPage({ params }: { params: { locale: Locale; slug: string } }): JSX.Element {
   const locale = params.locale;
@@ -41,9 +45,24 @@ export default function ListingDetailPage({ params }: { params: { locale: Locale
               <li>{t(locale, 'listing.buildable')}: {l.land.buildable ? t(locale, 'listing.yesToConfirm') : t(locale, 'listing.toConfirm')}</li>
             </ul></section>
         )}
+
+        <section className="mt-8">
+          <SectionHead title={tr(SIMILAR, locale)} />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {LISTINGS.filter((o) => o.island === l.island && o.slug !== l.slug).slice(0, 3).map((o) => (
+              <ListingCard key={o.id} l={o} locale={locale} />
+            ))}
+          </div>
+        </section>
       </div>
 
       <aside className="space-y-4">
+        <div className="rounded-xl border border-slate-200 bg-white p-4">
+          <h2 className="text-sm font-semibold text-slate-700">{tr(LOCATION, locale)}</h2>
+          <div className="mt-2 flex aspect-[4/3] items-center justify-center rounded-lg bg-gradient-to-br from-brand-50 to-sand-100 text-center text-xs text-slate-500">
+            <span>📍 {l.municipality}, {l.island}<br />{tr(MAP_SOON, locale)}</span>
+          </div>
+        </div>
         <div className="rounded-xl border border-slate-200 bg-white p-4">
           <h2 className="text-sm font-semibold text-slate-700">{t(locale, 'listing.trust')}</h2>
           <div className="mt-2 flex flex-wrap gap-2">

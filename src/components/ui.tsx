@@ -4,6 +4,7 @@ import {
   type Locale, type Listing, type VerificationLevel, type UIKey,
   t, tr, formatPrice, docLabel, verifLabel,
 } from '@/i18n';
+import { Logo } from './Logo';
 
 const cn = (...p: Array<string | false | null | undefined>): string => p.filter(Boolean).join(' ');
 
@@ -110,7 +111,7 @@ export function SiteFooter({ locale }: { locale: Locale }): JSX.Element {
       <div className="mx-auto grid w-full max-w-6xl gap-8 px-4 py-8 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2 lg:col-span-2">
           <p className="flex items-center gap-2 text-base font-bold text-brand">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-brand text-xs text-white">D</span>
+            <Logo size={24} />
             Djarvista
           </p>
           <p className="mt-2 max-w-md text-xs text-slate-500">{t(locale, 'footer.body')}</p>
@@ -130,7 +131,7 @@ export function SiteFooter({ locale }: { locale: Locale }): JSX.Element {
             {link('/entrar', 'nav.login')}
             {link('/registar', 'nav.register')}
             {link('/painel', 'nav.dashboard')}
-            {link('/verificacao', 'nav.verification')}
+            {link('/investir', 'nav.investir')}
           </ul>
         </div>
       </div>
