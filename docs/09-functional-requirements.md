@@ -1,4 +1,4 @@
-# Ilhavista — Functional & Non-Functional Requirements
+# Djarvista — Functional & Non-Functional Requirements
 
 **Document:** 09 — Functional Requirements
 **Status:** Draft for validation

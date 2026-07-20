@@ -1,8 +1,8 @@
 {
-  "name": "ilhavista",
+  "name": "djarvista",
   "version": "0.1.0",
   "private": true,
-  "description": "Ilhavista — independent digital infrastructure for property, building and public information in Cabo Verde.",
+  "description": "Djarvista — independent digital infrastructure for property, building and public information in Cabo Verde.",
   "license": "MIT",
   "packageManager": "pnpm@9.6.0",
   "engines": {
@@ -21,10 +21,10 @@
     "test": "turbo run test",
     "test:e2e": "turbo run test:e2e",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
-    "db:generate": "pnpm --filter @ilhavista/database generate",
-    "db:migrate": "pnpm --filter @ilhavista/database migrate",
-    "db:seed": "pnpm --filter @ilhavista/database seed",
-    "db:reset": "pnpm --filter @ilhavista/database reset"
+    "db:generate": "pnpm --filter @djarvista/database generate",
+    "db:migrate": "pnpm --filter @djarvista/database migrate",
+    "db:seed": "pnpm --filter @djarvista/database seed",
+    "db:reset": "pnpm --filter @djarvista/database reset"
   },
   "devDependencies": {
     "prettier": "^3.3.3",

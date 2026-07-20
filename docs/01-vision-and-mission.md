@@ -1,4 +1,4 @@
-# Ilhavista — Vision & Mission
+# Djarvista — Vision & Mission
 
 > **Status:** Strategy document, v0.1 · **Date:** 2026-07-20
 > **Classification legend:** **FACT** · **ASSUMPTION** · **HYPOTHESIS** · **RECOMMENDATION**. External claims cite the project canon (sources accessed **2026-07-20**). Unconfirmed items marked *to validate / verification required*.
@@ -9,7 +9,7 @@
 
 **Make property, building and public information in Cabo Verde transparent, trustworthy and accessible to everyone — citizens, professionals, investors and public bodies alike — regardless of who they know.**
 
-Ilhavista exists to replace dependence on personal networks and scattered, unverifiable information with **neutral digital infrastructure** where information is consolidated, sources are preserved, trust is explicit, and administrative procedures are navigable.
+Djarvista exists to replace dependence on personal networks and scattered, unverifiable information with **neutral digital infrastructure** where information is consolidated, sources are preserved, trust is explicit, and administrative procedures are navigable.
 
 ---
 
@@ -17,7 +17,7 @@ Ilhavista exists to replace dependence on personal networks and scattered, unver
 
 **A Cabo Verde where finding, verifying, buying, building and servicing property is as clear and reliable online as any comparable service in the world — starting on São Vicente and extending to comparable island states.**
 
-We envision Ilhavista as the **default, independent digital gateway** for property, land, building and public information across the archipelago — a shared utility that public bodies, professionals and citizens can all trust because it belongs to none of them exclusively and serves all of them equally.
+We envision Djarvista as the **default, independent digital gateway** for property, land, building and public information across the archipelago — a shared utility that public bodies, professionals and citizens can all trust because it belongs to none of them exclusively and serves all of them equally.
 
 ---
 
@@ -25,7 +25,7 @@ We envision Ilhavista as the **default, independent digital gateway** for proper
 
 | Value | What it means in practice |
 |-------|---------------------------|
-| **Independence** | Ilhavista is neutral infrastructure, not an agency or a broker. It never sells its neutrality. |
+| **Independence** | Djarvista is neutral infrastructure, not an agency or a broker. It never sells its neutrality. |
 | **Transparency** | Sources are cited and preserved; sponsored content is always labelled; nothing hidden buys advantage. |
 | **Trust** | Trust is earned and shown (verification L0–L5), never assumed or purchased. |
 | **Local applicability** | Built for Cabo Verde's languages, procedures, currency and market realities — not a foreign template dropped in. |
@@ -38,19 +38,19 @@ We envision Ilhavista as the **default, independent digital gateway** for proper
 
 **"We show you what is true, who is trustworthy, and how to proceed — independently."**
 
-Ilhavista promises every user three things:
+Djarvista promises every user three things:
 
 1. **Truthful, sourced information** — including official government text preserved alongside plain-language summaries and translations.
 2. **Explicit, earned trust** — verified identities, professionals, documents and reviews, with the basis of each badge visible.
 3. **A clear path forward** — process guidance through procedures that are otherwise opaque.
 
-**What Ilhavista will never do:** let paid visibility buy verification, review scores, or manipulation of official information. (Canon guardrail.)
+**What Djarvista will never do:** let paid visibility buy verification, review scores, or manipulation of official information. (Canon guardrail.)
 
 ---
 
 ## 5. Tone of voice
 
-**RECOMMENDATION:** Ilhavista speaks like a **trusted, plain-spoken local guide** — competent, calm, and honest about uncertainty.
+**RECOMMENDATION:** Djarvista speaks like a **trusted, plain-spoken local guide** — competent, calm, and honest about uncertainty.
 
 - **Clear, not clever.** Plain language over jargon; short sentences; concrete nouns.
 - **Honest about certainty.** Distinguish confirmed facts from things still being verified. Never present *legal/tax verification required* items as advice.
@@ -64,18 +64,18 @@ Ilhavista promises every user three things:
 
 > **For** citizens, professionals, investors and public bodies in Cabo Verde
 > **who** struggle with fragmented information, informal markets and opaque procedures,
-> **Ilhavista is** independent digital infrastructure
+> **Djarvista is** independent digital infrastructure
 > **that** consolidates property, building and public information and makes trust explicit and procedures navigable,
 > **unlike** classifieds sites, individual agencies, or personal-network word-of-mouth,
 > **because** it is neutral, trust-first, source-transparent, mobile-first and built specifically for Cabo Verde.
 
-Ilhavista is **trust-first infrastructure, not a listings site.**
+Djarvista is **trust-first infrastructure, not a listings site.**
 
 ---
 
 ## 7. The five value layers explained
 
-| # | Layer | Problem it addresses | What Ilhavista provides | MVP presence |
+| # | Layer | Problem it addresses | What Djarvista provides | MVP presence |
 |---|-------|----------------------|----------------------|--------------|
 | 1 | **Information** | Scattered, unverifiable, single-language information | Consolidated, source-linked, multilingual property/land/building/public-procedure information; official texts preserved | Government info pages; multilingual content (pt/en human; kea/nl/fr machine) |
 | 2 | **Trust** | No neutral way to know who or what to believe | Verification system L0–L5 for identities, professionals, documents, completed work, and institutional partners; verified reviews | L0–L2 + manual L3; verified reviews |
@@ -94,7 +94,7 @@ Ilhavista is **trust-first infrastructure, not a listings site.**
 - **Local applicability.** Built for Cabo Verde's currency (CVE, pegged 110.265 = 1 EUR — **FACT/high, still verify**), languages, islands and procedures, aligned to national digital-government direction (**gov.cv** launched 24 Feb 2026; **CMDCV** e-signature; **NOSi** backbone — **FACT/high-med**). *Government confirmation required* for any official integration.
 - **Accessibility.** Mobile-first because the market is mobile — **73.5% internet penetration, 115% mobile connections** (**FACT/high**, DataReportal "Digital 2025: Cabo Verde", Jan 2025). PWA, WCAG 2.1 AA, low-bandwidth-aware, WhatsApp-oriented notifications.
 - **Scalability.** A lean modular monolith and repeatable concierge operations mean island #2 costs far less than island #1. Architecture extraction (to services) happens only when scale demands it, never speculatively.
-- **Independence.** Ilhavista is neutral infrastructure. It partners with government, banks, notaries and agencies but is owned by none of them and favours none of them. Independence is the product; it is never for sale.
+- **Independence.** Djarvista is neutral infrastructure. It partners with government, banks, notaries and agencies but is owned by none of them and favours none of them. Independence is the product; it is never for sale.
 
 ---
 

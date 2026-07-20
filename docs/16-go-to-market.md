@@ -1,4 +1,4 @@
-# Ilhavista — Go-to-Market Strategy
+# Djarvista — Go-to-Market Strategy
 
 > **Status:** Strategy document, v0.1 · **Date:** 2026-07-20
 > **Classification legend:** **FACT** (confirmed source) · **ASSUMPTION** (single/indirect source) · **HYPOTHESIS** (reasoned guess) · **RECOMMENDATION** (our advice)
@@ -8,7 +8,7 @@
 
 ## 0. How to read this document
 
-This is the phased go-to-market (GTM) plan for **Ilhavista**, the trust-first digital infrastructure for property, building and public information in Cabo Verde. It follows the canon's **four-phase ambition** — pilot on São Vicente → multi-island → national + institutional → international replication — and the **concierge-MVP** operating model, in which every trust-critical function (verification, listing intake, onboarding, matchmaking, procedure guidance, support) is performed **manually by a human team first**, then progressively productized.
+This is the phased go-to-market (GTM) plan for **Djarvista**, the trust-first digital infrastructure for property, building and public information in Cabo Verde. It follows the canon's **four-phase ambition** — pilot on São Vicente → multi-island → national + institutional → international replication — and the **concierge-MVP** operating model, in which every trust-critical function (verification, listing intake, onboarding, matchmaking, procedure guidance, support) is performed **manually by a human team first**, then progressively productized.
 
 All financial figures are in **CVE**, pegged to EUR at **110.265 CVE = 1 EUR** (**FACT/high — still verify**). Team sizes, budgets and KPI targets in this document are **ASSUMPTION** or **RECOMMENDATION** unless cited otherwise; they are planning anchors to be replaced with validated numbers during the pilot.
 
@@ -18,7 +18,7 @@ All financial figures are in **CVE**, pegged to EUR at **110.265 CVE = 1 EUR** (
 
 ## 1. GTM thesis and sequencing logic
 
-**RECOMMENDATION.** Ilhavista's core promise is **trust**, not listing volume. A trust marketplace with no verified inventory is not trusted (canon risk #2). Therefore the GTM does **not** open with paid advertising to a cold audience. It opens with **concierge-seeded supply** — a human team manually verifying a starter cohort of professionals and listings — and only then invites demand.
+**RECOMMENDATION.** Djarvista's core promise is **trust**, not listing volume. A trust marketplace with no verified inventory is not trusted (canon risk #2). Therefore the GTM does **not** open with paid advertising to a cold audience. It opens with **concierge-seeded supply** — a human team manually verifying a starter cohort of professionals and listings — and only then invites demand.
 
 The sequencing rule across all four phases:
 
@@ -266,7 +266,7 @@ Onboarding is **concierge-first** and personal (canon MVP). The progression from
 
 ## 10. Sales strategy
 
-**RECOMMENDATION.** Ilhavista's early sales are **value-proven, not cold**. The team never sells a subscription before demonstrating a lead or a match.
+**RECOMMENDATION.** Djarvista's early sales are **value-proven, not cold**. The team never sells a subscription before demonstrating a lead or a match.
 
 - **Free tier first.** Every professional starts free with a verified profile (canon: Free tier).
 - **Paywall on proven value.** Offer **Pro ≈ 2.500 CVE/mo (~€23)** or **Business ≈ 7.500 CVE/mo (~€68)** once a professional has received qualified leads or wants more visibility (canon business model).
@@ -309,7 +309,7 @@ Onboarding is **concierge-first** and personal (canon MVP). The progression from
 
 ## 13. Summary
 
-Ilhavista's GTM is a **trust-seeding sequence**, not an advertising blitz. Phase 1 on São Vicente proves the loop with a small concierge team over WhatsApp; Phase 2 transfers and semi-automates it across islands; Phase 3 adds national coverage and institutional partnerships; Phase 4 exports a country-agnostic core. Every phase gates on evidence, and every monetization move follows demonstrated value. Companion documents: `17-pilot-sao-vicente.md` (execution), `18-product-roadmap.md` (build sequence), `20-kpi-framework.md` (measurement).
+Djarvista's GTM is a **trust-seeding sequence**, not an advertising blitz. Phase 1 on São Vicente proves the loop with a small concierge team over WhatsApp; Phase 2 transfers and semi-automates it across islands; Phase 3 adds national coverage and institutional partnerships; Phase 4 exports a country-agnostic core. Every phase gates on evidence, and every monetization move follows demonstrated value. Companion documents: `17-pilot-sao-vicente.md` (execution), `18-product-roadmap.md` (build sequence), `20-kpi-framework.md` (measurement).
 
 ---
 

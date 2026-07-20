@@ -4,7 +4,7 @@ export const metadata = { title: 'Publicar um pedido' };
 
 export default function NewJobPage(): JSX.Element {
   const wa = whatsappLink(
-    'Olá Ilhavista, quero publicar um pedido de obra/serviço. O trabalho é: ',
+    'Olá Djarvista, quero publicar um pedido de obra/serviço. O trabalho é: ',
   );
   return (
     <div className="mx-auto max-w-2xl space-y-6">

@@ -1,4 +1,4 @@
-# Ilhavista — Technical Architecture
+# Djarvista — Technical Architecture
 
 > **Status:** Architecture document, v0.1 · **Date:** 2026-07-20
 > **Classification legend:** **FACT** (confirmed source) · **ASSUMPTION** (single/indirect source) · **HYPOTHESIS** (reasoned guess) · **RECOMMENDATION** (our advice)
@@ -33,7 +33,7 @@ graph TB
         Admin([Platform admin / finance admin])
     end
 
-    Ilhavista{{Ilhavista Platform<br/>Next.js 14 modular monolith}}
+    Djarvista{{Djarvista Platform<br/>Next.js 14 modular monolith}}
 
     subgraph External
         Email[[Email provider<br/>transactional]]
@@ -46,22 +46,22 @@ graph TB
         PSP[[Payment provider<br/>deferred / later]]
     end
 
-    Visitor --> Ilhavista
-    User --> Ilhavista
-    Pro --> Ilhavista
-    OrgAdmin --> Ilhavista
-    GovEditor --> Ilhavista
-    Ops --> Ilhavista
-    Admin --> Ilhavista
+    Visitor --> Djarvista
+    User --> Djarvista
+    Pro --> Djarvista
+    OrgAdmin --> Djarvista
+    GovEditor --> Djarvista
+    Ops --> Djarvista
+    Admin --> Djarvista
 
-    Ilhavista --> Email
-    Ilhavista --> WhatsApp
-    Ilhavista --> SMS
-    Ilhavista --> S3
-    Ilhavista --> Maps
-    Ilhavista -. reads public info .-> GovCV
-    Ilhavista -. future auth/e-sign .-> CMDCV
-    Ilhavista -. later .-> PSP
+    Djarvista --> Email
+    Djarvista --> WhatsApp
+    Djarvista --> SMS
+    Djarvista --> S3
+    Djarvista --> Maps
+    Djarvista -. reads public info .-> GovCV
+    Djarvista -. future auth/e-sign .-> CMDCV
+    Djarvista -. later .-> PSP
 ```
 
 **Notes**
@@ -189,7 +189,7 @@ sequenceDiagram
 | Concern | Why modular monolith wins for the pilot |
 |---|---|
 | **Speed to pilot** | One deploy, one codebase, one CI pipeline. The São Vicente pilot needs shipping, not distributed-systems ops. |
-| **End-to-end TypeScript** | Shared `@ilhavista/types`, `@ilhavista/validation` (zod) from DB to UI eliminates a class of integration bugs. |
+| **End-to-end TypeScript** | Shared `@djarvista/types`, `@djarvista/validation` (zod) from DB to UI eliminates a class of integration bugs. |
 | **Team size** | A small team cannot operate N services, N pipelines, N on-call surfaces. |
 | **Transaction integrity** | Trust/verification/moderation flows need multi-entity consistency — trivial in one Postgres, painful across services. |
 | **SEO + i18n** | Next.js SSR/ISR gives multilingual, indexable listing and gov-content pages out of the box. |
@@ -201,9 +201,9 @@ Even as a monolith, modules communicate through **explicit service interfaces** 
 
 ```
 apps/web, apps/admin
-  └── call → module public API (e.g. @ilhavista/modules/listings)
+  └── call → module public API (e.g. @djarvista/modules/listings)
                 └── module internals: service, repository, dto, events
-                      └── @ilhavista/database (Prisma) — module owns its tables
+                      └── @djarvista/database (Prisma) — module owns its tables
 ```
 
 **RECOMMENDATION — extract a module into a NestJS service only when a concrete trigger fires:**
@@ -227,7 +227,7 @@ apps/web, apps/admin
 | Cache/queue | Redis + BullMQ | One dependency for cache, rate-limit, queues | Queue behind an interface |
 | Search | PG FTS (MVP) → Meilisearch | Avoid premature infra; upgrade when relevance/scale demands | Search behind `SearchPort` interface |
 | Storage | S3-compatible | Signed URLs, malware scan, cheap | S3 API is a standard |
-| Validation | zod (`@ilhavista/validation`) | Shared client+server contracts | — |
+| Validation | zod (`@djarvista/validation`) | Shared client+server contracts | — |
 
 ---
 
@@ -237,7 +237,7 @@ Each module owns its tables, exposes a typed service API, emits domain events, a
 
 ```mermaid
 graph TB
-    subgraph Platform["@ilhavista modular monolith"]
+    subgraph Platform["@djarvista modular monolith"]
         auth[auth<br/>OTP, MFA, sessions, RBAC]
         accounts[accounts<br/>Users, Profiles]
         orgs[organizations<br/>Orgs, GovernmentEntities]
@@ -423,7 +423,7 @@ Dead-letter queue + alert on repeated failure. Idempotent job handlers keyed by 
 - **Tracing:** OpenTelemetry spans across handler → module → DB/queue. *To validate: chosen backend (e.g. self-host vs SaaS).*
 - **Error tracking:** Sentry-style capture with source maps for `apps/web`.
 - **Uptime / synthetic checks** on critical flows: login OTP, listing search, gov-content page.
-- **Product analytics** via `@ilhavista/analytics` (privacy-respecting; consent-aware given CNPD regime).
+- **Product analytics** via `@djarvista/analytics` (privacy-respecting; consent-aware given CNPD regime).
 
 ### 7.2 Backups
 
@@ -536,7 +536,7 @@ graph TB
 
 - Updating a source creates a **new version**; existing translations are marked **stale** until re-translated (never silently shown as current).
 - **Official government text** (canon: gov.cv, INGT, Conservatória, etc.) is stored verbatim with its source citation; machine/plain-language variants are additive and labelled. *Government confirmation required* before presenting anything as official.
-- UI/URL locale via Next.js App Router segments (`/pt`, `/kea`, `/en`, `/nl`, `/fr`); `@ilhavista/i18n` holds message catalogues for chrome, while **content** translations live in the DB (`Translations`).
+- UI/URL locale via Next.js App Router segments (`/pt`, `/kea`, `/en`, `/nl`, `/fr`); `@djarvista/i18n` holds message catalogues for chrome, while **content** translations live in the DB (`Translations`).
 
 ---
 
@@ -552,13 +552,13 @@ graph TB
 ```mermaid
 sequenceDiagram
     participant Buyer
-    participant Ilhavista
+    participant Djarvista
     participant Seller as Seller (WhatsApp)
-    Buyer->>Ilhavista: Click "Contact via WhatsApp" on listing
-    Ilhavista->>Ilhavista: Build wa.me deep link with prefilled, tracked context
-    Ilhavista-->>Buyer: Open WhatsApp (deep link) + log Lead
+    Buyer->>Djarvista: Click "Contact via WhatsApp" on listing
+    Djarvista->>Djarvista: Build wa.me deep link with prefilled, tracked context
+    Djarvista-->>Buyer: Open WhatsApp (deep link) + log Lead
     Buyer->>Seller: Prefilled message (listing ref)
-    Note over Ilhavista: Lead recorded; conversation happens off-platform (MVP)
+    Note over Djarvista: Lead recorded; conversation happens off-platform (MVP)
 ```
 
 - Every WhatsApp handoff **creates a `Lead`** so the interaction is measured even though the chat happens off-platform.

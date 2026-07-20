@@ -1,4 +1,4 @@
-import { prisma } from '@ilhavista/database';
+import { prisma } from '@djarvista/database';
 
 /**
  * Minimal operations dashboard: verification queue, moderation cases and review

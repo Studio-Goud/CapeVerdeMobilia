@@ -3,8 +3,8 @@ import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-  title: { default: 'Ilhavista — Cabo Verde', template: '%s · Ilhavista' },
-  description: 'Ilhavista — property, land, building and official information in Cabo Verde (PT / EN / NL demo).',
+  title: { default: 'Djarvista — Cabo Verde', template: '%s · Djarvista' },
+  description: 'Djarvista — property, land, building and official information in Cabo Verde (PT / EN / NL demo).',
 };
 export const viewport: Viewport = { themeColor: '#0e7490', width: 'device-width', initialScale: 1 };
 

@@ -1,10 +1,10 @@
-# Ilhavista — Product Requirements Document (PRD)
+# Djarvista — Product Requirements Document (PRD)
 
 **Document:** 07 — Product Requirements
 **Status:** Draft for validation
 **Last updated:** 2026-07-20
 **Owner:** Product / UX
-**Canonical source:** `docs/canon.md` (Ilhavista Project Canon). This PRD must remain consistent with the canon at all times; where they diverge, the canon wins.
+**Canonical source:** `docs/canon.md` (Djarvista Project Canon). This PRD must remain consistent with the canon at all times; where they diverge, the canon wins.
 
 > **Reliability labels used throughout:** **FACT** (confirmed source) · **ASSUMPTION** (single/indirect source) · **HYPOTHESIS** (reasoned guess) · **RECOMMENDATION** (our advice). Legal, tax, government and market items are flagged "To validate" where confirmation is still required. We never invent laws, rates, market sizes, partners or contacts.
 
@@ -12,9 +12,9 @@
 
 ## 1. Product overview
 
-### 1.1 What Ilhavista is
+### 1.1 What Djarvista is
 
-**Ilhavista** is independent digital infrastructure connecting citizens, professionals, investors and public bodies for property, building and public information in Cabo Verde. It is **trust-first, not just a listings site**. (FACT — canon positioning.)
+**Djarvista** is independent digital infrastructure connecting citizens, professionals, investors and public bodies for property, building and public information in Cabo Verde. It is **trust-first, not just a listings site**. (FACT — canon positioning.)
 
 The product delivers **five value layers** (FACT — canon):
 
@@ -54,7 +54,7 @@ Pilot on **São Vicente (Mindelo)** → multi-island → national → export to 
 
 ## 3. Target users
 
-Ilhavista serves both sides of the marketplace plus public institutions. Roles below are the canon roles; Section 8 maps them to permissions.
+Djarvista serves both sides of the marketplace plus public institutions. Roles below are the canon roles; Section 8 maps them to permissions.
 
 ### 3.1 Primary personas (MVP)
 
@@ -66,7 +66,7 @@ Ilhavista serves both sides of the marketplace plus public institutions. Roles b
 | **Business / agency** | business admin, agent (makelaar), developer (projectontwikkelaar) | Real-estate agencies, construction firms, developers, material suppliers. | Manage org profile, listings, staff, leads. |
 | **Client / commissioner** | client (opdrachtgever) | Person commissioning building/renovation work. | Post a job, compare quotes, leave a verified review. |
 | **Government editor / approver** | gov editor, gov approver | Public bodies (e.g. municipalities, INGT, Casa do Cidadão) publishing official procedure info. | Publish accurate, versioned official information. (Government confirmation required.) |
-| **Platform operations** | moderator, verification specialist, support, admins | Ilhavista team running concierge-first operations. | Moderate, verify, support, run the platform. |
+| **Platform operations** | moderator, verification specialist, support, admins | Djarvista team running concierge-first operations. | Moderate, verify, support, run the platform. |
 
 ### 3.2 Connectivity reality (FACT, high — canon fact #1, DataReportal Digital 2025: Cabo Verde, Jan 2025)
 
@@ -264,7 +264,7 @@ Canon roles, mapped to representative permissions. RBAC is enforced (FACT — ca
 
 ## 9. Data fields — Module A (property/land listing)
 
-Fields for the MVP listing. Types are indicative; validation lives in `@ilhavista/validation`. "Req?" = required at publish.
+Fields for the MVP listing. Types are indicative; validation lives in `@djarvista/validation`. "Req?" = required at publish.
 
 | Field | Type | Req? | Notes |
 |-------|------|:---:|-------|

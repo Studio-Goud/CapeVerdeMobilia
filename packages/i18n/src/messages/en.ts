@@ -2,7 +2,7 @@ import type { pt } from './pt';
 
 export const en: typeof pt = {
   common: {
-    appName: 'Ilhavista',
+    appName: 'Djarvista',
     tagline: 'The digital gateway to property, building and public information in Cabo Verde',
     search: 'Search',
     contact: 'Contact',

@@ -1,4 +1,4 @@
-import { ListingCard } from '@ilhavista/ui';
+import { ListingCard } from '@djarvista/ui';
 import { formatPrice, documentStatusLabel } from '@/lib/format';
 
 type Row = {

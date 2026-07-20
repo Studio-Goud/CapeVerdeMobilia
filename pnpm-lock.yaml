@@ -20,13 +20,13 @@ importers:
 
   apps/admin:
     dependencies:
-      '@ilhavista/auth':
+      '@djarvista/auth':
         specifier: workspace:*
         version: link:../../packages/auth
-      '@ilhavista/database':
+      '@djarvista/database':
         specifier: workspace:*
         version: link:../../packages/database
-      '@ilhavista/ui':
+      '@djarvista/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       next:
@@ -54,22 +54,22 @@ importers:
 
   apps/web:
     dependencies:
-      '@ilhavista/analytics':
+      '@djarvista/analytics':
         specifier: workspace:*
         version: link:../../packages/analytics
-      '@ilhavista/config':
+      '@djarvista/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@ilhavista/i18n':
+      '@djarvista/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
-      '@ilhavista/types':
+      '@djarvista/types':
         specifier: workspace:*
         version: link:../../packages/types
-      '@ilhavista/ui':
+      '@djarvista/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@ilhavista/validation':
+      '@djarvista/validation':
         specifier: workspace:*
         version: link:../../packages/validation
       next:
@@ -121,10 +121,10 @@ importers:
 
   packages/auth:
     dependencies:
-      '@ilhavista/config':
+      '@djarvista/config':
         specifier: workspace:*
         version: link:../config
-      '@ilhavista/database':
+      '@djarvista/database':
         specifier: workspace:*
         version: link:../database
       zod:
@@ -169,7 +169,7 @@ importers:
 
   packages/i18n:
     dependencies:
-      '@ilhavista/config':
+      '@djarvista/config':
         specifier: workspace:*
         version: link:../config
     devDependencies:

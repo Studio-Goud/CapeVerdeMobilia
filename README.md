@@ -1,8 +1,8 @@
-# Ilhavista
+# Djarvista
 
 **The independent digital gateway to property, land, building and public information in Cabo Verde.**
 
-Ilhavista connects citizens, professionals, investors and public bodies on one trust-first platform.
+Djarvista connects citizens, professionals, investors and public bodies on one trust-first platform.
 It combines a property & land marketplace, a verified professionals & construction marketplace, a
 review/trust layer, and an official government-information centre with step-by-step procedure
 guides — starting with a pilot on **São Vicente**.
@@ -11,7 +11,7 @@ guides — starting with a pilot on **São Vicente**.
 > business/product/technical documentation **and** a runnable monorepo skeleton for the MVP.
 > All market figures, procedures and legal/tax details are **grounded in cited public sources or
 > explicitly labelled as assumptions** — see [`/docs/25-open-questions.md`](docs/25-open-questions.md).
-> Ilhavista does not provide legal advice and does not replace public authorities.
+> Djarvista does not provide legal advice and does not replace public authorities.
 
 ---
 
@@ -22,7 +22,7 @@ plots, ownership, zoning, permits, procedures, agents, contractors and trustwort
 fragmented, hard to find, and dependent on personal networks. Cabo Verde has strong connectivity
 (internet penetration **~73.5%**, mobile connections **~115%** of population — DataReportal, Jan 2025)
 and an accelerating digital-government programme (**gov.cv** launched Feb 2026; target 60% of public
-services online by 2026). Ilhavista turns that fragmentation into a transparent, mobile-first,
+services online by 2026). Djarvista turns that fragmentation into a transparent, mobile-first,
 multilingual platform. See [`/docs/00-executive-summary.md`](docs/00-executive-summary.md).
 
 ## The five value layers
@@ -87,8 +87,8 @@ psql "$DATABASE_URL" -f packages/database/prisma/sql/search_and_geo.sql   # Post
 pnpm db:seed
 
 # 2. Run the web app
-pnpm --filter @ilhavista/web dev   # http://localhost:3000
-pnpm --filter @ilhavista/admin dev # http://localhost:3001
+pnpm --filter @djarvista/web dev   # http://localhost:3000
+pnpm --filter @djarvista/admin dev # http://localhost:3001
 ```
 
 ### Common scripts
@@ -100,7 +100,7 @@ pnpm --filter @ilhavista/admin dev # http://localhost:3001
 | `pnpm typecheck` | Strict TS across the monorepo |
 | `pnpm lint` | ESLint (flat config) |
 | `pnpm test` | Unit tests (Vitest) |
-| `pnpm --filter @ilhavista/web test:e2e` | Playwright smoke tests (needs seed + server) |
+| `pnpm --filter @djarvista/web test:e2e` | Playwright smoke tests (needs seed + server) |
 | `pnpm db:seed` / `pnpm db:reset` | Seed / reset the database |
 
 > **Security note:** the scaffold's password hashing is a salted-SHA-256 **placeholder** so the repo

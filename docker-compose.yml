@@ -1,60 +1,60 @@
-# Local development dependencies for Ilhavista.
+# Local development dependencies for Djarvista.
 # Usage: docker compose up -d   (then `pnpm db:migrate && pnpm db:seed`)
 services:
   postgres:
     image: postgis/postgis:16-3.4
-    container_name: ilhavista-postgres
+    container_name: djarvista-postgres
     environment:
-      POSTGRES_USER: ilhavista
-      POSTGRES_PASSWORD: ilhavista
-      POSTGRES_DB: ilhavista
+      POSTGRES_USER: djarvista
+      POSTGRES_PASSWORD: djarvista
+      POSTGRES_DB: djarvista
     ports:
       - '5432:5432'
     volumes:
-      - ilhavista_pg:/var/lib/postgresql/data
+      - djarvista_pg:/var/lib/postgresql/data
       - ./infrastructure/postgres/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U ilhavista']
+      test: ['CMD-SHELL', 'pg_isready -U djarvista']
       interval: 5s
       timeout: 5s
       retries: 10
 
   redis:
     image: redis:7-alpine
-    container_name: ilhavista-redis
+    container_name: djarvista-redis
     ports:
       - '6379:6379'
     volumes:
-      - ilhavista_redis:/data
+      - djarvista_redis:/data
 
   minio:
     image: minio/minio:latest
-    container_name: ilhavista-minio
+    container_name: djarvista-minio
     command: server /data --console-address ":9001"
     environment:
-      MINIO_ROOT_USER: ilhavista
-      MINIO_ROOT_PASSWORD: ilhavista-dev-secret
+      MINIO_ROOT_USER: djarvista
+      MINIO_ROOT_PASSWORD: djarvista-dev-secret
     ports:
       - '9000:9000'
       - '9001:9001'
     volumes:
-      - ilhavista_minio:/data
+      - djarvista_minio:/data
 
   # Optional — enable when moving beyond Postgres full-text search.
   meilisearch:
     image: getmeili/meilisearch:v1.8
-    container_name: ilhavista-meili
+    container_name: djarvista-meili
     environment:
-      MEILI_MASTER_KEY: ilhavista-dev-master-key
+      MEILI_MASTER_KEY: djarvista-dev-master-key
       MEILI_NO_ANALYTICS: 'true'
     ports:
       - '7700:7700'
     volumes:
-      - ilhavista_meili:/meili_data
+      - djarvista_meili:/meili_data
     profiles: ['search']
 
 volumes:
-  ilhavista_pg:
-  ilhavista_redis:
-  ilhavista_minio:
-  ilhavista_meili:
+  djarvista_pg:
+  djarvista_redis:
+  djarvista_minio:
+  djarvista_meili:

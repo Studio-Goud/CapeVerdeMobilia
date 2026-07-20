@@ -1,11 +1,11 @@
 {
-  "name": "@ilhavista/i18n",
+  "name": "@djarvista/i18n",
   "version": "0.1.0",
   "private": true,
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": { ".": "./src/index.ts" },
   "scripts": { "typecheck": "tsc --noEmit" },
-  "dependencies": { "@ilhavista/config": "workspace:*" },
+  "dependencies": { "@djarvista/config": "workspace:*" },
   "devDependencies": { "typescript": "^5.5.4" }
 }

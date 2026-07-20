@@ -1,4 +1,4 @@
-import { listingSearchSchema } from '@ilhavista/validation';
+import { listingSearchSchema } from '@djarvista/validation';
 import { searchListings } from '@/lib/queries';
 import { ListingGrid } from '@/components/ListingGrid';
 

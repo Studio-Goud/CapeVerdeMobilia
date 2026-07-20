@@ -1,4 +1,4 @@
-# Ilhavista — Market Analysis (Cabo Verde)
+# Djarvista — Market Analysis (Cabo Verde)
 
 **Document:** `docs/03-market-analysis.md`
 **Author role:** Senior market analyst
@@ -13,7 +13,7 @@ Every material claim is tagged per Canon:
 - **FACT** — confirmed by a cited source (accessed 2026-07-20; reliability noted).
 - **ASSUMPTION** — single/indirect source or analyst input; needs validation.
 - **HYPOTHESIS** — reasoned guess, no direct source.
-- **RECOMMENDATION** — Ilhavista's advice / analyst judgement.
+- **RECOMMENDATION** — Djarvista's advice / analyst judgement.
 
 > ⚠️ **MARKET VALIDATION REQUIRED — WHOLE SIZING SECTION.**
 > Cabo Verde does **not** publish (and this analyst does **not** have) reliable official real-estate transaction counts, median prices, or professional-population registers. **The entire "Market Sizing" section (§3) is built explicitly from stated ASSUMPTIONS/HYPOTHESES.** Every number is reproducible from the assumptions tables. Treat all TAM/SAM/SOM figures as planning scaffolding to be replaced with primary data, not as measured market facts.
@@ -24,13 +24,13 @@ Every material claim is tagged per Canon:
 
 Cabo Verde has **9 inhabited islands** (FACT/med — Canon §KEY FACT 7; sources capeverdeproperty24.com, bespacegroup.com, accessed 2026-07-20). Total population **est. ~525,000** (ASSUMPTION/med — Canon §KEY FACT 7; *validate vs latest census*). **Sal, Boa Vista and São Vicente are first-explored by international buyers; Mindelo (São Vicente) is the cultural capital** (FACT/med — same source).
 
-Ilhavista's declared launch path is **pilot on São Vicente → multi-island → national → export** (FACT — Canon §Brand).
+Djarvista's declared launch path is **pilot on São Vicente → multi-island → national → export** (FACT — Canon §Brand).
 
 **On per-island population figures:** No island-level census counts are asserted as fact here. The "Relative population" column below is **ASSUMPTION/HYPOTHESIS** expressed as a share band and must be validated against the latest census (Instituto Nacional de Estatística / INE-CV). It is used only to rank islands, not to size the market.
 
 ### 1.1 Island roles, buyer profiles and opportunity
 
-| Island | Primary role | Relative population (ASSUMPTION — validate) | Dominant buyer / user profile | Ilhavista opportunity | Priority |
+| Island | Primary role | Relative population (ASSUMPTION — validate) | Dominant buyer / user profile | Djarvista opportunity | Priority |
 |---|---|---|---|---|---|
 | **Santiago** (Praia) | Administrative & economic capital; largest domestic market; government seat | Largest (~half of national) | Domestic buyers, diaspora returnees, civil servants, local investors, commercial tenants | Deepest local-housing + commercial + government-info demand; highest listing volume; anchor for gov partnership (ministries in Praia) | **Tier 1 (scale)** |
 | **São Vicente** (Mindelo) | Cultural capital; services & port hub; **declared pilot island** | Second largest | Diaspora, cultural/creative economy, domestic buyers, early foreign lifestyle buyers, professionals | **Pilot beachhead** — dense, digitally engaged, mixed local + foreign demand, manageable supply to verify by concierge | **Tier 1 (pilot)** |
@@ -49,7 +49,7 @@ Ilhavista's declared launch path is **pilot on São Vicente → multi-island →
 1. **Domestic + diaspora engine** (Santiago, São Vicente, Santo Antão, Fogo, São Nicolau, Maio, Brava): local housing, remittance-funded self-build, renovation, agricultural/building land. Price-sensitive, Portuguese/Kabuverdianu, WhatsApp-native, heavy **informal market** (Canon — informal intermediaries).
 2. **International lifestyle/investment engine** (Sal, Boa Vista, plus growing São Vicente): holiday homes, resorts, short-let management, development land. Higher ticket, multilingual (EN/FR/NL), overlaps international portals; needs the **trust/verification and legal-process layers** most.
 
-**RECOMMENDATION:** Ilhavista's five value layers (Information, Trust, Findability, Transactions/jobs, Process guidance — Canon) map differently per engine. Domestic engine values Information + Findability + Process; international engine values Trust + Process + Transactions. Product prioritisation and pricing should reflect this split.
+**RECOMMENDATION:** Djarvista's five value layers (Information, Trust, Findability, Transactions/jobs, Process guidance — Canon) map differently per engine. Domestic engine values Information + Findability + Process; international engine values Trust + Process + Transactions. Product prioritisation and pricing should reflect this split.
 
 ---
 
@@ -57,7 +57,7 @@ Ilhavista's declared launch path is **pilot on São Vicente → multi-island →
 
 Segments below are qualitative structure + demand logic. **No segment values are asserted as measured facts.** Quantified pools appear only in §3 under the validation banner.
 
-| # | Segment | Primary islands | Buyer/user | Ilhavista monetisation hook (Canon business model) | Notes |
+| # | Segment | Primary islands | Buyer/user | Djarvista monetisation hook (Canon business model) | Notes |
 |---|---|---|---|---|---|
 | 1 | **Local housing** (sale + rent) | Santiago, São Vicente, all | Domestic + diaspora | Free basic + Premium listing (~5.000 CVE/30d); agent Pro/Business subs | Largest by volume; heavy informal/WhatsApp incumbency |
 | 2 | **Social housing** | Santiago, São Vicente | Public bodies, low-income households | Government info/partner layer (info, eligibility, procedure wizard) | Not a direct commission market; **government partnership** value; info + trust layer |
@@ -83,9 +83,9 @@ Segments below are qualitative structure + demand logic. **No segment values are
 > ⚠️ **MARKET VALIDATION REQUIRED.** Every figure below is derived from the **ASSUMPTIONS TABLE (§3.1)**. No official transaction data underlies these numbers. They are internally consistent and reproducible: apply the stated assumptions and the arithmetic returns the stated results. Replace assumptions with primary data (INE-CV census, Conservatória/INGT registration counts, LMITS transaction data, Casa do Cidadão professional registrations, TradeInvest FDI data) before relying on any figure.
 
 **Definitions used:**
-- **TAM** = total annual **Ilhavista-addressable revenue pool** if the entire relevant Cabo Verde market were monetised at Ilhavista's model (subscriptions, listings, leads, verification, project-mgmt, government, later facilitated-job take). *TAM here is a revenue pool, not property GMV.* Property transaction GMV is computed separately in §3.3 as an input.
+- **TAM** = total annual **Djarvista-addressable revenue pool** if the entire relevant Cabo Verde market were monetised at Djarvista's model (subscriptions, listings, leads, verification, project-mgmt, government, later facilitated-job take). *TAM here is a revenue pool, not property GMV.* Property transaction GMV is computed separately in §3.3 as an input.
 - **SAM** = the digitally reachable, target-island, willing-to-transact-online share of TAM.
-- **SOM** = the share of SAM Ilhavista can realistically obtain by ~Year 3 as a single platform.
+- **SOM** = the share of SAM Djarvista can realistically obtain by ~Year 3 as a single platform.
 
 ### 3.1 Master assumptions table (ALL inputs — ASSUMPTION/HYPOTHESIS)
 
@@ -135,7 +135,7 @@ All CVE; EUR = CVE ÷ 110.265, rounded.
 
 ### 3.3 Property transaction GMV (transaction-driven method — input & cross-check)
 
-This is the value of ownership transfers, **not** Ilhavista revenue (no escrow/commission at MVP — Canon WON'T-yet). It feeds the top-down cross-check (§3.5) and frames the later facilitated-transaction opportunity.
+This is the value of ownership transfers, **not** Djarvista revenue (no escrow/commission at MVP — Canon WON'T-yet). It feeds the top-down cross-check (§3.5) and frames the later facilitated-transaction opportunity.
 
 | Metric | Formula | Conservative | Realistic | Ambitious |
 |---|---|---:|---:|---:|
@@ -188,12 +188,12 @@ Independent check of the professional + listing portion of TAM (P1+P2), avoiding
 
 ### 4.1 Demand drivers
 
-| Driver | Evidence | Label | Implication for Ilhavista |
+| Driver | Evidence | Label | Implication for Djarvista |
 |---|---|---|---|
 | **High connectivity** | 73.5% internet, 115% mobile, 49.9% social (DataReportal Digital 2025, Jan 2025) | FACT/high (Canon §1) | Mobile-first PWA is the right bet; distribution can be digital/WhatsApp-led |
 | **Digital-government push** | Unified **gov.cv** launched 24 Feb 2026; **CMDCV** e-signature; **NOSi** e-gov backbone; targets 60% services online by 2026, >80% by 2030 (techafricanews, ecofinagency, govinsider, nosi.cv) | FACT/high-med (Canon §2) | Opens the government-info + procedure-wizard + partnership layers; CMDCV can back identity verification (L1–L5) |
 | **Open foreign ownership** | Foreigners buy freehold on national terms (residential/tourism/commercial/dev land); agricultural conditional (caboverdeexpert, mcc.gov, judicaregroup) | FACT/med — legal verification required (Canon §3) | Sustains the international engine (Sal/Boa Vista/São Vicente); multilingual + process layer directly monetisable |
-| **Faster land registration** | **INGT** centralises registration; **LMITS** (built under **MCC compact**) cut registration from months to weeks | FACT/med (Canon §3) | Reduces a core transaction friction; Ilhavista process layer can wrap it |
+| **Faster land registration** | **INGT** centralises registration; **LMITS** (built under **MCC compact**) cut registration from months to weeks | FACT/med (Canon §3) | Reduces a core transaction friction; Djarvista process layer can wrap it |
 | **One-day company formation** | **"Empresa no Dia"** via **Casa do Cidadão** (~$100); **EASE** registry; **TradeInvest** one-stop | FACT/med-high (Canon §6) | Lowers barrier for professionals/developers to formalise → grows the payable professional base |
 | **Foreign tourism/investment interest** | Sal, Boa Vista, São Vicente first-explored by international buyers; Mindelo cultural capital (capeverdeproperty24, bespacegroup) | FACT/med (Canon §7) | High-ticket holiday-home/resort/management demand; strongest trust-layer willingness-to-pay |
 | **Diaspora & remittances** | Heavy emigration ties, esp. São Nicolau/Brava/Fogo (Canon §7 context) | HYPOTHESIS/med — *validate remittance data* | Remittance-funded self-build/renovation → building-services + materials demand |
@@ -203,7 +203,7 @@ Independent check of the professional + listing portion of TAM (P1+P2), avoiding
 | Headwind | Evidence | Label | Mitigation (RECOMMENDATION) |
 |---|---|---|---|
 | **Entrenched informal market** | Informal intermediaries dominate; WhatsApp/Facebook incumbency (Canon business model & positioning) | ASSUMPTION/med — market validation required | Concierge onboarding + verified supply + WhatsApp-oriented notifications (Canon MVP) to meet the market where it is |
-| **No reliable transaction data** | No official transaction/price register available to analyst | FACT (this analysis) | Fund primary research; use Ilhavista's own funnel as the first proprietary dataset (data moat) |
+| **No reliable transaction data** | No official transaction/price register available to analyst | FACT (this analysis) | Fund primary research; use Djarvista's own funnel as the first proprietary dataset (data moat) |
 | **Small, fragmented geography** | 9 islands, thin markets on Tier 3 islands; some without air links (Brava, Santo Antão) | FACT/med (Canon §7) | Sequence rollout; info/trust value first where transaction volume is thin |
 | **Regulatory/tax flux** | **IUP repealed 1 Jan 2026 → cITI + cIPI (0.1%)**; transaction costs ~6% (pwc.pt, btoc.com.cv, taxsummaries.pwc.com; caboverdeexpert) | FACT/med-high & ASSUMPTION/med — tax verification required (Canon §4, §5) | Process layer must track live rules; label all tax/cost figures "verification required" |
 | **Data-protection obligations** | RGPD-aligned regime, **CNPD** authority; exact duties to confirm (vpqadvogados) | ASSUMPTION — legal verification required (Canon §8) | Privacy-by-design; counsel sign-off before scale |
@@ -212,7 +212,7 @@ Independent check of the professional + listing portion of TAM (P1+P2), avoiding
 
 ### 4.3 Net read (RECOMMENDATION)
 
-The **structural drivers are unusually favourable** for a trust-first digital infrastructure play: high connectivity, an accelerating digital-government agenda that Ilhavista can plug into, open foreign ownership, and improving land-registration rails. The **binding constraints are demand-side and data-side**, not technology: entrenched informal channels, unproven willingness to pay, thin markets on smaller islands, and the total absence of official market data. This validates the Canon's sequencing — **pilot São Vicente, concierge-verify supply, lead with information/trust/process, and build the proprietary data moat before betting on transaction take-rates.**
+The **structural drivers are unusually favourable** for a trust-first digital infrastructure play: high connectivity, an accelerating digital-government agenda that Djarvista can plug into, open foreign ownership, and improving land-registration rails. The **binding constraints are demand-side and data-side**, not technology: entrenched informal channels, unproven willingness to pay, thin markets on smaller islands, and the total absence of official market data. This validates the Canon's sequencing — **pilot São Vicente, concierge-verify supply, lead with information/trust/process, and build the proprietary data moat before betting on transaction take-rates.**
 
 ---
 

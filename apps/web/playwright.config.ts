@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 /**
  * E2E config. Assumes a seeded database and a running dev server.
- * Run: pnpm --filter @ilhavista/web test:e2e
+ * Run: pnpm --filter @djarvista/web test:e2e
  * (Chromium is pre-provisioned in CI at /opt/pw-browsers.)
  */
 export default defineConfig({

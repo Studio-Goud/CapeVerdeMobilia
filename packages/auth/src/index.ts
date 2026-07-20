@@ -1,5 +1,5 @@
 import { createHash, randomBytes, randomInt, timingSafeEqual } from 'node:crypto';
-import { RoleKey } from '@ilhavista/database';
+import { RoleKey } from '@djarvista/database';
 
 /**
  * Auth primitives for the MVP. Kept deliberately small and dependency-light.

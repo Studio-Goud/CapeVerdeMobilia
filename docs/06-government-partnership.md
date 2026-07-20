@@ -1,4 +1,4 @@
-# 06 — Government Partnership Proposition (Ilhavista)
+# 06 — Government Partnership Proposition (Djarvista)
 
 > **Reliability labels:** **FACT** (confirmed source) / **ASSUMPTION** /
 > **HYPOTHESIS** / **RECOMMENDATION**. Everything here is consistent with the
@@ -12,7 +12,7 @@
 
 ## 1. Core message
 
-**Ilhavista does not replace government. It makes official information more
+**Djarvista does not replace government. It makes official information more
 findable, more understandable and more accessible.**
 
 Cabo Verde is investing heavily in digital government — the unified portal
@@ -23,7 +23,7 @@ via **Chave Móvel Digital (CMDCV) / Autentika**, the e-gov backbone operated by
 and **>80% by 2030** (Canon KEY FACT 2 — FACT/high-med; sources: techafricanews.com
 25 Feb 2026, ecofinagency.com, govinsider.asia, portal-autentika.gov.cv, nosi.cv).
 
-Ilhavista is an **independent** trust-first layer (Canon §Brand) that sits *beside*
+Djarvista is an **independent** trust-first layer (Canon §Brand) that sits *beside*
 these official systems. It:
 
 - links to and cites official sources (never overwrites or re-authors them);
@@ -34,7 +34,7 @@ these official systems. It:
 - surfaces where people get stuck, so public bodies can improve their own
   information.
 
-Ilhavista never issues decisions, never charges for access to official
+Djarvista never issues decisions, never charges for access to official
 information, and never alters the ranking or wording of official content for
 payment (Canon §Business model; `05-business-model.md` §5 guardrails).
 
@@ -42,7 +42,7 @@ payment (Canon §Business model; `05-business-model.md` §5 guardrails).
 
 ## 2. Value for public bodies
 
-| Benefit | How Ilhavista delivers it | Label |
+| Benefit | How Djarvista delivers it | Label |
 |---|---|---|
 | **Fewer repeat questions** | Plain-language FAQs and procedure wizard deflect routine queries away from counters and phone lines | HYPOTHESIS |
 | **Better information quality** | Structured, multilingual, source-linked presentation of official content | RECOMMENDATION |
@@ -72,26 +72,26 @@ expected: **(1) → (2) → (3)** as trust and scope grow.
 
 | Dimension | Terms |
 |---|---|
-| **Purpose** | Ilhavista publishes plain-language summaries that **link to and cite** the body's official information; no formal endorsement. |
+| **Purpose** | Djarvista publishes plain-language summaries that **link to and cite** the body's official information; no formal endorsement. |
 | **Governance** | Light. Named contact on each side; informal review of published summaries. |
-| **Responsibilities** | Ilhavista: accuracy of summaries, prominent source links, prompt correction. Body: point to canonical sources, flag errors. |
-| **Data ownership** | Body owns official content; Ilhavista owns its summaries/translations and links back. No personal data exchanged. |
-| **Liability** | Ilhavista carries a clear disclaimer ("informational, not official; verify with the competent authority"). Legal verification required. |
+| **Responsibilities** | Djarvista: accuracy of summaries, prominent source links, prompt correction. Body: point to canonical sources, flag errors. |
+| **Data ownership** | Body owns official content; Djarvista owns its summaries/translations and links back. No personal data exchanged. |
+| **Liability** | Djarvista carries a clear disclaimer ("informational, not official; verify with the competent authority"). Legal verification required. |
 | **Approval process** | Optional courtesy review; no sign-off gate. |
 | **Costs** | Free or subsidised (Canon). No fee to the body. |
 | **Service levels** | Best-effort; correction target e.g. 5 working days (RECOMMENDATION). |
 | **Audit** | Change log of published summaries available on request. |
-| **Exit** | Either side ends at will; Ilhavista removes contested summaries promptly. |
+| **Exit** | Either side ends at will; Djarvista removes contested summaries promptly. |
 
 ### Model 2 — Official publication partner *(SLA licence)*
 
 | Dimension | Terms |
 |---|---|
-| **Purpose** | The body authorises Ilhavista to publish/mirror specified official information with an "official source" designation, under a service-level agreement. |
+| **Purpose** | The body authorises Djarvista to publish/mirror specified official information with an "official source" designation, under a service-level agreement. |
 | **Governance** | Formal steering contact; periodic review meetings; defined content scope. |
-| **Responsibilities** | Body: provides/approves canonical content and updates. Ilhavista: faithful publication, versioning, agreed uptime, correction SLAs, multilingual rendering with source preserved. |
-| **Data ownership** | Body retains full ownership and editorial authority over official text; Ilhavista licenses to display. Aggregated usage analytics shared with the body. |
-| **Liability** | Defined in licence; Ilhavista liable for faithful reproduction, body for source correctness. Legal verification required. |
+| **Responsibilities** | Body: provides/approves canonical content and updates. Djarvista: faithful publication, versioning, agreed uptime, correction SLAs, multilingual rendering with source preserved. |
+| **Data ownership** | Body retains full ownership and editorial authority over official text; Djarvista licenses to display. Aggregated usage analytics shared with the body. |
+| **Liability** | Defined in licence; Djarvista liable for faithful reproduction, body for source correctness. Legal verification required. |
 | **Approval process** | Content sign-off workflow (gov editor → gov approver roles — Canon §Roles) before publication of changes. |
 | **Costs** | SLA licence, **RECOMMENDATION 150.000–250.000 CVE/mo (€1.360–2.267)** depending on scope; may be subsidised/grant-funded. Government confirmation required. |
 | **Service levels** | E.g. 99.5% availability, content-update propagation ≤ 2 working days, critical-correction ≤ 24h (RECOMMENDATION). |
@@ -103,7 +103,7 @@ expected: **(1) → (2) → (3)** as trust and scope grow.
 | Dimension | Terms |
 |---|---|
 | **Purpose** | Joint delivery of a digital service (e.g. integrated procedure guidance tied to official systems), potentially integrating with the NOSi/Autentika/CMDCV ecosystem (integration **to validate**). |
-| **Governance** | Formal PPP governance: joint steering committee, defined decision rights, independence safeguards so Ilhavista's trust-first neutrality is preserved (Canon §Brand). |
+| **Governance** | Formal PPP governance: joint steering committee, defined decision rights, independence safeguards so Djarvista's trust-first neutrality is preserved (Canon §Brand). |
 | **Responsibilities** | Split by agreement; roles, KPIs and escalation defined contractually. |
 | **Data ownership** | Data-governance schedule: official data owned by the body; personal data processed under CNPD regime (Canon KEY FACT 8); analytics rights defined; no resale of personal data (`05-business-model.md` §5). |
 | **Liability** | Allocated contractually with indemnities and insurance. Legal verification required. |
@@ -117,7 +117,7 @@ expected: **(1) → (2) → (3)** as trust and scope grow.
 
 ## 4. Independence & trust safeguards (all models)
 
-1. Ilhavista is **independent digital infrastructure** (Canon §Brand); partnership
+1. Djarvista is **independent digital infrastructure** (Canon §Brand); partnership
    never implies government control of the platform or vice-versa.
 2. Official information is **never for sale** — no payment alters its ranking,
    wording or prominence (`05-business-model.md` §5).
@@ -134,9 +134,9 @@ expected: **(1) → (2) → (3)** as trust and scope grow.
 
 ## 5. Relevant Cabo Verde institutions (context, cite these)
 
-| Institution / asset | Relevance to Ilhavista | Canon source |
+| Institution / asset | Relevance to Djarvista | Canon source |
 |---|---|---|
-| **gov.cv** (launched 24 Feb 2026) | Canonical destination Ilhavista links to; unified services portal | KEY FACT 2 (FACT) |
+| **gov.cv** (launched 24 Feb 2026) | Canonical destination Djarvista links to; unified services portal | KEY FACT 2 (FACT) |
 | **Porton di nôs Ilha** | Legacy citizen portal; historical source links | KEY FACT 2 |
 | **CMDCV / Autentika** | Auth & e-signature; potential integration (to validate) | KEY FACT 2 |
 | **NOSi** | Operates e-gov backbone; PPP/integration counterpart | KEY FACT 2 |
@@ -145,7 +145,7 @@ expected: **(1) → (2) → (3)** as trust and scope grow.
 | **Cabo Verde TradeInvest** | One-stop investor shop; investor-experience alignment | KEY FACT 6 (FACT) |
 | **Conservatória do Registo Predial / Notary** | Property registration & public deed steps in procedure wizard | KEY FACT 3 (FACT) |
 | **CNPD** | Data-protection authority; governs shared analytics | KEY FACT 8 (ASSUMPTION) |
-| **Digitization targets** | 60% of vital public services online by 2026; >80% by 2030 — the tailwind Ilhavista complements | KEY FACT 2 (FACT/med) |
+| **Digitization targets** | 60% of vital public services online by 2026; >80% by 2030 — the tailwind Djarvista complements | KEY FACT 2 (FACT/med) |
 
 **Sources (accessed 2026-07-20, per Canon):** techafricanews.com (25 Feb 2026),
 ecofinagency.com, govinsider.asia, portal-autentika.gov.cv, nosi.cv (digital

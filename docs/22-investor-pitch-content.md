@@ -1,4 +1,4 @@
-# Ilhavista — Investor Pitch Content
+# Djarvista — Investor Pitch Content
 
 > **Status:** Investor narrative + slide content, v0.1 · **Date:** 2026-07-20
 > **Audience:** Angels, early-stage / impact / frontier-market VCs, strategic investors.
@@ -11,7 +11,7 @@
 
 Cabo Verde is a **digital, mobile, diaspora-connected** nation — internet penetration ~73.5% and mobile connections ~115% of population (**FACT/high**, DataReportal 2025) — but its **property and building market still runs on personal networks and scattered, hard-to-trust information.** Foreign buyers can't navigate ownership, tax and procedure from abroad; locals lose time and money to opacity; professionals have no trusted place to be found and verified; and the rules just changed (the **IUP** acquisition tax was repealed 1 Jan 2026 and replaced by **cITI + cIPI** — **FACT/med-high, tax verification required**), so everyone is re-learning the market at once.
 
-**Ilhavista is the trust layer that market lacks.** Not "just a listings site" — **independent digital infrastructure** that brings five things into one mobile-first place: reliable **information**, verifiable **trust** (L0–L5 verification), **findability**, a path to **transactions/jobs**, and **process guidance** through opaque procedures. Trust compounds: verified professionals attract buyers; buyers attract listings; usage generates the information and reviews that make the next user trust the platform more. We monetise through a **hybrid model** — professional subscriptions, premium/featured listings (always labelled), verification and lead services, and later a facilitated-job take rate once escrow exists — while **paid visibility never buys trust or manipulates official information.**
+**Djarvista is the trust layer that market lacks.** Not "just a listings site" — **independent digital infrastructure** that brings five things into one mobile-first place: reliable **information**, verifiable **trust** (L0–L5 verification), **findability**, a path to **transactions/jobs**, and **process guidance** through opaque procedures. Trust compounds: verified professionals attract buyers; buyers attract listings; usage generates the information and reviews that make the next user trust the platform more. We monetise through a **hybrid model** — professional subscriptions, premium/featured listings (always labelled), verification and lead services, and later a facilitated-job take rate once escrow exists — while **paid visibility never buys trust or manipulates official information.**
 
 We start with a **concierge-led pilot on São Vicente (Mindelo)**, prove the trust loop and willingness to pay, expand **multi-island → national**, and design for **export to comparable island states**. We are raising to fund the pilot-to-multi-island journey.
 
@@ -20,7 +20,7 @@ We start with a **concierge-led pilot on São Vicente (Mindelo)**, prove the tru
 ## 2. Slide-by-slide content
 
 ### Slide 1 — Title / one-liner
-- **Ilhavista** — the digital gateway to property, building and public information in Cabo Verde.
+- **Djarvista** — the digital gateway to property, building and public information in Cabo Verde.
 - Independent, trust-first digital infrastructure. Mobile-first. Multilingual.
 - [Raise stage · location · date · contact]
 
@@ -74,7 +74,7 @@ We start with a **concierge-led pilot on São Vicente (Mindelo)**, prove the tru
   - **Trust brand + verification corpus** — reputation is slow to copy.
   - **Local operational depth** — concierge, language (kea), on-island relationships.
   - **Provenance/neutrality stance** — credibility with public bodies a pure-classifieds rival can't easily claim.
-  - **Switching costs** — professionals' verified history and reviews live on Ilhavista.
+  - **Switching costs** — professionals' verified history and reviews live on Djarvista.
 
 ### Slide 10 — Defensibility (why we win / stay won)
 - Incumbent listings sites are thin, foreign-run or generic; none combine **verification + procedure guidance + neutrality**. (**ASSUMPTION/med.**)
@@ -120,7 +120,7 @@ We start with a **concierge-led pilot on São Vicente (Mindelo)**, prove the tru
 
 ### Slide 16 — Vision / close
 - From a São Vicente pilot to national infrastructure, then to comparable island states.
-- **Ilhavista:** if it's on Ilhavista, you can act on it.
+- **Djarvista:** if it's on Djarvista, you can act on it.
 
 ---
 

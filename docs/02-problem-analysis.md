@@ -1,4 +1,4 @@
-# Ilhavista — Problem Analysis per Stakeholder
+# Djarvista — Problem Analysis per Stakeholder
 
 > **Status:** Strategy document, v0.1 · **Date:** 2026-07-20
 > **Classification legend:** **FACT** · **ASSUMPTION** · **HYPOTHESIS** · **RECOMMENDATION**. External claims cite the project canon (sources accessed **2026-07-20**). Unconfirmed items marked *to validate / verification required*.
@@ -273,7 +273,7 @@ Each analysis below uses ten dimensions: *Current way of working · Frustrations
 
 ---
 
-## 16. Cross-cutting problems Ilhavista solves
+## 16. Cross-cutting problems Djarvista solves
 
 The fifteen analyses converge on a small set of systemic problems. These are what the platform is fundamentally built to address:
 
@@ -285,7 +285,7 @@ The fifteen analyses converge on a small set of systemic problems. These are wha
 6. **Informality and weak documentation.** Undocumented land/title, cash jobs and informal mandates create risk and depress value. → **Layers 2 + 4:** document verification (L3), quotes/jobs, and later escrow to formalize.
 7. **A mobile audience underserved by desktop-era channels.** With 73.5% internet and 115% mobile penetration (**FACT/high**), the market is reachable — but only through a mobile-first, low-bandwidth, WhatsApp-oriented experience. → **Product principle:** mobile-first PWA, WCAG 2.1 AA.
 
-**Net thesis (RECOMMENDATION):** Ilhavista's defensible value is the combination of **consolidated information + explicit trust + process guidance** delivered mobile-first and independently. Any single layer already exists somewhere in weak form; the **integration under a neutral, trust-first brand** is the opportunity — and the reason the São Vicente pilot must prove the full information → trust → findability → lead loop before scaling.
+**Net thesis (RECOMMENDATION):** Djarvista's defensible value is the combination of **consolidated information + explicit trust + process guidance** delivered mobile-first and independently. Any single layer already exists somewhere in weak form; the **integration under a neutral, trust-first brand** is the opportunity — and the reason the São Vicente pilot must prove the full information → trust → findability → lead loop before scaling.
 
 ---
 

@@ -1,4 +1,4 @@
-# Ilhavista — Security & Privacy
+# Djarvista — Security & Privacy
 
 > **Status:** Strategy / design document, v0.1 · **Date:** 2026-07-20
 > **Classification legend:** **FACT** (confirmed source) · **ASSUMPTION** (single/indirect source) · **HYPOTHESIS** (reasoned guess) · **RECOMMENDATION** (our advice)
@@ -9,7 +9,7 @@
 
 ## 1. Scope & principles
 
-This document defines how Ilhavista protects data and systems across the five value layers (Information, Trust, Findability, Transactions/jobs, Process guidance). It covers the MVP modular monolith (Next.js 14 App Router, PostgreSQL + PostGIS, Prisma, Redis, S3-compatible storage) described in the project canon.
+This document defines how Djarvista protects data and systems across the five value layers (Information, Trust, Findability, Transactions/jobs, Process guidance). It covers the MVP modular monolith (Next.js 14 App Router, PostgreSQL + PostGIS, Prisma, Redis, S3-compatible storage) described in the project canon.
 
 **Core principles (RECOMMENDATION):**
 
@@ -170,7 +170,7 @@ Detailed trust/verification and review-fraud logic lives in **doc 14**. Security
 
 ## 8. Secure SDLC
 
-- TypeScript strict, server-side validation (canon `@ilhavista/validation`), no trust in client input.
+- TypeScript strict, server-side validation (canon `@djarvista/validation`), no trust in client input.
 - **Dependency scanning** (SCA) and **secret scanning** in CI; SBOM generated per build.
 - **Security headers + strict CSP** enforced at the edge / Next.js middleware.
 - Pre-launch **pentest**; then annual and on major change.
@@ -196,7 +196,7 @@ Detailed trust/verification and review-fraud logic lives in **doc 14**. Security
 
 ## 10. GDPR-alignment note for EU users
 
-**RECOMMENDATION (HYPOTHESIS on applicability — legal verification required):** Ilhavista targets foreign buyers/investors, many EU-based; EU GDPR may apply to processing of EU data subjects. Treat GDPR as the **planning baseline** and align with the local CNPD regime where stricter:
+**RECOMMENDATION (HYPOTHESIS on applicability — legal verification required):** Djarvista targets foreign buyers/investors, many EU-based; EU GDPR may apply to processing of EU data subjects. Treat GDPR as the **planning baseline** and align with the local CNPD regime where stricter:
 
 - Lawful basis per purpose; granular consent for optional processing.
 - Data-subject rights: access, rectification, erasure, portability, objection — served via self-service DSAR + support.

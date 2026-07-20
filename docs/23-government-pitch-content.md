@@ -1,9 +1,9 @@
-# Ilhavista — Government Pitch Content
+# Djarvista — Government Pitch Content
 
 > **Status:** Public-sector narrative + slide content, v0.1 · **Date:** 2026-07-20
 > **Audience:** Municipalities (câmaras municipais), ministries, NOSi, INGT, Casa do Cidadão, and related public bodies.
 > **Classification legend:** **FACT** (confirmed source) · **ASSUMPTION** (single/indirect source) · **HYPOTHESIS** (reasoned guess) · **RECOMMENDATION** (our advice)
-> This is a **separate** narrative from the investor pitch (`22-investor-pitch-content.md`) — public value, not returns. It must **not** be mixed with investor content. Ilhavista is **independent** infrastructure; it does **not** claim government endorsement it does not have. Any partnership requires **government confirmation** and **legal verification**.
+> This is a **separate** narrative from the investor pitch (`22-investor-pitch-content.md`) — public value, not returns. It must **not** be mixed with investor content. Djarvista is **independent** infrastructure; it does **not** claim government endorsement it does not have. Any partnership requires **government confirmation** and **legal verification**.
 
 ---
 
@@ -13,13 +13,13 @@ Cabo Verde has made **digital government a national priority.** The unified port
 
 Property, land and building sit at the intersection of many public bodies — municipalities, **INGT** (land registration), the **Conservatória do Registo Predial**, notaries, **Casa do Cidadão** ("Empresa no Dia"), and the tax administration (now **cITI + cIPI** after the 2026 IUP repeal). For citizens, especially in the diaspora, **finding the right procedure, the right office and the right, current information is hard.** This is precisely the "last-mile" of digital government: not a new registry, but a **trusted, multilingual, mobile-first front door** that helps people find information, follow procedures, and reach verified professionals — while always **preserving official texts and linking back to official sources.**
 
-**Ilhavista is that independent front-door layer.** It complements gov.cv and the 60%-by-2026 agenda by improving **accessibility, transparency and digital inclusion** at the citizen edge, relieving front-office load, and giving public bodies **better information** about what citizens are trying to do. It is offered through **three collaboration models** of increasing formality, so a municipality or ministry can start with zero risk and deepen only when value is proven.
+**Djarvista is that independent front-door layer.** It complements gov.cv and the 60%-by-2026 agenda by improving **accessibility, transparency and digital inclusion** at the citizen edge, relieving front-office load, and giving public bodies **better information** about what citizens are trying to do. It is offered through **three collaboration models** of increasing formality, so a municipality or ministry can start with zero risk and deepen only when value is proven.
 
 ---
 
-## 2. Public value — how Ilhavista helps
+## 2. Public value — how Djarvista helps
 
-| Public objective | How Ilhavista contributes |
+| Public objective | How Djarvista contributes |
 |------------------|------------------------|
 | **Transparency** | Official texts preserved and cited; sponsored content always labelled "Patrocinado/Sponsored"; paid visibility never manipulates official information. |
 | **Accessibility** | Mobile-first PWA (mobile connections ~115% of population — **FACT/high**), multilingual (pt/kea/en/nl/fr), WCAG 2.1 AA, plain-language summaries alongside official text. |
@@ -36,20 +36,20 @@ Property, land and building sit at the intersection of many public bodies — mu
 ## 3. Slide-by-slide content
 
 ### Slide 1 — Title
-- **Ilhavista** — an independent, multilingual front-door layer supporting citizens and public bodies for property, building and public information.
+- **Djarvista** — an independent, multilingual front-door layer supporting citizens and public bodies for property, building and public information.
 - Complements **gov.cv**; supports the **60%-by-2026** digital-services target.
 
 ### Slide 2 — Context / alignment with national agenda
 - **gov.cv** unified portal launched **24 Feb 2026**; **Porton di nôs Ilha** legacy portal; **CMDCV** e-ID; **NOSi** backbone. (**FACT/high-med.**)
 - National targets: **60% of vital services online by 2026, >80% by 2030.** (**FACT/med.**)
-- Ilhavista is **complementary and independent** — a citizen-edge trust/inclusion layer, not a competing registry or portal.
+- Djarvista is **complementary and independent** — a citizen-edge trust/inclusion layer, not a competing registry or portal.
 
 ### Slide 3 — The citizen problem this addresses
 - Property/building touches **many** bodies (municipalities, INGT, Conservatória, notaries, Casa do Cidadão, tax).
 - Citizens — especially diaspora — struggle to find **the right, current procedure and office**, in **their language**.
 - Result: repeat visits, mis-filed requests, reliance on informal networks. (**ASSUMPTION/med — to validate with front offices.**)
 
-### Slide 4 — What Ilhavista provides to the public interest
+### Slide 4 — What Djarvista provides to the public interest
 - **Government info pages** and a **procedure wizard** that guide citizens step-by-step (with official texts preserved and linked).
 - **Multilingual + plain-language** access (pt/kea/en/nl/fr).
 - **Verified professionals** so citizens reach trustworthy local help.
@@ -78,7 +78,7 @@ Property, land and building sit at the intersection of many public bodies — mu
 - A better-informed foreign buyer = smoother, more compliant transactions.
 
 ### Slide 10 — How we work with NOSi / gov.cv (integration stance)
-- **Independent and complementary:** Ilhavista links **to** official sources, never replaces or impersonates them.
+- **Independent and complementary:** Djarvista links **to** official sources, never replaces or impersonates them.
 - Open to **official data/links, SLAs, and (later) integration** with NOSi/gov.cv where mandated. (**Government confirmation required.**)
 - Respects national auth (**CMDCV**) as the trust anchor for official actions.
 
@@ -108,10 +108,10 @@ Property, land and building sit at the intersection of many public bodies — mu
 
 > Phased, increasing formality and value. A partner can stop at any level. All levels require **government confirmation**; Models 2–3 require **legal verification**.
 
-| Model | Name | What it is | Ilhavista obligations | Public body role | Commercial basis |
+| Model | Name | What it is | Djarvista obligations | Public body role | Commercial basis |
 |-------|------|------------|--------------------|------------------|------------------|
-| **1** | **Informal information partner** | Ilhavista curates, translates and links to publicly available official procedure information; official texts preserved and cited. | Accuracy, source-linking, correction workflow, "unofficial summary" labelling. | Optional light review; feedback. | **Free / subsidised.** No exclusivity. |
-| **2** | **Official publication partner** | Public body designates Ilhavista as an authorised channel to publish/mirror specific official information under agreed terms. | Meet an **SLA** (accuracy, uptime, update latency, versioning); audit trail. | Provides authoritative content/updates; approves. | **SLA licence.** (**Legal verification required.**) |
+| **1** | **Informal information partner** | Djarvista curates, translates and links to publicly available official procedure information; official texts preserved and cited. | Accuracy, source-linking, correction workflow, "unofficial summary" labelling. | Optional light review; feedback. | **Free / subsidised.** No exclusivity. |
+| **2** | **Official publication partner** | Public body designates Djarvista as an authorised channel to publish/mirror specific official information under agreed terms. | Meet an **SLA** (accuracy, uptime, update latency, versioning); audit trail. | Provides authoritative content/updates; approves. | **SLA licence.** (**Legal verification required.**) |
 | **3** | **Public-private digital partnership (PPP)** | Deeper, formal partnership: possible integration with gov.cv/NOSi, joint service delivery, co-designed procedure flows. | Integration, security, compliance, service levels per contract. | Formal partner; governance & oversight. | **PPP contract.** (**Government confirmation + legal verification required.**) |
 
 ---

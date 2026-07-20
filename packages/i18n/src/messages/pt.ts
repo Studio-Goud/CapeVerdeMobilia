@@ -1,6 +1,6 @@
 export const pt = {
   common: {
-    appName: 'Ilhavista',
+    appName: 'Djarvista',
     tagline: 'A porta digital para terra, construção e serviços em Cabo Verde',
     search: 'Pesquisar',
     contact: 'Contactar',

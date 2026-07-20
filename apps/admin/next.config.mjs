@@ -2,6 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  transpilePackages: ['@ilhavista/ui', '@ilhavista/database', '@ilhavista/auth'],
+  transpilePackages: ['@djarvista/ui', '@djarvista/database', '@djarvista/auth'],
 };
 export default nextConfig;

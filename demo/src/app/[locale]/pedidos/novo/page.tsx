@@ -3,7 +3,7 @@ import { LeadForm } from '@/components/LeadForm';
 
 export default function NewJobPage({ params }: { params: { locale: Locale } }): JSX.Element {
   const locale = params.locale;
-  const wa = whatsappLink('Ilhavista: ' + t(locale, 'job.describe'));
+  const wa = whatsappLink('Djarvista: ' + t(locale, 'job.describe'));
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <h1 className="text-2xl font-bold">{t(locale, 'job.title')}</h1>

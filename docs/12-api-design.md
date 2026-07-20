@@ -1,8 +1,8 @@
-# Ilhavista — API Design
+# Djarvista — API Design
 
 > **Status:** API design document, v0.1 · **Date:** 2026-07-20
 > **Classification legend:** **FACT** (confirmed source) · **ASSUMPTION** (single/indirect source) · **HYPOTHESIS** (reasoned guess) · **RECOMMENDATION** (our advice)
-> The API is served by **Next.js Route Handlers** under `/app/api/v1/*` (modular monolith, canon). Contracts are shared as TypeScript + **zod** (`@ilhavista/validation`). Must stay consistent with the [Project Canon](_canon.md), the [Technical Architecture](./10-technical-architecture.md), and the [Data Model](./11-data-model.md).
+> The API is served by **Next.js Route Handlers** under `/app/api/v1/*` (modular monolith, canon). Contracts are shared as TypeScript + **zod** (`@djarvista/validation`). Must stay consistent with the [Project Canon](_canon.md), the [Technical Architecture](./10-technical-architecture.md), and the [Data Model](./11-data-model.md).
 
 ---
 
@@ -137,7 +137,7 @@ Idempotency-Key: 5c1f...-uuid
 
 ### 2.4 Webhooks
 
-Outbound (to partners/PSP later) and inbound (PSP, malware-scan callbacks). All signed (HMAC `X-Ilhavista-Signature`), timestamped, replay-protected. Inbound handlers are idempotent and enqueue rather than process inline. MVP: media-scan + (deferred) PSP.
+Outbound (to partners/PSP later) and inbound (PSP, malware-scan callbacks). All signed (HMAC `X-Djarvista-Signature`), timestamped, replay-protected. Inbound handlers are idempotent and enqueue rather than process inline. MVP: media-scan + (deferred) PSP.
 
 ```json
 // outbound event
@@ -153,7 +153,7 @@ URL-versioned (`/v1`). Breaking changes → `/v2`; additive changes stay in `/v1
 
 ### 2.6 OpenAPI
 
-**RECOMMENDATION:** generate an **OpenAPI 3.1** document from the zod schemas (`@ilhavista/validation`) so the spec never drifts from runtime validation. Served at `/api/v1/openapi.json`; Swagger/Redoc UI in non-prod. Structure: `components.schemas` from zod, `paths` per resource, shared `securitySchemes` (bearer session), reusable `Error`, `Pagination`, `Money` components.
+**RECOMMENDATION:** generate an **OpenAPI 3.1** document from the zod schemas (`@djarvista/validation`) so the spec never drifts from runtime validation. Served at `/api/v1/openapi.json`; Swagger/Redoc UI in non-prod. Structure: `components.schemas` from zod, `paths` per resource, shared `securitySchemes` (bearer session), reusable `Error`, `Pagination`, `Money` components.
 
 ---
 

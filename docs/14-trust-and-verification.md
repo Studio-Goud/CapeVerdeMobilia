@@ -1,4 +1,4 @@
-# Ilhavista — Trust & Verification Model
+# Djarvista — Trust & Verification Model
 
 > **Status:** Strategy / design document, v0.1 · **Date:** 2026-07-20
 > **Classification legend:** **FACT** (confirmed source) · **ASSUMPTION** (single/indirect source) · **HYPOTHESIS** (reasoned guess) · **RECOMMENDATION** (our advice)
@@ -9,7 +9,7 @@
 
 ## 1. Purpose
 
-Trust is value layer #2 of Ilhavista (canon). The platform is **trust-first, not a listings site**. This document specifies the **L0–L5 verification model**, the **verified-review system**, the **trust signals** surfaced in the UI, and the **human-in-the-loop rules** that constrain automation. Paid visibility **never** buys verification, review scores, or manipulation of official information (canon) — this is a hard invariant.
+Trust is value layer #2 of Djarvista (canon). The platform is **trust-first, not a listings site**. This document specifies the **L0–L5 verification model**, the **verified-review system**, the **trust signals** surfaced in the UI, and the **human-in-the-loop rules** that constrain automation. Paid visibility **never** buys verification, review scores, or manipulation of official information (canon) — this is a hard invariant.
 
 ---
 
@@ -25,7 +25,7 @@ Costs below reference the canon currency peg (**110.265 CVE = 1 EUR**, fixed peg
 | **L1** | Identity & contact | Verified email **and** phone (OTP); one government ID (passport/BI/residence permit) matched to name | ID validity or ~24 months, whichever first (*to validate*) | On expiry, on risk flag, on major profile change | "Identity verified" | Does **not** confirm business, licence, ownership, or competence | Free (baseline) | Med (forged/borrowed ID) | To verification specialist; suspend on mismatch |
 | **L2** | Business / professional activity | L1 + proof of active business or profession: registry extract (EASE/registry), tax ID, "Empresa no Dia"/Casa do Cidadão reference, or professional-body membership | ~12 months | Annual; on complaint spike | "Business verified" | Does **not** certify quality, specific permits, or ownership of any listed property | Free–Pro tier context; verification fee *to validate* | Med (shell/inactive entity) | Verification specialist; downgrade to L1 on lapse |
 | **L3** | Documents (permits, registrations, certificates, title docs) | L2 + the specific document(s): building permit, professional certificate, or property **ownership proof** — Conservatória do Registo Predial extract, notarial deed reference, INGT/LMITS reference | Tied to document validity; else ~12 months | On document expiry; on dispute; periodic sample re-check | "Documents verified" *(scoped to the specific document/claim)* | Confirms **only the specific document sighted**, not general trustworthiness or a permit guarantee | Per-level verification fee *to validate* | **High** (document forgery, stale registry data) | **Manual specialist review**; legal escalation for suspected forgery |
-| **L4** | Transaction / project completed | Evidence of a completed platform-facilitated transaction/project: both-party confirmation, invoice/payment proof, project ID | Per transaction (event-based) | n/a (historical fact) | "Completed on Ilhavista" (count/history) | Confirms **that** a job/deal completed, not its quality (quality = reviews) | Included / take-rate context (later phase) | Med (collusive fake transactions) | Fraud scoring + specialist; revoke on collusion |
+| **L4** | Transaction / project completed | Evidence of a completed platform-facilitated transaction/project: both-party confirmation, invoice/payment proof, project ID | Per transaction (event-based) | n/a (historical fact) | "Completed on Djarvista" (count/history) | Confirms **that** a job/deal completed, not its quality (quality = reviews) | Included / take-rate context (later phase) | Med (collusive fake transactions) | Fraud scoring + specialist; revoke on collusion |
 | **L5** | Public / institutional partner | Formal agreement with a public body, bank, or notary; official contact + signed partnership/SLA | Duration of agreement | Per agreement / annual | "Official partner" (distinct styling) | Confers institutional status **only within scope of the agreement**; not a blanket endorsement | Contractual (PPP/SLA context) | Low–Med (impersonation of officials) | **Dual-control grant**; platform admin + superadmin; **Government confirmation required** |
 
 **Escalation path (RECOMMENDATION):** automated checks → verification specialist → moderator/platform admin → (for L5 / legal-forgery / registry conflicts) legal + institutional contact. Suspected document forgery at L3 or official impersonation at L5 is treated as a security incident (doc 13 §7).
@@ -46,7 +46,7 @@ A review's status reflects **how strongly the underlying interaction is evidence
 
 | Proof-of-interaction signal | Strength | Notes |
 |-----------------------------|----------|-------|
-| Platform booking / job created on Ilhavista | Strong | Native record of the interaction |
+| Platform booking / job created on Djarvista | Strong | Native record of the interaction |
 | Accepted quote (quote/job flow) | Strong | Reviewer accepted the reviewed party's quote |
 | Invoice check | Strong | Invoice matching both parties + service |
 | Payment proof | Strong | Uploaded/native payment evidence |
@@ -125,7 +125,7 @@ Not all dimensions apply to every interaction type; UI shows only relevant ones.
 | Verification level (L0–L5) | Verification model (§2) | Scoped badge with tooltip explaining exactly what is verified |
 | Verified-review status | Review system (§3) | "Verified" tag on qualifying reviews; unverified shown separately/labelled |
 | Dimension scores | Reviews (§3.2) | Per-dimension breakdown + overall |
-| Completed-on-Ilhavista history | L4 | Count / history of completed jobs |
+| Completed-on-Djarvista history | L4 | Count / history of completed jobs |
 | Official-partner status | L5 | Distinct "Official partner" styling |
 | Sponsored/Featured | Business model | Always labelled **"Patrocinado/Sponsored"** (canon) |
 | Official vs commercial info | Data model | Visual distinction (see §7) |

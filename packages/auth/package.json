@@ -1,11 +1,11 @@
 {
-  "name": "@ilhavista/auth",
+  "name": "@djarvista/auth",
   "version": "0.1.0",
   "private": true,
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": { ".": "./src/index.ts" },
   "scripts": { "typecheck": "tsc --noEmit", "test": "vitest run" },
-  "dependencies": { "@ilhavista/database": "workspace:*", "@ilhavista/config": "workspace:*", "zod": "^3.23.8" },
+  "dependencies": { "@djarvista/database": "workspace:*", "@djarvista/config": "workspace:*", "zod": "^3.23.8" },
   "devDependencies": { "typescript": "^5.5.4", "vitest": "^2.0.5", "@types/node": "^20.14.0" }
 }

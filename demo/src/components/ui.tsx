@@ -66,7 +66,7 @@ export function SiteHeader({ locale }: { locale: Locale }): JSX.Element {
   return (
     <header className="border-b border-slate-200 bg-white">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3">
-        <Link href={`/${locale}`} className="text-lg font-bold text-brand">Ilhavista</Link>
+        <Link href={`/${locale}`} className="text-lg font-bold text-brand">Djarvista</Link>
         <nav aria-label="Primary" className="hidden gap-4 text-sm font-medium text-slate-600 md:flex">
           {nav.map((i) => <Link key={i.href} href={i.href} className="hover:text-brand">{i.label}</Link>)}
         </nav>
@@ -83,7 +83,7 @@ export function SiteFooter({ locale }: { locale: Locale }): JSX.Element {
   return (
     <footer className="border-t border-slate-200 bg-white">
       <div className="mx-auto w-full max-w-6xl px-4 py-6 text-xs text-slate-500">
-        <p className="font-semibold text-slate-700">Ilhavista</p>
+        <p className="font-semibold text-slate-700">Djarvista</p>
         <p className="mt-1 max-w-2xl">{t(locale, 'footer.body')}</p>
         <p className="mt-2">{t(locale, 'footer.demo')}</p>
       </div>

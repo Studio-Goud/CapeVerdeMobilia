@@ -1,5 +1,5 @@
 {
-  "name": "@ilhavista/web",
+  "name": "@djarvista/web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,12 +12,12 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "@ilhavista/analytics": "workspace:*",
-    "@ilhavista/config": "workspace:*",
-    "@ilhavista/i18n": "workspace:*",
-    "@ilhavista/types": "workspace:*",
-    "@ilhavista/ui": "workspace:*",
-    "@ilhavista/validation": "workspace:*",
+    "@djarvista/analytics": "workspace:*",
+    "@djarvista/config": "workspace:*",
+    "@djarvista/i18n": "workspace:*",
+    "@djarvista/types": "workspace:*",
+    "@djarvista/ui": "workspace:*",
+    "@djarvista/validation": "workspace:*",
     "next": "^14.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

@@ -1,4 +1,4 @@
-import { OfficialTag } from '@ilhavista/ui';
+import { OfficialTag } from '@djarvista/ui';
 import { listOfficialPublications } from '@/lib/queries';
 import { formatDate } from '@/lib/format';
 
@@ -11,7 +11,7 @@ export default async function GovInfoPage(): Promise<JSX.Element> {
       <h1 className="text-2xl font-bold">Centro de informação oficial</h1>
       <p className="max-w-2xl text-sm text-slate-500">
         Informação publicada por, ou resumida a partir de, fontes oficiais. Cada página indica a
-        entidade responsável, o estado oficial e a data da última atualização. Ilhavista não substitui
+        entidade responsável, o estado oficial e a data da última atualização. Djarvista não substitui
         as entidades públicas nem presta aconselhamento jurídico.
       </p>
 

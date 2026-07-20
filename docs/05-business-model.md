@@ -1,6 +1,6 @@
-# 05 — Business Model (Ilhavista)
+# 05 — Business Model (Djarvista)
 
-> **Scope.** How Ilhavista creates, delivers and captures value. Every figure is
+> **Scope.** How Djarvista creates, delivers and captures value. Every figure is
 > consistent with the [Project Canon](_canon.md). Reliability
 > labels are used throughout: **FACT** (confirmed source) / **ASSUMPTION**
 > (single or indirect source) / **HYPOTHESIS** (reasoned guess) /

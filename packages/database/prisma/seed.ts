@@ -1,5 +1,5 @@
 /**
- * Ilhavista — development seed data.
+ * Djarvista — development seed data.
  *
  * ALL data below is FICTIONAL. No real persons, companies, contacts, permits
  * or property records are used. Real island/municipality names are public
@@ -109,7 +109,7 @@ const CATEGORY_TREE: { key: string; name: string; children: { key: string; name:
 ];
 
 async function main(): Promise<void> {
-  console.info('Seeding Ilhavista development data (fictional)…');
+  console.info('Seeding Djarvista development data (fictional)…');
 
   // --- Roles & permissions ---
   const permissionByKey = new Map<string, string>();

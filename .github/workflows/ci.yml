@@ -16,18 +16,18 @@ jobs:
       postgres:
         image: postgis/postgis:16-3.4
         env:
-          POSTGRES_USER: ilhavista
-          POSTGRES_PASSWORD: ilhavista
-          POSTGRES_DB: ilhavista
+          POSTGRES_USER: djarvista
+          POSTGRES_PASSWORD: djarvista
+          POSTGRES_DB: djarvista
         ports: ['5432:5432']
         options: >-
-          --health-cmd "pg_isready -U ilhavista"
+          --health-cmd "pg_isready -U djarvista"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
     env:
-      DATABASE_URL: postgresql://ilhavista:ilhavista@localhost:5432/ilhavista?schema=public
-      SHADOW_DATABASE_URL: postgresql://ilhavista:ilhavista@localhost:5432/ilhavista_shadow?schema=public
+      DATABASE_URL: postgresql://djarvista:djarvista@localhost:5432/djarvista?schema=public
+      SHADOW_DATABASE_URL: postgresql://djarvista:djarvista@localhost:5432/djarvista_shadow?schema=public
       AUTH_SECRET: ci-secret-please-change-000000000000
     steps:
       - uses: actions/checkout@v4

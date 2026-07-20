@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { RoleKey } from '@ilhavista/database';
+import { RoleKey } from '@djarvista/database';
 import { hashPassword, verifyPassword, generateOtp, can, assertCan, ForbiddenError } from './index';
 
 describe('password hashing', () => {
