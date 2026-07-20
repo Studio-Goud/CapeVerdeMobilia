@@ -3,6 +3,7 @@ import { t, tr, formatPrice, formatDate, docLabel, type Locale, type TL } from '
 import { fetchListingBySlug, fetchListings } from '@/lib/data';
 import { OfficialTag, ListingCard, SectionHead } from '@/components/ui';
 import { LeadForm } from '@/components/LeadForm';
+import { SaveButton } from '@/components/SaveButton';
 
 const SIMILAR: TL = { pt: 'Imóveis semelhantes', en: 'Similar properties', nl: 'Vergelijkbaar aanbod' };
 const LOCATION: TL = { pt: 'Localização', en: 'Location', nl: 'Locatie' };
@@ -59,6 +60,7 @@ export default async function ListingDetailPage({ params }: { params: { locale: 
       </div>
 
       <aside className="space-y-4">
+        <SaveButton listingId={l.id} locale={locale} />
         <div className="rounded-xl border border-slate-200 bg-white p-4">
           <h2 className="text-sm font-semibold text-slate-700">{tr(LOCATION, locale)}</h2>
           <div className="mt-2 flex aspect-[4/3] items-center justify-center rounded-lg bg-gradient-to-br from-brand-50 to-sand-100 text-center text-xs text-slate-500">

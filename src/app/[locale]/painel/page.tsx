@@ -1,14 +1,28 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { t, tr, formatEur, cveToEur, LISTINGS, type Locale } from '@/i18n';
+import { t, tr, formatEur, cveToEur, LISTINGS, type Locale, type Listing, type TL } from '@/i18n';
 import { PROJECTS } from '@/content';
 import { useAuth } from '@/components/Auth';
+import { fetchBusinessDashboard, fetchMyFavorites, type BusinessDashboard } from '@/lib/browserData';
 import { Card, Stat, Pill, TrustBadge } from '@/components/ui';
+
+const EMPTY_LISTINGS: TL = { pt: 'Ainda não publicou anúncios.', en: 'You have not published any listings yet.', nl: 'Je hebt nog geen advertenties geplaatst.' };
 
 export default function DashboardPage({ params }: { params: { locale: Locale } }): JSX.Element {
   const locale = params.locale;
-  const { ready, user } = useAuth();
+  const { ready, user, configured } = useAuth();
+  const [biz, setBiz] = useState<BusinessDashboard | null>(null);
+  const [favs, setFavs] = useState<Listing[] | null>(null);
+
+  const isBiz = !!user && (user.role === 'business' || user.role === 'admin');
+
+  useEffect(() => {
+    if (!configured || !user) return;
+    if (isBiz) { void fetchBusinessDashboard().then(setBiz); }
+    else { void fetchMyFavorites().then(setFavs); }
+  }, [configured, user, isBiz]);
 
   if (!ready) return <div className="h-40" aria-hidden />;
 
@@ -24,7 +38,7 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
     );
   }
 
-  const isBiz = user.role === 'business' || user.role === 'admin';
+  const favListings = configured ? (favs ?? []) : LISTINGS.slice(0, 2);
 
   return (
     <div className="space-y-6">
@@ -44,11 +58,36 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
       {isBiz ? (
         <>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <Stat label={t(locale, 'dash.myListings')} value="3" hint={`2 ${t(locale, 'dash.active')}`} />
-            <Stat label={t(locale, 'dash.incomingLeads')} value="7" hint={`3 ${t(locale, 'dash.pending')}`} />
-            <Stat label={t(locale, 'dash.quotes')} value="4" />
-            <Stat label={t(locale, 'dash.reviews')} value="★ 4.6" hint="8" />
+            <Stat label={t(locale, 'dash.myListings')} value={configured ? (biz?.listings.length ?? '…') : '3'} />
+            <Stat label={t(locale, 'dash.incomingLeads')} value={configured ? (biz?.leadsCount ?? '…') : '7'} />
+            <Stat label={t(locale, 'dash.quotes')} value={configured ? '0' : '4'} />
+            <Stat label={t(locale, 'dash.reviews')} value={configured ? '—' : '★ 4.6'} hint={configured ? undefined : '8'} />
           </div>
+
+          {/* Real listings owned by this business */}
+          <section>
+            <div className="mb-3 flex items-center justify-between">
+              <h2 className="text-lg font-semibold">{t(locale, 'dash.myListings')}</h2>
+              <Link href={`/${locale}/imoveis/novo`} className="text-sm font-medium text-brand hover:underline">{t(locale, 'dash.newListing')}</Link>
+            </div>
+            {configured ? (
+              biz && biz.listings.length > 0 ? (
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {biz.listings.map((l) => (
+                    <Link key={l.id} href={`/${locale}/imoveis/${l.slug}`} className="flex gap-3 rounded-xl border border-slate-200 bg-white p-3 hover:shadow-card">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={l.thumbnail} alt="" className="h-16 w-20 shrink-0 rounded-lg object-cover" />
+                      <div><p className="line-clamp-2 text-sm font-medium text-slate-900">{tr(l.title, locale)}</p><p className="text-xs text-slate-500">{l.island}</p></div>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <Card><p className="text-sm text-slate-500">{tr(EMPTY_LISTINGS, locale)}</p></Card>
+              )
+            ) : (
+              <Card><p className="text-sm text-slate-500">{t(locale, 'dash.empty')}</p></Card>
+            )}
+          </section>
 
           <section>
             <div className="mb-3 flex items-center justify-between">
@@ -81,25 +120,26 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
       ) : (
         <>
           <div className="grid gap-4 sm:grid-cols-3">
-            <Stat label={t(locale, 'dash.favorites')} value="2" />
-            <Stat label={t(locale, 'dash.savedSearches')} value="1" />
-            <Stat label={t(locale, 'dash.myRequests')} value="1" hint={`1 ${t(locale, 'dash.pending')}`} />
+            <Stat label={t(locale, 'dash.favorites')} value={configured ? favListings.length : '2'} />
+            <Stat label={t(locale, 'dash.savedSearches')} value={configured ? '0' : '1'} />
+            <Stat label={t(locale, 'dash.myRequests')} value={configured ? '0' : '1'} />
           </div>
 
           <section>
             <h2 className="mb-3 text-lg font-semibold">{t(locale, 'dash.favorites')}</h2>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {LISTINGS.slice(0, 2).map((l) => (
-                <Link key={l.id} href={`/${locale}/imoveis/${l.slug}`} className="flex gap-3 rounded-xl border border-slate-200 bg-white p-3 hover:shadow-card">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={l.thumbnail} alt="" className="h-16 w-20 shrink-0 rounded-lg object-cover" />
-                  <div>
-                    <p className="line-clamp-2 text-sm font-medium text-slate-900">{tr(l.title, locale)}</p>
-                    <p className="text-xs text-slate-500">{l.island}</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
+            {favListings.length > 0 ? (
+              <div className="grid gap-3 sm:grid-cols-2">
+                {favListings.map((l) => (
+                  <Link key={l.id} href={`/${locale}/imoveis/${l.slug}`} className="flex gap-3 rounded-xl border border-slate-200 bg-white p-3 hover:shadow-card">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={l.thumbnail} alt="" className="h-16 w-20 shrink-0 rounded-lg object-cover" />
+                    <div><p className="line-clamp-2 text-sm font-medium text-slate-900">{tr(l.title, locale)}</p><p className="text-xs text-slate-500">{l.island}</p></div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <Card><p className="text-sm text-slate-500">{t(locale, 'dash.empty')}</p></Card>
+            )}
           </section>
 
           <div className="flex flex-wrap gap-2">
