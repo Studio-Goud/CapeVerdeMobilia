@@ -1,9 +1,9 @@
 import Link from 'next/link';
+import type { ReactNode } from 'react';
 import {
-  type Locale, type Listing, type VerificationLevel,
+  type Locale, type Listing, type VerificationLevel, type UIKey,
   t, tr, formatPrice, docLabel, verifLabel,
 } from '@/i18n';
-import { LanguageSwitcher } from './LanguageSwitcher';
 
 const cn = (...p: Array<string | false | null | undefined>): string => p.filter(Boolean).join(' ');
 
@@ -31,17 +31,62 @@ export function OfficialTag({ variant, locale }: { variant: 'official' | 'summar
   return <span className={cn('inline-flex rounded px-2 py-0.5 text-xs font-semibold', cls)}>{t(locale, key)}</span>;
 }
 
+/** Section heading with optional "view all" link. */
+export function SectionHead({ title, href, linkLabel }: { title: string; href?: string; linkLabel?: string }): JSX.Element {
+  return (
+    <div className="mb-3 flex items-center justify-between gap-3">
+      <h2 className="text-xl font-semibold text-slate-900">{title}</h2>
+      {href && linkLabel && <Link href={href} className="shrink-0 text-sm font-medium text-brand hover:underline">{linkLabel}</Link>}
+    </div>
+  );
+}
+
+/** Page title block for interior pages. */
+export function PageTitle({ title, intro }: { title: string; intro?: string }): JSX.Element {
+  return (
+    <header className="mb-6">
+      <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">{title}</h1>
+      {intro && <p className="mt-2 max-w-3xl text-sm text-slate-600">{intro}</p>}
+    </header>
+  );
+}
+
+export function Card({ children, className }: { children: ReactNode; className?: string }): JSX.Element {
+  return <div className={cn('rounded-xl border border-slate-200 bg-white p-4 shadow-card', className)}>{children}</div>;
+}
+
+export function Stat({ label, value, hint }: { label: string; value: ReactNode; hint?: string }): JSX.Element {
+  return (
+    <div className="rounded-xl border border-slate-200 bg-white p-4">
+      <p className="text-xs font-medium uppercase tracking-wide text-slate-400">{label}</p>
+      <p className="mt-1 text-2xl font-bold text-slate-900">{value}</p>
+      {hint && <p className="mt-0.5 text-xs text-slate-500">{hint}</p>}
+    </div>
+  );
+}
+
+export function Pill({ children, tone = 'slate' }: { children: ReactNode; tone?: 'slate' | 'brand' | 'coral' | 'emerald' | 'amber' }): JSX.Element {
+  const tones = {
+    slate: 'bg-slate-100 text-slate-600',
+    brand: 'bg-brand-50 text-brand-700',
+    coral: 'bg-coral-50 text-coral-700',
+    emerald: 'bg-emerald-100 text-emerald-800',
+    amber: 'bg-amber-100 text-amber-800',
+  } as const;
+  return <span className={cn('inline-flex rounded-full px-2 py-0.5 text-xs font-medium', tones[tone])}>{children}</span>;
+}
+
 export function ListingCard({ l, locale }: { l: Listing; locale: Locale }): JSX.Element {
   return (
-    <Link href={`/${locale}/imoveis/${l.slug}`} className="group block overflow-hidden rounded-xl border border-slate-200 bg-white transition hover:shadow-md">
+    <Link href={`/${locale}/imoveis/${l.slug}`} className="group block overflow-hidden rounded-xl border border-slate-200 bg-white shadow-card transition hover:-translate-y-0.5 hover:shadow-lg">
       <div className="relative aspect-[4/3] bg-slate-100">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={l.thumbnail} alt={tr(l.title, locale)} className="h-full w-full object-cover" loading="lazy" />
-        {l.isFeatured && <span className="absolute left-2 top-2 rounded bg-amber-500 px-2 py-0.5 text-xs font-semibold text-white">{t(locale, 'common.sponsored')}</span>}
+        {l.isFeatured && <span className="absolute left-2 top-2 rounded bg-coral px-2 py-0.5 text-xs font-semibold text-white">{t(locale, 'common.sponsored')}</span>}
       </div>
       <div className="space-y-1 p-3">
         <h3 className="line-clamp-2 text-sm font-semibold text-slate-900">{tr(l.title, locale)}</h3>
-        <p className="text-sm font-bold text-slate-900">{formatPrice(locale, l.priceAmount, l.priceOnRequest)}</p>
+        <p className="text-sm font-bold text-brand">{formatPrice(locale, l.priceAmount, l.priceOnRequest)}</p>
         <div className="flex items-center justify-between text-xs text-slate-500">
           <span>{l.island}</span>
           <span className="rounded bg-slate-100 px-1.5 py-0.5">{docLabel(locale, l.documentStatus)}</span>
@@ -56,36 +101,41 @@ export function ListingGrid({ rows, locale }: { rows: Listing[]; locale: Locale 
   return <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{rows.map((l) => <ListingCard key={l.id} l={l} locale={locale} />)}</div>;
 }
 
-export function SiteHeader({ locale }: { locale: Locale }): JSX.Element {
-  const nav = [
-    { href: `/${locale}/imoveis`, label: t(locale, 'nav.imoveis') },
-    { href: `/${locale}/profissionais`, label: t(locale, 'nav.profissionais') },
-    { href: `/${locale}/info`, label: t(locale, 'nav.info') },
-    { href: `/${locale}/procedimentos`, label: t(locale, 'nav.procedimentos') },
-  ];
+export function SiteFooter({ locale }: { locale: Locale }): JSX.Element {
+  const link = (href: string, key: UIKey): JSX.Element => (
+    <li><Link href={`/${locale}${href}`} className="hover:text-brand">{t(locale, key)}</Link></li>
+  );
   return (
-    <header className="border-b border-slate-200 bg-white">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3">
-        <Link href={`/${locale}`} className="text-lg font-bold text-brand">Djarvista</Link>
-        <nav aria-label="Primary" className="hidden gap-4 text-sm font-medium text-slate-600 md:flex">
-          {nav.map((i) => <Link key={i.href} href={i.href} className="hover:text-brand">{i.label}</Link>)}
-        </nav>
-        <div className="flex items-center gap-3">
-          <LanguageSwitcher current={locale} />
-          <Link href={`/${locale}/pedidos/novo`} className="hidden rounded-lg bg-brand px-3 py-1.5 text-sm font-semibold text-white hover:bg-brand-dark sm:inline-block">{t(locale, 'nav.postJob')}</Link>
+    <footer className="mt-10 border-t border-slate-200 bg-white">
+      <div className="mx-auto grid w-full max-w-6xl gap-8 px-4 py-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="sm:col-span-2 lg:col-span-2">
+          <p className="flex items-center gap-2 text-base font-bold text-brand">
+            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-brand text-xs text-white">D</span>
+            Djarvista
+          </p>
+          <p className="mt-2 max-w-md text-xs text-slate-500">{t(locale, 'footer.body')}</p>
+        </div>
+        <div>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">{t(locale, 'footer.explore')}</p>
+          <ul className="space-y-1 text-sm text-slate-600">
+            {link('/imoveis', 'nav.imoveis')}
+            {link('/profissionais', 'nav.profissionais')}
+            {link('/assistente', 'nav.wizard')}
+            {link('/info', 'nav.info')}
+          </ul>
+        </div>
+        <div>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">{t(locale, 'footer.account')}</p>
+          <ul className="space-y-1 text-sm text-slate-600">
+            {link('/entrar', 'nav.login')}
+            {link('/registar', 'nav.register')}
+            {link('/painel', 'nav.dashboard')}
+            {link('/verificacao', 'nav.verification')}
+          </ul>
         </div>
       </div>
-    </header>
-  );
-}
-
-export function SiteFooter({ locale }: { locale: Locale }): JSX.Element {
-  return (
-    <footer className="border-t border-slate-200 bg-white">
-      <div className="mx-auto w-full max-w-6xl px-4 py-6 text-xs text-slate-500">
-        <p className="font-semibold text-slate-700">Djarvista</p>
-        <p className="mt-1 max-w-2xl">{t(locale, 'footer.body')}</p>
-        <p className="mt-2">{t(locale, 'footer.demo')}</p>
+      <div className="border-t border-slate-100">
+        <p className="mx-auto w-full max-w-6xl px-4 py-3 text-xs text-slate-500">{t(locale, 'footer.demo')}</p>
       </div>
     </footer>
   );
