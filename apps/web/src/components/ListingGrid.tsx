@@ -1,4 +1,4 @@
-import { ListingCard } from '@kavila/ui';
+import { ListingCard } from '@ilhavista/ui';
 import { formatPrice, documentStatusLabel } from '@/lib/format';
 
 type Row = {

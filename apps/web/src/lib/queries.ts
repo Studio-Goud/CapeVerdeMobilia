@@ -1,5 +1,5 @@
-import type { ListingSearchInput } from '@kavila/validation';
-import type { VerificationLevel } from '@kavila/ui';
+import type { ListingSearchInput } from '@ilhavista/validation';
+import type { VerificationLevel } from '@ilhavista/ui';
 
 /**
  * DEMO DATA PROVIDER.
@@ -370,7 +370,7 @@ const PUBLICATIONS: DemoPublication[] = [
   {
     id: 'demo-pub2',
     title: 'Reforma fiscal imobiliária 2026: cITI e cIPI (demo)',
-    govEntity: { name: 'Portal informativo Kavíla' },
+    govEntity: { name: 'Portal informativo Ilhavista' },
     officialStatus: false,
     version: 2,
     updatedAt: new Date('2026-06-15'),

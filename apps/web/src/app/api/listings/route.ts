@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { listingSearchSchema } from '@kavila/validation';
-import { track } from '@kavila/analytics';
+import { listingSearchSchema } from '@ilhavista/validation';
+import { track } from '@ilhavista/analytics';
 import { searchListings } from '@/lib/queries';
 
 /**

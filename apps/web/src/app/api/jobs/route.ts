@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createJobSchema } from '@kavila/validation';
+import { createJobSchema } from '@ilhavista/validation';
 import { IS_DEMO } from '@/lib/queries';
 
 /**

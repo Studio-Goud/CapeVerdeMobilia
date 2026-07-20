@@ -1,5 +1,5 @@
 {
-  "name": "@kavila/admin",
+  "name": "@ilhavista/admin",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,9 +10,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@kavila/database": "workspace:*",
-    "@kavila/auth": "workspace:*",
-    "@kavila/ui": "workspace:*",
+    "@ilhavista/database": "workspace:*",
+    "@ilhavista/auth": "workspace:*",
+    "@ilhavista/ui": "workspace:*",
     "next": "^14.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

@@ -3,15 +3,15 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   // Compile workspace packages that ship raw TS/TSX. The public demo build runs
-  // without a database, so @kavila/database and @kavila/auth are intentionally
+  // without a database, so @ilhavista/database and @ilhavista/auth are intentionally
   // not part of the web build graph.
   transpilePackages: [
-    '@kavila/ui',
-    '@kavila/types',
-    '@kavila/i18n',
-    '@kavila/validation',
-    '@kavila/config',
-    '@kavila/analytics',
+    '@ilhavista/ui',
+    '@ilhavista/types',
+    '@ilhavista/i18n',
+    '@ilhavista/validation',
+    '@ilhavista/config',
+    '@ilhavista/analytics',
   ],
   images: {
     remotePatterns: [{ protocol: 'https', hostname: '**' }],

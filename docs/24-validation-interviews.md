@@ -1,4 +1,4 @@
-# Kavíla — Validation & Interview Plan
+# Ilhavista — Validation & Interview Plan
 
 > **Status:** Research/validation plan, v0.1 · **Date:** 2026-07-20
 > **Classification legend:** **FACT** · **ASSUMPTION** · **HYPOTHESIS** · **RECOMMENDATION**
@@ -13,9 +13,9 @@
 2. **Ask about the past, never the future.** Avoid "would you", "could you", "do you like". Ask "what did you do", "what happened", "what did it cost".
 3. **Follow the pain and the money.** Where did they lose time, redo work, or pay someone? What did they already pay for (and how much)?
 4. **Silence and "tell me more."** Let them narrate; probe specifics (names of steps, offices, documents, amounts, dates).
-5. **Ask who they trusted** and why — trust is the core of Kavíla.
+5. **Ask who they trusted** and why — trust is the core of Ilhavista.
 6. **Capture verbatim quotes** and hard numbers (time, money, number of visits/errors).
-7. **No pitching until the end.** Do not describe Kavíla before the behavioural section; it biases answers.
+7. **No pitching until the end.** Do not describe Ilhavista before the behavioural section; it biases answers.
 
 **Logistics**
 - 30–45 min, in pt/kea/en as appropriate; record with consent (data protection — **CNPD/legal verification required**).
@@ -234,4 +234,4 @@ Score each interview on **five dimensions, 1–5**. Definitions are behavioural 
 
 ---
 
-*Guides are behavioural by design. If an interviewer finds themselves describing Kavíla or asking "would you use it", stop — return to the last real event.*
+*Guides are behavioural by design. If an interviewer finds themselves describing Ilhavista or asking "would you use it", stop — return to the last real event.*

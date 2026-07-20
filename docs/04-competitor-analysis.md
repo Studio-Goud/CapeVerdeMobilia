@@ -1,4 +1,4 @@
-# Kavíla — Competitor Analysis (Cabo Verde)
+# Ilhavista — Competitor Analysis (Cabo Verde)
 
 **Document:** `docs/04-competitor-analysis.md`
 **Author role:** Senior market analyst
@@ -8,7 +8,7 @@
 
 ## Labelling convention (per Canon)
 
-**FACT** (cited source, accessed 2026-07-20, reliability noted) · **ASSUMPTION** (single/indirect source or analyst input) · **HYPOTHESIS** (reasoned guess) · **RECOMMENDATION** (Kavíla's advice).
+**FACT** (cited source, accessed 2026-07-20, reliability noted) · **ASSUMPTION** (single/indirect source or analyst input) · **HYPOTHESIS** (reasoned guess) · **RECOMMENDATION** (Ilhavista's advice).
 
 > ⚠️ **MARKET VALIDATION REQUIRED.** No comprehensive, verified census of Cabo Verde property websites, agent sites, Facebook/WhatsApp groups or informal intermediaries is available to this analyst. **Named individual portals/agencies are deliberately NOT presented as confirmed facts** — the Canon prohibits inventing partners/contacts. Competitor *categories* and their *capabilities* are characterised as ASSUMPTION/HYPOTHESIS and must be validated by primary competitive research (manual audit of live sites, group memberships, agent interviews) before relying on any competitive claim.
 
@@ -16,13 +16,13 @@
 
 ## 1. Competitive landscape overview
 
-Kavíla is positioned as **independent digital infrastructure** — a trust-first platform spanning five value layers: **Information, Trust, Findability, Transactions/jobs, Process guidance** (FACT — Canon §Brand). It therefore competes not with one incumbent but with a **fragmented stack of partial substitutes**, most of which cover only one or two layers.
+Ilhavista is positioned as **independent digital infrastructure** — a trust-first platform spanning five value layers: **Information, Trust, Findability, Transactions/jobs, Process guidance** (FACT — Canon §Brand). It therefore competes not with one incumbent but with a **fragmented stack of partial substitutes**, most of which cover only one or two layers.
 
-The single most important structural fact about the competition (ASSUMPTION/med — Canon positioning): **the incumbent is not a company, it is a behaviour** — informal, relationship-based, WhatsApp/Facebook-mediated property discovery with no trust, verification, process or data layer. Kavíla's real competitor is the **status quo of informality**.
+The single most important structural fact about the competition (ASSUMPTION/med — Canon positioning): **the incumbent is not a company, it is a behaviour** — informal, relationship-based, WhatsApp/Facebook-mediated property discovery with no trust, verification, process or data layer. Ilhavista's real competitor is the **status quo of informality**.
 
 ### 1.1 Competitor categories
 
-| # | Category | Type | Layers covered (Canon) | Strength | Fatal gap vs Kavíla |
+| # | Category | Type | Layers covered (Canon) | Strength | Fatal gap vs Ilhavista |
 |---|---|---|---|---|---|
 | 1 | **Local real-estate websites** | Direct | Findability (listings) | Local supply, PT/local knowledge | No trust/verification, no process, no government info, weak land/professional coverage |
 | 2 | **Individual agent / agency websites** | Direct | Findability (own stock) | Curated stock, relationships | Single-agency silo, no neutral cross-market, no verification standard |
@@ -36,13 +36,13 @@ The single most important structural fact about the competition (ASSUMPTION/med 
 | 10 | **Government websites** (gov.cv, Casa do Cidadão, INGT, EASE, TradeInvest) | Indirect / future **partner** | Information + Process (official) | Authoritative, official | Not a marketplace; fragmented UX; not multilingual for buyers; no supply/professionals |
 | 11 | **Informal intermediaries** | Indirect (the real incumbent) | Trust (personal) + Transactions | Dominant, trusted, local | No transparency, scale, records, verification or data |
 
-**Government note (RECOMMENDATION):** category 10 is characterised as a **prospective partner, not a competitor to defeat** — consistent with the Canon's government path (informal info partner → official publication partner (SLA) → PPP). Kavíla should aggregate and add process/multilingual value on top of official sources, never impersonate or replace them.
+**Government note (RECOMMENDATION):** category 10 is characterised as a **prospective partner, not a competitor to defeat** — consistent with the Canon's government path (informal info partner → official publication partner (SLA) → PPP). Ilhavista should aggregate and add process/multilingual value on top of official sources, never impersonate or replace them.
 
 ---
 
 ## 2. Competitor capability matrix
 
-**Scoring:** ✅ = present/core · ◐ = partial/informal/inconsistent · ❌ = absent. All non-Kavíla rows are **ASSUMPTION/HYPOTHESIS** (typical category behaviour, not an audit of any named site) — *validate per live competitor*.
+**Scoring:** ✅ = present/core · ◐ = partial/informal/inconsistent · ❌ = absent. All non-Ilhavista rows are **ASSUMPTION/HYPOTHESIS** (typical category behaviour, not an audit of any named site) — *validate per live competitor*.
 
 | Competitor category | Property listings | Land listings | Professionals | Verified reviews | Government info | Permit info | Multilingual | Map | Project mgmt | Quote requests | Payments | Identity verification | Document check | Mobile UX | Revenue model |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -57,22 +57,22 @@ The single most important structural fact about the competition (ASSUMPTION/med 
 | Google Maps / Business | ❌ | ❌ | ◐ | ✅ | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ◐ | ❌ | ✅ | Ads |
 | Government websites | ❌ | ◐ | ❌ | ❌ | ✅ | ✅ | ◐ | ◐ | ❌ | ❌ | ◐ | ✅ | ✅ | ◐ | Public / fees |
 | Informal intermediaries | ◐ | ◐ | ◐ | ❌ | ◐ | ◐ | ◐ | ❌ | ◐ | ◐ | ◐ | ❌ | ❌ | ❌ | Personal commission |
-| **Kavíla (target MVP → roadmap)** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ◐→✅ | ✅ | ◐→✅ | ✅ | ✅ | ✅ | Hybrid (see §2.1) |
+| **Ilhavista (target MVP → roadmap)** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ◐→✅ | ✅ | ◐→✅ | ✅ | ✅ | ✅ | Hybrid (see §2.1) |
 
 *◐ = symbol used for "partial" in the matrix.*
 
-### 2.1 Kavíla capability notes vs Canon scope
+### 2.1 Ilhavista capability notes vs Canon scope
 
 - **Project mgmt** — COULD scope (project dashboard); shown ◐→✅ (roadmap), not day-one MUST.
 - **Payments** — full escrow/payments is **WON'T-yet** (Canon MoSCoW); MVP uses lead/subscription/verification fees, not sale escrow. Shown ◐→✅.
-- **Identity/document verification** — Kavíla's **L0–L5 verification ladder** is the defining differentiator (Canon §Verification levels); manual L3 at MVP, backed later by **CMDCV** e-signature (Canon §KEY FACT 2, FACT/high-med).
+- **Identity/document verification** — Ilhavista's **L0–L5 verification ladder** is the defining differentiator (Canon §Verification levels); manual L3 at MVP, backed later by **CMDCV** e-signature (Canon §KEY FACT 2, FACT/high-med).
 - **Government info / permit info** — Canon MUST scope (government info pages, procedure wizard v1); credibility depends on the government-partner path, not scraping.
 - **Multilingual** — pt/kea/en/nl/fr with source-linked translations (Canon §Languages); no competitor category offers official-text-preserving multilingual process guidance.
 - **Revenue model** — hybrid: professional subs (Free / Pro ≈2.500 CVE/mo / Business ≈7.500 CVE/mo), Premium listing ≈5.000 CVE/30d, Featured (always labelled "Patrocinado/Sponsored"), lead/verification fees, project-mgmt add-on, government SLA/PPP, later 5–10% facilitated-job take (Canon §Business model).
 
 ### 2.2 The "whitespace" read (RECOMMENDATION)
 
-No competitor category covers more than ~2 of Kavíla's 5 value layers. The columns where **every** incumbent scores ❌ or ◐ — **verified reviews, government/permit info, identity/document verification, project mgmt, and integrated land + professionals + trust in one place** — are precisely Kavíla's intended moat. Individual capabilities are copyable; the **combination + trust ladder + government relationship** is not.
+No competitor category covers more than ~2 of Ilhavista's 5 value layers. The columns where **every** incumbent scores ❌ or ◐ — **verified reviews, government/permit info, identity/document verification, project mgmt, and integrated land + professionals + trust in one place** — are precisely Ilhavista's intended moat. Individual capabilities are copyable; the **combination + trust ladder + government relationship** is not.
 
 ---
 
@@ -99,7 +99,7 @@ Each advantage is rated for defensibility and tied to Canon.
 3. **Verified supply liquidity** — concierge-verified inventory across islands is expensive and time-consuming to build. *(High barrier.)*
 4. **Data accumulation** — the proprietary dataset compounds; a late entrant can't backfill history. *(Very high over time.)*
 5. **Multilingual + legal-process accuracy** — maintaining correct, source-linked, 5-language procedure content (with live tax/registration changes) is an ongoing cost few will sustain. *(Medium-high barrier.)*
-6. **Two-sided cold start** — ironically also Kavíla's own biggest risk (see §4).
+6. **Two-sided cold start** — ironically also Ilhavista's own biggest risk (see §4).
 
 ---
 
@@ -118,7 +118,7 @@ Each advantage is rated for defensibility and tied to Canon.
 
 ## 5. Strategic implication (RECOMMENDATION)
 
-Kavíla should **not** try to out-listing the listings sites or out-reach Facebook/WhatsApp on day one. The winning wedge is the **trust + government-information + process layer that no incumbent offers**, delivered concierge-first on the São Vicente pilot, then compounded via verified supply, proprietary data, and government partnership into a position that is **combinatorially hard to copy** even though any single feature is not.
+Ilhavista should **not** try to out-listing the listings sites or out-reach Facebook/WhatsApp on day one. The winning wedge is the **trust + government-information + process layer that no incumbent offers**, delivered concierge-first on the São Vicente pilot, then compounded via verified supply, proprietary data, and government partnership into a position that is **combinatorially hard to copy** even though any single feature is not.
 
 ---
 

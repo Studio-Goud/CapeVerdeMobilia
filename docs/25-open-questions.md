@@ -1,8 +1,8 @@
-# Kavíla — Open Questions & Assumptions Register
+# Ilhavista — Open Questions & Assumptions Register
 
 > **Status:** Assumptions & validation register, v0.1 · **Date:** 2026-07-20
 > **Classification legend:** **FACT** (confirmed source) · **ASSUMPTION** (single/indirect source) · **HYPOTHESIS** (reasoned guess) · **RECOMMENDATION** (our advice)
-> This register tracks the key assumptions the whole Kavíla concept depends on, plus the source register for researched facts, and a validation plan. Sources accessed **2026-07-20**. Nothing here that is marked "to validate / legal verification required / government confirmation required" may be presented as settled.
+> This register tracks the key assumptions the whole Ilhavista concept depends on, plus the source register for researched facts, and a validation plan. Sources accessed **2026-07-20**. Nothing here that is marked "to validate / legal verification required / government confirmation required" may be presented as settled.
 
 ---
 
@@ -34,7 +34,7 @@
 | 20 | Network effects / trust loop actually kick in (supply→demand→data). | HYPOTHESIS | Defensibility & growth thesis. | Measure leads/verified-pro and retention in pilot. | [Owner: Strategy] | 🔴 |
 | 21 | Data-protection regime (RGPD-aligned, CNPD) obligations are manageable. | ASSUMPTION | Legal/operational feasibility. | Counsel review of obligations. **Legal verification required.** | [Owner: Legal] | 🔴 |
 | 22 | CVE peg 110.265/EUR is fixed & stable for pricing. | FACT/high (still verify) | Pricing/FX in € terms. | Central bank/official confirmation. | [Owner: Finance] | 🟡 |
-| 23 | Brand name "Kavíla" is available (domain/trademark/handles). | ASSUMPTION | Brand/legal foundation. | Registrar checks, IP clearance, platform checks. **Not guaranteed** (see `21`). | [Owner: Brand/Legal] | 🔴 |
+| 23 | Brand name "Ilhavista" is available (domain/trademark/handles). | ASSUMPTION | Brand/legal foundation. | Registrar checks, IP clearance, platform checks. **Not guaranteed** (see `21`). | [Owner: Brand/Legal] | 🔴 |
 | 24 | Company formation is easy ("Empresa no Dia" ~1 day, ~$100; EASE; TradeInvest). | FACT/med-high | Setup & investor-climate story. | Casa do Cidadão / eRegulations; confirm current fee/steps. | [Owner: Ops] | 🟡 |
 | 25 | Multilingual need (pt/kea/en/nl/fr) is real and drives usage/inclusion. | ASSUMPTION | i18n scope & inclusion claim. | Interview language friction; usage-by-language in pilot. | [Owner: Product] | 🔴 |
 | 26 | Incumbent listings sites are thin/generic and don't combine verification + procedure + neutrality. | ASSUMPTION | Competitive/defensibility claim. | Competitive teardown; user interviews. | [Owner: Strategy] | 🔴 |

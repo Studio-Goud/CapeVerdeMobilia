@@ -7,13 +7,13 @@ import { IS_DEMO } from '@/lib/queries';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Kavíla — imóveis, terra, construção e informação oficial em Cabo Verde',
-    template: '%s · Kavíla',
+    default: 'Ilhavista — imóveis, terra, construção e informação oficial em Cabo Verde',
+    template: '%s · Ilhavista',
   },
   description:
-    'Kavíla — a porta digital para terra, construção e serviços em Cabo Verde. Encontre, verifique e contacte com confiança.',
+    'Ilhavista — a porta digital para terra, construção e serviços em Cabo Verde. Encontre, verifique e contacte com confiança.',
   manifest: '/manifest.webmanifest',
-  applicationName: 'Kavíla',
+  applicationName: 'Ilhavista',
 };
 
 export const viewport: Viewport = {
@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: ReactNode }): JSX.E
       <body className="flex min-h-screen flex-col">
         {IS_DEMO && (
           <div className="bg-amber-500 px-4 py-1.5 text-center text-xs font-medium text-white">
-            Demonstratie · fictieve data — dit is een demo van het Kavíla-platform, geen live dienst.
+            Demonstratie · fictieve data — dit is een demo van het Ilhavista-platform, geen live dienst.
           </div>
         )}
         <SiteHeader />

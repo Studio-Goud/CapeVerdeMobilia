@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { createLeadSchema } from '@kavila/validation';
-import { track } from '@kavila/analytics';
+import { createLeadSchema } from '@ilhavista/validation';
+import { track } from '@ilhavista/analytics';
 import { IS_DEMO } from '@/lib/queries';
 
 /**

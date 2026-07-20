@@ -1,4 +1,4 @@
-# Kavíla — Executive Summary
+# Ilhavista — Executive Summary
 
 > **Status:** Strategy document, v0.1 · **Date:** 2026-07-20
 > **Classification legend:** **FACT** (confirmed source) · **ASSUMPTION** (single/indirect source) · **HYPOTHESIS** (reasoned guess) · **RECOMMENDATION** (our advice)
@@ -8,7 +8,7 @@
 
 ## 1. Concept in one paragraph
 
-**Kavíla** is proposed as **independent digital infrastructure** connecting citizens, professionals, investors and public bodies around property, building and public information in Cabo Verde. It is deliberately **not "just a listings site."** It is a trust-first layer that combines five things most Cabo Verdean property and building interactions lack in one place: reliable **information**, verifiable **trust**, **findability**, a path to **transactions/jobs**, and **process guidance** through opaque administrative procedures. The name is coined from *kavel/parcel* + *vila/town* (**RECOMMENDATION** — trademark, domain and social handles *to validate*).
+**Ilhavista** is proposed as **independent digital infrastructure** connecting citizens, professionals, investors and public bodies around property, building and public information in Cabo Verde. It is deliberately **not "just a listings site."** It is a trust-first layer that combines five things most Cabo Verdean property and building interactions lack in one place: reliable **information**, verifiable **trust**, **findability**, a path to **transactions/jobs**, and **process guidance** through opaque administrative procedures. The name combines *ilha* (island) + *vista* (view) — “island view” (**RECOMMENDATION** — trademark, domain and social handles *to validate*).
 
 ---
 
@@ -26,7 +26,7 @@ The Cabo Verdean property and building market is **fragmented, informal, and dep
 
 ## 3. Recommended solution & positioning
 
-**RECOMMENDATION:** Build Kavíla as an **independent, trust-first digital platform** — neutral infrastructure rather than an agency or a pure classifieds board.
+**RECOMMENDATION:** Build Ilhavista as an **independent, trust-first digital platform** — neutral infrastructure rather than an agency or a pure classifieds board.
 
 **Positioning statement:** *Independent digital infrastructure connecting citizens, professionals, investors and public bodies for property, building and public information in Cabo Verde.*
 

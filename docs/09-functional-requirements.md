@@ -1,4 +1,4 @@
-# Kavíla — Functional & Non-Functional Requirements
+# Ilhavista — Functional & Non-Functional Requirements
 
 **Document:** 09 — Functional Requirements
 **Status:** Draft for validation

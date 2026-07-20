@@ -20,5 +20,5 @@ if (process.env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma;
 }
 
-// Re-export the generated types so consumers depend only on @kavila/database.
+// Re-export the generated types so consumers depend only on @ilhavista/database.
 export * from '@prisma/client';

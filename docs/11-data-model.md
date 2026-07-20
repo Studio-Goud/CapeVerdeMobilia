@@ -1,4 +1,4 @@
-# Kavíla — Data Model
+# Ilhavista — Data Model
 
 > **Status:** Data model document, v0.1 · **Date:** 2026-07-20
 > **Classification legend:** **FACT** (confirmed source) · **ASSUMPTION** (single/indirect source) · **HYPOTHESIS** (reasoned guess) · **RECOMMENDATION** (our advice)
@@ -489,7 +489,7 @@ Every table: `createdAt`, `createdById?`, `updatedAt`, `updatedById?` (and soft-
 - Single schema in `packages/database/prisma/schema.prisma`; entity names **PascalCase**, matching this doc.
 - PostGIS geometry via `Unsupported("geography(Point, 4326)")` columns + raw SQL for geo queries (Prisma has no native geo type).
 - `searchVector` via a generated column / trigger; excluded from Prisma writes, used by raw FTS queries (arch §8).
-- Enums declared in Prisma; shared to app through `@kavila/types`.
+- Enums declared in Prisma; shared to app through `@ilhavista/types`.
 - Migrations are forward-only, expand/contract (arch §6.3).
 
 ---

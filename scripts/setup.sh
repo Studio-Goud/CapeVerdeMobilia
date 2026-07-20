@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# One-shot local setup for Kavíla. Requires Docker + Node 20 + pnpm 9.
+# One-shot local setup for Ilhavista. Requires Docker + Node 20 + pnpm 9.
 set -euo pipefail
 
 echo "▸ Copying .env.example -> .env (if missing)"
@@ -20,4 +20,4 @@ pnpm db:migrate
 echo "▸ Seeding fictional demo data"
 pnpm db:seed
 
-echo "✓ Done. Start the web app with: pnpm --filter @kavila/web dev"
+echo "✓ Done. Start the web app with: pnpm --filter @ilhavista/web dev"

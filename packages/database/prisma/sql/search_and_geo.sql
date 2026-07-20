@@ -1,5 +1,5 @@
 -- =============================================================================
--- Kavíla — custom SQL applied after `prisma migrate dev`.
+-- Ilhavista — custom SQL applied after `prisma migrate dev`.
 -- Adds a PostGIS point column for spatial queries and a full-text search vector
 -- trigger for listings. Prisma manages the tables; this handles what its schema
 -- language cannot express directly. Apply with:

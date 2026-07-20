@@ -1,4 +1,4 @@
-import { cveToEur } from '@kavila/config';
+import { cveToEur } from '@ilhavista/config';
 
 /** Format a price with CVE primary and EUR reference (peg). */
 export function formatPrice(

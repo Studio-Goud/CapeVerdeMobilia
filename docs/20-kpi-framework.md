@@ -1,4 +1,4 @@
-# Kavíla — KPI Framework
+# Ilhavista — KPI Framework
 
 > **Status:** Strategy document, v0.1 · **Date:** 2026-07-20
 > **Classification legend:** **FACT** (confirmed source) · **ASSUMPTION** (single/indirect source) · **HYPOTHESIS** (reasoned guess) · **RECOMMENDATION** (our advice)
@@ -8,11 +8,11 @@
 
 ## 0. Purpose and principles
 
-This is the measurement layer for Kavíla. It defines a **KPI tree** across five families — **marketplace, property, trust, financial, public-value** — and gives each metric a definition, a formula (where sensible), a target direction, and a **pilot target (ASSUMPTION)** for the São Vicente Phase-1 pilot.
+This is the measurement layer for Ilhavista. It defines a **KPI tree** across five families — **marketplace, property, trust, financial, public-value** — and gives each metric a definition, a formula (where sensible), a target direction, and a **pilot target (ASSUMPTION)** for the São Vicente Phase-1 pilot.
 
 **Principles (RECOMMENDATION):**
 
-- **Trust is the north star.** Because Kavíla's promise is trust, trust KPIs are treated as leading indicators, not vanity metrics.
+- **Trust is the north star.** Because Ilhavista's promise is trust, trust KPIs are treated as leading indicators, not vanity metrics.
 - **Pilot targets are hypotheses.** Every numeric pilot target below is **ASSUMPTION** — a planning anchor to be replaced with validated numbers during the pilot (*market validation required*).
 - **No metric rewards paid manipulation.** Consistent with the canon guardrail, no KPI is defined in a way that could be gamed by paid visibility (paid visibility never buys verification, review scores, or official-info manipulation).
 - **Instrument from day one** (roadmap 0–3 mo). Currency **CVE**, pegged at **110.265 CVE = 1 EUR** (canon).
@@ -25,7 +25,7 @@ Companion documents: `16-go-to-market.md`, `17-pilot-sao-vicente.md`, `18-produc
 
 ```
 NORTH STAR: Trusted matches created
-  (a verified user connecting to verified supply through Kavíla)
+  (a verified user connecting to verified supply through Ilhavista)
 
 ├── 1. MARKETPLACE KPIs        → is the loop working?
 │     activation · listings · leads · matches · match rate · liquidity · retention
@@ -39,7 +39,7 @@ NORTH STAR: Trusted matches created
       info partners · procedure coverage · procedure completions · language coverage · accessibility
 ```
 
-**North-star metric — Trusted matches created.** Definition: count of connections where a verified user (L1+) contacts verified supply (professional or listing, L1+) through Kavíla in a period. Formula: `count(leads WHERE demand.verified AND supply.verified)`. Direction: ↑. Pilot target (ASSUMPTION): **30**.
+**North-star metric — Trusted matches created.** Definition: count of connections where a verified user (L1+) contacts verified supply (professional or listing, L1+) through Ilhavista in a period. Formula: `count(leads WHERE demand.verified AND supply.verified)`. Direction: ↑. Pilot target (ASSUMPTION): **30**.
 
 ---
 
@@ -119,7 +119,7 @@ Currency CVE (peg 110.265 CVE = 1 EUR). Tiers: **Free / Pro ≈ 2.500 CVE/mo (~�
 
 ## 6. Public-value KPIs
 
-These measure whether Kavíla is functioning as **independent digital infrastructure**, not just a marketplace (canon positioning).
+These measure whether Ilhavista is functioning as **independent digital infrastructure**, not just a marketplace (canon positioning).
 
 | KPI | Definition | Formula | Direction | Pilot target (ASSUMPTION) |
 |-----|------------|---------|-----------|---------------------------|
@@ -140,7 +140,7 @@ A single mobile-first admin dashboard (in `/apps/admin`), refreshed daily, laid 
 
 ```
 ┌────────────────────────────────────────────────────────────┐
-│  KAVÍLA — PILOT DASHBOARD (São Vicente)      as of <date>    │
+│  ILHAVISTA — PILOT DASHBOARD (São Vicente)      as of <date>    │
 ├────────────────────────────────────────────────────────────┤
 │  ★ NORTH STAR                                                │
 │    Trusted matches created     [ 18 / 30 ]  ▲   trend ▁▂▃▅▆  │

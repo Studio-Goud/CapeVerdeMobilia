@@ -1,9 +1,9 @@
-# KAVÍLA — PROJECT CANON (single source of truth)
+# ILHAVISTA — PROJECT CANON (single source of truth)
 
 Every doc/code artifact MUST be consistent with this. Distinguish FACT / ASSUMPTION / HYPOTHESIS / RECOMMENDATION. Never invent laws, rates, market sizes, partners or contacts. Mark unconfirmed items as "To validate", "Legal verification required", "Government confirmation required", or "Market validation required".
 
 ## Brand
-- Name: **Kavíla** (code namespace `kavila`, packages `@kavila/*`). Coined from *kavel/parcel* + *vila/town*. To validate: trademark, domain, social handles (never present as guaranteed).
+- Name: **Ilhavista** (code namespace `ilhavista`, packages `@ilhavista/*`). Combines *ilha* (island) + *vista* (view) — “island view”. To validate: trademark, domain, social handles (never present as guaranteed).
 - Positioning: **Independent digital infrastructure** connecting citizens, professionals, investors and public bodies for property, building and public information in Cabo Verde. Trust-first — not just a listings site.
 - Five value layers: (1) Information (2) Trust (3) Findability (4) Transactions/jobs (5) Process guidance.
 - Tagline EN: "The digital gateway to property, building and public information in Cabo Verde." PT: "A porta digital para terra, construção e serviços em Cabo Verde."

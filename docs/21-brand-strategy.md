@@ -1,4 +1,4 @@
-# Kavíla — Brand Strategy
+# Ilhavista — Brand Strategy
 
 > **Status:** Brand strategy document, v0.1 · **Date:** 2026-07-20
 > **Classification legend:** **FACT** (confirmed source) · **ASSUMPTION** (single/indirect source) · **HYPOTHESIS** (reasoned guess) · **RECOMMENDATION** (our advice)
@@ -12,7 +12,7 @@ This document defines the brand foundations for the platform. It:
 
 1. Explores a wide field of **candidate names** (§3) against explicit **criteria** (§2).
 2. Shortlists the **best five** and profiles each (§4).
-3. Confirms **Kavíla** as the recommended name (consistent with the project canon) and develops the full brand system — mission, vision, values, promise, tone of voice, tagline, pitches and descriptions (§5–§6).
+3. Confirms **Ilhavista** as the recommended name (consistent with the project canon) and develops the full brand system — mission, vision, values, promise, tone of voice, tagline, pitches and descriptions (§5–§6).
 4. Flags **availability items that must be validated officially** (§7).
 
 The brand must serve a platform that is deliberately **not "just a listings site"** but **independent digital infrastructure** connecting citizens, professionals, investors and public bodies for property, building and public information in Cabo Verde. (**RECOMMENDATION**, per canon positioning.)
@@ -45,7 +45,7 @@ At least 20 candidates, each with rationale and a criteria read. Availability is
 
 | # | Name | Rationale / origin | C1 | C2 | C3 | C4 | C5 | C6 | C7 | C9 preliminary read |
 |---|------|--------------------|----|----|----|----|----|----|----|----|
-| 1 | **Kavíla** | Coined from *kavel/parcel* (NL/parcel of land) + *vila/town* (PT). Land + settlement, not "house". | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | No negative reading found in desk screen (to confirm). |
+| 1 | **Ilhavista** | *Ilha* (island) + *vista* (view) — evokes Cabo Verde’s islands and property outlooks; broad enough for land, building and public info. | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | No negative reading found in desk screen (to confirm). |
 | 2 | **Terrada** | From *terra* (land, PT/kea). Warm, rooted, evokes ground/soil. | ✓ | ✓ | ~ | ~ | ✓ | ✓ | ~ | *Terrado* means an earthen/paved terrace in some PT usage — check nuance. |
 | 3 | **Praça** | *Praça* = town square (PT), the civic gathering place; metaphor for a neutral public marketplace. | ✓ | ✓ | ✓ | ~ | ✓ | ✓ | ✓ | Common word → weak distinctiveness & hard to trademark/own. |
 | 4 | **Morada** | *Morada* = address/dwelling-place (PT). Elegant, means "where you live/your address". | ✓ | ✓ | ✓ | ✓ | ~ | ~ | ~ | Leans residential (C6 risk); pretty but housing-tilted. |
@@ -76,16 +76,16 @@ At least 20 candidates, each with rationale and a criteria read. Availability is
 
 ## 4. Shortlist — the best 5
 
-Selection favours names that clear **C6 (not housing-only)**, **C7 (property + build + government)** and **C5 (export)** while still feeling Cabo-Verdean and pronounceable. Shortlist: **Kavíla, Portada, Terrapraça, Praça, Chave.**
+Selection favours names that clear **C6 (not housing-only)**, **C7 (property + build + government)** and **C5 (export)** while still feeling Cabo-Verdean and pronounceable. Shortlist: **Ilhavista, Portada, Terrapraça, Praça, Chave.**
 
-### 4.1 Kavíla *(recommended — see §5)*
+### 4.1 Ilhavista *(recommended — see §5)*
 
-- **Meaning:** *kavel/parcel* (a plot of land) + *vila/town* → "the parcel and the town", land and community together.
+- **Meaning:** *ilha* (island) + *vista* (view) → “island view” — the archipelago and the outlook it offers.
 - **Positioning:** Independent, trust-first digital infrastructure for property, building and public information.
 - **Slogan:** "From parcel to place." (EN) · "Da terra à vila." (PT)
 - **Pros:** Coined & ownable (strong trademark/domain potential, to validate); not housing-only; covers land + settlement + civic; travels internationally; soft, warm sound; the accented **í** gives a distinctive, memorable wordmark.
-- **Cons:** Coined word needs meaning-building (no instant recognition); the accent may be dropped in typing/URLs (needs an ASCII fallback, e.g. `kavila`); must confirm no clash across languages.
-- **International scalability:** High. Meaning is not country-bound; works as `@kavila` namespace across markets.
+- **Cons:** Coined word needs meaning-building (no instant recognition); the accent may be dropped in typing/URLs (needs an ASCII fallback, e.g. `ilhavista`); must confirm no clash across languages.
+- **International scalability:** High. Meaning is not country-bound; works as `@ilhavista` namespace across markets.
 - **Brand feel:** Rooted, modern, quietly institutional — a trustworthy utility rather than a hype app.
 
 ### 4.2 Portada
@@ -128,13 +128,13 @@ Selection favours names that clear **C6 (not housing-only)**, **C7 (property + b
 - **International scalability:** Medium.
 - **Brand feel:** Friendly, access-oriented — but risky given the state-service name clash.
 
-**Conclusion:** Kavíla is the strongest all-round performer and is the canon's recommended name. It is the only shortlisted option that is simultaneously ownable, non-generic, not housing-only, export-ready, and free of a known state-service name clash (**RECOMMENDATION**; all availability still **to validate** — §7).
+**Conclusion:** Ilhavista is the strongest all-round performer and is the canon's recommended name. It is the only shortlisted option that is simultaneously ownable, non-generic, not housing-only, export-ready, and free of a known state-service name clash (**RECOMMENDATION**; all availability still **to validate** — §7).
 
 ---
 
-## 5. Recommended name: Kavíla
+## 5. Recommended name: Ilhavista
 
-> **RECOMMENDATION (per project canon):** Adopt **Kavíla** as the brand name. Code namespace `kavila`; packages `@kavila/*`. Coined from *kavel/parcel* + *vila/town*. Trademark, domain and social handles are **to validate via official checks** and are **not guaranteed** (§7).
+> **RECOMMENDATION (per project canon):** Adopt **Ilhavista** as the brand name. Code namespace `ilhavista`; packages `@ilhavista/*`. Combines *ilha* (island) + *vista* (view) — “island view”. Trademark, domain and social handles are **to validate via official checks** and are **not guaranteed** (§7).
 
 ### 5.1 Mission
 
@@ -155,7 +155,7 @@ A Cabo Verde where any person, at home or in the diaspora, can find reliable inf
 
 ### 5.4 Brand promise
 
-**"If it's on Kavíla, you can act on it."** Information you can trust, people you can verify, and steps you can actually follow.
+**"If it's on Ilhavista, you can act on it."** Information you can trust, people you can verify, and steps you can actually follow.
 
 ### 5.5 Tone of voice
 
@@ -174,17 +174,17 @@ A Cabo Verde where any person, at home or in the diaspora, can find reliable inf
 
 ### 5.7 Elevator pitch (30 seconds)
 
-> Kavíla is independent digital infrastructure for property, building and public information in Cabo Verde. Today this market runs on personal networks and scattered, hard-to-trust information — foreign buyers can't navigate it, and even locals lose time and money on opaque procedures. Kavíla brings five things into one trusted, mobile-first place: reliable **information**, verifiable **trust**, **findability**, a path to **transactions and jobs**, and **step-by-step process guidance**. We're not "just a listings site" — we're the trust layer that connects citizens, professionals, investors and public bodies. We start with a pilot on São Vicente and scale across the islands, then to comparable island states.
+> Ilhavista is independent digital infrastructure for property, building and public information in Cabo Verde. Today this market runs on personal networks and scattered, hard-to-trust information — foreign buyers can't navigate it, and even locals lose time and money on opaque procedures. Ilhavista brings five things into one trusted, mobile-first place: reliable **information**, verifiable **trust**, **findability**, a path to **transactions and jobs**, and **step-by-step process guidance**. We're not "just a listings site" — we're the trust layer that connects citizens, professionals, investors and public bodies. We start with a pilot on São Vicente and scale across the islands, then to comparable island states.
 
 ### 5.8 Short company description (≈50 words)
 
-> **Kavíla** is an independent, trust-first digital platform for property, building and public information in Cabo Verde. It connects citizens, professionals, investors and public bodies through verified profiles, reliable information and clear process guidance — mobile-first and multilingual. Kavíla is neutral infrastructure, not an agency. Pilot on São Vicente, then multi-island.
+> **Ilhavista** is an independent, trust-first digital platform for property, building and public information in Cabo Verde. It connects citizens, professionals, investors and public bodies through verified profiles, reliable information and clear process guidance — mobile-first and multilingual. Ilhavista is neutral infrastructure, not an agency. Pilot on São Vicente, then multi-island.
 
 ### 5.9 Longer company description (≈150 words)
 
-> **Kavíla** is independent digital infrastructure connecting citizens, professionals, investors and public bodies around property, building and public information in Cabo Verde. The market today is fragmented, informal and network-dependent: information is scattered and hard to trust, foreign buyers face uncertainty, and administrative procedures are opaque. Kavíla addresses this with five value layers in one place — **information, trust, findability, transactions/jobs, and process guidance** — built on a tiered **verification system (L0–L5)** and human-assisted **concierge** operations.
+> **Ilhavista** is independent digital infrastructure connecting citizens, professionals, investors and public bodies around property, building and public information in Cabo Verde. The market today is fragmented, informal and network-dependent: information is scattered and hard to trust, foreign buyers face uncertainty, and administrative procedures are opaque. Ilhavista addresses this with five value layers in one place — **information, trust, findability, transactions/jobs, and process guidance** — built on a tiered **verification system (L0–L5)** and human-assisted **concierge** operations.
 >
-> The platform is mobile-first (internet penetration ~73.5%, mobile connections ~115% of population — **FACT/high**, DataReportal 2025) and multilingual (Portuguese, Kabuverdianu, English, Dutch, French). It runs a **hybrid business model**: professional subscriptions, premium/featured listings (always labelled), verification and lead services, and phased government partnerships. Paid visibility never buys trust or manipulates official information. Kavíla pilots on São Vicente, expands multi-island and national, and is designed to export to comparable island states.
+> The platform is mobile-first (internet penetration ~73.5%, mobile connections ~115% of population — **FACT/high**, DataReportal 2025) and multilingual (Portuguese, Kabuverdianu, English, Dutch, French). It runs a **hybrid business model**: professional subscriptions, premium/featured listings (always labelled), verification and lead services, and phased government partnerships. Paid visibility never buys trust or manipulates official information. Ilhavista pilots on São Vicente, expands multi-island and national, and is designed to export to comparable island states.
 
 ---
 
@@ -192,7 +192,7 @@ A Cabo Verde where any person, at home or in the diaspora, can find reliable inf
 
 *Direction only — design to be produced separately. Non-binding.*
 
-- **Wordmark:** lowercase **kavíla** with a distinctive accent on the **í**; ASCII fallback `kavila` for URLs, handles and code (namespace `kavila`, packages `@kavila/*`).
+- **Wordmark:** lowercase **ilhavista** with a distinctive accent on the **í**; ASCII fallback `ilhavista` for URLs, handles and code (namespace `ilhavista`, packages `@ilhavista/*`).
 - **Feel:** calm, institutional-modern; a utility you trust, not an app that shouts.
 - **Colour direction (HYPOTHESIS):** an island/ocean palette (deep blue = trust/water) with a warm earth/terracotta accent (land/*terra*) — final palette to be set by design + accessibility (WCAG 2.1 AA contrast).
 - **Verbal system:** trust badges (L0–L5), the "Patrocinado/Sponsored" label, and a consistent "source & provenance" line on information pages.
@@ -207,11 +207,11 @@ A Cabo Verde where any person, at home or in the diaspora, can find reliable inf
 
 | Domain | Why | Status |
 |--------|-----|--------|
-| `kavila.cv` | Country ccTLD (Cabo Verde) — primary local identity | **To validate** via the `.cv` registry / an accredited registrar |
-| `kavila.com` | Global primary; export-ready | **To validate** via registrar WHOIS/availability lookup |
-| `kavila.app` / `kavila.io` | Product/tech alternates if `.com` is taken | **To validate** |
-| `kavila.pt` | Portuguese-language reach / diaspora | **To validate** |
-| ASCII vs accent | Register the **ASCII** form `kavila`; `kavíla`/punycode as secondary | **To validate** IDN handling per TLD |
+| `ilhavista.cv` | Country ccTLD (Cabo Verde) — primary local identity | **To validate** via the `.cv` registry / an accredited registrar |
+| `ilhavista.com` | Global primary; export-ready | **To validate** via registrar WHOIS/availability lookup |
+| `ilhavista.app` / `ilhavista.io` | Product/tech alternates if `.com` is taken | **To validate** |
+| `ilhavista.pt` | Portuguese-language reach / diaspora | **To validate** |
+| ASCII vs accent | Register the **ASCII** form `ilhavista`; `ilhavista`/punycode as secondary | **To validate** IDN handling per TLD |
 
 *Action:* run live availability checks; if primary is taken, evaluate alternates before committing to the name in market. Do **not** announce or print the name on materials until at least the primary domain is secured.
 
@@ -219,7 +219,7 @@ A Cabo Verde where any person, at home or in the diaspora, can find reliable inf
 
 | Item | Scope | Status |
 |------|-------|--------|
-| Word mark "Kavíla" (and "Kavila") | Cabo Verde national registry (IGQPI — industrial property) | **Legal verification required** — clearance search + filing via IP counsel |
+| Word mark "Ilhavista" (and "Ilhavista") | Cabo Verde national registry (IGQPI — industrial property) | **Legal verification required** — clearance search + filing via IP counsel |
 | Relevant Nice classes | e.g. software/SaaS, real-estate services, advertising/marketplace, information services (exact classes for counsel to set) | **Legal verification required** |
 | Regional/international | ARIPO/Madrid route for export markets | **Legal verification required** |
 | Conflict screen | Especially vs state-service names (e.g. "Chave Móvel Digital", "NOSi", "Porton di nôs Ilha") | **Legal verification required** |
@@ -230,23 +230,23 @@ A Cabo Verde where any person, at home or in the diaspora, can find reliable inf
 
 | Platform | Target handle | Status |
 |----------|---------------|--------|
-| Instagram | `@kavila` / `@kavila.cv` | **To validate** on-platform |
-| Facebook | `/kavila` page vanity URL | **To validate** on-platform |
-| WhatsApp Business | Kavíla business profile (WhatsApp is a primary CV channel) | **To validate** |
-| LinkedIn | `/company/kavila` | **To validate** |
-| X / TikTok / YouTube | `@kavila` variants | **To validate** |
+| Instagram | `@ilhavista` / `@ilhavista.cv` | **To validate** on-platform |
+| Facebook | `/ilhavista` page vanity URL | **To validate** on-platform |
+| WhatsApp Business | Ilhavista business profile (WhatsApp is a primary CV channel) | **To validate** |
+| LinkedIn | `/company/ilhavista` | **To validate** |
+| X / TikTok / YouTube | `@ilhavista` variants | **To validate** |
 
-*Action:* secure a **consistent** handle set (prefer the same string everywhere). If `@kavila` is unavailable on a key platform, agree a standard suffix (e.g. `kavila.cv` or `kavilaapp`) across all platforms for consistency.
+*Action:* secure a **consistent** handle set (prefer the same string everywhere). If `@ilhavista` is unavailable on a key platform, agree a standard suffix (e.g. `ilhavista.cv` or `ilhavistaapp`) across all platforms for consistency.
 
 ### 7.4 Consistency rule
 
-Pick **one** canonical string and use it everywhere (domain root, handles, code namespace). Canon sets the code form as `kavila` / `@kavila/*`; the public brand keeps the accented **Kavíla** in prose and the wordmark. **Do not commit publicly to the name until §7.1–§7.3 are cleared.**
+Pick **one** canonical string and use it everywhere (domain root, handles, code namespace). Canon sets the code form as `ilhavista` / `@ilhavista/*`; the public brand keeps the accented **Ilhavista** in prose and the wordmark. **Do not commit publicly to the name until §7.1–§7.3 are cleared.**
 
 ---
 
 ## 8. Summary
 
 - Long list of **24 candidates** screened against nine criteria (§3).
-- Shortlist of **five**; **Kavíla** wins on ownability, "not housing-only", export-readiness, and absence of a known state-service name clash (§4).
-- **Kavíla confirmed as recommended** (canon-consistent) with a full brand system (§5).
+- Shortlist of **five**; **Ilhavista** wins on ownability, "not housing-only", export-readiness, and absence of a known state-service name clash (§4).
+- **Ilhavista confirmed as recommended** (canon-consistent) with a full brand system (§5).
 - All **domain / trademark / handle** items remain **to validate** — never presented as guaranteed (§7).

@@ -1,5 +1,5 @@
 import { prisma, type Prisma } from './index';
-import type { ListingSearchInput } from '@kavila/validation';
+import type { ListingSearchInput } from '@ilhavista/validation';
 
 /**
  * Database-backed data access (real implementation).

@@ -2,6 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  transpilePackages: ['@kavila/ui', '@kavila/database', '@kavila/auth'],
+  transpilePackages: ['@ilhavista/ui', '@ilhavista/database', '@ilhavista/auth'],
 };
 export default nextConfig;

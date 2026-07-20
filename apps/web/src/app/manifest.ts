@@ -3,8 +3,8 @@ import type { MetadataRoute } from 'next';
 /** PWA manifest — installable, mobile-first (see /docs/10-technical-architecture.md). */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Kavíla',
-    short_name: 'Kavíla',
+    name: 'Ilhavista',
+    short_name: 'Ilhavista',
     description: 'Imóveis, terra, construção e informação oficial em Cabo Verde.',
     start_url: '/',
     display: 'standalone',

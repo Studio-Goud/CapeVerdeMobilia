@@ -1,4 +1,4 @@
-# Kavíla — Product Roadmap
+# Ilhavista — Product Roadmap
 
 > **Status:** Strategy document, v0.1 · **Date:** 2026-07-20
 > **Classification legend:** **FACT** (confirmed source) · **ASSUMPTION** (single/indirect source) · **HYPOTHESIS** (reasoned guess) · **RECOMMENDATION** (our advice)

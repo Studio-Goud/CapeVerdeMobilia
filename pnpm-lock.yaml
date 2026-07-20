@@ -20,13 +20,13 @@ importers:
 
   apps/admin:
     dependencies:
-      '@kavila/auth':
+      '@ilhavista/auth':
         specifier: workspace:*
         version: link:../../packages/auth
-      '@kavila/database':
+      '@ilhavista/database':
         specifier: workspace:*
         version: link:../../packages/database
-      '@kavila/ui':
+      '@ilhavista/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       next:
@@ -54,22 +54,22 @@ importers:
 
   apps/web:
     dependencies:
-      '@kavila/analytics':
+      '@ilhavista/analytics':
         specifier: workspace:*
         version: link:../../packages/analytics
-      '@kavila/config':
+      '@ilhavista/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@kavila/i18n':
+      '@ilhavista/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
-      '@kavila/types':
+      '@ilhavista/types':
         specifier: workspace:*
         version: link:../../packages/types
-      '@kavila/ui':
+      '@ilhavista/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@kavila/validation':
+      '@ilhavista/validation':
         specifier: workspace:*
         version: link:../../packages/validation
       next:
@@ -121,10 +121,10 @@ importers:
 
   packages/auth:
     dependencies:
-      '@kavila/config':
+      '@ilhavista/config':
         specifier: workspace:*
         version: link:../config
-      '@kavila/database':
+      '@ilhavista/database':
         specifier: workspace:*
         version: link:../database
       zod:
@@ -169,7 +169,7 @@ importers:
 
   packages/i18n:
     dependencies:
-      '@kavila/config':
+      '@ilhavista/config':
         specifier: workspace:*
         version: link:../config
     devDependencies:

@@ -1,60 +1,60 @@
-# Local development dependencies for Kavíla.
+# Local development dependencies for Ilhavista.
 # Usage: docker compose up -d   (then `pnpm db:migrate && pnpm db:seed`)
 services:
   postgres:
     image: postgis/postgis:16-3.4
-    container_name: kavila-postgres
+    container_name: ilhavista-postgres
     environment:
-      POSTGRES_USER: kavila
-      POSTGRES_PASSWORD: kavila
-      POSTGRES_DB: kavila
+      POSTGRES_USER: ilhavista
+      POSTGRES_PASSWORD: ilhavista
+      POSTGRES_DB: ilhavista
     ports:
       - '5432:5432'
     volumes:
-      - kavila_pg:/var/lib/postgresql/data
+      - ilhavista_pg:/var/lib/postgresql/data
       - ./infrastructure/postgres/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U kavila']
+      test: ['CMD-SHELL', 'pg_isready -U ilhavista']
       interval: 5s
       timeout: 5s
       retries: 10
 
   redis:
     image: redis:7-alpine
-    container_name: kavila-redis
+    container_name: ilhavista-redis
     ports:
       - '6379:6379'
     volumes:
-      - kavila_redis:/data
+      - ilhavista_redis:/data
 
   minio:
     image: minio/minio:latest
-    container_name: kavila-minio
+    container_name: ilhavista-minio
     command: server /data --console-address ":9001"
     environment:
-      MINIO_ROOT_USER: kavila
-      MINIO_ROOT_PASSWORD: kavila-dev-secret
+      MINIO_ROOT_USER: ilhavista
+      MINIO_ROOT_PASSWORD: ilhavista-dev-secret
     ports:
       - '9000:9000'
       - '9001:9001'
     volumes:
-      - kavila_minio:/data
+      - ilhavista_minio:/data
 
   # Optional — enable when moving beyond Postgres full-text search.
   meilisearch:
     image: getmeili/meilisearch:v1.8
-    container_name: kavila-meili
+    container_name: ilhavista-meili
     environment:
-      MEILI_MASTER_KEY: kavila-dev-master-key
+      MEILI_MASTER_KEY: ilhavista-dev-master-key
       MEILI_NO_ANALYTICS: 'true'
     ports:
       - '7700:7700'
     volumes:
-      - kavila_meili:/meili_data
+      - ilhavista_meili:/meili_data
     profiles: ['search']
 
 volumes:
-  kavila_pg:
-  kavila_redis:
-  kavila_minio:
-  kavila_meili:
+  ilhavista_pg:
+  ilhavista_redis:
+  ilhavista_minio:
+  ilhavista_meili:

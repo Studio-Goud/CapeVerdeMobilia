@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { OfficialTag } from '@kavila/ui';
+import { OfficialTag } from '@ilhavista/ui';
 import { getProcedureBySlug } from '@/lib/queries';
 
 export default async function ProcedureDetailPage({
@@ -62,7 +62,7 @@ export default async function ProcedureDetailPage({
 
       <p className="rounded-lg bg-amber-50 p-3 text-xs text-amber-800">
         Esta informação é indicativa e pode estar desatualizada. Confirme sempre com as entidades
-        competentes. Kavíla não presta aconselhamento jurídico.
+        competentes. Ilhavista não presta aconselhamento jurídico.
       </p>
     </article>
   );

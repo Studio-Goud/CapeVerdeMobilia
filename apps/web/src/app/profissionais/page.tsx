@@ -1,4 +1,4 @@
-import { TrustBadge } from '@kavila/ui';
+import { TrustBadge } from '@ilhavista/ui';
 import { listProfessionals } from '@/lib/queries';
 
 export const metadata = { title: 'Profissionais e empresas' };

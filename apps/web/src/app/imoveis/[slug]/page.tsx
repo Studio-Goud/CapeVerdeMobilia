@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { OfficialTag } from '@kavila/ui';
+import { OfficialTag } from '@ilhavista/ui';
 import { getListingBySlug } from '@/lib/queries';
 import { formatPrice, formatDate, documentStatusLabel } from '@/lib/format';
 import { LeadForm } from '@/components/LeadForm';
@@ -99,7 +99,7 @@ export default async function ListingDetailPage({
             <p className="mt-3 rounded bg-amber-50 p-2 text-xs text-amber-800">{listing.riskNotes}</p>
           )}
           <p className="mt-3 text-[11px] text-slate-400">
-            Informação comercial indicativa. Kavíla não confirma a propriedade legal nem substitui a
+            Informação comercial indicativa. Ilhavista não confirma a propriedade legal nem substitui a
             devida diligência jurídica.
           </p>
         </div>

@@ -1,4 +1,4 @@
-import { env } from '@kavila/config';
+import { env } from '@ilhavista/config';
 
 /**
  * Build a WhatsApp click-to-chat deep link. In the concierge MVP, several flows

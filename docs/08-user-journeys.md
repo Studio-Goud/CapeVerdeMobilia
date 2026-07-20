@@ -1,4 +1,4 @@
-# Kavíla — User Journeys & Flows
+# Ilhavista — User Journeys & Flows
 
 **Document:** 08 — User Journeys
 **Status:** Draft for validation
@@ -16,7 +16,7 @@ Public PWA (`apps/web`) plus operations console (`apps/admin`). MVP modules A–
 
 ```mermaid
 graph TD
-    Home[Home / Kavíla]:::pub
+    Home[Home / Ilhavista]:::pub
     Home --> Prop[Property & Land — Module A]
     Home --> Pros[Professionals & Businesses — Module B]
     Home --> Gov[Government Info — Module D]
@@ -206,7 +206,7 @@ flowchart TD
 
 ### 3.1 Foreign buyer searches & contacts
 
-1. Foreign/diaspora buyer opens Kavíla; selects **en/nl/fr**.
+1. Foreign/diaspora buyer opens Ilhavista; selects **en/nl/fr**.
 2. Searches property/land (filter by island e.g. Sal, Boa Vista, São Vicente; price CVE with EUR shown via peg 110.265).
 3. Opens a listing; sees **verification badge**, sponsored labelling, provenance of translated text.
 4. Reads linked **government info** (e.g. foreign ownership, registration, taxes) with "verification required" flags.

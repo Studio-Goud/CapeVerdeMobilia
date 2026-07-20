@@ -1,6 +1,6 @@
-# 05 — Business Model (Kavíla)
+# 05 — Business Model (Ilhavista)
 
-> **Scope.** How Kavíla creates, delivers and captures value. Every figure is
+> **Scope.** How Ilhavista creates, delivers and captures value. Every figure is
 > consistent with the [Project Canon](_canon.md). Reliability
 > labels are used throughout: **FACT** (confirmed source) / **ASSUMPTION**
 > (single or indirect source) / **HYPOTHESIS** (reasoned guess) /

@@ -30,7 +30,7 @@ export function ListingCard(props: ListingCardProps): React.JSX.Element {
             loading="lazy"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-slate-400">Kavíla</div>
+          <div className="flex h-full items-center justify-center text-slate-400">Ilhavista</div>
         )}
         {props.isFeatured && (
           <span className="absolute left-2 top-2 rounded bg-amber-500 px-2 py-0.5 text-xs font-semibold text-white">
