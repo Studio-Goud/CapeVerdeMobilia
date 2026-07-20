@@ -1,46 +1,114 @@
 'use client';
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import type { User } from '@supabase/supabase-js';
+import { getBrowserSupabase } from '@/lib/supabase/client';
+import { isSupabaseConfigured } from '@/lib/supabase/env';
 
-export type Role = 'private' | 'business';
+export type Role = 'private' | 'business' | 'admin';
 export interface DemoUser { name: string; role: Role; email?: string }
+
+export interface SignUpInput { name: string; role: Role; email: string; password: string; company?: string }
+export interface SignInInput { email: string; password: string; role?: Role }
+export interface AuthResult { error?: string; needsConfirm?: boolean }
 
 interface AuthState {
   ready: boolean;
+  configured: boolean;
   user: DemoUser | null;
-  login: (u: DemoUser) => void;
-  logout: () => void;
+  signUp: (input: SignUpInput) => Promise<AuthResult>;
+  signIn: (input: SignInInput) => Promise<AuthResult>;
+  signOut: () => Promise<void>;
+  /** Demo-mode only: instant login used by the quick-demo buttons. */
+  demoLogin: (u: DemoUser) => void;
 }
 
 const STORAGE_KEY = 'djarvista.demoUser';
 const AuthContext = createContext<AuthState | null>(null);
 
-/** Client-only demo auth. No backend — the "session" lives in localStorage. */
+function mapUser(u: User | null): DemoUser | null {
+  if (!u) return null;
+  const md = (u.user_metadata ?? {}) as Record<string, string>;
+  const role: Role = md.role === 'business' || md.role === 'admin' ? md.role : 'private';
+  const name = md.name || md.company || u.email?.split('@')[0] || 'Utilizador';
+  return { name, role, email: u.email ?? undefined };
+}
+
 export function AuthProvider({ children }: { children: ReactNode }): JSX.Element {
   const [user, setUser] = useState<DemoUser | null>(null);
   const [ready, setReady] = useState(false);
+  const configured = isSupabaseConfigured;
 
   useEffect(() => {
+    if (configured) {
+      const supabase = getBrowserSupabase();
+      if (!supabase) { setReady(true); return; }
+      supabase.auth.getUser().then(({ data }) => {
+        setUser(mapUser(data.user));
+        setReady(true);
+      });
+      const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+        setUser(mapUser(session?.user ?? null));
+      });
+      return () => sub.subscription.unsubscribe();
+    }
+    // demo mode
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
       if (raw) setUser(JSON.parse(raw) as DemoUser);
-    } catch {
-      /* ignore malformed storage */
-    }
+    } catch { /* ignore */ }
     setReady(true);
-  }, []);
+    return undefined;
+  }, [configured]);
 
-  const login = useCallback((u: DemoUser) => {
+  const demoLogin = useCallback((u: DemoUser) => {
     setUser(u);
     try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(u)); } catch { /* ignore */ }
   }, []);
 
-  const logout = useCallback(() => {
+  const signUp = useCallback(async (input: SignUpInput): Promise<AuthResult> => {
+    if (configured) {
+      const supabase = getBrowserSupabase();
+      if (!supabase) return { error: 'not-configured' };
+      const { data, error } = await supabase.auth.signUp({
+        email: input.email,
+        password: input.password,
+        options: { data: { name: input.name, role: input.role, company: input.company ?? '' } },
+      });
+      if (error) return { error: error.message };
+      return { needsConfirm: !data.session };
+    }
+    demoLogin({ name: input.role === 'business' ? (input.company || input.name) : input.name, role: input.role, email: input.email });
+    return {};
+  }, [configured, demoLogin]);
+
+  const signIn = useCallback(async (input: SignInInput): Promise<AuthResult> => {
+    if (configured) {
+      const supabase = getBrowserSupabase();
+      if (!supabase) return { error: 'not-configured' };
+      const { error } = await supabase.auth.signInWithPassword({ email: input.email, password: input.password });
+      if (error) return { error: error.message };
+      return {};
+    }
+    demoLogin({ name: input.email.split('@')[0] || 'Utilizador', role: input.role ?? 'private', email: input.email });
+    return {};
+  }, [configured, demoLogin]);
+
+  const signOut = useCallback(async (): Promise<void> => {
+    if (configured) {
+      const supabase = getBrowserSupabase();
+      await supabase?.auth.signOut();
+      setUser(null);
+      return;
+    }
     setUser(null);
     try { window.localStorage.removeItem(STORAGE_KEY); } catch { /* ignore */ }
-  }, []);
+  }, [configured]);
 
-  const value = useMemo<AuthState>(() => ({ ready, user, login, logout }), [ready, user, login, logout]);
+  const value = useMemo<AuthState>(
+    () => ({ ready, configured, user, signUp, signIn, signOut, demoLogin }),
+    [ready, configured, user, signUp, signIn, signOut, demoLogin],
+  );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

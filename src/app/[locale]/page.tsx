@@ -1,12 +1,13 @@
 import Link from 'next/link';
-import { searchListings, PROFESSIONALS, t, tr, type Locale, type UIKey } from '@/i18n';
+import { PROFESSIONALS, t, tr, type Locale, type UIKey } from '@/i18n';
+import { fetchListings } from '@/lib/data';
 import { ListingGrid, SectionHead, Card, TrustBadge } from '@/components/ui';
 
 interface ModuleCard { icon: string; titleKey: UIKey; href: string }
 
-export default function HomePage({ params }: { params: { locale: Locale } }): JSX.Element {
+export default async function HomePage({ params }: { params: { locale: Locale } }): Promise<JSX.Element> {
   const locale = params.locale;
-  const listings = searchListings({}, locale).slice(0, 6);
+  const listings = (await fetchListings()).slice(0, 6);
   const professionals = PROFESSIONALS.slice(0, 4);
   const p = (s: string): string => `/${locale}${s}`;
 

@@ -446,14 +446,17 @@ export const PUBLICATIONS: Publication[] = [
     plainSummary: { pt: 'Desde 1 de janeiro de 2026 o IUP foi substituído pelo cITI (transmissão) e cIPI (propriedade). Resumo indicativo — confirmar com as Finanças.', en: 'Since 1 January 2026 the IUP has been replaced by cITI (transfer) and cIPI (ownership). Indicative summary — confirm with the tax authority.', nl: 'Sinds 1 januari 2026 is de IUP vervangen door cITI (overdracht) en cIPI (eigendom). Indicatieve samenvatting — bevestig bij de Belastingdienst.' } },
 ];
 
-export function searchListings(opts: { q?: string; kind?: string; islandCode?: string }, l: Locale): Listing[] {
+export function filterListings(rows: Listing[], opts: { q?: string; kind?: string; islandCode?: string }, l: Locale): Listing[] {
   const nameByCode: Record<string, string> = { SV: 'São Vicente', ST: 'Santiago', SL: 'Sal', BV: 'Boa Vista' };
-  let rows = LISTINGS.slice();
-  if (opts.kind) rows = rows.filter((r) => r.kind === opts.kind);
+  let out = rows.slice();
+  if (opts.kind) out = out.filter((r) => r.kind === opts.kind);
   const island = opts.islandCode ? nameByCode[opts.islandCode] : undefined;
-  if (island) rows = rows.filter((r) => r.island === island);
-  if (opts.q) { const q = opts.q.toLowerCase(); rows = rows.filter((r) => tr(r.title, l).toLowerCase().includes(q) || tr(r.description, l).toLowerCase().includes(q)); }
-  return rows.sort((a, b) => Number(b.isFeatured) - Number(a.isFeatured));
+  if (island) out = out.filter((r) => r.island === island);
+  if (opts.q) { const q = opts.q.toLowerCase(); out = out.filter((r) => tr(r.title, l).toLowerCase().includes(q) || tr(r.description, l).toLowerCase().includes(q)); }
+  return out.sort((a, b) => Number(b.isFeatured) - Number(a.isFeatured));
+}
+export function searchListings(opts: { q?: string; kind?: string; islandCode?: string }, l: Locale): Listing[] {
+  return filterListings(LISTINGS, opts, l);
 }
 export const getListing = (slug: string): Listing | undefined => LISTINGS.find((l) => l.slug === slug);
 export const getProcedure = (slug: string): Procedure | undefined => PROCEDURES.find((p) => p.slug === slug);

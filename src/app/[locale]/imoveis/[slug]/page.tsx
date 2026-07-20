@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
-import { getListing, LISTINGS, t, tr, formatPrice, formatDate, docLabel, type Locale, type TL } from '@/i18n';
+import { t, tr, formatPrice, formatDate, docLabel, type Locale, type TL } from '@/i18n';
+import { fetchListingBySlug, fetchListings } from '@/lib/data';
 import { OfficialTag, ListingCard, SectionHead } from '@/components/ui';
 import { LeadForm } from '@/components/LeadForm';
 
@@ -7,10 +8,11 @@ const SIMILAR: TL = { pt: 'Imóveis semelhantes', en: 'Similar properties', nl: 
 const LOCATION: TL = { pt: 'Localização', en: 'Location', nl: 'Locatie' };
 const MAP_SOON: TL = { pt: 'Mapa interativo em breve', en: 'Interactive map coming soon', nl: 'Interactieve kaart binnenkort' };
 
-export default function ListingDetailPage({ params }: { params: { locale: Locale; slug: string } }): JSX.Element {
+export default async function ListingDetailPage({ params }: { params: { locale: Locale; slug: string } }): Promise<JSX.Element> {
   const locale = params.locale;
-  const l = getListing(params.slug);
+  const l = await fetchListingBySlug(params.slug);
   if (!l) notFound();
+  const similar = (await fetchListings()).filter((o) => o.island === l.island && o.slug !== l.slug).slice(0, 3);
 
   return (
     <div className="grid gap-8 lg:grid-cols-3">
@@ -49,7 +51,7 @@ export default function ListingDetailPage({ params }: { params: { locale: Locale
         <section className="mt-8">
           <SectionHead title={tr(SIMILAR, locale)} />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {LISTINGS.filter((o) => o.island === l.island && o.slug !== l.slug).slice(0, 3).map((o) => (
+            {similar.map((o) => (
               <ListingCard key={o.id} l={o} locale={locale} />
             ))}
           </div>
@@ -78,7 +80,7 @@ export default function ListingDetailPage({ params }: { params: { locale: Locale
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-4">
           <h2 className="text-sm font-semibold text-slate-700">{t(locale, 'listing.contactVisit')}</h2>
-          <LeadForm locale={locale} />
+          <LeadForm locale={locale} listingId={l.id} source="listing" />
         </div>
       </aside>
     </div>

@@ -1,4 +1,6 @@
-import { searchListings, t, type Locale } from '@/i18n';
+import Link from 'next/link';
+import { filterListings, t, type Locale } from '@/i18n';
+import { fetchListings } from '@/lib/data';
 import { ListingGrid } from '@/components/ui';
 
 const ISLANDS = [['', 'all'], ['SV', 'São Vicente'], ['ST', 'Santiago'], ['SL', 'Sal'], ['BV', 'Boa Vista']] as const;
@@ -11,21 +13,25 @@ const KINDS: [string, Record<Locale, string>][] = [
 ];
 const one = (v: string | string[] | undefined): string | undefined => (Array.isArray(v) ? v[0] : v);
 
-export default function ListingsPage({
+export default async function ListingsPage({
   params, searchParams,
 }: {
   params: { locale: Locale };
   searchParams: Record<string, string | string[] | undefined>;
-}): JSX.Element {
+}): Promise<JSX.Element> {
   const locale = params.locale;
   const q = one(searchParams.q);
   const kind = one(searchParams.kind);
   const islandCode = one(searchParams.islandCode);
-  const rows = searchListings({ q, kind, islandCode }, locale);
+  const all = await fetchListings();
+  const rows = filterListings(all, { q, kind, islandCode }, locale);
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">{t(locale, 'nav.imoveis')}</h1>
+      <div className="flex items-center justify-between gap-3">
+        <h1 className="text-2xl font-bold">{t(locale, 'nav.imoveis')}</h1>
+        <Link href={`/${locale}/imoveis/novo`} className="rounded-lg bg-coral px-4 py-2 text-sm font-semibold text-white hover:bg-coral-600">{t(locale, 'dash.newListing')}</Link>
+      </div>
       <form className="flex flex-wrap items-end gap-3 rounded-xl border border-slate-200 bg-white p-4">
         <label className="flex flex-col text-sm"><span className="mb-1 text-slate-600">{t(locale, 'common.search')}</span>
           <input name="q" defaultValue={q ?? ''} className="rounded border px-2 py-1.5" /></label>

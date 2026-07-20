@@ -24,7 +24,7 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
     );
   }
 
-  const isBiz = user.role === 'business';
+  const isBiz = user.role === 'business' || user.role === 'admin';
 
   return (
     <div className="space-y-6">
@@ -72,7 +72,7 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
           </section>
 
           <div className="flex flex-wrap gap-2">
-            <Link href={`/${locale}/pedidos/novo`} className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white">{t(locale, 'dash.newListing')}</Link>
+            <Link href={`/${locale}/imoveis/novo`} className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white">{t(locale, 'dash.newListing')}</Link>
             <Link href={`/${locale}/concursos`} className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700">{t(locale, 'dash.openTenders')}</Link>
             <Link href={`/${locale}/verificacao`} className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700">{t(locale, 'dash.raiseLevel')}</Link>
             <Link href={`/${locale}/admin`} className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700">{t(locale, 'nav.admin')}</Link>

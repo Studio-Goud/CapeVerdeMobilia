@@ -3,22 +3,35 @@
 import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { t, type Locale } from '@/i18n';
+import { t, tr, type Locale, type TL } from '@/i18n';
 import { useAuth, type Role } from '@/components/Auth';
+
+const CHECK_EMAIL: TL = {
+  pt: 'Conta criada. Verifique o seu email para confirmar antes de entrar.',
+  en: 'Account created. Check your email to confirm before logging in.',
+  nl: 'Account aangemaakt. Bevestig via je e-mail voordat je inlogt.',
+};
 
 export default function RegisterPage({ params }: { params: { locale: Locale } }): JSX.Element {
   const locale = params.locale;
   const router = useRouter();
-  const { login } = useAuth();
+  const { signUp } = useAuth();
   const [role, setRole] = useState<Role>('private');
   const [name, setName] = useState('');
   const [company, setCompany] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
 
-  function onSubmit(e: FormEvent<HTMLFormElement>): void {
+  async function onSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
-    const displayName = role === 'business' ? (company || name || 'Empresa') : (name || email.split('@')[0] || 'Utilizador');
-    login({ name: displayName, role, email });
+    setError(null); setNotice(null); setBusy(true);
+    const res = await signUp({ name, role, email, password, company: role === 'business' ? company : undefined });
+    setBusy(false);
+    if (res.error) { setError(res.error); return; }
+    if (res.needsConfirm) { setNotice(tr(CHECK_EMAIL, locale)); return; }
     router.push(`/${locale}/painel`);
   }
 
@@ -61,9 +74,13 @@ export default function RegisterPage({ params }: { params: { locale: Locale } })
           </label>
           <label className="block text-sm">
             <span className="text-slate-600">{t(locale, 'auth.password')}</span>
-            <input type="password" required className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" placeholder="••••••••" />
+            <input type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" placeholder="••••••••" />
           </label>
-          <button className="w-full rounded-lg bg-coral px-3 py-2.5 font-semibold text-white hover:bg-coral-600">{t(locale, 'auth.registerBtn')}</button>
+          {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+          {notice && <p className="rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-800">{notice}</p>}
+          <button disabled={busy} className="w-full rounded-lg bg-coral px-3 py-2.5 font-semibold text-white hover:bg-coral-600 disabled:opacity-60">
+            {t(locale, 'auth.registerBtn')}
+          </button>
         </div>
       </form>
 

@@ -45,7 +45,7 @@ function SoonTag({ locale }: { locale: Locale }): JSX.Element {
 }
 
 function AuthArea({ locale, onNavigate }: { locale: Locale; onNavigate?: () => void }): JSX.Element {
-  const { ready, user, logout } = useAuth();
+  const { ready, user, signOut } = useAuth();
   if (!ready) return <div className="h-8 w-24" aria-hidden />;
   if (user) {
     return (
@@ -53,7 +53,7 @@ function AuthArea({ locale, onNavigate }: { locale: Locale; onNavigate?: () => v
         <Link href={`/${locale}/painel`} onClick={onNavigate} className="rounded-lg bg-brand px-3 py-1.5 text-sm font-semibold text-white hover:bg-brand-dark">
           {t(locale, 'nav.dashboard')}
         </Link>
-        <button onClick={() => { logout(); onNavigate?.(); }} className="rounded-lg px-2 py-1.5 text-sm font-medium text-slate-500 hover:text-brand">
+        <button onClick={() => { void signOut(); onNavigate?.(); }} className="rounded-lg px-2 py-1.5 text-sm font-medium text-slate-500 hover:text-brand">
           {t(locale, 'nav.logout')}
         </button>
       </div>

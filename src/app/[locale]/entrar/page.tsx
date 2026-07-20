@@ -9,18 +9,24 @@ import { useAuth, type Role } from '@/components/Auth';
 export default function LoginPage({ params }: { params: { locale: Locale } }): JSX.Element {
   const locale = params.locale;
   const router = useRouter();
-  const { login } = useAuth();
+  const { signIn, demoLogin, configured } = useAuth();
   const [role, setRole] = useState<Role>('private');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
 
-  function go(u: { name: string; role: Role; email?: string }): void {
-    login(u);
+  async function onSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
+    e.preventDefault();
+    setError(null); setBusy(true);
+    const res = await signIn({ email, password, role });
+    setBusy(false);
+    if (res.error) { setError(res.error); return; }
     router.push(`/${locale}/painel`);
   }
-  function onSubmit(e: FormEvent<HTMLFormElement>): void {
-    e.preventDefault();
-    const name = email.split('@')[0] || (role === 'business' ? 'Empresa' : 'Utilizador');
-    go({ name, role, email });
+  function quick(u: { name: string; role: Role }): void {
+    demoLogin(u);
+    router.push(`/${locale}/painel`);
   }
 
   return (
@@ -29,41 +35,48 @@ export default function LoginPage({ params }: { params: { locale: Locale } }): J
       <p className="mt-1 text-sm text-slate-600">{t(locale, 'auth.loginSubtitle')}</p>
 
       <form onSubmit={onSubmit} className="mt-6 space-y-3 rounded-xl border border-slate-200 bg-white p-5 shadow-card">
-        <div className="flex gap-2">
-          {(['private', 'business'] as Role[]).map((r) => (
-            <button type="button" key={r} onClick={() => setRole(r)}
-              className={`flex-1 rounded-lg border px-3 py-2 text-sm font-medium ${role === r ? 'border-brand bg-brand-50 text-brand-700' : 'border-slate-200 text-slate-600'}`}>
-              {t(locale, r === 'private' ? 'auth.private' : 'auth.business')}
-            </button>
-          ))}
-        </div>
+        {!configured && (
+          <div className="flex gap-2">
+            {(['private', 'business'] as Role[]).map((r) => (
+              <button type="button" key={r} onClick={() => setRole(r)}
+                className={`flex-1 rounded-lg border px-3 py-2 text-sm font-medium ${role === r ? 'border-brand bg-brand-50 text-brand-700' : 'border-slate-200 text-slate-600'}`}>
+                {t(locale, r === 'private' ? 'auth.private' : 'auth.business')}
+              </button>
+            ))}
+          </div>
+        )}
         <label className="block text-sm">
           <span className="text-slate-600">{t(locale, 'auth.email')}</span>
           <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" placeholder="voce@exemplo.cv" />
         </label>
         <label className="block text-sm">
           <span className="text-slate-600">{t(locale, 'auth.password')}</span>
-          <input type="password" required className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" placeholder="••••••••" />
+          <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2" placeholder="••••••••" />
         </label>
-        <button className="w-full rounded-lg bg-brand px-3 py-2.5 font-semibold text-white hover:bg-brand-dark">{t(locale, 'auth.loginBtn')}</button>
+        {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+        <button disabled={busy} className="w-full rounded-lg bg-brand px-3 py-2.5 font-semibold text-white hover:bg-brand-dark disabled:opacity-60">
+          {t(locale, 'auth.loginBtn')}
+        </button>
       </form>
 
-      <div className="mt-4 rounded-xl border border-dashed border-slate-300 bg-sand-50 p-4">
-        <p className="text-xs text-slate-500">{t(locale, 'auth.quickDemo')}</p>
-        <div className="mt-2 flex flex-col gap-2 sm:flex-row">
-          <button onClick={() => go({ name: 'Ana', role: 'private' })} className="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:border-brand hover:text-brand">
-            {t(locale, 'auth.demoPrivate')}
-          </button>
-          <button onClick={() => go({ name: 'Construções Djar', role: 'business' })} className="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:border-brand hover:text-brand">
-            {t(locale, 'auth.demoBusiness')}
-          </button>
+      {!configured && (
+        <div className="mt-4 rounded-xl border border-dashed border-slate-300 bg-sand-50 p-4">
+          <p className="text-xs text-slate-500">{t(locale, 'auth.quickDemo')}</p>
+          <div className="mt-2 flex flex-col gap-2 sm:flex-row">
+            <button onClick={() => quick({ name: 'Ana', role: 'private' })} className="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:border-brand hover:text-brand">
+              {t(locale, 'auth.demoPrivate')}
+            </button>
+            <button onClick={() => quick({ name: 'Construções Djar', role: 'business' })} className="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:border-brand hover:text-brand">
+              {t(locale, 'auth.demoBusiness')}
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       <p className="mt-4 text-center text-sm">
         <Link href={`/${locale}/registar`} className="text-brand hover:underline">{t(locale, 'auth.noAccount')}</Link>
       </p>
-      <p className="mt-3 text-xs text-slate-400">{t(locale, 'auth.demoNote')}</p>
+      {!configured && <p className="mt-3 text-xs text-slate-400">{t(locale, 'auth.demoNote')}</p>}
     </div>
   );
 }
