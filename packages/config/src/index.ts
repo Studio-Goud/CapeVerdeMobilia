@@ -14,9 +14,10 @@ const envSchema = z.object({
   APP_URL: z.string().url().default('http://localhost:3000'),
   // Optional here so that importing config in tests / client bundles never throws;
   // the database package reads DATABASE_URL directly for Prisma. Runtime DB code
-  // should assert its presence where it is actually used.
-  DATABASE_URL: z.string().min(1).optional(),
-  REDIS_URL: z.string().min(1).optional(),
+  // should assert its presence where it is actually used. An empty string (some
+  // hosts inject empty env vars) is treated as unset.
+  DATABASE_URL: z.preprocess((v) => (v === '' ? undefined : v), z.string().min(1).optional()),
+  REDIS_URL: z.preprocess((v) => (v === '' ? undefined : v), z.string().min(1).optional()),
   AUTH_SECRET: z.string().min(16).default('dev-only-insecure-secret-change-me'),
   SESSION_TTL_HOURS: z.coerce.number().int().positive().default(168),
   OTP_TTL_MINUTES: z.coerce.number().int().positive().default(10),

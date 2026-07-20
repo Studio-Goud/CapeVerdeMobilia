@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import { listingSearchSchema } from '@kavila/validation';
-import { searchListings } from '@/lib/queries';
 import { track } from '@kavila/analytics';
+import { searchListings } from '@/lib/queries';
 
 /**
- * GET /api/listings — paginated, filterable listing search.
- * Returns a standard paginated envelope. Featured listings are ordered first
- * but flagged so clients can label them "Sponsored".
+ * GET /api/listings — paginated, filterable listing search (demo data).
+ * Featured listings are ordered first but flagged so clients can label them
+ * "Sponsored".
  */
 export async function GET(request: Request): Promise<NextResponse> {
   const url = new URL(request.url);
@@ -30,7 +30,7 @@ export async function GET(request: Request): Promise<NextResponse> {
       slug: r.slug,
       kind: r.kind,
       title: r.title,
-      priceAmount: r.priceAmount == null ? null : Number(r.priceAmount),
+      priceAmount: r.priceAmount,
       priceCurrency: r.priceCurrency,
       priceOnRequest: r.priceOnRequest,
       island: r.location?.island?.name ?? null,

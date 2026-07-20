@@ -13,9 +13,7 @@
   },
   "dependencies": {
     "@kavila/analytics": "workspace:*",
-    "@kavila/auth": "workspace:*",
     "@kavila/config": "workspace:*",
-    "@kavila/database": "workspace:*",
     "@kavila/i18n": "workspace:*",
     "@kavila/types": "workspace:*",
     "@kavila/ui": "workspace:*",

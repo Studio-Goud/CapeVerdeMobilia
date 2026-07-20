@@ -1,22 +1,19 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@kavila/database';
 import { createLeadSchema } from '@kavila/validation';
 import { track } from '@kavila/analytics';
+import { IS_DEMO } from '@/lib/queries';
 
 /**
- * POST /api/leads — create a lead against a published listing.
- * Public endpoint (unauthenticated buyers can enquire). Rate limiting and bot
- * protection are applied at the edge/middleware layer (see docs 13).
+ * POST /api/leads — create a lead against a listing.
+ * In the demo deployment leads are validated and acknowledged but NOT persisted
+ * (there is no database). The database-backed version lives in packages/database.
  */
 export async function POST(request: Request): Promise<NextResponse> {
   let json: unknown;
   try {
     json = await request.json();
   } catch {
-    return NextResponse.json(
-      { error: { code: 'BAD_REQUEST', message: 'Invalid JSON body' } },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: { code: 'BAD_REQUEST', message: 'Invalid JSON body' } }, { status: 400 });
   }
 
   const parsed = createLeadSchema.safeParse(json);
@@ -33,32 +30,19 @@ export async function POST(request: Request): Promise<NextResponse> {
     );
   }
 
-  const input = parsed.data;
+  await track({ name: 'listing_lead', props: { listingId: parsed.data.listingId } });
 
-  const listing = await prisma.listing.findFirst({
-    where: { id: input.listingId, status: 'PUBLISHED', deletedAt: null },
-    select: { id: true },
-  });
-  if (!listing) {
+  if (IS_DEMO) {
     return NextResponse.json(
-      { error: { code: 'NOT_FOUND', message: 'Listing not found' } },
-      { status: 404 },
+      { data: { id: 'demo-lead', demo: true, message: 'Demonstração: pedido recebido (não guardado).' } },
+      { status: 201 },
     );
   }
 
-  const lead = await prisma.lead.create({
-    data: {
-      listingId: input.listingId,
-      name: input.name,
-      email: input.email,
-      phone: input.phone,
-      message: input.message,
-      locale: input.locale,
-    },
-    select: { id: true, createdAt: true },
-  });
-
-  await track({ name: 'listing_lead', props: { listingId: input.listingId } });
-
-  return NextResponse.json({ data: { id: lead.id } }, { status: 201 });
+  // Real deployment: persist via packages/database. Intentionally not imported in
+  // the demo build so no database client is bundled.
+  return NextResponse.json(
+    { error: { code: 'NOT_CONFIGURED', message: 'Database not configured' } },
+    { status: 503 },
+  );
 }
