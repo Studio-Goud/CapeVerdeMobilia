@@ -1,0 +1,1256 @@
+// =============================================================================
+// Kavíla — Prisma schema
+// Independent digital infrastructure for property, building and public
+// information in Cabo Verde. See /docs/11-data-model.md for the narrative model.
+//
+// Conventions
+//  - Ids: cuid(). Timestamps: createdAt / updatedAt on every table.
+//  - Soft delete: nullable deletedAt on user-generated content.
+//  - Audit: createdById / updatedById reference User where meaningful.
+//  - Geo: latitude/longitude stored as Decimal for portability; a PostGIS
+//    geometry(Point,4326) column is added in a follow-up SQL migration for
+//    radius/containment queries (see infrastructure/postgres).
+//  - Privacy classification is documented per model in /docs/13-security-and-privacy.md.
+// =============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  extensions        = [postgis, pg_trgm, unaccent]
+}
+
+// ----------------------------------------------------------------------------
+// Enums
+// ----------------------------------------------------------------------------
+
+enum Locale {
+  pt
+  kea
+  en
+  nl
+  fr
+}
+
+enum AccountStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+  DEACTIVATED
+}
+
+/// Platform roles. RBAC permissions are resolved via Role -> Permission.
+enum RoleKey {
+  VISITOR
+  USER
+  BUYER
+  SELLER
+  INVESTOR
+  CLIENT
+  PROFESSIONAL
+  BUSINESS_ADMIN
+  AGENT
+  DEVELOPER
+  GOV_EDITOR
+  GOV_APPROVER
+  MODERATOR
+  VERIFICATION_SPECIALIST
+  SUPPORT
+  FINANCE_ADMIN
+  PLATFORM_ADMIN
+  SUPERADMIN
+}
+
+/// Verification levels L0–L5 (see /docs/14-trust-and-verification.md).
+enum VerificationLevel {
+  L0_NONE
+  L1_IDENTITY
+  L2_BUSINESS
+  L3_DOCUMENTS
+  L4_TRANSACTION
+  L5_INSTITUTIONAL
+}
+
+enum VerificationStatus {
+  NOT_REQUESTED
+  PENDING
+  IN_REVIEW
+  APPROVED
+  REJECTED
+  EXPIRED
+}
+
+enum OrganizationType {
+  AGENCY
+  DEVELOPER
+  CONSTRUCTION
+  ARCHITECT
+  SUPPLIER
+  SERVICES
+  LEGAL
+  FINANCE
+  OTHER
+}
+
+enum PropertyType {
+  HOUSE
+  APARTMENT
+  VILLA
+  COMMERCIAL
+  HOTEL
+  RESORT_UNIT
+  MIXED_USE
+  RUIN_RENOVATION
+}
+
+enum LandType {
+  BUILDING_LAND
+  RECREATION_LAND
+  AGRICULTURAL_LAND
+  TOURISM_LAND
+  INDUSTRIAL_LAND
+}
+
+enum ListingKind {
+  PROPERTY_SALE
+  PROPERTY_RENT
+  HOLIDAY_RENT
+  COMMERCIAL
+  LAND
+  NEW_DEVELOPMENT
+  INVESTMENT_PROJECT
+  OFF_MARKET
+}
+
+enum ListingStatus {
+  DRAFT
+  PENDING_REVIEW
+  PUBLISHED
+  RESERVED
+  SOLD
+  RENTED
+  ARCHIVED
+  REJECTED
+}
+
+enum DocumentStatus {
+  UNKNOWN
+  DECLARED
+  UPLOADED
+  VERIFIED
+  DISPUTED
+}
+
+enum MediaType {
+  PHOTO
+  VIDEO
+  DRONE
+  FLOOR_PLAN
+  VIRTUAL_TOUR
+  DOCUMENT
+}
+
+enum JobStatus {
+  DRAFT
+  OPEN
+  QUOTING
+  AWARDED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum QuoteStatus {
+  DRAFT
+  SUBMITTED
+  SHORTLISTED
+  ACCEPTED
+  DECLINED
+  WITHDRAWN
+}
+
+enum ContractStatus {
+  DRAFT
+  ACTIVE
+  COMPLETED
+  DISPUTED
+  TERMINATED
+}
+
+enum ProjectStatus {
+  PLANNING
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+}
+
+enum MilestoneStatus {
+  PENDING
+  IN_PROGRESS
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+enum ReviewStatus {
+  PENDING_EVIDENCE
+  UNDER_REVIEW
+  VERIFIED
+  UNVERIFIED
+  DISPUTED
+  REMOVED
+}
+
+enum ReviewEvidenceKind {
+  PLATFORM_BOOKING
+  ACCEPTED_QUOTE
+  INVOICE
+  PAYMENT_PROOF
+  PROJECT_ID
+  DOCUMENT_CONFIRMATION
+  MUTUAL_CONFIRMATION
+  MANUAL_CHECK
+  CONTROLLED_INVITATION
+}
+
+/// Editorial state for official government content. Versioned + audited.
+enum PublicationStatus {
+  DRAFT
+  IN_REVIEW
+  PUBLISHED
+  UPDATED
+  DEPRECATED
+  UNDER_REVISION
+}
+
+/// How a translation was produced — surfaced in the UI as a trust signal.
+enum TranslationKind {
+  OFFICIAL
+  PROFESSIONAL
+  MACHINE
+  PLAIN_LANGUAGE
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  CONVERTED
+  CLOSED
+  SPAM
+}
+
+enum NotificationChannel {
+  EMAIL
+  WHATSAPP
+  SMS
+  IN_APP
+}
+
+enum PaymentStatus {
+  PENDING
+  AUTHORIZED
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum SubscriptionPlan {
+  FREE
+  PRO
+  BUSINESS
+  GOV_PARTNER
+}
+
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELLED
+}
+
+enum ComplaintStatus {
+  OPEN
+  INVESTIGATING
+  RESOLVED
+  DISMISSED
+}
+
+enum ModerationStatus {
+  OPEN
+  IN_REVIEW
+  ACTIONED
+  DISMISSED
+}
+
+enum TicketStatus {
+  OPEN
+  PENDING
+  RESOLVED
+  CLOSED
+}
+
+enum FraudSignalKind {
+  DUPLICATE_LISTING
+  DUPLICATE_ACCOUNT
+  SELF_REVIEW
+  PRICE_ANOMALY
+  VELOCITY
+  DEVICE_REUSE
+  DOCUMENT_MISMATCH
+  BLACKLISTED_CONTACT
+}
+
+// ----------------------------------------------------------------------------
+// Identity, access & organizations
+// ----------------------------------------------------------------------------
+
+model User {
+  id            String        @id @default(cuid())
+  email         String?       @unique
+  phone         String?       @unique
+  emailVerified DateTime?
+  phoneVerified DateTime?
+  passwordHash  String?
+  displayName   String?
+  preferredLocale Locale      @default(pt)
+  status        AccountStatus @default(PENDING)
+  mfaEnabled    Boolean       @default(false)
+  mfaSecret     String? // encrypted at rest; never returned to clients
+
+  profile       Profile?
+  roles         UserRole[]
+  memberships   OrganizationMember[]
+  sessions      Session[]
+  authTokens    AuthToken[]
+
+  listings      Listing[]     @relation("ListingOwner")
+  favorites     Favorite[]
+  leadsSent     Lead[]        @relation("LeadFromUser")
+  jobsPosted    Job[]         @relation("JobClient")
+  reviewsAuthored Review[]    @relation("ReviewAuthor")
+  messagesSent  Message[]     @relation("MessageSender")
+  notifications Notification[]
+  verifications Verification[] @relation("VerificationSubjectUser")
+  supportTickets SupportTicket[]
+
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  deletedAt     DateTime?
+
+  @@index([status])
+  @@index([deletedAt])
+}
+
+/// Public-facing person profile (1:1 with User). Privacy: personal.
+model Profile {
+  id         String  @id @default(cuid())
+  userId     String  @unique
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName   String?
+  avatarUrl  String?
+  bio        String?
+  languages  Locale[]
+  countryOfResidence String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Role {
+  id          String       @id @default(cuid())
+  key         RoleKey      @unique
+  name        String
+  description String?
+  users       UserRole[]
+  permissions RolePermission[]
+  createdAt   DateTime     @default(now())
+}
+
+model Permission {
+  id          String   @id @default(cuid())
+  key         String   @unique // e.g. "listing.publish", "gov.publish", "review.moderate"
+  description String?
+  roles       RolePermission[]
+}
+
+model RolePermission {
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+}
+
+/// A user can hold a role globally or scoped to one organization.
+model UserRole {
+  id             String        @id @default(cuid())
+  userId         String
+  roleId         String
+  organizationId String?
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role           Role          @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime      @default(now())
+
+  @@unique([userId, roleId, organizationId])
+  @@index([roleId])
+}
+
+model Organization {
+  id                String            @id @default(cuid())
+  name              String
+  legalName         String?
+  type              OrganizationType
+  registrationNo    String? // NIF / commercial registry (EASE). Privacy: internal.
+  description       String?
+  websiteUrl        String?
+  email             String?
+  phone             String?
+  logoUrl           String?
+  locationId        String?
+  location          Location?         @relation(fields: [locationId], references: [id])
+  verificationLevel VerificationLevel @default(L0_NONE)
+
+  members       OrganizationMember[]
+  professionals Professional[]
+  listings      Listing[]            @relation("ListingOrganization")
+  roleScopes    UserRole[]
+  subscriptions Subscription[]
+  invoices      Invoice[]
+  verifications Verification[]       @relation("VerificationSubjectOrg")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+
+  @@index([type])
+  @@index([verificationLevel])
+}
+
+model OrganizationMember {
+  id             String       @id @default(cuid())
+  organizationId String
+  userId         String
+  title          String?
+  isAdmin        Boolean      @default(false)
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+
+  @@unique([organizationId, userId])
+}
+
+/// A public authority that publishes official content. Privacy: public.
+model GovernmentEntity {
+  id           String   @id @default(cuid())
+  name         String
+  shortName    String?
+  level        String // national | ministry | municipality | cadastre | utility | agency
+  contactEmail String?
+  contactPhone String?
+  websiteUrl   String?
+  islandId     String?
+  island       Island?  @relation(fields: [islandId], references: [id])
+  publications OfficialPublication[]
+  procedures   Procedure[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([level])
+}
+
+// ----------------------------------------------------------------------------
+// Sessions & tokens
+// ----------------------------------------------------------------------------
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash    String   @unique
+  ipAddress    String?
+  userAgent    String?
+  deviceLabel  String?
+  expiresAt    DateTime
+  revokedAt    DateTime?
+  createdAt    DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+/// One-time tokens: email verify, phone OTP, password reset, magic links.
+model AuthToken {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind      String // EMAIL_VERIFY | PHONE_OTP | PASSWORD_RESET | MAGIC_LINK
+  codeHash  String
+  expiresAt DateTime
+  consumedAt DateTime?
+  attempts  Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([userId, kind])
+}
+
+// ----------------------------------------------------------------------------
+// Geography
+// ----------------------------------------------------------------------------
+
+model Island {
+  id            String         @id @default(cuid())
+  name          String         @unique
+  code          String         @unique // e.g. "SV", "ST", "SL", "BV"
+  municipalities Municipality[]
+  locations     Location[]
+  govEntities   GovernmentEntity[]
+  createdAt     DateTime       @default(now())
+}
+
+model Municipality {
+  id        String     @id @default(cuid())
+  name      String
+  islandId  String
+  island    Island     @relation(fields: [islandId], references: [id])
+  locations Location[]
+  createdAt DateTime   @default(now())
+
+  @@unique([islandId, name])
+}
+
+/// A reusable place reference (neighbourhood / point). PostGIS point added via SQL.
+model Location {
+  id             String        @id @default(cuid())
+  islandId       String
+  municipalityId String?
+  island         Island        @relation(fields: [islandId], references: [id])
+  municipality   Municipality? @relation(fields: [municipalityId], references: [id])
+  label          String?
+  addressLine    String?
+  latitude       Decimal?      @db.Decimal(9, 6)
+  longitude      Decimal?      @db.Decimal(9, 6)
+  properties     Property[]
+  landParcels    LandParcel[]
+  listings       Listing[]
+  organizations  Organization[]
+  createdAt      DateTime      @default(now())
+
+  @@index([islandId])
+  @@index([municipalityId])
+}
+
+// ----------------------------------------------------------------------------
+// Property & land
+// ----------------------------------------------------------------------------
+
+model Property {
+  id            String       @id @default(cuid())
+  type          PropertyType
+  title         String
+  description   String?
+  builtAreaSqm  Decimal?     @db.Decimal(10, 2)
+  plotAreaSqm   Decimal?     @db.Decimal(10, 2)
+  bedrooms      Int?
+  bathrooms     Int?
+  yearBuilt     Int?
+  locationId    String?
+  location      Location?    @relation(fields: [locationId], references: [id])
+  utilities     String[] // water, electricity, sewage, internet ...
+  listings      Listing[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  deletedAt     DateTime?
+
+  @@index([type])
+}
+
+model LandParcel {
+  id               String   @id @default(cuid())
+  type             LandType
+  reference        String? // cadastral / matriz reference. Privacy: internal.
+  areaSqm          Decimal? @db.Decimal(12, 2)
+  zoning           String? // bestemming — from municipal plan
+  buildable        Boolean?
+  buildRatio       Decimal? @db.Decimal(5, 2) // permitted built ratio, if known
+  locationId       String?
+  location         Location? @relation(fields: [locationId], references: [id])
+  registryStatus   DocumentStatus @default(UNKNOWN)
+  listings         Listing[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  deletedAt        DateTime?
+
+  @@index([type])
+}
+
+model Listing {
+  id             String        @id @default(cuid())
+  kind           ListingKind
+  status         ListingStatus @default(DRAFT)
+  title          String
+  slug           String        @unique
+  description    String?
+  priceAmount    Decimal?      @db.Decimal(14, 2)
+  priceCurrency  String        @default("CVE")
+  priceOnRequest Boolean       @default(false)
+
+  propertyId     String?
+  property       Property?     @relation(fields: [propertyId], references: [id])
+  landParcelId   String?
+  landParcel     LandParcel?   @relation(fields: [landParcelId], references: [id])
+  locationId     String?
+  location       Location?     @relation(fields: [locationId], references: [id])
+
+  ownerUserId    String?
+  ownerUser      User?         @relation("ListingOwner", fields: [ownerUserId], references: [id])
+  organizationId String?
+  organization   Organization? @relation("ListingOrganization", fields: [organizationId], references: [id])
+
+  documentStatus DocumentStatus @default(UNKNOWN)
+  permitStatus   DocumentStatus @default(UNKNOWN)
+  riskNotes      String?
+  officialSourceRef String? // link to an OfficialPublication / registry citation
+
+  isFeatured     Boolean       @default(false) // paid placement — always labelled "Sponsored"
+  isPremium      Boolean       @default(false)
+  publishedAt    DateTime?
+  lastVerifiedAt DateTime?
+  expiresAt      DateTime?
+
+  media          ListingMedia[]
+  leads          Lead[]
+  favorites      Favorite[]
+  verifications  Verification[] @relation("VerificationSubjectListing")
+  moderationCases ModerationCase[]
+
+  searchVector   Unsupported("tsvector")? // maintained by trigger for FTS
+
+  createdById    String?
+  updatedById    String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  deletedAt      DateTime?
+
+  @@index([kind, status])
+  @@index([status, publishedAt])
+  @@index([organizationId])
+  @@index([isFeatured])
+}
+
+model ListingMedia {
+  id         String    @id @default(cuid())
+  listingId  String
+  listing    Listing   @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  type       MediaType
+  url        String
+  caption    String?
+  sortOrder  Int       @default(0)
+  isPrivate  Boolean   @default(false) // e.g. documents shared only after lead accepted
+  createdAt  DateTime  @default(now())
+
+  @@index([listingId])
+}
+
+// ----------------------------------------------------------------------------
+// Professionals, services & portfolios
+// ----------------------------------------------------------------------------
+
+model Category {
+  id       String     @id @default(cuid())
+  key      String     @unique
+  name     String
+  parentId String?
+  parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryTree")
+  services Service[]
+  jobs     Job[]
+  createdAt DateTime  @default(now())
+
+  @@index([parentId])
+}
+
+model Professional {
+  id                String            @id @default(cuid())
+  organizationId    String?
+  organization      Organization?     @relation(fields: [organizationId], references: [id])
+  displayName       String
+  slug              String            @unique
+  headline          String?
+  bio               String?
+  languages         Locale[]
+  serviceAreas      String[] // island / municipality labels
+  priceIndication   String?
+  avgResponseMinutes Int?
+  completedJobs     Int               @default(0)
+  ratingAvg         Decimal?          @db.Decimal(3, 2)
+  ratingCount       Int               @default(0)
+  verificationLevel VerificationLevel @default(L0_NONE)
+  availableFrom     DateTime?
+
+  services      ProfessionalService[]
+  portfolios    Portfolio[]
+  reviews       Review[]              @relation("ReviewTarget")
+  quotes        Quote[]
+  verifications Verification[]        @relation("VerificationSubjectProfessional")
+  complaints    Complaint[]           @relation("ComplaintAgainstProfessional")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+
+  @@index([verificationLevel])
+  @@index([ratingAvg])
+}
+
+model Service {
+  id         String   @id @default(cuid())
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+  name       String
+  professionals ProfessionalService[]
+  createdAt  DateTime @default(now())
+
+  @@index([categoryId])
+}
+
+model ProfessionalService {
+  professionalId String
+  serviceId      String
+  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  service        Service      @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@id([professionalId, serviceId])
+}
+
+model Portfolio {
+  id             String   @id @default(cuid())
+  professionalId String
+  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  title          String
+  description    String?
+  mediaUrls      String[]
+  completedAt    DateTime?
+  createdAt      DateTime @default(now())
+
+  @@index([professionalId])
+}
+
+// ----------------------------------------------------------------------------
+// Jobs, quotes, contracts, projects
+// ----------------------------------------------------------------------------
+
+model Job {
+  id            String     @id @default(cuid())
+  clientUserId  String
+  clientUser    User       @relation("JobClient", fields: [clientUserId], references: [id])
+  categoryId    String?
+  category      Category?  @relation(fields: [categoryId], references: [id])
+  title         String
+  description   String
+  locationId    String?
+  budgetAmount  Decimal?   @db.Decimal(14, 2)
+  budgetCurrency String    @default("CVE")
+  deadline      DateTime?
+  status        JobStatus  @default(DRAFT)
+  attachments   String[]
+  quotes        Quote[]
+  contract      Contract?
+  project       Project?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  deletedAt     DateTime?
+
+  @@index([status])
+  @@index([clientUserId])
+}
+
+model Quote {
+  id             String      @id @default(cuid())
+  jobId          String
+  job            Job         @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  professionalId String
+  professional   Professional @relation(fields: [professionalId], references: [id])
+  amount         Decimal     @db.Decimal(14, 2)
+  currency       String      @default("CVE")
+  message        String?
+  estimatedDays  Int?
+  status         QuoteStatus @default(DRAFT)
+  submittedAt    DateTime?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@unique([jobId, professionalId])
+  @@index([status])
+}
+
+model Contract {
+  id             String         @id @default(cuid())
+  jobId          String         @unique
+  job            Job            @relation(fields: [jobId], references: [id])
+  acceptedQuoteId String?       @unique
+  amount         Decimal        @db.Decimal(14, 2)
+  currency       String         @default("CVE")
+  status         ContractStatus @default(DRAFT)
+  startedAt      DateTime?
+  completedAt    DateTime?
+  reviews        Review[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model Project {
+  id          String          @id @default(cuid())
+  jobId       String?         @unique
+  job         Job?            @relation(fields: [jobId], references: [id])
+  ownerUserId String
+  title       String
+  status      ProjectStatus   @default(PLANNING)
+  budgetAmount Decimal?       @db.Decimal(14, 2)
+  currency    String          @default("CVE")
+  startDate   DateTime?
+  endDate     DateTime?
+  milestones  ProjectMilestone[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  deletedAt   DateTime?
+
+  @@index([status])
+}
+
+model ProjectMilestone {
+  id          String          @id @default(cuid())
+  projectId   String
+  project     Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  amount      Decimal?        @db.Decimal(14, 2)
+  dueDate     DateTime?
+  status      MilestoneStatus @default(PENDING)
+  approvedAt  DateTime?
+  sortOrder   Int             @default(0)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@index([projectId])
+}
+
+// ----------------------------------------------------------------------------
+// Reviews & trust
+// ----------------------------------------------------------------------------
+
+model Review {
+  id             String       @id @default(cuid())
+  authorUserId   String
+  author         User         @relation("ReviewAuthor", fields: [authorUserId], references: [id])
+  professionalId String?
+  professional   Professional? @relation("ReviewTarget", fields: [professionalId], references: [id])
+  contractId     String?
+  contract       Contract?    @relation(fields: [contractId], references: [id])
+
+  status         ReviewStatus @default(PENDING_EVIDENCE)
+  overall        Int // 1..5
+  scoreQuality        Int?
+  scoreCommunication  Int?
+  scoreReliability    Int?
+  scorePlanning       Int?
+  scoreValue          Int?
+  scoreProfessionalism Int?
+  scoreAftercare      Int?
+  comment        String?
+  response       String? // right of reply from the professional
+  fraudScore     Decimal?     @db.Decimal(4, 3)
+
+  evidence       ReviewEvidence[]
+  complaints     Complaint[]
+
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  deletedAt      DateTime?
+
+  @@index([professionalId, status])
+  @@index([status])
+}
+
+model ReviewEvidence {
+  id        String             @id @default(cuid())
+  reviewId  String
+  review    Review             @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  kind      ReviewEvidenceKind
+  reference String? // id/url of the corroborating record
+  verifiedBy String? // staff user id if manually checked
+  verifiedAt DateTime?
+  createdAt DateTime           @default(now())
+
+  @@index([reviewId])
+}
+
+// ----------------------------------------------------------------------------
+// Verification
+// ----------------------------------------------------------------------------
+
+/// A verification case raises a subject to a VerificationLevel. Subject is one of
+/// user / organization / professional / listing (polymorphic via nullable FKs).
+model Verification {
+  id             String             @id @default(cuid())
+  level          VerificationLevel
+  status         VerificationStatus @default(PENDING)
+  subjectUserId  String?
+  subjectUser    User?              @relation("VerificationSubjectUser", fields: [subjectUserId], references: [id])
+  subjectOrgId   String?
+  subjectOrg     Organization?      @relation("VerificationSubjectOrg", fields: [subjectOrgId], references: [id])
+  subjectProfessionalId String?
+  subjectProfessional Professional? @relation("VerificationSubjectProfessional", fields: [subjectProfessionalId], references: [id])
+  subjectListingId String?
+  subjectListing Listing?           @relation("VerificationSubjectListing", fields: [subjectListingId], references: [id])
+
+  reviewedById   String?
+  reviewedAt     DateTime?
+  validUntil     DateTime?
+  notes          String?
+  documents      VerificationDocument[]
+
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  @@index([status])
+  @@index([level])
+}
+
+/// Sensitive: encrypted-at-rest storage keys, access-logged. Privacy: sensitive.
+model VerificationDocument {
+  id             String       @id @default(cuid())
+  verificationId String
+  verification   Verification @relation(fields: [verificationId], references: [id], onDelete: Cascade)
+  docType        String // ID | company_registration | permit | certificate | title_deed ...
+  storageKey     String // object-storage key (never a public URL)
+  checksum       String?
+  scannedClean   Boolean?     // malware scan result
+  createdAt      DateTime     @default(now())
+
+  @@index([verificationId])
+}
+
+// ----------------------------------------------------------------------------
+// Government information: procedures & official publications (versioned)
+// ----------------------------------------------------------------------------
+
+model Procedure {
+  id            String    @id @default(cuid())
+  slug          String    @unique
+  title         String
+  summary       String?
+  govEntityId   String?
+  govEntity     GovernmentEntity? @relation(fields: [govEntityId], references: [id])
+  estimatedDays Int?
+  estimatedCost String?
+  status        PublicationStatus @default(DRAFT)
+  steps         ProcedureStep[]
+  translations  Translation[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([status])
+}
+
+model ProcedureStep {
+  id            String    @id @default(cuid())
+  procedureId   String
+  procedure     Procedure @relation(fields: [procedureId], references: [id], onDelete: Cascade)
+  sortOrder     Int
+  title         String
+  description   String?
+  responsibleEntity String?
+  requiredDocuments String[]
+  estimatedDays Int?
+  createdAt     DateTime  @default(now())
+
+  @@index([procedureId])
+}
+
+/// Official published content. Clearly distinguished from platform-authored info.
+model OfficialPublication {
+  id            String            @id @default(cuid())
+  slug          String            @unique
+  title         String
+  govEntityId   String
+  govEntity     GovernmentEntity  @relation(fields: [govEntityId], references: [id])
+  status        PublicationStatus @default(DRAFT)
+  officialStatus Boolean          @default(false) // true = officially confirmed by the authority
+  version       Int               @default(1)
+  publishedAt   DateTime?
+  validFrom     DateTime?
+  validUntil    DateTime?
+  bodyMarkdown  String?
+  plainSummary  String? // platform plain-language summary (labelled as such)
+  approvedById  String?
+
+  sourceDocuments SourceDocument[]
+  versions        DocumentVersion[]
+  translations    Translation[]
+
+  createdById   String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@index([status])
+  @@index([govEntityId])
+}
+
+model SourceDocument {
+  id            String   @id @default(cuid())
+  publicationId String
+  publication   OfficialPublication @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+  title         String
+  storageKey    String
+  originalLocale Locale  @default(pt)
+  checksum      String?
+  createdAt     DateTime @default(now())
+
+  @@index([publicationId])
+}
+
+/// Immutable snapshots of a publication for auditability.
+model DocumentVersion {
+  id            String   @id @default(cuid())
+  publicationId String
+  publication   OfficialPublication @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+  version       Int
+  bodyMarkdown  String?
+  changedById   String?
+  changeNote    String?
+  createdAt     DateTime @default(now())
+
+  @@unique([publicationId, version])
+}
+
+/// Translations link to a source (procedure or publication). Source text preserved.
+model Translation {
+  id            String          @id @default(cuid())
+  locale        Locale
+  kind          TranslationKind @default(MACHINE)
+  title         String?
+  body          String?
+  procedureId   String?
+  procedure     Procedure?      @relation(fields: [procedureId], references: [id], onDelete: Cascade)
+  publicationId String?
+  publication   OfficialPublication? @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+  translatedById String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  @@unique([procedureId, locale])
+  @@unique([publicationId, locale])
+  @@index([kind])
+}
+
+// ----------------------------------------------------------------------------
+// Interactions: leads, messages, notifications, favorites
+// ----------------------------------------------------------------------------
+
+model Lead {
+  id          String     @id @default(cuid())
+  listingId   String?
+  listing     Listing?   @relation(fields: [listingId], references: [id])
+  fromUserId  String?
+  fromUser    User?      @relation("LeadFromUser", fields: [fromUserId], references: [id])
+  name        String?
+  email       String?
+  phone       String?
+  message     String?
+  locale      Locale     @default(pt)
+  status      LeadStatus @default(NEW)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([listingId])
+  @@index([status])
+}
+
+model Conversation {
+  id        String    @id @default(cuid())
+  subject   String?
+  messages  Message[]
+  createdAt DateTime  @default(now())
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderUserId   String?
+  sender         User?        @relation("MessageSender", fields: [senderUserId], references: [id])
+  body           String
+  attachments    String[]
+  readAt         DateTime?
+  createdAt      DateTime     @default(now())
+
+  @@index([conversationId])
+}
+
+model Notification {
+  id        String              @id @default(cuid())
+  userId    String
+  user      User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  channel   NotificationChannel
+  template  String
+  payload   Json
+  sentAt    DateTime?
+  readAt    DateTime?
+  createdAt DateTime            @default(now())
+
+  @@index([userId, readAt])
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listingId String
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, listingId])
+}
+
+// ----------------------------------------------------------------------------
+// Billing
+// ----------------------------------------------------------------------------
+
+model Subscription {
+  id             String             @id @default(cuid())
+  organizationId String
+  organization   Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  plan           SubscriptionPlan
+  status         SubscriptionStatus @default(TRIALING)
+  priceAmount    Decimal            @db.Decimal(12, 2)
+  currency       String             @default("CVE")
+  currentPeriodEnd DateTime?
+  invoices       Invoice[]
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  @@index([status])
+}
+
+model Invoice {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  subscriptionId String?
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
+  number         String       @unique
+  amount         Decimal      @db.Decimal(12, 2)
+  currency       String       @default("CVE")
+  issuedAt       DateTime     @default(now())
+  dueAt          DateTime?
+  payments       Payment[]
+
+  @@index([organizationId])
+}
+
+model Payment {
+  id          String        @id @default(cuid())
+  invoiceId   String?
+  invoice     Invoice?      @relation(fields: [invoiceId], references: [id])
+  amount      Decimal       @db.Decimal(12, 2)
+  currency    String        @default("CVE")
+  status      PaymentStatus @default(PENDING)
+  provider    String?
+  providerRef String?
+  idempotencyKey String?    @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([status])
+}
+
+// ----------------------------------------------------------------------------
+// Safety, moderation, audit, support
+// ----------------------------------------------------------------------------
+
+model Complaint {
+  id             String          @id @default(cuid())
+  reporterUserId String?
+  reviewId       String?
+  review         Review?         @relation(fields: [reviewId], references: [id])
+  professionalId String?
+  professional   Professional?   @relation("ComplaintAgainstProfessional", fields: [professionalId], references: [id])
+  subject        String
+  description    String?
+  status         ComplaintStatus @default(OPEN)
+  resolutionNote String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([status])
+}
+
+model ModerationCase {
+  id          String           @id @default(cuid())
+  entityType  String // listing | review | profile | message | publication
+  entityId    String
+  listingId   String?
+  listing     Listing?         @relation(fields: [listingId], references: [id])
+  reason      String
+  status      ModerationStatus @default(OPEN)
+  assignedToId String?
+  resolution  String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@index([status])
+  @@index([entityType, entityId])
+}
+
+/// Append-only audit trail. Never soft-deleted; retained per policy.
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  actorRole  String?
+  action     String // e.g. "listing.publish", "gov.publication.approve"
+  entityType String
+  entityId   String
+  metadata   Json?
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+
+  @@index([entityType, entityId])
+  @@index([actorId])
+  @@index([createdAt])
+}
+
+model FraudSignal {
+  id         String          @id @default(cuid())
+  kind       FraudSignalKind
+  entityType String
+  entityId   String
+  score      Decimal         @db.Decimal(4, 3)
+  details    Json?
+  resolved   Boolean         @default(false)
+  createdAt  DateTime        @default(now())
+
+  @@index([entityType, entityId])
+  @@index([resolved])
+}
+
+model SupportTicket {
+  id         String       @id @default(cuid())
+  userId     String?
+  user       User?        @relation(fields: [userId], references: [id])
+  subject    String
+  body       String
+  channel    NotificationChannel @default(EMAIL)
+  status     TicketStatus @default(OPEN)
+  assignedToId String?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  @@index([status])
+}
