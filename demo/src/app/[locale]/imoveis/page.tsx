@@ -1,0 +1,44 @@
+import { searchListings, t, type Locale } from '@/i18n';
+import { ListingGrid } from '@/components/ui';
+
+const ISLANDS = [['', 'all'], ['SV', 'São Vicente'], ['ST', 'Santiago'], ['SL', 'Sal'], ['BV', 'Boa Vista']] as const;
+const KINDS: [string, Record<Locale, string>][] = [
+  ['', { pt: 'Todos', en: 'All', nl: 'Alle' }],
+  ['PROPERTY_SALE', { pt: 'Venda', en: 'Sale', nl: 'Koop' }],
+  ['PROPERTY_RENT', { pt: 'Arrendamento', en: 'Rent', nl: 'Huur' }],
+  ['LAND', { pt: 'Terreno', en: 'Land', nl: 'Grond' }],
+  ['NEW_DEVELOPMENT', { pt: 'Novo projeto', en: 'New development', nl: 'Nieuw project' }],
+];
+const one = (v: string | string[] | undefined): string | undefined => (Array.isArray(v) ? v[0] : v);
+
+export default function ListingsPage({
+  params, searchParams,
+}: {
+  params: { locale: Locale };
+  searchParams: Record<string, string | string[] | undefined>;
+}): JSX.Element {
+  const locale = params.locale;
+  const q = one(searchParams.q);
+  const kind = one(searchParams.kind);
+  const islandCode = one(searchParams.islandCode);
+  const rows = searchListings({ q, kind, islandCode }, locale);
+
+  return (
+    <div className="space-y-6">
+      <h1 className="text-2xl font-bold">{t(locale, 'nav.imoveis')}</h1>
+      <form className="flex flex-wrap items-end gap-3 rounded-xl border border-slate-200 bg-white p-4">
+        <label className="flex flex-col text-sm"><span className="mb-1 text-slate-600">{t(locale, 'common.search')}</span>
+          <input name="q" defaultValue={q ?? ''} className="rounded border px-2 py-1.5" /></label>
+        <label className="flex flex-col text-sm"><span className="mb-1 text-slate-600">{t(locale, 'common.island')}</span>
+          <select name="islandCode" defaultValue={islandCode ?? ''} className="rounded border px-2 py-1.5">
+            {ISLANDS.map(([v, l]) => <option key={v} value={v}>{l === 'all' ? t(locale, 'common.all') : l}</option>)}</select></label>
+        <label className="flex flex-col text-sm"><span className="mb-1 text-slate-600">{t(locale, 'common.type')}</span>
+          <select name="kind" defaultValue={kind ?? ''} className="rounded border px-2 py-1.5">
+            {KINDS.map(([v, l]) => <option key={v} value={v}>{l[locale]}</option>)}</select></label>
+        <button className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white">{t(locale, 'common.filter')}</button>
+      </form>
+      <p className="text-sm text-slate-500">{rows.length} {t(locale, 'common.results')}</p>
+      <ListingGrid rows={rows} locale={locale} />
+    </div>
+  );
+}
