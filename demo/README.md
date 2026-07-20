@@ -16,3 +16,5 @@ Vercel → Add New… → Project → import `Studio-Goud/CapeVerdeMobilia` →
 **Root Directory = `demo`** → Deploy. Framework (Next.js) is auto-detected.
 
 All content is fictional. Djarvista does not provide legal advice.
+
+<!-- deploy: trigger production build for djarvista.com -->
