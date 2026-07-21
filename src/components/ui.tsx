@@ -4,6 +4,7 @@ import {
   type Locale, type Listing, type VerificationLevel, type UIKey,
   t, tr, formatPrice, docLabel, verifLabel,
 } from '@/i18n';
+import { isSupabaseConfigured } from '@/lib/supabase/env';
 import { Wordmark } from './Wordmark';
 
 const cn = (...p: Array<string | false | null | undefined>): string => p.filter(Boolean).join(' ');
@@ -159,7 +160,7 @@ export function SiteFooter({ locale }: { locale: Locale }): JSX.Element {
       </div>
       <div className="border-t border-slate-100">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 py-3 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-          <p>{t(locale, 'footer.demo')}</p>
+          <p>{isSupabaseConfigured ? t(locale, 'footer.rights') : t(locale, 'footer.demo')}</p>
           <ul className="flex flex-wrap gap-x-4 gap-y-1">
             {link('/termos', 'footer.terms')}
             {link('/privacidade', 'footer.privacy')}

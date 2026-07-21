@@ -186,6 +186,7 @@ const UI = {
   'footer.demo': { pt: 'Demonstração · dados fictícios · piloto conceptual São Vicente', en: 'Demo · fictional data · conceptual São Vicente pilot', nl: 'Demo · fictieve data · conceptuele São Vicente-pilot' },
   'footer.explore': { pt: 'Explorar', en: 'Explore', nl: 'Ontdek' },
   'footer.account': { pt: 'Conta', en: 'Account', nl: 'Account' },
+  'footer.rights': { pt: 'Djarvista · Cabo Verde — a começar por São Vicente', en: 'Djarvista · Cape Verde — starting on São Vicente', nl: 'Djarvista · Kaapverdië — te beginnen op São Vicente' },
   'footer.terms': { pt: 'Termos de utilização', en: 'Terms of use', nl: 'Gebruiksvoorwaarden' },
   'footer.privacy': { pt: 'Privacidade', en: 'Privacy', nl: 'Privacy' },
 
