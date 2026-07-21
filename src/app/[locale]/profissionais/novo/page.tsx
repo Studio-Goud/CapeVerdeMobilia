@@ -199,7 +199,9 @@ export default function ProfessionalFormPage({ params }: { params: { locale: Loc
 
     const res = await upsertProfessional(payload);
     setBusy(false);
-    if (res === null) { router.push(`/${locale}/profissionais/${slug}`); return; }
+    // A published profile has a public detail page; a draft does not (the detail
+    // route filters on status='published'), so send drafts back to the directory.
+    if (res === null) { router.push(f.publish ? `/${locale}/profissionais/${slug}` : `/${locale}/profissionais`); return; }
     if (res === 'auth') {
       setError(tr({ pt: 'A sua sessão expirou. Inicie sessão novamente.', en: 'Your session expired. Please log in again.', nl: 'Je sessie is verlopen. Log opnieuw in.' }, locale));
       return;

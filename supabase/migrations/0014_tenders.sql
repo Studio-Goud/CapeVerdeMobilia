@@ -56,10 +56,13 @@ create table if not exists public.tender_bids (
 
 alter table public.tender_bids enable row level security;
 
--- A bidder inserts their own bid; the tender owner and the bidder may read it.
+-- A bidder inserts their own bid, but only while the tender is open.
 drop policy if exists "bids insert own" on public.tender_bids;
 create policy "bids insert own" on public.tender_bids
-  for insert to authenticated with check (bidder_id = auth.uid());
+  for insert to authenticated with check (
+    bidder_id = auth.uid()
+    and exists (select 1 from public.tenders t where t.id = tender_id and t.status = 'open')
+  );
 
 drop policy if exists "bids read owner or bidder" on public.tender_bids;
 create policy "bids read owner or bidder" on public.tender_bids
@@ -72,6 +75,11 @@ create policy "bids read owner or bidder" on public.tender_bids
 drop policy if exists "bids update own" on public.tender_bids;
 create policy "bids update own" on public.tender_bids
   for update to authenticated using (bidder_id = auth.uid()) with check (bidder_id = auth.uid());
+
+-- A bidder may withdraw their own bid.
+drop policy if exists "bids delete own" on public.tender_bids;
+create policy "bids delete own" on public.tender_bids
+  for delete to authenticated using (bidder_id = auth.uid());
 
 -- Keep tenders.updated_at fresh.
 create or replace function public.touch_tenders_updated_at()

@@ -45,7 +45,9 @@ export async function fetchListings(): Promise<Listing[]> {
     .neq('kind', 'SERVICE')
     .order('is_featured', { ascending: false })
     .order('published_at', { ascending: false });
-  if (error || !data || data.length === 0) return demoProperties();
+  // Demo content only when there is no backend. On a configured site an empty
+  // result is a real empty state — never show fictional listings as if live.
+  if (error || !data) return [];
   return (data as ListingRow[]).map(rowToListing);
 }
 
@@ -59,7 +61,7 @@ export async function fetchServiceListings(): Promise<Listing[]> {
     .eq('status', 'published')
     .eq('kind', 'SERVICE')
     .order('published_at', { ascending: false });
-  if (error || !data || data.length === 0) return demoServices();
+  if (error || !data) return [];
   return (data as ListingRow[]).map(rowToListing);
 }
 
@@ -67,7 +69,7 @@ export async function fetchListingBySlug(slug: string): Promise<Listing | undefi
   const supabase = getServerSupabase();
   if (!supabase) return demoGetListing(slug);
   const { data, error } = await supabase.from('listings').select('*').eq('slug', slug).maybeSingle();
-  if (error || !data) return demoGetListing(slug);
+  if (error || !data) return undefined;
   return rowToListing(data as ListingRow);
 }
 
@@ -223,10 +225,7 @@ export async function fetchProfessionals(area?: string): Promise<ProProfile[]> {
   let query = supabase.from('professionals').select('*, profiles(verification_level)').eq('status', 'published');
   if (area) query = query.contains('service_areas', [area]);
   const { data, error } = await query.order('created_at', { ascending: false });
-  if (error || !data || data.length === 0) {
-    const demo = PROFESSIONALS.map(demoToProProfile);
-    return area ? demo.filter((p) => p.serviceAreas.includes(area)) : demo;
-  }
+  if (error || !data) return [];
   const rows = data as unknown as ProRow[];
   const stats = await ratingsFor(supabase, rows.map((r) => r.slug));
   return rows.map((r) => {
@@ -248,10 +247,7 @@ export async function fetchProfessionalBySlug(slug: string): Promise<ProProfile 
   }
   const { data, error } = await supabase
     .from('professionals').select('*, profiles(verification_level)').eq('slug', slug).eq('status', 'published').maybeSingle();
-  if (error || !data) {
-    const p = demoGetProfessional(slug);
-    return p ? demoToProProfile(p) : undefined;
-  }
+  if (error || !data) return undefined;
   const r = data as unknown as ProRow;
   const stats = await ratingsFor(supabase, [r.slug]);
   const s = stats.get(r.slug);
@@ -291,10 +287,7 @@ export async function fetchSuppliers(island?: string): Promise<SupplierView[]> {
   let query = supabase.from('suppliers').select('*').eq('status', 'published');
   if (island) query = query.eq('island', island);
   const { data, error } = await query.order('verified', { ascending: false }).order('created_at', { ascending: false });
-  if (error || !data || data.length === 0) {
-    const demo = SUPPLIERS.map(demoToSupplier);
-    return island ? demo.filter((s) => s.island === island) : demo;
-  }
+  if (error || !data) return [];
   return (data as SupplierRow[]).map((r) => ({
     id: r.id, userId: r.user_id, slug: r.slug, name: r.name, category: r.category, island: r.island ?? '',
     description: r.description, priceFrom: r.price_from, phone: r.phone, verified: r.verified,
@@ -333,10 +326,7 @@ export async function fetchTenders(island?: string): Promise<TenderView[]> {
   let query = supabase.from('tenders').select('*').neq('status', 'draft');
   if (island) query = query.eq('island', island);
   const { data, error } = await query.order('created_at', { ascending: false });
-  if (error || !data || data.length === 0) {
-    const demo = TENDERS.map(demoToTender);
-    return island ? demo.filter((t) => t.island === island) : demo;
-  }
+  if (error || !data) return [];
   return (data as TenderRow[]).map(tenderRowToView);
 }
 export async function fetchTenderBySlug(slug: string): Promise<TenderView | undefined> {
@@ -383,10 +373,7 @@ export async function fetchProjects(island?: string): Promise<ProjectView[]> {
   let query = supabase.from('projects').select('*').eq('visibility', 'published');
   if (island) query = query.eq('island', island);
   const { data, error } = await query.order('created_at', { ascending: false });
-  if (error || !data || data.length === 0) {
-    const demo = PROJECTS.map(demoToProject);
-    return island ? demo.filter((p) => p.island === island) : demo;
-  }
+  if (error || !data) return [];
   return (data as ProjectRow[]).map(projectRowToView);
 }
 export async function fetchProjectBySlug(slug: string): Promise<ProjectView | undefined> {

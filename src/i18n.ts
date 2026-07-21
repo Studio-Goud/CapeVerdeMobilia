@@ -10,7 +10,7 @@ export const isLocale = (v: string): v is Locale => (LOCALES as string[]).includ
 
 /** A translatable string in the three demo languages. */
 export type TL = Record<Locale, string>;
-export const tr = (v: TL, l: Locale): string => v[l] ?? v.pt;
+export const tr = (v: TL, l: Locale): string => v[l] ?? v.pt ?? '';
 
 // --- UI dictionary (interface chrome). Keys are derived from the object below. ---
 const UI = {

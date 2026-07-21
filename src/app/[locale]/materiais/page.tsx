@@ -56,13 +56,15 @@ export default async function MaterialsPage({
             <p className="text-xs text-slate-500">{s.island}</p>
             {s.priceFrom && <p className="mt-2 text-sm font-medium text-brand">{tr(s.priceFrom, locale)}</p>}
             {s.description && <p className="mt-2 line-clamp-2 text-sm text-slate-600">{tr(s.description, locale)}</p>}
-            <a
-              href={whatsappLink(`${tr(s.category, locale)} — ${s.name}`, s.phone ?? undefined)}
-              target="_blank" rel="noopener noreferrer"
-              className="mt-3 inline-block rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-brand hover:text-brand"
-            >
-              {t(locale, 'mat.requestQuote')}
-            </a>
+            {s.phone && (
+              <a
+                href={whatsappLink(`${tr(s.category, locale)} — ${s.name}`, s.phone)}
+                target="_blank" rel="noopener noreferrer"
+                className="mt-3 inline-block rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-brand hover:text-brand"
+              >
+                {t(locale, 'mat.requestQuote')}
+              </a>
+            )}
           </Card>
         ))}
       </div>
