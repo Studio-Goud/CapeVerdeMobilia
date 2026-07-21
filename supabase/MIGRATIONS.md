@@ -15,6 +15,7 @@ yet migrated, so the live site never breaks while you catch up.
 | 0007 | `migrations/0007_admin_delete_listings.sql` | admin delete policy on `listings` (moderators can remove listings) | ⏳ **to run** |
 | 0008 | `migrations/0008_publications_seed.sql` | refresh + expand info-centre seeds (sourced tenancy/tax/buying summaries) | ⏳ **to run** |
 | 0009 | `migrations/0009_security_hardening.sql` | **security**: block self-promote to admin, self-verify reviews, rental-request injection | ⏳ **to run** |
+| 0010 | `migrations/0010_publications_construction.sql` | building-permit info article (RNOTPU / DL 57/2015 / PDM) | ⏳ **to run** |
 
 ## Roles
 - Make yourself admin (trust/ops + info editor):
