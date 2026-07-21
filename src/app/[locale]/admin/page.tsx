@@ -11,11 +11,14 @@ import {
   fetchAllListingsForMod,
   setListingStatus,
   deleteListing,
+  fetchBoostRequests,
+  resolveBoost,
   type AdminVerification,
   type AdminListing,
+  type BoostRequestItem,
 } from '@/lib/browserData';
 
-type Tab = 'verifications' | 'listings';
+type Tab = 'verifications' | 'listings' | 'boosts';
 
 // Verification level accepted by verifLabel — derived, so we avoid `any` and an extra import.
 type VerifLevel = Parameters<typeof verifLabel>[1];
@@ -50,6 +53,9 @@ const L = {
   },
   tabVerifications: { pt: 'Verificações', en: 'Verifications', nl: 'Verificaties' },
   tabListings: { pt: 'Anúncios', en: 'Listings', nl: 'Advertenties' },
+  tabBoosts: { pt: 'Destaques', en: 'Boosts', nl: 'Uitlichtingen' },
+  noBoosts: { pt: 'Sem pedidos de destaque pendentes.', en: 'No pending boost requests.', nl: 'Geen openstaande uitlicht-aanvragen.' },
+  boostHint: { pt: 'Aprovar coloca o anúncio em destaque (pagamento tratado à parte — ver PAYMENTS.md).', en: 'Approving features the listing (payment handled separately — see PAYMENTS.md).', nl: 'Goedkeuren licht de advertentie uit (betaling apart — zie PAYMENTS.md).' },
   loading: { pt: 'A carregar…', en: 'Loading…', nl: 'Laden…' },
   noVerifications: {
     pt: 'Sem pedidos de verificação pendentes.',
@@ -93,6 +99,7 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
   const [tab, setTab] = useState<Tab>('verifications');
   const [verifs, setVerifs] = useState<AdminVerification[] | null>(null);
   const [listings, setListings] = useState<AdminListing[] | null>(null);
+  const [boosts, setBoosts] = useState<BoostRequestItem[] | null>(null);
   const [busy, setBusy] = useState(false);
 
   const isAdmin = Boolean(user) && user?.role === 'admin';
@@ -109,11 +116,18 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
     setListings(rows ?? []);
   }, []);
 
+  const loadBoosts = useCallback(async (): Promise<void> => {
+    setBoosts(null);
+    const rows = await fetchBoostRequests();
+    setBoosts(rows ?? []);
+  }, []);
+
   useEffect(() => {
     if (!ready || !configured || !isAdmin) return;
     if (tab === 'verifications') void loadVerifs();
-    else void loadListings();
-  }, [ready, configured, isAdmin, tab, loadVerifs, loadListings]);
+    else if (tab === 'listings') void loadListings();
+    else void loadBoosts();
+  }, [ready, configured, isAdmin, tab, loadVerifs, loadListings, loadBoosts]);
 
   // --- Actions ---------------------------------------------------------------
   const openDoc = useCallback(async (path: string): Promise<void> => {
@@ -150,6 +164,16 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
       await loadListings();
     },
     [loadListings, locale],
+  );
+
+  const decideBoost = useCallback(
+    async (req: BoostRequestItem, approve: boolean): Promise<void> => {
+      setBusy(true);
+      await resolveBoost(req.id, req.listing_id, approve);
+      setBusy(false);
+      await loadBoosts();
+    },
+    [loadBoosts],
   );
 
   // --- Guards ----------------------------------------------------------------
@@ -203,9 +227,34 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
       <div className="mb-6 flex flex-wrap gap-2 rounded-xl border border-slate-200 bg-white p-1 shadow-card">
         {tabBtn('verifications', tr(L.tabVerifications, locale))}
         {tabBtn('listings', tr(L.tabListings, locale))}
+        {tabBtn('boosts', tr(L.tabBoosts, locale))}
       </div>
 
-      {tab === 'verifications' ? (
+      {tab === 'boosts' ? (
+        <section className="space-y-3">
+          <p className="text-xs text-slate-400">{tr(L.boostHint, locale)}</p>
+          {boosts === null ? (
+            <p className="text-sm text-slate-500">{tr(L.loading, locale)}</p>
+          ) : boosts.length === 0 ? (
+            <Card><p className="text-sm text-slate-500">{tr(L.noBoosts, locale)}</p></Card>
+          ) : (
+            boosts.map((req) => (
+              <Card key={req.id}>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="min-w-0">
+                    <h3 className="truncate text-sm font-semibold text-slate-900">{req.listingTitle ? tr(req.listingTitle, locale) : req.listing_id.slice(0, 8)}</h3>
+                    <p className="text-xs text-slate-400">{tr(L.submitted, locale)}: {formatDate(locale, req.created_at)}</p>
+                  </div>
+                  <div className="flex flex-wrap gap-2 sm:justify-end">
+                    <button type="button" disabled={busy} className={BTN_APPROVE} onClick={() => void decideBoost(req, true)}>{tr(L.approve, locale)}</button>
+                    <button type="button" disabled={busy} className={BTN_DANGER} onClick={() => void decideBoost(req, false)}>{tr(L.reject, locale)}</button>
+                  </div>
+                </div>
+              </Card>
+            ))
+          )}
+        </section>
+      ) : tab === 'verifications' ? (
         <section className="space-y-3">
           {verifs === null ? (
             <p className="text-sm text-slate-500">{tr(L.loading, locale)}</p>

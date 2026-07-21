@@ -22,6 +22,7 @@ yet migrated, so the live site never breaks while you catch up.
 | 0014 | `migrations/0014_tenders.sql` | real tenders + bids (concursos), public bid count | ⏳ **to run** |
 | 0015 | `migrations/0015_projects.sql` | real construction-project portfolio (projetos) | ⏳ **to run** |
 | 0016 | `migrations/0016_tender_bid_guards.sql` | only bid on open tenders; bidders can withdraw (patch to 0014) | ⏳ **to run** |
+| 0017 | `migrations/0017_boost_requests.sql` | boost/feature-listing requests (revenue loop) + RLS | ⏳ **to run** |
 
 ## Roles
 - Make yourself admin (trust/ops + info editor):

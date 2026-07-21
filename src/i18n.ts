@@ -281,6 +281,8 @@ const UI = {
   'dash.myProjects': { pt: 'Os meus projetos', en: 'My projects', nl: 'Mijn projecten' },
   'dash.newProject': { pt: 'Adicionar projeto', en: 'Add project', nl: 'Project toevoegen' },
   'dash.noProjects': { pt: 'Ainda não adicionou projetos.', en: 'You have not added any projects yet.', nl: 'Je hebt nog geen projecten toegevoegd.' },
+  'dash.boost': { pt: 'Destacar', en: 'Feature', nl: 'Uitlichten' },
+  'dash.boostRequested': { pt: 'Pedido enviado', en: 'Requested', nl: 'Aangevraagd' },
   'dash.close': { pt: 'Fechar', en: 'Close', nl: 'Sluiten' },
   'dash.reopen': { pt: 'Reabrir', en: 'Reopen', nl: 'Heropenen' },
   'dash.draft': { pt: 'Rascunho', en: 'Draft', nl: 'Concept' },

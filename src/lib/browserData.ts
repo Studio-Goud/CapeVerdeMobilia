@@ -449,6 +449,48 @@ export async function setProjectVisibility(id: string, visibility: 'published' |
 }
 
 // ---------------------------------------------------------------------------
+// Boost / feature requests (revenue loop) — request → admin approves → featured
+// ---------------------------------------------------------------------------
+/** Owner requests to feature one of their listings. */
+export async function requestBoost(listingId: string): Promise<string | null> {
+  const ctx = await uid();
+  if (!ctx) return isSupabaseConfigured ? 'auth' : 'demo';
+  const { error } = await ctx.supa.from('boost_requests').insert({ listing_id: listingId, requester: ctx.id, status: 'pending' });
+  return error ? error.message : null;
+}
+
+export interface BoostRequestItem { id: string; listing_id: string; requester: string; status: string; created_at: string; listingTitle: TL | null }
+/** Admin: pending boost requests. */
+export async function fetchBoostRequests(): Promise<BoostRequestItem[] | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return null;
+  const { data, error } = await supa
+    .from('boost_requests')
+    .select('id,listing_id,requester,status,created_at,listings(title)')
+    .eq('status', 'pending')
+    .order('created_at', { ascending: false });
+  if (error) return null;
+  return (data ?? []).map((d) => {
+    const rel = (d as unknown as { listings: { title: TL } | { title: TL }[] | null }).listings;
+    const listing = Array.isArray(rel) ? rel[0] : rel;
+    return { ...(d as unknown as BoostRequestItem), listingTitle: listing?.title ?? null };
+  });
+}
+
+/** Admin: approve (sets the listing featured) or reject a boost request. */
+export async function resolveBoost(reqId: string, listingId: string, approve: boolean): Promise<string | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return 'demo';
+  const { error } = await supa.from('boost_requests').update({ status: approve ? 'approved' : 'rejected' }).eq('id', reqId);
+  if (error) return error.message;
+  if (approve) {
+    const { error: e2 } = await supa.from('listings').update({ is_featured: true }).eq('id', listingId);
+    if (e2) return e2.message;
+  }
+  return null;
+}
+
+// ---------------------------------------------------------------------------
 // Projects portfolio (projetos)
 // ---------------------------------------------------------------------------
 export interface ProjectInput {

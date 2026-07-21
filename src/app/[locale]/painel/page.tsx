@@ -8,6 +8,7 @@ import {
   fetchBusinessDashboard, fetchMyFavorites, fetchLeads, setListingStatus, deleteListing,
   fetchIncomingRentalRequests, fetchMyRentalRequests, setRentalRequestStatus, fetchMyBookings,
   fetchMyTenders, fetchMyProjects, setTenderStatus, deleteTender, setProjectVisibility, deleteProject,
+  requestBoost,
   type BusinessDashboard, type LeadItem, type OwnedListing, type RentalRequestItem, type Booking,
   type MyTender, type MyProject,
 } from '@/lib/browserData';
@@ -26,6 +27,7 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
   const [bookings, setBookings] = useState<Booking[] | null>(null);
   const [myTenders, setMyTenders] = useState<MyTender[] | null>(null);
   const [myProjects, setMyProjects] = useState<MyProject[] | null>(null);
+  const [boosted, setBoosted] = useState<Set<string>>(new Set());
   const [actionError, setActionError] = useState<string | null>(null);
 
   const isBiz = !!user && (user.role === 'business' || user.role === 'admin');
@@ -99,6 +101,12 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
     const err = await deleteListing(l.id);
     if (err) { setActionError(err); return; }
     await reloadBiz();
+  }
+  async function boostListing(l: OwnedListing): Promise<void> {
+    setActionError(null);
+    const err = await requestBoost(l.id);
+    if (err) { setActionError(err); return; }
+    setBoosted((prev) => new Set(prev).add(l.id));
   }
 
   if (!ready) return <div className="h-40" aria-hidden />;
@@ -191,6 +199,13 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
                     </Link>
                     <button onClick={() => void togglePublish(l)} className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-brand hover:text-brand">
                       {t(locale, l.status === 'published' ? 'dash.unpublish' : 'dash.publish')}
+                    </button>
+                    <button
+                      onClick={() => void boostListing(l)}
+                      disabled={boosted.has(l.id)}
+                      className="rounded-lg border border-coral/40 px-3 py-1.5 text-xs font-semibold text-coral-600 hover:bg-coral-50 disabled:opacity-60"
+                    >
+                      {t(locale, boosted.has(l.id) ? 'dash.boostRequested' : 'dash.boost')}
                     </button>
                     <button onClick={() => void removeListing(l)} className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50">
                       {t(locale, 'dash.delete')}
