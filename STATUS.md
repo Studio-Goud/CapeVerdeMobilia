@@ -28,7 +28,7 @@ echte advertenties/profielen via de formulieren, of nodig echte makelaars uit
 (zie `outreach/makelaar-uitnodiging.md`).
 
 ## ⚠️ Alleen jij kunt dit doen
-1. **Migraties draaien** in Supabase SQL-editor: **0014 + 0015 + 0016** (0016 = biedingen alleen op open concursos + intrekken). 0001–0013 zijn gedaan.
+1. **Migratie 0017 draaien** (boost/uitlicht-aanvragen). 0001–0016 zijn gedaan.
 2. **`service_role`-sleutel roteren** (stond ooit in de chat).
 3. **Juridische `[…]`-placeholders** invullen in `/termos` en `/privacidade` (rechtsvorm, adres) + juridische check.
 4. **Apple App Store**: volg `APP_STORE.md` (Mac + Apple Developer-account $99/jaar nodig).
