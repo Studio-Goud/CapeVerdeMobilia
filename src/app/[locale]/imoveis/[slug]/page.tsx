@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { t, tr, formatPrice, formatDate, docLabel, type Locale, type TL } from '@/i18n';
 import { fetchListingBySlug, fetchListings } from '@/lib/data';
@@ -14,6 +15,19 @@ const RENT_TITLE: TL = { pt: 'Pedir para arrendar', en: 'Request to rent', nl: '
 const SIMILAR: TL = { pt: 'Imóveis semelhantes', en: 'Similar properties', nl: 'Vergelijkbaar aanbod' };
 const LOCATION: TL = { pt: 'Localização', en: 'Location', nl: 'Locatie' };
 const MAP_SOON: TL = { pt: 'Localização aproximada', en: 'Approximate location', nl: 'Locatie bij benadering' };
+
+export async function generateMetadata({ params }: { params: { locale: Locale; slug: string } }): Promise<Metadata> {
+  const l = await fetchListingBySlug(params.slug);
+  if (!l) return { title: 'Djarvista' };
+  const title = tr(l.title, params.locale);
+  const description = tr(l.description, params.locale).slice(0, 180);
+  const image = (l.photos && l.photos[0]) || l.thumbnail;
+  return {
+    title, description,
+    openGraph: { title, description, images: image ? [image] : undefined },
+    twitter: { card: 'summary_large_image', title, description },
+  };
+}
 
 export default async function ListingDetailPage({ params }: { params: { locale: Locale; slug: string } }): Promise<JSX.Element> {
   const locale = params.locale;

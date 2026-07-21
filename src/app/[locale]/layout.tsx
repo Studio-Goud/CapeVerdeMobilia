@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { LOCALES, isLocale, t, type Locale } from '@/i18n';
 import { SiteFooter } from '@/components/ui';
@@ -8,6 +9,15 @@ import { isSupabaseConfigured } from '@/lib/supabase/env';
 
 export function generateStaticParams(): { locale: Locale }[] {
   return LOCALES.map((locale) => ({ locale }));
+}
+
+export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
+  const l = isLocale(params.locale) ? params.locale : 'pt';
+  const ogLocale = l === 'pt' ? 'pt_PT' : l === 'en' ? 'en_GB' : 'nl_NL';
+  return {
+    openGraph: { locale: ogLocale },
+    alternates: { languages: { pt: '/pt', en: '/en', nl: '/nl' } },
+  };
 }
 
 export default function LocaleLayout({

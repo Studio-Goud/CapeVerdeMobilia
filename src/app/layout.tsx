@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.djarvista.com'),
@@ -26,7 +27,10 @@ export const viewport: Viewport = { themeColor: '#003893', width: 'device-width'
 export default function RootLayout({ children }: { children: ReactNode }): JSX.Element {
   return (
     <html lang="pt">
-      <body className="flex min-h-screen flex-col">{children}</body>
+      <body className="flex min-h-screen flex-col">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
