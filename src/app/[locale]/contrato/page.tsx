@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { t, tr, type Locale, type TL } from '@/i18n';
 import { useAuth } from '@/components/Auth';
 
@@ -8,6 +9,9 @@ const TXT = {
   title: { pt: 'Gerador de contrato de arrendamento', en: 'Rental contract generator', nl: 'Huurcontract-generator' } as TL,
   intro: { pt: 'Preencha os dados e gere um contrato de arrendamento pronto a imprimir ou guardar em PDF. O documento é redigido em português (língua legal em Cabo Verde).', en: 'Fill in the details and generate a tenancy agreement ready to print or save as PDF. The document is written in Portuguese (the legal language in Cape Verde).', nl: 'Vul de gegevens in en genereer een huurcontract, klaar om te printen of als PDF op te slaan. Het document is in het Portugees (de juridische taal in Kaapverdië).' } as TL,
   disclaimer: { pt: 'A Djarvista fornece este gerador apenas como serviço/ferramenta. Não é parte no contrato, não presta aconselhamento jurídico e não é responsável pela validade do documento. Recomenda-se validação por advogado/notário e o cumprimento das obrigações de registo e imposto de selo aplicáveis.', en: 'Djarvista provides this generator only as a service/tool. It is not a party to the contract, does not give legal advice and is not responsible for the document’s validity. Legal/notary review and compliance with applicable registration and stamp-duty duties are recommended.', nl: 'Djarvista biedt deze generator uitsluitend als service/tool aan. Djarvista is geen partij bij het contract, geeft geen juridisch advies en is niet verantwoordelijk voor de geldigheid van het document. Validatie door advocaat/notaris en naleving van registratie- en zegelrechtverplichtingen worden aangeraden.' } as TL,
+  knowRules: { pt: 'Conheça as regras antes de assinar:', en: 'Know the rules before signing:', nl: 'Ken de regels vóór ondertekening:' } as TL,
+  rulesLink: { pt: 'Regras do arrendamento urbano', en: 'Urban-tenancy rules', nl: 'Regels stedelijke huur' } as TL,
+  evictLink: { pt: 'Se o inquilino se recusar a sair', en: 'If the tenant refuses to leave', nl: 'Als de huurder weigert te vertrekken' } as TL,
   fill: { pt: 'Dados', en: 'Details', nl: 'Gegevens' } as TL,
   print: { pt: 'Imprimir / Guardar PDF', en: 'Print / Save PDF', nl: 'Printen / PDF opslaan' } as TL,
   preview: { pt: 'Pré-visualização', en: 'Preview', nl: 'Voorbeeld' } as TL,
@@ -63,6 +67,12 @@ export default function ContractPage({ params }: { params: { locale: Locale } })
         <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">{tr(TXT.title, locale)}</h1>
         <p className="mt-2 max-w-3xl text-sm text-slate-600">{tr(TXT.intro, locale)}</p>
         <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-xs text-amber-900">⚖️ {tr(TXT.disclaimer, locale)}</div>
+        <p className="mt-3 text-xs text-slate-500">
+          🏛️ {tr(TXT.knowRules, locale)}{' '}
+          <Link href={`/${locale}/info/arrendamento-regras-basicas`} className="font-medium text-brand hover:underline">{tr(TXT.rulesLink, locale)}</Link>
+          {' · '}
+          <Link href={`/${locale}/info/inquilino-recusa-sair`} className="font-medium text-brand hover:underline">{tr(TXT.evictLink, locale)}</Link>
+        </p>
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
