@@ -1,5 +1,6 @@
 // Djarvista demo — trilingual (PT / EN / NL) strings + fictional content.
 // No database, no PII. UI strings and demo content are both localized.
+import { placeholderImage } from './lib/placeholder';
 
 export type Locale = 'pt' | 'en' | 'nl';
 export const LOCALES: Locale[] = ['pt', 'en', 'nl'];
@@ -58,6 +59,8 @@ const UI = {
   'common.filter': { pt: 'Filtrar', en: 'Filter', nl: 'Filteren' },
   'common.viewAll': { pt: 'Ver todos', en: 'View all', nl: 'Bekijk alles' },
   'common.results': { pt: 'resultado(s)', en: 'result(s)', nl: 'resulta(a)t(en)' },
+  'common.noListings': { pt: 'Ainda não há anúncios aqui.', en: 'No listings here yet.', nl: 'Hier staan nog geen advertenties.' },
+  'common.beFirst': { pt: 'Seja o primeiro a publicar', en: 'Be the first to list', nl: 'Wees de eerste die plaatst' },
   'common.send': { pt: 'Enviar', en: 'Send', nl: 'Versturen' },
   'common.close': { pt: 'Fechar', en: 'Close', nl: 'Sluiten' },
   'common.priceOnRequest': { pt: 'Preço sob consulta', en: 'Price on request', nl: 'Prijs op aanvraag' },
@@ -183,6 +186,8 @@ const UI = {
   'footer.demo': { pt: 'Demonstração · dados fictícios · piloto conceptual São Vicente', en: 'Demo · fictional data · conceptual São Vicente pilot', nl: 'Demo · fictieve data · conceptuele São Vicente-pilot' },
   'footer.explore': { pt: 'Explorar', en: 'Explore', nl: 'Ontdek' },
   'footer.account': { pt: 'Conta', en: 'Account', nl: 'Account' },
+  'footer.terms': { pt: 'Termos de utilização', en: 'Terms of use', nl: 'Gebruiksvoorwaarden' },
+  'footer.privacy': { pt: 'Privacidade', en: 'Privacy', nl: 'Privacy' },
 
   // Not found
   'notfound.title': { pt: 'Página não encontrada', en: 'Page not found', nl: 'Pagina niet gevonden' },
@@ -395,7 +400,7 @@ export const verifLabel = (l: Locale, v: VerificationLevel): string =>
 export function whatsappLink(message: string, to = '2389000000'): string {
   return `https://wa.me/${to.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
 }
-const img = (label: string): string => `https://placehold.co/1200x800/003893/ffffff?text=${encodeURIComponent(label)}`;
+const img = (label: string): string => placeholderImage(label);
 
 // --- Content data (fictional) ---
 export const LISTINGS: Listing[] = [

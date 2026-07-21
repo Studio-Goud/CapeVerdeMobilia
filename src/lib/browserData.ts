@@ -2,8 +2,8 @@
 import { getBrowserSupabase } from './supabase/client';
 import { isSupabaseConfigured } from './supabase/env';
 import type { Listing, TL } from '@/i18n';
+import { PLACEHOLDER_IMAGE as PLACEHOLDER } from './placeholder';
 
-const PLACEHOLDER = 'https://placehold.co/1200x800/003893/ffffff?text=Djarvista';
 const EMPTY_TL: TL = { pt: '', en: '', nl: '' };
 
 interface Row {

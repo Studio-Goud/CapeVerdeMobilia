@@ -98,7 +98,17 @@ export function ListingCard({ l, locale }: { l: Listing; locale: Locale }): JSX.
 }
 
 export function ListingGrid({ rows, locale }: { rows: Listing[]; locale: Locale }): JSX.Element {
-  if (rows.length === 0) return <p className="rounded-lg border border-dashed border-slate-300 p-6 text-slate-500">—</p>;
+  if (rows.length === 0) {
+    return (
+      <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-slate-300 bg-white/60 px-6 py-12 text-center">
+        <span aria-hidden className="text-3xl">🏝️</span>
+        <p className="text-sm font-medium text-slate-600">{t(locale, 'common.noListings')}</p>
+        <Link href={`/${locale}/imoveis/publicar`} className="mt-1 rounded-lg bg-coral px-4 py-2 text-sm font-semibold text-white hover:bg-coral-600">
+          {t(locale, 'common.beFirst')}
+        </Link>
+      </div>
+    );
+  }
   return <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{rows.map((l) => <ListingCard key={l.id} l={l} locale={locale} />)}</div>;
 }
 
@@ -135,7 +145,13 @@ export function SiteFooter({ locale }: { locale: Locale }): JSX.Element {
         </div>
       </div>
       <div className="border-t border-slate-100">
-        <p className="mx-auto w-full max-w-6xl px-4 py-3 text-xs text-slate-500">{t(locale, 'footer.demo')}</p>
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 py-3 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+          <p>{t(locale, 'footer.demo')}</p>
+          <ul className="flex flex-wrap gap-x-4 gap-y-1">
+            {link('/termos', 'footer.terms')}
+            {link('/info', 'nav.info')}
+          </ul>
+        </div>
       </div>
     </footer>
   );

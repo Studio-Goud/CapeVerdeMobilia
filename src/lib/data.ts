@@ -2,8 +2,7 @@
 // to the fictional demo content so the site keeps working during onboarding.
 import { LISTINGS, getListing as demoGetListing, type Listing, type TL } from '@/i18n';
 import { getServerSupabase } from './supabase/server';
-
-const PLACEHOLDER = 'https://placehold.co/1200x800/003893/ffffff?text=Djarvista';
+import { PLACEHOLDER_IMAGE as PLACEHOLDER } from './placeholder';
 
 interface ListingRow {
   id: string; slug: string; kind: string; title: TL; description: TL | null;
