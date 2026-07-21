@@ -115,6 +115,17 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
             <Stat label={t(locale, 'dash.reviews')} value={configured ? '—' : '★ 4.6'} hint={configured ? undefined : '8'} />
           </div>
 
+          {/* Professional directory profile */}
+          <Card className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 className="text-base font-semibold text-slate-900">{t(locale, 'dash.proProfileTitle')}</h2>
+              <p className="mt-0.5 text-sm text-slate-600">{t(locale, 'dash.proProfileBody')}</p>
+            </div>
+            <Link href={`/${locale}/profissionais/novo`} className="shrink-0 rounded-lg border border-brand px-4 py-2 text-sm font-semibold text-brand hover:bg-brand-50">
+              {t(locale, 'dash.proProfileCta')}
+            </Link>
+          </Card>
+
           {/* Listings management */}
           <section>
             <div className="mb-3 flex items-center justify-between">

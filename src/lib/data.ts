@@ -1,6 +1,9 @@
 // Server-side data access. Uses Supabase when configured; otherwise falls back
 // to the fictional demo content so the site keeps working during onboarding.
-import { LISTINGS, getListing as demoGetListing, type Listing, type TL } from '@/i18n';
+import {
+  LISTINGS, getListing as demoGetListing, PROFESSIONALS, getProfessional as demoGetProfessional,
+  type Listing, type TL, type VerificationLevel,
+} from '@/i18n';
 import { getServerSupabase } from './supabase/server';
 import { PLACEHOLDER_IMAGE as PLACEHOLDER } from './placeholder';
 
@@ -160,4 +163,100 @@ export async function fetchReviews(proSlug: string): Promise<ReviewView[]> {
     author: r.author_name || 'Anónimo', rating: r.rating, verified: r.verified,
     date: (r.created_at ?? '').slice(0, 10), body: r.body ?? '',
   }));
+}
+
+// ---------------------------------------------------------------------------
+// Professionals directory (real when configured; demo fallback otherwise).
+// ---------------------------------------------------------------------------
+export interface ProProfile {
+  id: string; userId: string | null; slug: string; displayName: string;
+  headline: TL; bio: TL | null; category: string | null;
+  serviceAreas: string[]; priceIndication: TL | null; phone: string | null;
+  verificationLevel: VerificationLevel; ratingAvg: number | null; ratingCount: number;
+}
+interface ProRow {
+  id: string; user_id: string; slug: string; display_name: string;
+  headline: TL; bio: TL | null; category: string | null; service_areas: string[] | null;
+  price_indication: TL | null; phone: string | null;
+  profiles: { verification_level: VerificationLevel } | { verification_level: VerificationLevel }[] | null;
+}
+
+/** Map the demo Professional shape to ProProfile so pages share one type. */
+function demoToProProfile(p: (typeof PROFESSIONALS)[number]): ProProfile {
+  return {
+    id: p.id, userId: null, slug: p.slug, displayName: p.displayName, headline: p.headline,
+    bio: null, category: null, serviceAreas: p.serviceAreas, priceIndication: p.priceIndication,
+    phone: null, verificationLevel: p.verificationLevel, ratingAvg: p.ratingAvg, ratingCount: p.ratingCount,
+  };
+}
+
+function verifOf(row: ProRow): VerificationLevel {
+  const rel = row.profiles;
+  const obj = Array.isArray(rel) ? rel[0] : rel;
+  return obj?.verification_level ?? 'L0_NONE';
+}
+
+/** Aggregate review stats (avg + count) for a set of slugs in one query. */
+async function ratingsFor(
+  supabase: NonNullable<ReturnType<typeof getServerSupabase>>, slugs: string[],
+): Promise<Map<string, { avg: number; count: number }>> {
+  const map = new Map<string, { avg: number; count: number }>();
+  if (slugs.length === 0) return map;
+  const { data } = await supabase.from('reviews').select('pro_slug,rating').in('pro_slug', slugs);
+  const acc = new Map<string, { sum: number; count: number }>();
+  for (const r of (data ?? []) as { pro_slug: string; rating: number }[]) {
+    const a = acc.get(r.pro_slug) ?? { sum: 0, count: 0 };
+    a.sum += r.rating; a.count += 1; acc.set(r.pro_slug, a);
+  }
+  for (const [slug, a] of acc) map.set(slug, { avg: a.sum / a.count, count: a.count });
+  return map;
+}
+
+/** Published professionals, optionally filtered by service area. */
+export async function fetchProfessionals(area?: string): Promise<ProProfile[]> {
+  const supabase = getServerSupabase();
+  if (!supabase) {
+    const demo = PROFESSIONALS.map(demoToProProfile);
+    return area ? demo.filter((p) => p.serviceAreas.includes(area)) : demo;
+  }
+  let query = supabase.from('professionals').select('*, profiles(verification_level)').eq('status', 'published');
+  if (area) query = query.contains('service_areas', [area]);
+  const { data, error } = await query.order('created_at', { ascending: false });
+  if (error || !data || data.length === 0) {
+    const demo = PROFESSIONALS.map(demoToProProfile);
+    return area ? demo.filter((p) => p.serviceAreas.includes(area)) : demo;
+  }
+  const rows = data as unknown as ProRow[];
+  const stats = await ratingsFor(supabase, rows.map((r) => r.slug));
+  return rows.map((r) => {
+    const s = stats.get(r.slug);
+    return {
+      id: r.id, userId: r.user_id, slug: r.slug, displayName: r.display_name, headline: r.headline,
+      bio: r.bio, category: r.category, serviceAreas: r.service_areas ?? [], priceIndication: r.price_indication,
+      phone: r.phone, verificationLevel: verifOf(r), ratingAvg: s ? s.avg : null, ratingCount: s ? s.count : 0,
+    };
+  });
+}
+
+/** A single published professional by slug (demo fallback when not configured). */
+export async function fetchProfessionalBySlug(slug: string): Promise<ProProfile | undefined> {
+  const supabase = getServerSupabase();
+  if (!supabase) {
+    const p = demoGetProfessional(slug);
+    return p ? demoToProProfile(p) : undefined;
+  }
+  const { data, error } = await supabase
+    .from('professionals').select('*, profiles(verification_level)').eq('slug', slug).eq('status', 'published').maybeSingle();
+  if (error || !data) {
+    const p = demoGetProfessional(slug);
+    return p ? demoToProProfile(p) : undefined;
+  }
+  const r = data as unknown as ProRow;
+  const stats = await ratingsFor(supabase, [r.slug]);
+  const s = stats.get(r.slug);
+  return {
+    id: r.id, userId: r.user_id, slug: r.slug, displayName: r.display_name, headline: r.headline,
+    bio: r.bio, category: r.category, serviceAreas: r.service_areas ?? [], priceIndication: r.price_indication,
+    phone: r.phone, verificationLevel: verifOf(r), ratingAvg: s ? s.avg : null, ratingCount: s ? s.count : 0,
+  };
 }

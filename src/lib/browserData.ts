@@ -292,3 +292,44 @@ export async function saveFavorite(listingId: string): Promise<'ok' | 'demo' | '
   const { error } = await supa.from('favorites').upsert({ user_id: uidv, listing_id: listingId });
   return error ? error.message : 'ok';
 }
+
+// ---------------------------------------------------------------------------
+// Professional profile (owned by a business user — one per user)
+// ---------------------------------------------------------------------------
+export interface MyProfessional {
+  id?: string; slug: string; display_name: string; headline: TL; bio: TL;
+  category: string; service_areas: string[]; price_indication: TL | null; phone: string; status: string;
+}
+interface MyProRow {
+  id: string; slug: string; display_name: string; headline: TL | null; bio: TL | null;
+  category: string | null; service_areas: string[] | null; price_indication: TL | null; phone: string | null; status: string;
+}
+
+/** The current user's professional profile, or null if none/not logged in. */
+export async function fetchMyProfessional(): Promise<MyProfessional | null> {
+  const ctx = await uid();
+  if (!ctx) return null;
+  const { data } = await ctx.supa.from('professionals').select('*').eq('user_id', ctx.id).maybeSingle();
+  if (!data) return null;
+  const r = data as MyProRow;
+  return {
+    id: r.id, slug: r.slug, display_name: r.display_name,
+    headline: { ...EMPTY_TL, ...(r.headline ?? {}) }, bio: { ...EMPTY_TL, ...(r.bio ?? {}) },
+    category: r.category ?? '', service_areas: r.service_areas ?? [],
+    price_indication: r.price_indication, phone: r.phone ?? '', status: r.status,
+  };
+}
+
+/** Create or update the current user's professional profile (unique per user). */
+export async function upsertProfessional(input: MyProfessional): Promise<string | null> {
+  const ctx = await uid();
+  if (!ctx) return isSupabaseConfigured ? 'auth' : 'demo';
+  const row = {
+    user_id: ctx.id, slug: input.slug, display_name: input.display_name,
+    headline: input.headline, bio: input.bio, category: input.category || null,
+    service_areas: input.service_areas, price_indication: input.price_indication,
+    phone: input.phone || null, status: input.status,
+  };
+  const { error } = await ctx.supa.from('professionals').upsert(row, { onConflict: 'user_id' });
+  return error ? error.message : null;
+}

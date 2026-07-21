@@ -1,31 +1,43 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { t, tr, type Locale, getProfessional, verifLabel } from '@/i18n';
+import { t, tr, type Locale, type TL, verifLabel } from '@/i18n';
 import { REVIEWS } from '@/content';
-import { fetchReviews, type ReviewView } from '@/lib/data';
+import { fetchProfessionalBySlug, fetchReviews, type ProProfile, type ReviewView } from '@/lib/data';
 import { isSupabaseConfigured } from '@/lib/supabase/env';
 import { PageTitle, Card, Pill, TrustBadge, SectionHead } from '@/components/ui';
 import { LeadForm } from '@/components/LeadForm';
 import { ReviewForm } from '@/components/ReviewForm';
 
-const ABOUT = { pt: 'Sobre', en: 'About', nl: 'Over' };
-const SERVICES = { pt: 'Serviços', en: 'Services', nl: 'Diensten' };
-const REVIEWS_HEAD = { pt: 'Avaliações', en: 'Reviews', nl: 'Beoordelingen' };
-const AREAS = { pt: 'Áreas de serviço', en: 'Service areas', nl: 'Werkgebieden' };
-const VERIFIED = { pt: 'Verificado', en: 'Verified', nl: 'Geverifieerd' };
-const TRUST = { pt: 'Confiança e verificação', en: 'Trust & verification', nl: 'Vertrouwen en verificatie' };
-const TRUST_BODY = {
-  pt: 'O nível de verificação indica que passos de validação de identidade, empresa e documentos foram concluídos nesta plataforma de demonstração.',
-  en: 'The verification level indicates which identity, business and document checks have been completed on this demo platform.',
-  nl: 'Het verificatieniveau geeft aan welke identiteits-, bedrijfs- en documentcontroles op dit demoplatform zijn afgerond.',
-};
-const ABOUT_BODY = {
-  pt: 'Equipa sediada em São Vicente com mais de uma década de experiência em projetos residenciais e comerciais nas ilhas de Cabo Verde. Trabalhamos com clientes locais e da diáspora, prezando por prazos claros, orçamentos transparentes e comunicação em português, crioulo e inglês. Este é um perfil fictício para fins de demonstração.',
-  en: 'A São Vicente-based team with over a decade of experience on residential and commercial projects across the islands of Cape Verde. We serve both local and diaspora clients, with a focus on clear timelines, transparent budgets and communication in Portuguese, Creole and English. This is a fictional profile for demonstration purposes.',
-  nl: 'Een team gevestigd op São Vicente met meer dan tien jaar ervaring in residentiële en commerciële projecten op de eilanden van Kaapverdië. Wij bedienen zowel lokale klanten als de diaspora, met aandacht voor duidelijke planningen, transparante budgetten en communicatie in het Portugees, Creools en Engels. Dit is een fictief profiel voor demonstratiedoeleinden.',
+const ABOUT: TL = { pt: 'Sobre', en: 'About', nl: 'Over' };
+const SERVICES: TL = { pt: 'Serviços', en: 'Services', nl: 'Diensten' };
+const REVIEWS_HEAD: TL = { pt: 'Avaliações', en: 'Reviews', nl: 'Beoordelingen' };
+const AREAS: TL = { pt: 'Áreas de serviço', en: 'Service areas', nl: 'Werkgebieden' };
+const VERIFIED: TL = { pt: 'Verificado', en: 'Verified', nl: 'Geverifieerd' };
+const TRUST: TL = { pt: 'Confiança e verificação', en: 'Trust & verification', nl: 'Vertrouwen en verificatie' };
+const CONTACT_PHONE: TL = { pt: 'Ligar diretamente', en: 'Call directly', nl: 'Direct bellen' };
+
+const TRUST_BODY: TL = {
+  pt: 'O nível de verificação indica quais os passos de validação de identidade, empresa e documentos que este profissional já concluiu.',
+  en: 'The verification level indicates which identity, business and document checks this professional has completed.',
+  nl: 'Het verificatieniveau geeft aan welke identiteits-, bedrijfs- en documentcontroles deze professional heeft afgerond.',
 };
 
-const SERVICE_ITEMS: ReadonlyArray<{ pt: string; en: string; nl: string }> = [
+// Shown only when the professional has no real bio yet — generic, no fictional claims.
+const ABOUT_FALLBACK: TL = {
+  pt: 'Profissional disponível para projetos residenciais e comerciais em Cabo Verde. Entre em contacto para conhecer os serviços, a disponibilidade e receber um orçamento sem compromisso.',
+  en: 'Professional available for residential and commercial projects across Cape Verde. Get in touch to learn about services, availability and to receive a no-obligation quote.',
+  nl: 'Professional beschikbaar voor residentiële en commerciële projecten in Kaapverdië. Neem contact op voor informatie over diensten, beschikbaarheid en een vrijblijvende offerte.',
+};
+
+// Generic "what to expect" guide — not claimed as this professional's specific offering.
+const SERVICES_INTRO: TL = {
+  pt: 'O que geralmente esperar ao entrar em contacto:',
+  en: 'What to generally expect when you get in touch:',
+  nl: 'Wat u doorgaans kunt verwachten bij contact:',
+};
+
+const SERVICE_ITEMS: ReadonlyArray<TL> = [
   {
     pt: 'Consulta inicial e visita ao local sem compromisso',
     en: 'Initial consultation and no-obligation site visit',
@@ -37,7 +49,7 @@ const SERVICE_ITEMS: ReadonlyArray<{ pt: string; en: string; nl: string }> = [
     nl: 'Gedetailleerde offerte met materialen en planning',
   },
   {
-    pt: 'Acompanhamento e gestão da obra do início ao fim',
+    pt: 'Acompanhamento e gestão do projeto do início ao fim',
     en: 'Project supervision and management from start to finish',
     nl: 'Begeleiding en beheer van het project van begin tot eind',
   },
@@ -47,6 +59,12 @@ const SERVICE_ITEMS: ReadonlyArray<{ pt: string; en: string; nl: string }> = [
     nl: 'Ondersteuning bij documentatie en vergunningen bij de instanties',
   },
 ];
+
+/** Real bio when the professional has written one; otherwise a generic fallback line. */
+function aboutText(pro: ProProfile, locale: Locale): string {
+  const bio = pro.bio ? tr(pro.bio, locale).trim() : '';
+  return bio || tr(ABOUT_FALLBACK, locale);
+}
 
 function Stars({ rating }: { rating: number }): JSX.Element {
   const rounded = Math.round(rating);
@@ -58,13 +76,25 @@ function Stars({ rating }: { rating: number }): JSX.Element {
   );
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { locale: Locale; slug: string };
+}): Promise<Metadata> {
+  const pro = await fetchProfessionalBySlug(params.slug);
+  if (!pro) return { title: 'Djarvista' };
+  const title = `${pro.displayName} · Djarvista`;
+  const description = tr(pro.headline, params.locale).slice(0, 180);
+  return { title, description, openGraph: { title, description } };
+}
+
 export default async function ProfessionalDetailPage({
   params,
 }: {
   params: { locale: Locale; slug: string };
 }): Promise<JSX.Element> {
   const locale = params.locale;
-  const pro = getProfessional(params.slug);
+  const pro = await fetchProfessionalBySlug(params.slug);
   if (!pro) notFound();
 
   const configured = isSupabaseConfigured;
@@ -110,7 +140,7 @@ export default async function ProfessionalDetailPage({
 
           <section className="mb-8">
             <SectionHead title={tr(ABOUT, locale)} />
-            <p className="max-w-3xl text-sm leading-relaxed text-slate-600">{tr(ABOUT_BODY, locale)}</p>
+            <p className="max-w-3xl whitespace-pre-line text-sm leading-relaxed text-slate-600">{aboutText(pro, locale)}</p>
             {pro.priceIndication && (
               <p className="mt-3 text-sm font-medium text-slate-700">{tr(pro.priceIndication, locale)}</p>
             )}
@@ -118,6 +148,7 @@ export default async function ProfessionalDetailPage({
 
           <section className="mb-8">
             <SectionHead title={tr(SERVICES, locale)} />
+            <p className="mb-3 text-sm text-slate-600">{tr(SERVICES_INTRO, locale)}</p>
             <ul className="space-y-2">
               {SERVICE_ITEMS.map((s) => (
                 <li key={s.en} className="flex items-start gap-2 text-sm text-slate-600">
@@ -169,7 +200,13 @@ export default async function ProfessionalDetailPage({
         <aside className="space-y-6">
           <Card>
             <h2 className="mb-3 text-lg font-semibold text-slate-900">{t(locale, 'listing.contactVisit')}</h2>
-            <LeadForm locale={locale} proSlug={pro.slug} source="pro" />
+            {pro.phone && (
+              <p className="mb-3 text-sm text-slate-600">
+                {tr(CONTACT_PHONE, locale)}:{' '}
+                <a href={`tel:${pro.phone}`} className="font-medium text-brand hover:underline">{pro.phone}</a>
+              </p>
+            )}
+            <LeadForm locale={locale} proSlug={pro.slug} recipient={pro.userId} source="pro" />
           </Card>
 
           <Card>

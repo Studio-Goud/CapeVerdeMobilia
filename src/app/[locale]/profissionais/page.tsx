@@ -1,23 +1,37 @@
 import Link from 'next/link';
-import { PROFESSIONALS, t, tr, type Locale } from '@/i18n';
+import { t, tr, type Locale, type TL } from '@/i18n';
+import { fetchProfessionals, type ProProfile } from '@/lib/data';
 import { PageTitle, TrustBadge, Card } from '@/components/ui';
 
 const AREAS = ['', 'São Vicente', 'Santiago', 'Sal', 'Santo Antão'];
 const one = (v: string | string[] | undefined): string | undefined => (Array.isArray(v) ? v[0] : v);
 
-export default function ProfessionalsPage({
+const PRO_CTA: TL = {
+  pt: 'É profissional? Crie o seu perfil',
+  en: 'Are you a professional? Create your profile',
+  nl: 'Ben je professional? Maak je profiel aan',
+};
+
+export default async function ProfessionalsPage({
   params, searchParams,
 }: {
   params: { locale: Locale };
   searchParams: Record<string, string | string[] | undefined>;
-}): JSX.Element {
+}): Promise<JSX.Element> {
   const locale = params.locale;
   const area = one(searchParams.area) ?? '';
-  const rows = area ? PROFESSIONALS.filter((p) => p.serviceAreas.includes(area)) : PROFESSIONALS;
+  const rows = await fetchProfessionals(area);
 
   return (
     <div>
       <PageTitle title={t(locale, 'pros.title')} intro={t(locale, 'pros.intro')} />
+
+      <Link
+        href={`/${locale}/profissionais/novo`}
+        className="mb-5 inline-block rounded-lg border border-brand px-3 py-1.5 text-sm font-semibold text-brand"
+      >
+        {tr(PRO_CTA, locale)}
+      </Link>
 
       <form className="mb-5 flex flex-wrap items-end gap-3 rounded-xl border border-slate-200 bg-white p-4">
         <label className="flex flex-col text-sm">
@@ -32,7 +46,7 @@ export default function ProfessionalsPage({
       <p className="mb-3 text-sm text-slate-500">{rows.length} {t(locale, 'common.results')}</p>
 
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {rows.map((p) => (
+        {rows.map((p: ProProfile) => (
           <li key={p.id}>
             <Card>
               <div className="flex items-start justify-between gap-2">
