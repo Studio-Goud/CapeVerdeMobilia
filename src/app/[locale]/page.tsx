@@ -1,14 +1,16 @@
 import Link from 'next/link';
-import { PROFESSIONALS, t, tr, type Locale, type UIKey } from '@/i18n';
-import { fetchListings } from '@/lib/data';
+import { t, tr, type Locale, type UIKey } from '@/i18n';
+import { fetchListings, fetchProfessionals } from '@/lib/data';
 import { ListingGrid, SectionHead, Card, TrustBadge } from '@/components/ui';
 
 interface ModuleCard { icon: string; titleKey: UIKey; href: string }
 
 export default async function HomePage({ params }: { params: { locale: Locale } }): Promise<JSX.Element> {
   const locale = params.locale;
-  const listings = (await fetchListings()).slice(0, 6);
-  const professionals = PROFESSIONALS.slice(0, 4);
+  const [listings, professionals] = await Promise.all([
+    fetchListings().then((r) => r.slice(0, 6)),
+    fetchProfessionals().then((r) => r.slice(0, 4)),
+  ]);
   const p = (s: string): string => `/${locale}${s}`;
 
   const modules: ModuleCard[] = [
@@ -89,24 +91,26 @@ export default async function HomePage({ params }: { params: { locale: Locale } 
         </div>
       </section>
 
-      {/* Professionals */}
-      <section>
-        <SectionHead title={t(locale, 'home.professionals')} href={p('/profissionais')} linkLabel={t(locale, 'common.viewAll')} />
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {professionals.map((pro) => (
-            <li key={pro.id}>
-              <Card>
-                <p className="font-semibold text-slate-900">{pro.displayName}</p>
-                <p className="mt-0.5 text-sm text-slate-500">{tr(pro.headline, locale)}</p>
-                <div className="mt-2 flex items-center justify-between">
-                  <span className="text-xs text-slate-500">{pro.ratingAvg ? `★ ${pro.ratingAvg.toFixed(1)} (${pro.ratingCount})` : t(locale, 'pros.noReviews')}</span>
-                  <TrustBadge level={pro.verificationLevel} locale={locale} />
-                </div>
-              </Card>
-            </li>
-          ))}
-        </ul>
-      </section>
+      {/* Professionals — only shown when there are real ones */}
+      {professionals.length > 0 && (
+        <section>
+          <SectionHead title={t(locale, 'home.professionals')} href={p('/profissionais')} linkLabel={t(locale, 'common.viewAll')} />
+          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {professionals.map((pro) => (
+              <li key={pro.id}>
+                <Card>
+                  <p className="font-semibold text-slate-900">{pro.displayName}</p>
+                  <p className="mt-0.5 text-sm text-slate-500">{tr(pro.headline, locale)}</p>
+                  <div className="mt-2 flex items-center justify-between">
+                    <span className="text-xs text-slate-500">{pro.ratingAvg ? `★ ${pro.ratingAvg.toFixed(1)} (${pro.ratingCount})` : t(locale, 'pros.noReviews')}</span>
+                    <TrustBadge level={pro.verificationLevel} locale={locale} />
+                  </div>
+                </Card>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="rounded-2xl bg-slate-900 px-6 py-8 text-white sm:px-10">
