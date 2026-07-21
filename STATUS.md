@@ -20,8 +20,15 @@ Zie ook `LAUNCH_CHECKLIST.md` (live-test) en `APP_STORE.md` (Apple).
 - **Juridisch**: Gebruiksvoorwaarden + Privacybeleid (concept, drietalig).
 - **PWA**: installeerbaar, app-icons + manifest.
 
+## ℹ️ Belangrijk sinds de laatste update
+De app toont nu **alleen echte data** op de live site (geen fictieve
+voorbeelden meer). Gevolg: zolang er weinig echt aanbod is, ziet de site er
+**leeg** uit (lege staten i.p.v. nepdata) — dat is bewust en eerlijk. Vul met
+echte advertenties/profielen via de formulieren, of nodig echte makelaars uit
+(zie `outreach/makelaar-uitnodiging.md`).
+
 ## ⚠️ Alleen jij kunt dit doen
-1. **Migraties draaien** in Supabase SQL-editor: **0014 + 0015** (bestand verstuurd). 0001–0013 zijn gedaan.
+1. **Migraties draaien** in Supabase SQL-editor: **0014 + 0015 + 0016** (0016 = biedingen alleen op open concursos + intrekken). 0001–0013 zijn gedaan.
 2. **`service_role`-sleutel roteren** (stond ooit in de chat).
 3. **Juridische `[…]`-placeholders** invullen in `/termos` en `/privacidade` (rechtsvorm, adres) + juridische check.
 4. **Apple App Store**: volg `APP_STORE.md` (Mac + Apple Developer-account $99/jaar nodig).
