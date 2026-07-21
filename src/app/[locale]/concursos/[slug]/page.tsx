@@ -5,6 +5,7 @@ import { t, tr, formatDate, formatEur, cveToEur, type Locale, type TL } from '@/
 import { fetchTenderBySlug, type TenderView } from '@/lib/data';
 import { PageTitle, Card, Pill, SectionHead } from '@/components/ui';
 import { BidForm } from '@/components/BidForm';
+import { TenderBids } from '@/components/TenderBids';
 
 const DETAILS: TL = { pt: 'Detalhes do concurso', en: 'Tender details', nl: 'Details van de aanbesteding' };
 const DESCRIPTION: TL = { pt: 'Descrição', en: 'Description', nl: 'Omschrijving' };
@@ -80,6 +81,7 @@ export default async function TenderDetailPage({ params }: { params: { locale: L
           <Card>
             <BidForm locale={locale} tenderId={tender.id} />
           </Card>
+          <TenderBids locale={locale} tenderId={tender.id} ownerId={tender.ownerId} />
           <p className="px-1 text-xs text-slate-500">{tr(DISCLAIMER, locale)}</p>
         </aside>
       </div>
