@@ -29,6 +29,7 @@ const UI = {
   'nav.profissionais': { pt: 'Diretório de profissionais', en: 'Professionals directory', nl: 'Professionals-gids' },
   'nav.materials': { pt: 'Materiais & fornecedores', en: 'Materials & suppliers', nl: 'Bouwmaterialen & leveranciers' },
   'nav.services': { pt: 'Serviços', en: 'Services', nl: 'Diensten' },
+  'nav.contract': { pt: 'Contrato de arrendamento', en: 'Rental contract', nl: 'Huurcontract' },
   'nav.postJob': { pt: 'Publicar pedido', en: 'Post a job', nl: 'Opdracht plaatsen' },
   'nav.wizard': { pt: 'Assistente de passos', en: 'Step assistant', nl: 'Stappen-assistent' },
   'nav.projects': { pt: 'Projetos de obra', en: 'Building projects', nl: 'Bouwprojecten' },

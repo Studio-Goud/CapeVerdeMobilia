@@ -8,3 +8,11 @@ body { @apply bg-sand-50 text-slate-900 antialiased; }
 
 .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* Print: show only the generated document (e.g. rental contract). */
+@media print {
+  body * { visibility: hidden !important; }
+  #print-doc, #print-doc * { visibility: visible !important; }
+  #print-doc { position: absolute; inset: 0; margin: 0; padding: 0; border: none !important; box-shadow: none !important; max-width: none; width: 100%; }
+  .no-print { display: none !important; }
+}
