@@ -13,6 +13,7 @@ yet migrated, so the live site never breaks while you catch up.
 | 0005 | `migrations/0005_messages.sql` | `messages` (chat between rental parties) | ✅ done |
 | 0006 | `migrations/0006_publications.sql` | `publications` + `publication_flags` (official info centre) + seeds | ⏳ **to run** |
 | 0007 | `migrations/0007_admin_delete_listings.sql` | admin delete policy on `listings` (moderators can remove listings) | ⏳ **to run** |
+| 0008 | `migrations/0008_publications_seed.sql` | refresh + expand info-centre seeds (sourced tenancy/tax/buying summaries) | ⏳ **to run** |
 
 ## Roles
 - Make yourself admin (trust/ops + info editor):
