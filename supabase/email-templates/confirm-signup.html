@@ -1,0 +1,38 @@
+<!-- Djarvista — "Confirm signup" email template.
+     Paste into Supabase: Authentication → Emails → Templates → Confirm signup.
+     Subject: Confirme o seu email · Confirm your email — Djarvista -->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#faf8f3;padding:24px 0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;">
+  <tr><td align="center">
+    <table role="presentation" width="480" cellpadding="0" cellspacing="0" style="width:480px;max-width:92%;background:#ffffff;border:1px solid #e7dbc7;border-radius:16px;overflow:hidden;">
+      <!-- Header -->
+      <tr><td style="background:#0e6a91;padding:20px 28px;">
+        <span style="display:inline-block;width:28px;height:28px;line-height:28px;text-align:center;background:#f2612a;border-radius:8px;color:#ffffff;font-weight:700;vertical-align:middle;">D</span>
+        <span style="color:#ffffff;font-size:18px;font-weight:700;letter-spacing:-0.2px;margin-left:8px;vertical-align:middle;">Djarvista</span>
+      </td></tr>
+      <!-- Body -->
+      <tr><td style="padding:28px;">
+        <h1 style="margin:0 0 6px;font-size:20px;color:#123c52;">Confirme o seu email</h1>
+        <p style="margin:0 0 16px;font-size:13px;color:#64748b;">Confirm your email address</p>
+        <p style="margin:0 0 8px;font-size:15px;color:#334155;line-height:1.5;">Bem-vindo à Djarvista. Clique no botão para ativar a sua conta.</p>
+        <p style="margin:0 0 22px;font-size:14px;color:#64748b;line-height:1.5;">Welcome to Djarvista. Click the button below to activate your account.</p>
+        <table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="border-radius:10px;background:#f2612a;">
+          <a href="{{ .SiteURL }}/auth/callback?token_hash={{ .TokenHash }}&type=signup&next=/pt/painel"
+             style="display:inline-block;padding:12px 24px;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;border-radius:10px;">
+            Confirmar email · Confirm email
+          </a>
+        </td></tr></table>
+        <p style="margin:22px 0 0;font-size:12px;color:#94a3b8;line-height:1.5;">
+          Se o botão não funcionar, copie este link / If the button doesn't work, copy this link:<br>
+          <a href="{{ .SiteURL }}/auth/callback?token_hash={{ .TokenHash }}&type=signup&next=/pt/painel" style="color:#0e6a91;word-break:break-all;">{{ .SiteURL }}/auth/callback?token_hash={{ .TokenHash }}&type=signup</a>
+        </p>
+      </td></tr>
+      <!-- Footer -->
+      <tr><td style="padding:18px 28px;background:#f3ece0;border-top:1px solid #e7dbc7;">
+        <p style="margin:0;font-size:12px;color:#94a3b8;line-height:1.5;">
+          Se não criou esta conta, ignore este email. · If you didn't create this account, you can ignore this email.<br>
+          Djarvista — a porta digital para imóveis, construção e informação oficial em Cabo Verde.
+        </p>
+      </td></tr>
+    </table>
+  </td></tr>
+</table>
