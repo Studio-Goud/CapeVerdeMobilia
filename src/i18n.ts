@@ -179,7 +179,7 @@ const UI = {
   'lead.email': { pt: 'Email (opcional)', en: 'Email (optional)', nl: 'E-mail (optioneel)' },
   'lead.phone': { pt: 'Telefone / WhatsApp (opcional)', en: 'Phone / WhatsApp (optional)', nl: 'Telefoon / WhatsApp (optioneel)' },
   'lead.message': { pt: 'A sua mensagem', en: 'Your message', nl: 'Je bericht' },
-  'lead.ok': { pt: 'Demonstração: mensagem recebida. Numa versão real seria contactado em breve.', en: 'Demo: message received. In a real version you would be contacted shortly.', nl: 'Demo: bericht ontvangen. In een echte versie word je binnenkort gecontacteerd.' },
+  'lead.ok': { pt: 'Mensagem recebida. Entraremos em contacto em breve.', en: 'Message received. We will get in touch shortly.', nl: 'Bericht ontvangen. We nemen binnenkort contact op.' },
 
   // Footer
   'footer.body': { pt: 'Infraestrutura digital independente para imóveis, construção e informação pública em Cabo Verde. A informação comercial é indicativa; a informação oficial é claramente identificada. A Djarvista não presta aconselhamento jurídico.', en: 'Independent digital infrastructure for property, building and public information in Cabo Verde. Commercial information is indicative; official information is clearly identified. Djarvista does not provide legal advice.', nl: 'Onafhankelijke digitale infrastructuur voor vastgoed, bouw en overheidsinformatie in Kaapverdië. Commerciële informatie is indicatief; officiële informatie is duidelijk herkenbaar. Djarvista geeft geen juridisch advies.' },
@@ -308,7 +308,7 @@ const UI = {
   // Wizard
   'wiz.title': { pt: 'Assistente de passos', en: 'Step assistant', nl: 'Stappen-assistent' },
   'wiz.intro': { pt: 'Responda a três perguntas e receba um plano indicativo: passos, entidades, documentos, profissionais e riscos. Não é aconselhamento jurídico.', en: 'Answer three questions and get an indicative plan: steps, authorities, documents, professionals and risks. This is not legal advice.', nl: 'Beantwoord drie vragen en krijg een indicatief plan: stappen, instanties, documenten, professionals en risico’s. Dit is geen juridisch advies.' },
-  'wiz.q1': { pt: 'Quem é você?', en: 'Who are you?', nl: 'Wie ben je?' },
+  'wiz.q1': { pt: 'Qual é o seu perfil?', en: 'Who are you?', nl: 'Wie ben je?' },
   'wiz.q2': { pt: 'O que pretende fazer?', en: 'What do you want to do?', nl: 'Wat wil je doen?' },
   'wiz.q3': { pt: 'Em que ilha?', en: 'On which island?', nl: 'Op welk eiland?' },
   'wiz.who.foreign': { pt: 'Comprador estrangeiro', en: 'Foreign buyer', nl: 'Buitenlandse koper' },
@@ -328,7 +328,7 @@ const UI = {
 
   // Projects
   'proj.title': { pt: 'Projetos de obra', en: 'Building projects', nl: 'Bouwprojecten' },
-  'proj.intro': { pt: 'Um espaço simples para acompanhar orçamentos, marcos, documentos e pagamentos. (Exemplos fictícios.)', en: 'A simple space to follow quotes, milestones, documents and payments. (Fictional examples.)', nl: 'Een eenvoudige ruimte om offertes, mijlpalen, documenten en betalingen te volgen. (Fictieve voorbeelden.)' },
+  'proj.intro': { pt: 'Um espaço simples para acompanhar orçamentos, marcos, documentos e pagamentos.', en: 'A simple space to follow quotes, milestones, documents and payments.', nl: 'Een eenvoudige ruimte om offertes, mijlpalen, documenten en betalingen te volgen.' },
   'proj.milestones': { pt: 'Marcos', en: 'Milestones', nl: 'Mijlpalen' },
   'proj.budget': { pt: 'Orçamento', en: 'Budget', nl: 'Budget' },
   'proj.progress': { pt: 'Progresso', en: 'Progress', nl: 'Voortgang' },
@@ -339,7 +339,7 @@ const UI = {
 
   // Tenders
   'tend.title': { pt: 'Concursos & aberturas', en: 'Tenders & open jobs', nl: 'Aanbestedingen & opdrachten' },
-  'tend.intro': { pt: 'Pedidos abertos de clientes e organizações. Concursos públicos apenas quando legalmente permitido. (Exemplos fictícios.)', en: 'Open requests from clients and organisations. Public tenders only where legally permitted. (Fictional examples.)', nl: 'Open aanvragen van klanten en organisaties. Publieke aanbestedingen alleen waar juridisch toegestaan. (Fictieve voorbeelden.)' },
+  'tend.intro': { pt: 'Pedidos abertos de clientes e organizações. Concursos públicos apenas quando legalmente permitido.', en: 'Open requests from clients and organisations. Public tenders only where legally permitted.', nl: 'Open aanvragen van klanten en organisaties. Publieke aanbestedingen alleen waar juridisch toegestaan.' },
   'tend.deadline': { pt: 'Prazo', en: 'Deadline', nl: 'Deadline' },
   'tend.budget': { pt: 'Orçamento indicativo', en: 'Indicative budget', nl: 'Indicatief budget' },
   'tend.bids': { pt: 'propostas', en: 'bids', nl: 'inschrijvingen' },
@@ -349,7 +349,7 @@ const UI = {
 
   // Materials
   'mat.title': { pt: 'Materiais & fornecedores', en: 'Materials & suppliers', nl: 'Bouwmaterialen & leveranciers' },
-  'mat.intro': { pt: 'Diretório de fornecedores de materiais de construção. Preços opcionais; peça orçamento. (Exemplos fictícios.)', en: 'Directory of building-materials suppliers. Prices optional; request a quote. (Fictional examples.)', nl: 'Gids van leveranciers van bouwmaterialen. Prijzen optioneel; vraag een offerte. (Fictieve voorbeelden.)' },
+  'mat.intro': { pt: 'Diretório de fornecedores de materiais de construção. Preços opcionais; peça orçamento.', en: 'Directory of building-materials suppliers. Prices optional; request a quote.', nl: 'Gids van leveranciers van bouwmaterialen. Prijzen optioneel; vraag een offerte.' },
   'mat.category': { pt: 'Categoria', en: 'Category', nl: 'Categorie' },
   'mat.requestQuote': { pt: 'Pedir orçamento', en: 'Request a quote', nl: 'Offerte aanvragen' },
 
@@ -417,7 +417,7 @@ export const docLabel = (l: Locale, s: string): string => {
 };
 export const verifLabel = (l: Locale, v: VerificationLevel): string =>
   t(l, ({ L0_NONE: 'verif.L0', L1_IDENTITY: 'verif.L1', L2_BUSINESS: 'verif.L2', L3_DOCUMENTS: 'verif.L3', L4_TRANSACTION: 'verif.L4', L5_INSTITUTIONAL: 'verif.L5' } as Record<VerificationLevel, UIKey>)[v]);
-export function whatsappLink(message: string, to = '2389000000'): string {
+export function whatsappLink(message: string, to: string): string {
   return `https://wa.me/${to.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
 }
 const img = (label: string): string => placeholderImage(label);

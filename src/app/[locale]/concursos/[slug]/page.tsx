@@ -79,7 +79,13 @@ export default async function TenderDetailPage({ params }: { params: { locale: L
 
         <aside className="space-y-4">
           <Card>
-            <BidForm locale={locale} tenderId={tender.id} />
+            {tender.status === 'open' ? (
+              <BidForm locale={locale} tenderId={tender.id} />
+            ) : (
+              <p className="rounded-lg bg-slate-50 px-3 py-2 text-sm font-medium text-slate-600">
+                {tr({ pt: 'Este concurso está fechado — já não aceita propostas.', en: 'This tender is closed — no longer accepting bids.', nl: 'Deze aanbesteding is gesloten — geen inschrijvingen meer mogelijk.' }, locale)}
+              </p>
+            )}
           </Card>
           <TenderBids locale={locale} tenderId={tender.id} ownerId={tender.ownerId} />
           <p className="px-1 text-xs text-slate-500">{tr(DISCLAIMER, locale)}</p>

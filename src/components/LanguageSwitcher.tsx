@@ -2,11 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { LOCALES, LOCALE_NAMES, isLocale, type Locale } from '@/i18n';
 
-/** Swaps the leading /{locale} segment of the current path, preserving the page. */
+/** Swaps the leading /{locale} segment of the current path, preserving the page + query. */
 export function LanguageSwitcher({ current }: { current: Locale }): JSX.Element {
   const pathname = usePathname() || `/${current}`;
+  const [search, setSearch] = useState('');
+  useEffect(() => { setSearch(window.location.search); }, [pathname]);
   const parts = pathname.split('/');
   const rest = isLocale(parts[1] ?? '') ? '/' + parts.slice(2).join('/') : pathname;
   const restClean = rest === '/' ? '' : rest;
@@ -15,7 +18,7 @@ export function LanguageSwitcher({ current }: { current: Locale }): JSX.Element 
       {LOCALES.map((l) => (
         <Link
           key={l}
-          href={`/${l}${restClean}`}
+          href={`/${l}${restClean}${search}`}
           aria-current={l === current ? 'true' : undefined}
           className={
             l === current

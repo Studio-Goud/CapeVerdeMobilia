@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { tr, type Locale, type TL, verifLabel } from '@/i18n';
+import { t, tr, type Locale, type TL, verifLabel } from '@/i18n';
 import { useAuth } from '@/components/Auth';
 import { PageTitle, Card, Pill } from '@/components/ui';
 import { signedUrl } from '@/lib/storage';
@@ -101,6 +101,7 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
   const [listings, setListings] = useState<AdminListing[] | null>(null);
   const [boosts, setBoosts] = useState<BoostRequestItem[] | null>(null);
   const [busy, setBusy] = useState(false);
+  const [actionError, setActionError] = useState<string | null>(null);
 
   const isAdmin = Boolean(user) && user?.role === 'admin';
 
@@ -137,9 +138,10 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
 
   const decide = useCallback(
     async (req: AdminVerification, approve: boolean): Promise<void> => {
-      setBusy(true);
-      await reviewVerification(req.id, req.user_id, approve, req.level_requested);
+      setBusy(true); setActionError(null);
+      const err = await reviewVerification(req.id, req.user_id, approve, req.level_requested);
       setBusy(false);
+      if (err) { setActionError(err); return; }
       await loadVerifs();
     },
     [loadVerifs],
@@ -147,9 +149,10 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
 
   const changeStatus = useCallback(
     async (id: string, status: 'published' | 'draft'): Promise<void> => {
-      setBusy(true);
-      await setListingStatus(id, status);
+      setBusy(true); setActionError(null);
+      const err = await setListingStatus(id, status);
       setBusy(false);
+      if (err) { setActionError(err); return; }
       await loadListings();
     },
     [loadListings],
@@ -158,9 +161,10 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
   const removeListing = useCallback(
     async (id: string): Promise<void> => {
       if (!window.confirm(tr(L.confirmDelete, locale))) return;
-      setBusy(true);
-      await deleteListing(id);
+      setBusy(true); setActionError(null);
+      const err = await deleteListing(id);
       setBusy(false);
+      if (err) { setActionError(err); return; }
       await loadListings();
     },
     [loadListings, locale],
@@ -168,9 +172,10 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
 
   const decideBoost = useCallback(
     async (req: BoostRequestItem, approve: boolean): Promise<void> => {
-      setBusy(true);
-      await resolveBoost(req.id, req.listing_id, approve);
+      setBusy(true); setActionError(null);
+      const err = await resolveBoost(req.id, req.listing_id, approve);
       setBusy(false);
+      if (err) { setActionError(err); return; }
       await loadBoosts();
     },
     [loadBoosts],
@@ -229,6 +234,13 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
         {tabBtn('listings', tr(L.tabListings, locale))}
         {tabBtn('boosts', tr(L.tabBoosts, locale))}
       </div>
+
+      {actionError && (
+        <div role="alert" className="mb-4 flex items-center justify-between gap-3 rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-sm text-red-700">
+          <span>{t(locale, 'dash.actionError')}</span>
+          <button onClick={() => setActionError(null)} className="shrink-0 text-xs font-semibold text-red-600 hover:underline">{t(locale, 'common.close')}</button>
+        </div>
+      )}
 
       {tab === 'boosts' ? (
         <section className="space-y-3">

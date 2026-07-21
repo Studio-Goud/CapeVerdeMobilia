@@ -5,7 +5,7 @@ import { PageTitle, Card, Pill, OfficialTag, SectionHead } from '@/components/ui
 // --- Page-specific content (trilingual PT / EN / NL) ---------------------
 
 const HERO_TITLE: TL = {
-  pt: 'O Djarvista não substitui o Estado — torna a informação oficial mais fácil de encontrar, compreender e aceder.',
+  pt: 'A Djarvista não substitui o Estado — torna a informação oficial mais fácil de encontrar, compreender e consultar.',
   en: 'Djarvista does not replace the government — it makes official information easier to find, understand and access.',
   nl: 'Djarvista vervangt de overheid niet — het maakt officiële informatie makkelijker te vinden, te begrijpen en te bereiken.',
 };

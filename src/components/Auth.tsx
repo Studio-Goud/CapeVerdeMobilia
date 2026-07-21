@@ -91,7 +91,10 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
       const { data, error } = await supabase.auth.signUp({
         email: input.email,
         password: input.password,
-        options: { data: { name: input.name, role: input.role, company: input.company ?? '' } },
+        options: {
+          data: { name: input.name, role: input.role, company: input.company ?? '' },
+          emailRedirectTo: typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : undefined,
+        },
       });
       if (error) return { error: error.message };
       return { needsConfirm: !data.session };

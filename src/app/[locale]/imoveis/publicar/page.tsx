@@ -10,7 +10,7 @@ import { uploadFile, publicUrl, fileExt } from '@/lib/storage';
 import { isNativeApp, takePhotoAsFile } from '@/lib/native';
 
 const KINDS: { v: string; l: TL }[] = [
-  { v: 'PROPERTY_SALE', l: { pt: 'Casa para venda', en: 'Home for sale', nl: 'Woning te koop' } },
+  { v: 'PROPERTY_SALE', l: { pt: 'Casa à venda', en: 'Home for sale', nl: 'Woning te koop' } },
   { v: 'PROPERTY_RENT', l: { pt: 'Casa para arrendar', en: 'Home for rent', nl: 'Woning te huur' } },
   { v: 'LAND', l: { pt: 'Terreno', en: 'Land', nl: 'Grond' } },
   { v: 'COMMERCIAL', l: { pt: 'Comercial', en: 'Commercial', nl: 'Commercieel' } },

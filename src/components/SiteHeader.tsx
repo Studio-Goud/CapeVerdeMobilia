@@ -106,13 +106,14 @@ export function SiteHeader({ locale }: { locale: Locale }): JSX.Element {
         </nav>
 
         <div className="flex items-center gap-2">
-          <div className="hidden sm:block"><LanguageSwitcher current={locale} /></div>
+          {/* Language switch is always visible — it's the platform's core trilingual promise. */}
+          <LanguageSwitcher current={locale} />
           <div className="hidden md:block"><AuthArea locale={locale} /></div>
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label={t(locale, open ? 'nav.close' : 'nav.menu')}
             aria-expanded={open}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 text-slate-700 lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-200 text-slate-700 lg:hidden"
           >
             <span aria-hidden className="text-lg">{open ? '✕' : '☰'}</span>
           </button>

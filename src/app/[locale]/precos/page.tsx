@@ -59,7 +59,7 @@ const PLANS: Plan[] = [
         nl: 'Profiel met geverifieerd label en reputatie',
       },
       {
-        pt: 'Anúncios ilimitados e prioridade nas buscas',
+        pt: 'Anúncios ilimitados e prioridade nas pesquisas',
         en: 'Unlimited listings and search priority',
         nl: 'Onbeperkte advertenties en zoekprioriteit',
       },
@@ -76,7 +76,7 @@ const PLANS: Plan[] = [
     ],
   },
   {
-    name: { pt: 'Empresa · Makelaar', en: 'Agency · Broker', nl: 'Makelaar · Bedrijf' },
+    name: { pt: 'Empresa · Agência', en: 'Agency · Broker', nl: 'Makelaar · Bedrijf' },
     price: { pt: '≈ 6.000 CVE / mês', en: '≈ 6,000 CVE / month', nl: '≈ 6.000 CVE / maand' },
     features: [
       {
@@ -102,7 +102,7 @@ const PLANS: Plan[] = [
     ],
   },
   {
-    name: { pt: 'Instituição · Overheid', en: 'Institution · Government', nl: 'Instelling · Overheid' },
+    name: { pt: 'Instituição · Setor público', en: 'Institution · Government', nl: 'Instelling · Overheid' },
     price: { pt: 'Licença B2G · sob proposta', en: 'B2G licence · on request', nl: 'B2G-licentie · op aanvraag' },
     features: [
       {
@@ -181,7 +181,7 @@ const COPY = {
   plansHead: { pt: 'Planos', en: 'Plans', nl: 'Pakketten' },
   alaCarteHead: { pt: 'Serviços à la carte', en: 'À la carte services', nl: 'Losse diensten' },
   alaCarteIntro: {
-    pt: 'Micro-taxas opcionais para serviços de confiança. Usa se precisares — o serviço básico não depende delas.',
+    pt: 'Micro-taxas opcionais para serviços de confiança. Use se precisar — o serviço básico não depende delas.',
     en: 'Optional micro-fees for trust services. Use them if you need them — the basic service does not depend on them.',
     nl: 'Optionele microkosten voor vertrouwensdiensten. Gebruik ze indien nodig — de basisdienst hangt er niet van af.',
   },
@@ -199,7 +199,7 @@ export default function PricingPage({ params }: { params: { locale: Locale } }):
   const { locale } = params;
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-8">
+    <div className="mx-auto max-w-5xl">
       <PageTitle title={tr(COPY.title, locale)} intro={tr(COPY.intro, locale)} />
 
       {/* Free-forever highlight band */}
@@ -288,6 +288,6 @@ export default function PricingPage({ params }: { params: { locale: Locale } }):
         </div>
         <p className="mt-2 max-w-3xl text-sm text-slate-700">{tr(COPY.disclaimerBody, locale)}</p>
       </section>
-    </main>
+    </div>
   );
 }

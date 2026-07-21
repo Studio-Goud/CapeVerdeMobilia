@@ -155,7 +155,7 @@ const SECTIONS: Section[] = [
     ],
   },
   {
-    heading: { pt: '4. Anúncios e listagens', en: '4. Advertisements and listings', nl: '4. Advertenties en listings' },
+    heading: { pt: '4. Anúncios', en: '4. Listings', nl: '4. Advertenties' },
     blocks: [
       {
         kind: 'p',

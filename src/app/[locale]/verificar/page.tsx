@@ -125,7 +125,7 @@ export default function VerifyPage({ params }: { params: { locale: Locale } }): 
           </label>
           {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
           <button disabled={busy || !doc || !consent} className="w-full rounded-lg bg-brand px-3 py-2.5 font-semibold text-white hover:bg-brand-dark disabled:opacity-60">
-            {tr(TXT.submit, locale)}
+            {busy ? tr({ pt: 'A enviar…', en: 'Uploading…', nl: 'Bezig met verzenden…' }, locale) : tr(TXT.submit, locale)}
           </button>
           <p className="text-[11px] leading-snug text-slate-400">🔒 {tr(TXT.privacy, locale)}</p>
         </form>

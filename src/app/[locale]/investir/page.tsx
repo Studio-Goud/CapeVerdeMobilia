@@ -193,11 +193,11 @@ const DEFENSIBILITY: Block[] = [
 
 const TRACTION: Block[] = [
   {
-    h: { pt: 'Demo trilingue ao vivo', en: 'Live trilingual demo', nl: 'Live drietalige demo' },
+    h: { pt: 'Plataforma trilingue ao vivo', en: 'Live trilingual platform', nl: 'Live drietalig platform' },
     body: {
-      pt: 'Esta aplicação é o MVP: uma demonstração navegável em PT/EN/NL que mostra o produto, o fluxo e o tom, sem base de dados.',
-      en: 'This application is the MVP: a navigable PT/EN/NL demo showing the product, flow and tone, with no database.',
-      nl: 'Deze applicatie is de MVP: een navigeerbare PT/EN/NL-demo die het product, de flow en de toon toont, zonder database.',
+      pt: 'A plataforma está no ar em PT/EN/NL, com backend real: contas, anúncios, arrendamento, verificação e informação oficial — a começar por São Vicente.',
+      en: 'The platform is live in PT/EN/NL on a real backend: accounts, listings, renting, verification and official information — starting on São Vicente.',
+      nl: 'Het platform is live in PT/EN/NL op een echte backend: accounts, advertenties, verhuur, verificatie en officiële informatie — te beginnen op São Vicente.',
     },
   },
   {
@@ -243,9 +243,9 @@ const ASK: Block = {
 };
 
 const CLOSING: TL = {
-  pt: 'Um conjunto completo de 26 documentos de estratégia — deck para investidores, análise de mercado, modelo financeiro e mais — vive no repositório em platform/docs/.',
-  en: 'A complete set of 26 strategy documents — investor deck, market analysis, financial model and more — lives in the repository at platform/docs/.',
-  nl: 'Een volledige set van 26 strategiedocumenten — investeerdersdeck, marktanalyse, financieel model en meer — bevindt zich in de repository onder platform/docs/.',
+  pt: 'Documentação de estratégia completa — deck para investidores, análise de mercado e modelo financeiro — disponível a pedido.',
+  en: 'A complete set of strategy documents — investor deck, market analysis and financial model — available on request.',
+  nl: 'Een volledige set strategiedocumenten — investeerdersdeck, marktanalyse en financieel model — beschikbaar op aanvraag.',
 };
 
 export default function InvestirPage({ params }: { params: { locale: Locale } }): JSX.Element {
@@ -409,7 +409,7 @@ export default function InvestirPage({ params }: { params: { locale: Locale } })
               </h2>
               <p className="mt-1 max-w-2xl text-sm text-slate-600">{tr(CLOSING, locale)}</p>
             </div>
-            <code className="shrink-0 rounded-lg bg-white px-3 py-2 text-sm font-semibold text-brand shadow-card">platform/docs/</code>
+            <span className="shrink-0 rounded-lg bg-white px-3 py-2 text-sm font-semibold text-brand shadow-card">📄 {tr({ pt: 'A pedido', en: 'On request', nl: 'Op aanvraag' }, locale)}</span>
           </div>
         </Card>
         <p className="mt-4 text-center">

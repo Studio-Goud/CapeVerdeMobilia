@@ -15,7 +15,7 @@ const CHECK_EMAIL: TL = {
 export default function RegisterPage({ params }: { params: { locale: Locale } }): JSX.Element {
   const locale = params.locale;
   const router = useRouter();
-  const { signUp } = useAuth();
+  const { signUp, configured } = useAuth();
   const [role, setRole] = useState<Role>('private');
   const [name, setName] = useState('');
   const [company, setCompany] = useState('');
@@ -87,7 +87,7 @@ export default function RegisterPage({ params }: { params: { locale: Locale } })
       <p className="mt-4 text-center text-sm">
         <Link href={`/${locale}/entrar`} className="text-brand hover:underline">{t(locale, 'auth.haveAccount')}</Link>
       </p>
-      <p className="mt-3 text-xs text-slate-400">{t(locale, 'auth.demoNote')}</p>
+      {!configured && <p className="mt-3 text-xs text-slate-500">{t(locale, 'auth.demoNote')}</p>}
     </div>
   );
 }

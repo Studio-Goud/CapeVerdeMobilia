@@ -58,9 +58,10 @@ export default async function TendersPage({
         {rows.map((td: TenderView) => (
           <Card key={td.id} className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <h2 className="font-semibold text-slate-900">{tr(td.title, locale)}</h2>
                 <Pill tone={td.kind === 'PUBLIC' ? 'brand' : 'slate'}>{t(locale, td.kind === 'PUBLIC' ? 'tend.public' : 'tend.private')}</Pill>
+                {td.status !== 'open' && <Pill tone="coral">{t(locale, `tend.state.${td.status}` as 'tend.state.closed')}</Pill>}
               </div>
               <p className="mt-1 text-xs text-slate-500">
                 {td.island} · {t(locale, 'tend.deadline')}: {formatDate(locale, td.deadline)} · {td.bids} {t(locale, 'tend.bids')}
@@ -72,9 +73,13 @@ export default async function TendersPage({
             {td.slug && (
               <Link
                 href={`/${locale}/concursos/${td.slug}`}
-                className="shrink-0 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-dark"
+                className={
+                  td.status === 'open'
+                    ? 'shrink-0 rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-dark'
+                    : 'shrink-0 rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 hover:border-brand'
+                }
               >
-                {t(locale, 'tend.submitBid')}
+                {t(locale, td.status === 'open' ? 'tend.submitBid' : 'common.viewAll')}
               </Link>
             )}
           </Card>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { formatEur, cveToEur, tr, type Locale, type TL } from '@/i18n';
+import { formatEur, cveToEur, formatDate, tr, type Locale, type TL } from '@/i18n';
 import { getBrowserSupabase } from '@/lib/supabase/client';
 import { fetchTenderBids, type BidItem } from '@/lib/browserData';
 
@@ -52,7 +52,7 @@ export function TenderBids({ locale, tenderId, ownerId }: { locale: Locale; tend
                 {b.amount_cve == null ? tr(COPY.noAmount, locale) : formatEur(cveToEur(b.amount_cve))}
               </p>
               {b.message && <p className="mt-0.5 text-sm text-slate-700">{b.message}</p>}
-              <p className="mt-1 text-xs text-slate-400">{(b.created_at ?? '').slice(0, 10)}</p>
+              <p className="mt-1 text-xs text-slate-500">{formatDate(locale, b.created_at)}</p>
             </li>
           ))}
         </ul>

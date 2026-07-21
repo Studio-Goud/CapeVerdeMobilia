@@ -27,8 +27,8 @@ export function SaveButton({ listingId, locale }: { listingId: string; locale: L
           <Link href={`/${locale}/entrar`} className="text-brand hover:underline">{t(locale, 'nav.login')}</Link>
         </p>
       )}
-      {state === 'demo' && <p className="mt-1 text-xs text-slate-400">{t(locale, 'common.demoAction')}</p>}
-      {state === 'err' && <p className="mt-1 text-xs text-red-600">{t(locale, 'common.demoAction')}</p>}
+      {state === 'demo' && <p className="mt-1 text-xs text-slate-500">{t(locale, 'common.demoAction')}</p>}
+      {state === 'err' && <p className="mt-1 text-xs text-red-600">{t(locale, 'dash.actionError')}</p>}
     </div>
   );
 }

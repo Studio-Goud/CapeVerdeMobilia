@@ -10,6 +10,8 @@ const KINDS: [string, Record<Locale, string>][] = [
   ['PROPERTY_RENT', { pt: 'Arrendamento', en: 'Rent', nl: 'Huur' }],
   ['LAND', { pt: 'Terreno', en: 'Land', nl: 'Grond' }],
   ['NEW_DEVELOPMENT', { pt: 'Novo projeto', en: 'New development', nl: 'Nieuw project' }],
+  ['COMMERCIAL', { pt: 'Comercial', en: 'Commercial', nl: 'Commercieel' }],
+  ['HOLIDAY_RENT', { pt: 'Férias', en: 'Holiday', nl: 'Vakantie' }],
 ];
 const one = (v: string | string[] | undefined): string | undefined => (Array.isArray(v) ? v[0] : v);
 

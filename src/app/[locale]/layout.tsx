@@ -5,6 +5,7 @@ import { LOCALES, isLocale, t, type Locale } from '@/i18n';
 import { SiteFooter } from '@/components/ui';
 import { SiteHeader } from '@/components/SiteHeader';
 import { AuthProvider } from '@/components/Auth';
+import { HtmlLang } from '@/components/HtmlLang';
 import { isSupabaseConfigured } from '@/lib/supabase/env';
 
 export function generateStaticParams(): { locale: Locale }[] {
@@ -31,6 +32,7 @@ export default function LocaleLayout({
   const locale = params.locale;
   return (
     <AuthProvider>
+      <HtmlLang locale={locale} />
       {!isSupabaseConfigured && (
         <div className="bg-coral px-4 py-1.5 text-center text-xs font-medium text-white">
           {t(locale, 'demo.banner')}

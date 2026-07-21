@@ -1,9 +1,8 @@
-import { whatsappLink, t, type Locale } from '@/i18n';
+import { t, type Locale } from '@/i18n';
 import { LeadForm } from '@/components/LeadForm';
 
 export default function NewJobPage({ params }: { params: { locale: Locale } }): JSX.Element {
   const locale = params.locale;
-  const wa = whatsappLink('Djarvista: ' + t(locale, 'job.describe'));
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <h1 className="text-2xl font-bold">{t(locale, 'job.title')}</h1>
@@ -18,7 +17,6 @@ export default function NewJobPage({ params }: { params: { locale: Locale } }): 
         <h2 className="text-sm font-semibold text-slate-700">{t(locale, 'job.describe')}</h2>
         <LeadForm locale={locale} />
       </div>
-      <a href={wa} className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white">{t(locale, 'job.whatsapp')}</a>
     </div>
   );
 }
