@@ -16,6 +16,7 @@ yet migrated, so the live site never breaks while you catch up.
 | 0008 | `migrations/0008_publications_seed.sql` | refresh + expand info-centre seeds (sourced tenancy/tax/buying summaries) | ⏳ **to run** |
 | 0009 | `migrations/0009_security_hardening.sql` | **security**: block self-promote to admin, self-verify reviews, rental-request injection | ⏳ **to run** |
 | 0010 | `migrations/0010_publications_construction.sql` | building-permit info article (RNOTPU / DL 57/2015 / PDM) | ⏳ **to run** |
+| 0011 | `migrations/0011_publications_tenancy_rights.sql` | rent/deposit/updates rights-and-duties article (RGAU / INE) | ⏳ **to run** |
 
 ## Roles
 - Make yourself admin (trust/ops + info editor):
