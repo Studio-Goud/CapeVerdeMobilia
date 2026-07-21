@@ -92,6 +92,10 @@ const UI = {
   'home.forBuyers': { pt: 'Para compradores & investidores', en: 'For buyers & investors', nl: 'Voor kopers & investeerders' },
   'home.forPros': { pt: 'Para profissionais & empresas', en: 'For professionals & businesses', nl: 'Voor professionals & bedrijven' },
   'home.forGov': { pt: 'Para entidades públicas', en: 'For public bodies', nl: 'Voor overheidsinstanties' },
+  'home.listTitle': { pt: 'Tem uma casa para vender ou arrendar?', en: 'Have a home to sell or rent out?', nl: 'Heb je een huis te koop of te huur?' },
+  'home.listBody': { pt: 'Coloque o seu imóvel em poucos minutos: tire fotos, descreva e publique. Simples, direto e sem intermediários.', en: 'List your property in minutes: take photos, describe it and publish. Simple, direct and without middlemen.', nl: 'Plaats je woning in enkele minuten: maak foto’s, beschrijf en publiceer. Eenvoudig, direct en zonder tussenpersonen.' },
+  'home.listSale': { pt: 'Anunciar para venda', en: 'List for sale', nl: 'Plaatsen voor verkoop' },
+  'home.listRent': { pt: 'Anunciar para arrendar', en: 'List for rent', nl: 'Plaatsen voor verhuur' },
 
   // Listing detail
   'listing.description': { pt: 'Descrição', en: 'Description', nl: 'Omschrijving' },

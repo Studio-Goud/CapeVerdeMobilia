@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { t, tr, type Locale, type TL } from '@/i18n';
@@ -103,6 +103,14 @@ export default function PublishWizardPage({ params }: { params: { locale: Locale
   const [error, setError] = useState<string | null>(null);
 
   const upd = (k: keyof typeof f, v: string | boolean): void => setF((s) => ({ ...s, [k]: v }));
+
+  // Preset the listing kind from ?kind= (e.g. the homepage "list for rent" CTA).
+  useEffect(() => {
+    const preset = new URLSearchParams(window.location.search).get('kind');
+    if (preset && KINDS.some((k) => k.v === preset)) {
+      setF((s) => ({ ...s, kind: preset }));
+    }
+  }, []);
 
   function onPickPhotos(list: FileList | null): void {
     const files = list ? Array.from(list).slice(0, 12) : [];

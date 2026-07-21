@@ -39,6 +39,22 @@ export default async function HomePage({ params }: { params: { locale: Locale } 
         </div>
       </section>
 
+      {/* List your property (two-sided marketplace entry) */}
+      <section className="flex flex-col gap-4 rounded-2xl border border-coral/30 bg-coral-50/60 p-6 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 className="text-lg font-semibold text-slate-900">{t(locale, 'home.listTitle')}</h2>
+          <p className="mt-1 max-w-xl text-sm text-slate-600">{t(locale, 'home.listBody')}</p>
+        </div>
+        <div className="flex shrink-0 flex-wrap gap-2">
+          <Link href={p('/imoveis/publicar?kind=PROPERTY_SALE')} className="rounded-lg bg-coral px-4 py-2.5 text-sm font-semibold text-white hover:bg-coral-600">
+            {t(locale, 'home.listSale')}
+          </Link>
+          <Link href={p('/imoveis/publicar?kind=PROPERTY_RENT')} className="rounded-lg border border-coral/40 bg-white px-4 py-2.5 text-sm font-semibold text-coral-600 hover:bg-coral-50">
+            {t(locale, 'home.listRent')}
+          </Link>
+        </div>
+      </section>
+
       {/* Modules */}
       <section>
         <div className="mb-4">
