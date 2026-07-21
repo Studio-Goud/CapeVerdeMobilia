@@ -3,12 +3,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { t, tr, formatEur, cveToEur, formatDate, LISTINGS, type Locale, type Listing, type TL } from '@/i18n';
-import { PROJECTS } from '@/content';
 import { useAuth } from '@/components/Auth';
 import {
   fetchBusinessDashboard, fetchMyFavorites, fetchLeads, setListingStatus, deleteListing,
   fetchIncomingRentalRequests, fetchMyRentalRequests, setRentalRequestStatus, fetchMyBookings,
+  fetchMyTenders, fetchMyProjects, setTenderStatus, deleteTender, setProjectVisibility, deleteProject,
   type BusinessDashboard, type LeadItem, type OwnedListing, type RentalRequestItem, type Booking,
+  type MyTender, type MyProject,
 } from '@/lib/browserData';
 import { Card, Stat, Pill, TrustBadge } from '@/components/ui';
 import AvailabilityCalendar from '@/components/AvailabilityCalendar';
@@ -23,13 +24,18 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
   const [favs, setFavs] = useState<Listing[] | null>(null);
   const [rentals, setRentals] = useState<RentalRequestItem[] | null>(null);
   const [bookings, setBookings] = useState<Booking[] | null>(null);
+  const [myTenders, setMyTenders] = useState<MyTender[] | null>(null);
+  const [myProjects, setMyProjects] = useState<MyProject[] | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
 
   const isBiz = !!user && (user.role === 'business' || user.role === 'admin');
 
   const reloadBiz = useCallback(async () => {
-    const [b, l, r, bk] = await Promise.all([fetchBusinessDashboard(), fetchLeads(), fetchIncomingRentalRequests(), fetchMyBookings()]);
-    setBiz(b); setLeads(l); setRentals(r); setBookings(bk);
+    const [b, l, r, bk, tn, pj] = await Promise.all([
+      fetchBusinessDashboard(), fetchLeads(), fetchIncomingRentalRequests(), fetchMyBookings(),
+      fetchMyTenders(), fetchMyProjects(),
+    ]);
+    setBiz(b); setLeads(l); setRentals(r); setBookings(bk); setMyTenders(tn); setMyProjects(pj);
   }, []);
 
   useEffect(() => {
@@ -52,6 +58,33 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
     const err = await setRentalRequestStatus(id, 'withdrawn');
     if (err) { setActionError(err); return; }
     setRentals(await fetchMyRentalRequests());
+  }
+
+  async function toggleTender(t2: MyTender): Promise<void> {
+    setActionError(null);
+    const err = await setTenderStatus(t2.id, t2.status === 'open' ? 'closed' : 'open');
+    if (err) { setActionError(err); return; }
+    await reloadBiz();
+  }
+  async function removeTender(t2: MyTender): Promise<void> {
+    if (!window.confirm(t(locale, 'dash.confirmDelete'))) return;
+    setActionError(null);
+    const err = await deleteTender(t2.id);
+    if (err) { setActionError(err); return; }
+    await reloadBiz();
+  }
+  async function toggleProject(pj: MyProject): Promise<void> {
+    setActionError(null);
+    const err = await setProjectVisibility(pj.id, pj.visibility === 'published' ? 'draft' : 'published');
+    if (err) { setActionError(err); return; }
+    await reloadBiz();
+  }
+  async function removeProject(pj: MyProject): Promise<void> {
+    if (!window.confirm(t(locale, 'dash.confirmDelete'))) return;
+    setActionError(null);
+    const err = await deleteProject(pj.id);
+    if (err) { setActionError(err); return; }
+    await reloadBiz();
   }
 
   async function togglePublish(l: OwnedListing): Promise<void> {
@@ -241,25 +274,70 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
             </section>
           )}
 
+          {/* My tenders (concursos) */}
           <section>
             <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-lg font-semibold">{t(locale, 'dash.projects')}</h2>
-              <Link href={`/${locale}/projetos`} className="text-sm font-medium text-brand hover:underline">{t(locale, 'common.viewAll')}</Link>
+              <h2 className="text-lg font-semibold">{t(locale, 'dash.myTenders')}</h2>
+              <Link href={`/${locale}/concursos/novo`} className="text-sm font-medium text-brand hover:underline">{t(locale, 'dash.postTender')}</Link>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {PROJECTS.map((p) => (
-                <Card key={p.id}>
-                  <div className="flex items-start justify-between gap-2">
-                    <p className="text-sm font-semibold text-slate-900">{tr(p.name, locale)}</p>
-                    <Pill tone={p.status === 'DONE' ? 'emerald' : p.status === 'IN_PROGRESS' ? 'brand' : 'amber'}>{t(locale, `proj.status.${p.status}` as 'proj.status.PLANNING')}</Pill>
-                  </div>
-                  <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-100">
-                    <div className="h-full rounded-full bg-brand" style={{ width: `${p.progress}%` }} />
-                  </div>
-                  <p className="mt-1 text-xs text-slate-500">{p.progress}% · {formatEur(cveToEur(p.budgetCve))}</p>
-                </Card>
-              ))}
+            {myTenders && myTenders.length > 0 ? (
+              <div className="space-y-2">
+                {myTenders.map((tn) => (
+                  <Card key={tn.id} className="flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                      {tn.slug
+                        ? <Link href={`/${locale}/concursos/${tn.slug}`} className="text-sm font-semibold text-slate-900 hover:text-brand">{tr(tn.title, locale)}</Link>
+                        : <span className="text-sm font-semibold text-slate-900">{tr(tn.title, locale)}</span>}
+                      <p className="mt-0.5 text-xs text-slate-500">{tn.bids_count} {t(locale, 'tend.bids')} · {t(locale, `tend.state.${tn.status}` as 'tend.state.open')}</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <button onClick={() => void toggleTender(tn)} className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-brand">
+                        {tn.status === 'open' ? t(locale, 'dash.close') : t(locale, 'dash.reopen')}
+                      </button>
+                      <button onClick={() => void removeTender(tn)} className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50">
+                        {t(locale, 'dash.delete')}
+                      </button>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <Card><p className="text-sm text-slate-500">{t(locale, 'dash.noTenders')}</p></Card>
+            )}
+          </section>
+
+          {/* My projects (projetos) */}
+          <section>
+            <div className="mb-3 flex items-center justify-between">
+              <h2 className="text-lg font-semibold">{t(locale, 'dash.myProjects')}</h2>
+              <Link href={`/${locale}/projetos/novo`} className="text-sm font-medium text-brand hover:underline">{t(locale, 'dash.newProject')}</Link>
             </div>
+            {myProjects && myProjects.length > 0 ? (
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {myProjects.map((pj) => (
+                  <Card key={pj.id}>
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="text-sm font-semibold text-slate-900">{tr(pj.name, locale)}</p>
+                      <Pill tone={pj.status === 'DONE' ? 'emerald' : pj.status === 'IN_PROGRESS' ? 'brand' : 'amber'}>{t(locale, `proj.status.${pj.status}` as 'proj.status.PLANNING')}</Pill>
+                    </div>
+                    <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-100">
+                      <div className="h-full rounded-full bg-brand" style={{ width: `${pj.progress}%` }} />
+                    </div>
+                    <p className="mt-1 text-xs text-slate-500">{pj.progress}% · {pj.visibility === 'published' ? t(locale, 'listing.published') : t(locale, 'dash.draft')}</p>
+                    <div className="mt-3 flex gap-2">
+                      <button onClick={() => void toggleProject(pj)} className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-brand">
+                        {pj.visibility === 'published' ? t(locale, 'dash.unpublish') : t(locale, 'dash.publish')}
+                      </button>
+                      <button onClick={() => void removeProject(pj)} className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50">
+                        {t(locale, 'dash.delete')}
+                      </button>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <Card><p className="text-sm text-slate-500">{t(locale, 'dash.noProjects')}</p></Card>
+            )}
           </section>
 
           <div className="flex flex-wrap gap-2">

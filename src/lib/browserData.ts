@@ -424,6 +424,30 @@ export async function fetchTenderBids(tenderId: string): Promise<BidItem[] | nul
   return (data ?? []) as BidItem[];
 }
 
+/** Owner: open/close/reopen a tender. */
+export async function setTenderStatus(id: string, status: 'open' | 'closed' | 'draft'): Promise<string | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return 'demo';
+  const { error } = await supa.from('tenders').update({ status }).eq('id', id);
+  return error ? error.message : null;
+}
+
+/** Owner: delete a tender (cascades its bids). */
+export async function deleteTender(id: string): Promise<string | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return 'demo';
+  const { error } = await supa.from('tenders').delete().eq('id', id);
+  return error ? error.message : null;
+}
+
+/** Owner: publish/unpublish a project. */
+export async function setProjectVisibility(id: string, visibility: 'published' | 'draft'): Promise<string | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return 'demo';
+  const { error } = await supa.from('projects').update({ visibility }).eq('id', id);
+  return error ? error.message : null;
+}
+
 // ---------------------------------------------------------------------------
 // Projects portfolio (projetos)
 // ---------------------------------------------------------------------------
