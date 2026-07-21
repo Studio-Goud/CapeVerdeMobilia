@@ -2,7 +2,7 @@
 import { getBrowserSupabase } from './supabase/client';
 import type { Listing, TL } from '@/i18n';
 
-const PLACEHOLDER = 'https://placehold.co/1200x800/0e6a91/ffffff?text=Djarvista';
+const PLACEHOLDER = 'https://placehold.co/1200x800/003893/ffffff?text=Djarvista';
 const EMPTY_TL: TL = { pt: '', en: '', nl: '' };
 
 interface Row {

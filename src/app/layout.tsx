@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: { default: 'Djarvista — Cabo Verde', template: '%s · Djarvista' },
   description: 'Djarvista — property, land, building and official information in Cabo Verde (PT / EN / NL demo).',
 };
-export const viewport: Viewport = { themeColor: '#0e6a91', width: 'device-width', initialScale: 1 };
+export const viewport: Viewport = { themeColor: '#003893', width: 'device-width', initialScale: 1 };
 
 export default function RootLayout({ children }: { children: ReactNode }): JSX.Element {
   return (

@@ -360,7 +360,7 @@ export const verifLabel = (l: Locale, v: VerificationLevel): string =>
 export function whatsappLink(message: string, to = '2389000000'): string {
   return `https://wa.me/${to.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
 }
-const img = (label: string): string => `https://placehold.co/1200x800/0e6a91/ffffff?text=${encodeURIComponent(label)}`;
+const img = (label: string): string => `https://placehold.co/1200x800/003893/ffffff?text=${encodeURIComponent(label)}`;
 
 // --- Content data (fictional) ---
 export const LISTINGS: Listing[] = [

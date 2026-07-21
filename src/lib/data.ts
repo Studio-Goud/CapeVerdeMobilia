@@ -3,7 +3,7 @@
 import { LISTINGS, getListing as demoGetListing, type Listing, type TL } from '@/i18n';
 import { getServerSupabase } from './supabase/server';
 
-const PLACEHOLDER = 'https://placehold.co/1200x800/0e6a91/ffffff?text=Djarvista';
+const PLACEHOLDER = 'https://placehold.co/1200x800/003893/ffffff?text=Djarvista';
 
 interface ListingRow {
   id: string; slug: string; kind: string; title: TL; description: TL | null;

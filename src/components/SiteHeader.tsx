@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { t, type Locale, type UIKey } from '@/i18n';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { useAuth } from './Auth';
-import { Logo } from './Logo';
+import { Wordmark } from './Wordmark';
 
 interface NavItem { key: UIKey; href: string; soon?: boolean }
 interface NavGroup { key: UIKey; items: NavItem[] }
@@ -80,9 +80,8 @@ export function SiteHeader({ locale }: { locale: Locale }): JSX.Element {
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3">
-        <Link href={`/${locale}`} onClick={close} className="flex items-center gap-2 text-lg font-bold text-brand">
-          <Logo size={28} />
-          <span className="tracking-tightish">Djarvista</span>
+        <Link href={`/${locale}`} onClick={close} aria-label="Djarvista">
+          <Wordmark className="text-[20px]" />
         </Link>
 
         {/* Desktop nav */}

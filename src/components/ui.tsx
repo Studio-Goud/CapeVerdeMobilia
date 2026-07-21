@@ -4,7 +4,7 @@ import {
   type Locale, type Listing, type VerificationLevel, type UIKey,
   t, tr, formatPrice, docLabel, verifLabel,
 } from '@/i18n';
-import { Logo } from './Logo';
+import { Wordmark } from './Wordmark';
 
 const cn = (...p: Array<string | false | null | undefined>): string => p.filter(Boolean).join(' ');
 
@@ -110,10 +110,7 @@ export function SiteFooter({ locale }: { locale: Locale }): JSX.Element {
     <footer className="mt-10 border-t border-slate-200 bg-white">
       <div className="mx-auto grid w-full max-w-6xl gap-8 px-4 py-8 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2 lg:col-span-2">
-          <p className="flex items-center gap-2 text-base font-bold text-brand">
-            <Logo size={24} />
-            Djarvista
-          </p>
+          <Wordmark className="text-lg" />
           <p className="mt-2 max-w-md text-xs text-slate-500">{t(locale, 'footer.body')}</p>
         </div>
         <div>
