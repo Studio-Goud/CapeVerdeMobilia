@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { t, tr, type Locale, type TL } from '@/i18n';
 import { useAuth } from '@/components/Auth';
 import { getBrowserSupabase } from '@/lib/supabase/client';
+import { uploadFile, publicUrl, fileExt } from '@/lib/storage';
 
 const TXT = {
   title: { pt: 'Publicar anúncio', en: 'New listing', nl: 'Advertentie plaatsen' } as TL,
@@ -21,7 +22,9 @@ const TXT = {
   municipality: { pt: 'Concelho', en: 'Municipality', nl: 'Gemeente' } as TL,
   price: { pt: 'Preço (CVE)', en: 'Price (CVE)', nl: 'Prijs (CVE)' } as TL,
   onRequest: { pt: 'Preço sob consulta', en: 'Price on request', nl: 'Prijs op aanvraag' } as TL,
-  thumb: { pt: 'URL da imagem (opcional)', en: 'Image URL (optional)', nl: 'Afbeeldings-URL (optioneel)' } as TL,
+  photos: { pt: 'Fotografias', en: 'Photos', nl: 'Foto’s' } as TL,
+  photosHint: { pt: 'Adicione várias fotos — a primeira é a foto de capa. Diretamente do telemóvel ou galeria.', en: 'Add several photos — the first is the cover photo. Straight from your phone or gallery.', nl: 'Voeg meerdere foto’s toe — de eerste is de omslagfoto. Direct vanaf je telefoon of galerij.' } as TL,
+  uploading: { pt: 'A carregar fotos…', en: 'Uploading photos…', nl: 'Foto’s uploaden…' } as TL,
   publish: { pt: 'Publicar imediatamente', en: 'Publish immediately', nl: 'Direct publiceren' } as TL,
   submit: { pt: 'Guardar anúncio', en: 'Save listing', nl: 'Advertentie opslaan' } as TL,
 };
@@ -63,6 +66,14 @@ export default function NewListingPage({ params }: { params: { locale: Locale } 
   }, []);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [photos, setPhotos] = useState<File[]>([]);
+  const [previews, setPreviews] = useState<string[]>([]);
+
+  function onPickPhotos(list: FileList | null): void {
+    const files = list ? Array.from(list).slice(0, 12) : [];
+    setPhotos(files);
+    setPreviews(files.map((file) => URL.createObjectURL(file)));
+  }
 
   if (!ready) return <div className="h-40" aria-hidden />;
   if (!configured) return <Notice locale={locale}>{tr(TXT.needBackend, locale)}</Notice>;
@@ -86,11 +97,17 @@ export default function NewListingPage({ params }: { params: { locale: Locale } 
     const title: TL = { pt: f.titlePt, en: f.titleEn || f.titlePt, nl: f.titleNl || f.titlePt };
     const description: TL = { pt: f.desc, en: f.desc, nl: f.desc };
     const slug = `${slugify(f.titlePt) || 'anuncio'}-${Date.now().toString(36)}`;
+    const photoUrls: string[] = [];
+    for (let i = 0; i < photos.length; i++) {
+      const up = await uploadFile('listing-photos', `${owner}/${slug}/${i}.${fileExt(photos[i].name)}`, photos[i]);
+      if (up.error) { setBusy(false); setError(up.error); return; }
+      if (up.path) photoUrls.push(publicUrl('listing-photos', up.path));
+    }
     const { error: err } = await supabase.from('listings').insert({
       owner, slug, kind: f.kind, title, description,
       price_amount: f.onRequest || !f.price ? null : Number(f.price),
       price_on_request: f.onRequest, island: f.island, municipality: f.municipality || f.island,
-      thumbnail: f.thumb || null, status: f.publish ? 'published' : 'draft',
+      thumbnail: photoUrls[0] ?? null, photos: photoUrls, status: f.publish ? 'published' : 'draft',
       published_at: f.publish ? new Date().toISOString() : null,
     });
     setBusy(false);
@@ -134,13 +151,27 @@ export default function NewListingPage({ params }: { params: { locale: Locale } 
             <input type="checkbox" checked={f.onRequest} onChange={(e) => upd('onRequest', e.target.checked)} />
             {tr(TXT.onRequest, locale)}</label>
         </div>
-        <label className="block text-sm"><span className="text-slate-600">{tr(TXT.thumb, locale)}</span>
-          <input value={f.thumb} onChange={(e) => upd('thumb', e.target.value)} placeholder="https://…" className={input} /></label>
+        <div>
+          <span className="text-sm text-slate-600">{tr(TXT.photos, locale)}</span>
+          <input type="file" accept="image/*" multiple onChange={(e) => onPickPhotos(e.target.files)} className={`${input} cursor-pointer`} />
+          <p className="mt-1 text-xs text-slate-400">{tr(TXT.photosHint, locale)}</p>
+          {previews.length > 0 && (
+            <div className="mt-2 grid grid-cols-3 gap-2 sm:grid-cols-4">
+              {previews.map((src, i) => (
+                <div key={i} className="relative aspect-square overflow-hidden rounded-lg border border-slate-200">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={src} alt="" className="h-full w-full object-cover" />
+                  {i === 0 && <span className="absolute left-1 top-1 rounded bg-brand px-1.5 py-0.5 text-[10px] font-semibold text-white">1</span>}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         <label className="flex items-center gap-2 text-sm text-slate-700">
           <input type="checkbox" checked={f.publish} onChange={(e) => upd('publish', e.target.checked)} />
           {tr(TXT.publish, locale)}</label>
         {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
-        <button disabled={busy} className="w-full rounded-lg bg-brand px-3 py-2.5 font-semibold text-white hover:bg-brand-dark disabled:opacity-60">{tr(TXT.submit, locale)}</button>
+        <button disabled={busy} className="w-full rounded-lg bg-brand px-3 py-2.5 font-semibold text-white hover:bg-brand-dark disabled:opacity-60">{busy ? tr(TXT.uploading, locale) : tr(TXT.submit, locale)}</button>
       </form>
     </div>
   );

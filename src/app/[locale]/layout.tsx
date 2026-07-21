@@ -4,6 +4,7 @@ import { LOCALES, isLocale, t, type Locale } from '@/i18n';
 import { SiteFooter } from '@/components/ui';
 import { SiteHeader } from '@/components/SiteHeader';
 import { AuthProvider } from '@/components/Auth';
+import { isSupabaseConfigured } from '@/lib/supabase/env';
 
 export function generateStaticParams(): { locale: Locale }[] {
   return LOCALES.map((locale) => ({ locale }));
@@ -20,9 +21,11 @@ export default function LocaleLayout({
   const locale = params.locale;
   return (
     <AuthProvider>
-      <div className="bg-coral px-4 py-1.5 text-center text-xs font-medium text-white">
-        {t(locale, 'demo.banner')}
-      </div>
+      {!isSupabaseConfigured && (
+        <div className="bg-coral px-4 py-1.5 text-center text-xs font-medium text-white">
+          {t(locale, 'demo.banner')}
+        </div>
+      )}
       <SiteHeader locale={locale} />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">{children}</main>
       <SiteFooter locale={locale} />

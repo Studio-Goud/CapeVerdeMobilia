@@ -321,7 +321,7 @@ export interface Listing {
   id: string; slug: string; kind: string; title: TL; description: TL;
   priceAmount: number | null; priceOnRequest: boolean; isFeatured: boolean;
   documentStatus: string; island: string; municipality: string; thumbnail: string;
-  owner?: string | null; latitude?: number | null; longitude?: number | null;
+  owner?: string | null; latitude?: number | null; longitude?: number | null; photos?: string[] | null;
   publishedAt: string; lastVerifiedAt: string | null; riskNotes: TL | null;
   property: { type: string; bedrooms: number | null; bathrooms: number | null; builtAreaSqm: number | null; plotAreaSqm: number | null } | null;
   land: { type: string; areaSqm: number | null; zoning: TL | null; buildable: boolean } | null;

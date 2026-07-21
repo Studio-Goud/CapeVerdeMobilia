@@ -17,6 +17,7 @@ export default async function ListingDetailPage({ params }: { params: { locale: 
   if (!l) notFound();
   const similar = (await fetchListings()).filter((o) => o.island === l.island && o.slug !== l.slug).slice(0, 3);
   const loc = coordsFor(l);
+  const gallery = l.photos && l.photos.length > 0 ? l.photos : [l.thumbnail];
 
   return (
     <div className="grid gap-8 lg:grid-cols-3">
@@ -27,8 +28,18 @@ export default async function ListingDetailPage({ params }: { params: { locale: 
         <p className="mt-3 text-2xl font-bold text-brand">{formatPrice(locale, l.priceAmount, l.priceOnRequest)}</p>
         <div className="mt-4 aspect-video overflow-hidden rounded-xl bg-slate-100">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={l.thumbnail} alt={tr(l.title, locale)} className="h-full w-full object-cover" />
+          <img src={gallery[0]} alt={tr(l.title, locale)} className="h-full w-full object-cover" />
         </div>
+        {gallery.length > 1 && (
+          <div className="mt-2 grid grid-cols-4 gap-2 sm:grid-cols-5">
+            {gallery.slice(1).map((src, i) => (
+              <div key={i} className="aspect-square overflow-hidden rounded-lg bg-slate-100">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={src} alt="" className="h-full w-full object-cover" loading="lazy" />
+              </div>
+            ))}
+          </div>
+        )}
         <section className="mt-6"><h2 className="text-lg font-semibold">{t(locale, 'listing.description')}</h2>
           <p className="mt-2 whitespace-pre-line text-slate-700">{tr(l.description, locale)}</p></section>
 
