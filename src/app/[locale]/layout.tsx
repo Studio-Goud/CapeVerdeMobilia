@@ -34,7 +34,7 @@ export default function LocaleLayout({
     <AuthProvider>
       <HtmlLang locale={locale} />
       {!isSupabaseConfigured && (
-        <div className="bg-coral px-4 py-1.5 text-center text-xs font-medium text-white">
+        <div className="bg-coral-600 px-4 py-1.5 text-center text-xs font-medium text-white">
           {t(locale, 'demo.banner')}
         </div>
       )}

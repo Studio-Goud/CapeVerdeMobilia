@@ -78,7 +78,7 @@ export default function RegisterPage({ params }: { params: { locale: Locale } })
           </label>
           {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
           {notice && <p className="rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-800">{notice}</p>}
-          <button disabled={busy} className="w-full rounded-lg bg-coral px-3 py-2.5 font-semibold text-white hover:bg-coral-600 disabled:opacity-60">
+          <button disabled={busy} className="w-full rounded-lg bg-coral-600 px-3 py-2.5 font-semibold text-white hover:bg-coral-700 disabled:opacity-60">
             {t(locale, 'auth.registerBtn')}
           </button>
         </div>

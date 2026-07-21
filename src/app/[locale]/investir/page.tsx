@@ -413,7 +413,7 @@ export default function InvestirPage({ params }: { params: { locale: Locale } })
           </div>
         </Card>
         <p className="mt-4 text-center">
-          <Link href={`/${locale}`} className="inline-flex rounded-xl bg-coral px-6 py-3 font-semibold text-white hover:bg-coral-600">
+          <Link href={`/${locale}`} className="inline-flex rounded-xl bg-coral-600 px-6 py-3 font-semibold text-white hover:bg-coral-700">
             {t(locale, 'common.viewAll')}
           </Link>
         </p>

@@ -214,7 +214,7 @@ export default function PricingPage({ params }: { params: { locale: Locale } }):
           </div>
           <Link
             href={`/${locale}/registar`}
-            className="inline-flex shrink-0 items-center justify-center rounded-2xl bg-coral px-5 py-2.5 text-sm font-semibold text-white shadow-card transition hover:bg-coral-600"
+            className="inline-flex shrink-0 items-center justify-center rounded-2xl bg-coral-600 px-5 py-2.5 text-sm font-semibold text-white shadow-card transition hover:bg-coral-700"
           >
             {tr(COPY.cta, locale)}
           </Link>

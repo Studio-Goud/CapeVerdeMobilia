@@ -11,7 +11,7 @@ export default async function ServicesPage({ params }: { params: { locale: Local
     <div>
       <PageTitle title={t(locale, 'services.title')} intro={t(locale, 'services.intro')} />
       <div className="-mt-2 mb-6">
-        <Link href={`/${locale}/imoveis/novo?kind=SERVICE`} className="inline-block rounded-lg bg-coral px-4 py-2 text-sm font-semibold text-white hover:bg-coral-600">
+        <Link href={`/${locale}/imoveis/novo?kind=SERVICE`} className="inline-block rounded-lg bg-coral-600 px-4 py-2 text-sm font-semibold text-white hover:bg-coral-700">
           {t(locale, 'services.post')}
         </Link>
       </div>

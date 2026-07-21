@@ -173,7 +173,7 @@ export default function RentalsHubPage({ params }: { params: { locale: Locale } 
         <div className="mt-7 flex flex-col gap-3 sm:flex-row">
           <Link
             href={`/${locale}/imoveis/novo?kind=PROPERTY_RENT`}
-            className="inline-flex items-center justify-center rounded-2xl bg-coral px-6 py-3 font-semibold text-white shadow-card transition hover:bg-coral-600"
+            className="inline-flex items-center justify-center rounded-2xl bg-coral-600 px-6 py-3 font-semibold text-white shadow-card transition hover:bg-coral-700"
           >
             {tr(CTA_LIST, locale)}
           </Link>
@@ -226,7 +226,7 @@ export default function RentalsHubPage({ params }: { params: { locale: Locale } 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <Link
             href={`/${locale}/contrato`}
-            className="inline-flex items-center justify-center rounded-2xl bg-coral px-6 py-3 font-semibold text-white shadow-card transition hover:bg-coral-600"
+            className="inline-flex items-center justify-center rounded-2xl bg-coral-600 px-6 py-3 font-semibold text-white shadow-card transition hover:bg-coral-700"
           >
             {tr(CTA_CONTRACT, locale)}
           </Link>

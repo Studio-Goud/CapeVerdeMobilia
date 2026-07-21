@@ -117,7 +117,7 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
         <p className="text-slate-600">{t(locale, 'dash.needLogin')}</p>
         <div className="mt-4 flex justify-center gap-2">
           <Link href={`/${locale}/entrar`} className="rounded-lg bg-brand px-4 py-2 font-semibold text-white">{t(locale, 'nav.login')}</Link>
-          <Link href={`/${locale}/registar`} className="rounded-lg bg-coral px-4 py-2 font-semibold text-white">{t(locale, 'nav.register')}</Link>
+          <Link href={`/${locale}/registar`} className="rounded-lg bg-coral-600 px-4 py-2 font-semibold text-white">{t(locale, 'nav.register')}</Link>
         </div>
       </div>
     );

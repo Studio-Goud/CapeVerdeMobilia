@@ -84,7 +84,7 @@ export function ListingCard({ l, locale }: { l: Listing; locale: Locale }): JSX.
       <div className="relative aspect-[4/3] bg-slate-100">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={l.thumbnail} alt={tr(l.title, locale)} className="h-full w-full object-cover" loading="lazy" />
-        {l.isFeatured && <span className="absolute left-2 top-2 rounded bg-coral px-2 py-0.5 text-xs font-semibold text-white">{t(locale, 'common.sponsored')}</span>}
+        {l.isFeatured && <span className="absolute left-2 top-2 rounded bg-coral-600 px-2 py-0.5 text-xs font-semibold text-white">{t(locale, 'common.sponsored')}</span>}
       </div>
       <div className="space-y-1 p-3">
         <h3 className="line-clamp-2 text-sm font-semibold text-slate-900">{tr(l.title, locale)}</h3>
@@ -105,7 +105,7 @@ export function EmptyState({ icon = '🏝️', message, ctaHref, ctaLabel }: { i
       <span aria-hidden className="text-3xl">{icon}</span>
       <p className="max-w-md text-sm font-medium text-slate-600">{message}</p>
       {ctaHref && ctaLabel && (
-        <Link href={ctaHref} className="mt-1 rounded-lg bg-coral px-4 py-2 text-sm font-semibold text-white hover:bg-coral-600">{ctaLabel}</Link>
+        <Link href={ctaHref} className="mt-1 rounded-lg bg-coral-600 px-4 py-2 text-sm font-semibold text-white hover:bg-coral-700">{ctaLabel}</Link>
       )}
     </div>
   );
@@ -117,7 +117,7 @@ export function ListingGrid({ rows, locale }: { rows: Listing[]; locale: Locale 
       <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-slate-300 bg-white/60 px-6 py-12 text-center">
         <span aria-hidden className="text-3xl">🏝️</span>
         <p className="text-sm font-medium text-slate-600">{t(locale, 'common.noListings')}</p>
-        <Link href={`/${locale}/imoveis/publicar`} className="mt-1 rounded-lg bg-coral px-4 py-2 text-sm font-semibold text-white hover:bg-coral-600">
+        <Link href={`/${locale}/imoveis/publicar`} className="mt-1 rounded-lg bg-coral-600 px-4 py-2 text-sm font-semibold text-white hover:bg-coral-700">
           {t(locale, 'common.beFirst')}
         </Link>
       </div>

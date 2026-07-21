@@ -32,7 +32,7 @@ export default async function HomePage({ params }: { params: { locale: Locale } 
         <p className="mt-3 max-w-2xl text-white/90">{t(locale, 'home.heroSubtitle')}</p>
         <form action={p('/imoveis')} className="mt-6 flex max-w-xl flex-col gap-2 sm:flex-row">
           <input type="search" name="q" placeholder={t(locale, 'home.searchPlaceholder')} className="w-full rounded-xl px-4 py-3 text-slate-900" aria-label={t(locale, 'common.search')} />
-          <button className="rounded-xl bg-coral px-6 py-3 font-semibold text-white hover:bg-coral-600">{t(locale, 'common.search')}</button>
+          <button className="rounded-xl bg-coral-600 px-6 py-3 font-semibold text-white hover:bg-coral-700">{t(locale, 'common.search')}</button>
         </form>
         <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm">
           <Link href={p('/imoveis?kind=LAND')} className="underline-offset-2 hover:underline">{t(locale, 'home.land')}</Link>
@@ -48,7 +48,7 @@ export default async function HomePage({ params }: { params: { locale: Locale } 
           <p className="mt-1 max-w-xl text-sm text-slate-600">{t(locale, 'home.listBody')}</p>
         </div>
         <div className="flex shrink-0 flex-wrap gap-2">
-          <Link href={p('/imoveis/publicar?kind=PROPERTY_SALE')} className="rounded-lg bg-coral px-4 py-2.5 text-sm font-semibold text-white hover:bg-coral-600">
+          <Link href={p('/imoveis/publicar?kind=PROPERTY_SALE')} className="rounded-lg bg-coral-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-coral-700">
             {t(locale, 'home.listSale')}
           </Link>
           <Link href={p('/imoveis/publicar?kind=PROPERTY_RENT')} className="rounded-lg border border-coral/40 bg-white px-4 py-2.5 text-sm font-semibold text-coral-600 hover:bg-coral-50">
@@ -120,7 +120,7 @@ export default async function HomePage({ params }: { params: { locale: Locale } 
             <p className="mt-1 max-w-xl text-sm text-white/80">{t(locale, 'home.ctaBody')}</p>
           </div>
           <div className="flex shrink-0 gap-2">
-            <Link href={p('/registar')} className="rounded-lg bg-coral px-5 py-2.5 font-semibold text-white hover:bg-coral-600">{t(locale, 'nav.register')}</Link>
+            <Link href={p('/registar')} className="rounded-lg bg-coral-600 px-5 py-2.5 font-semibold text-white hover:bg-coral-700">{t(locale, 'nav.register')}</Link>
             <Link href={p('/entrar')} className="rounded-lg border border-white/30 px-5 py-2.5 font-semibold text-white hover:bg-white/10">{t(locale, 'nav.login')}</Link>
           </div>
         </div>

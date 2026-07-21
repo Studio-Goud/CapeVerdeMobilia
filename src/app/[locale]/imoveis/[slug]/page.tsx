@@ -40,7 +40,7 @@ export default async function ListingDetailPage({ params }: { params: { locale: 
   return (
     <div className="grid gap-8 lg:grid-cols-3">
       <div className="lg:col-span-2">
-        {l.isFeatured && <span className="mb-2 inline-block rounded bg-amber-500 px-2 py-0.5 text-xs font-semibold text-white">{t(locale, 'common.sponsored')}</span>}
+        {l.isFeatured && <span className="mb-2 inline-block rounded bg-coral-600 px-2 py-0.5 text-xs font-semibold text-white">{t(locale, 'common.sponsored')}</span>}
         <h1 className="text-2xl font-bold">{tr(l.title, locale)}</h1>
         <p className="mt-1 text-slate-500">{l.municipality} · {l.island}</p>
         <p className="mt-3 text-2xl font-bold text-brand">{formatPrice(locale, l.priceAmount, l.priceOnRequest)}</p>

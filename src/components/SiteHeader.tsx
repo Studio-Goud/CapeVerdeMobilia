@@ -67,7 +67,7 @@ function AuthArea({ locale, onNavigate }: { locale: Locale; onNavigate?: () => v
       <Link href={`/${locale}/entrar`} onClick={onNavigate} className="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-600 hover:text-brand">
         {t(locale, 'nav.login')}
       </Link>
-      <Link href={`/${locale}/registar`} onClick={onNavigate} className="rounded-lg bg-coral px-3 py-1.5 text-sm font-semibold text-white hover:bg-coral-600">
+      <Link href={`/${locale}/registar`} onClick={onNavigate} className="rounded-lg bg-coral-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-coral-700">
         {t(locale, 'nav.register')}
       </Link>
     </div>
