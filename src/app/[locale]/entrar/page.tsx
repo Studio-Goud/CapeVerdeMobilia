@@ -3,8 +3,13 @@
 import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { t, type Locale } from '@/i18n';
+import { t, tr, type Locale, type TL } from '@/i18n';
 import { useAuth, type Role } from '@/components/Auth';
+import { getBrowserSupabase } from '@/lib/supabase/client';
+
+const FORGOT: TL = { pt: 'Esqueceu a palavra-passe?', en: 'Forgot your password?', nl: 'Wachtwoord vergeten?' };
+const FORGOT_SENT: TL = { pt: 'Enviámos um link de recuperação para o seu email.', en: 'We sent a recovery link to your email.', nl: 'We hebben een herstel-link naar je e-mail gestuurd.' };
+const FORGOT_NEEDEMAIL: TL = { pt: 'Introduza o seu email primeiro.', en: 'Enter your email first.', nl: 'Vul eerst je e-mail in.' };
 
 export default function LoginPage({ params }: { params: { locale: Locale } }): JSX.Element {
   const locale = params.locale;
@@ -14,7 +19,20 @@ export default function LoginPage({ params }: { params: { locale: Locale } }): J
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+
+  async function onForgot(): Promise<void> {
+    setError(null); setNotice(null);
+    if (!email) { setError(tr(FORGOT_NEEDEMAIL, locale)); return; }
+    const supabase = getBrowserSupabase();
+    if (!supabase) return;
+    const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth/callback?next=/${locale}/nova-senha`,
+    });
+    if (err) { setError(err.message); return; }
+    setNotice(tr(FORGOT_SENT, locale));
+  }
 
   async function onSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
@@ -57,6 +75,12 @@ export default function LoginPage({ params }: { params: { locale: Locale } }): J
         <button disabled={busy} className="w-full rounded-lg bg-brand px-3 py-2.5 font-semibold text-white hover:bg-brand-dark disabled:opacity-60">
           {t(locale, 'auth.loginBtn')}
         </button>
+        {notice && <p className="rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-800">{notice}</p>}
+        {configured && (
+          <button type="button" onClick={() => void onForgot()} className="w-full text-center text-xs text-slate-500 hover:text-brand">
+            {tr(FORGOT, locale)}
+          </button>
+        )}
       </form>
 
       {!configured && (
