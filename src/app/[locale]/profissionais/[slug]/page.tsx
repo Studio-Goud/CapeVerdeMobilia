@@ -2,8 +2,11 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { t, tr, type Locale, getProfessional, verifLabel } from '@/i18n';
 import { REVIEWS } from '@/content';
+import { fetchReviews, type ReviewView } from '@/lib/data';
+import { isSupabaseConfigured } from '@/lib/supabase/env';
 import { PageTitle, Card, Pill, TrustBadge, SectionHead } from '@/components/ui';
 import { LeadForm } from '@/components/LeadForm';
+import { ReviewForm } from '@/components/ReviewForm';
 
 const ABOUT = { pt: 'Sobre', en: 'About', nl: 'Over' };
 const SERVICES = { pt: 'Serviços', en: 'Services', nl: 'Diensten' };
@@ -55,16 +58,21 @@ function Stars({ rating }: { rating: number }): JSX.Element {
   );
 }
 
-export default function ProfessionalDetailPage({
+export default async function ProfessionalDetailPage({
   params,
 }: {
   params: { locale: Locale; slug: string };
-}): JSX.Element {
+}): Promise<JSX.Element> {
   const locale = params.locale;
   const pro = getProfessional(params.slug);
   if (!pro) notFound();
 
-  const reviews = REVIEWS[pro.id] ?? [];
+  const configured = isSupabaseConfigured;
+  const demoReviews: ReviewView[] = (REVIEWS[pro.id] ?? []).map((r) => ({
+    author: r.author, rating: r.rating, verified: r.verified, date: r.date, body: tr(r.body, locale),
+  }));
+  const reviews: ReviewView[] = configured ? await fetchReviews(pro.slug) : demoReviews;
+  const reviewAvg = reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : null;
 
   return (
     <div>
@@ -82,9 +90,11 @@ export default function ProfessionalDetailPage({
           </div>
 
           <p className="-mt-2 mb-5 text-sm text-slate-600">
-            {pro.ratingAvg !== null
-              ? `★ ${pro.ratingAvg.toFixed(1)} (${pro.ratingCount})`
-              : t(locale, 'pros.noReviews')}
+            {reviews.length > 0
+              ? `★ ${(reviewAvg ?? 0).toFixed(1)} (${reviews.length})`
+              : !configured && pro.ratingAvg !== null
+                ? `★ ${pro.ratingAvg.toFixed(1)} (${pro.ratingCount})`
+                : t(locale, 'pros.noReviews')}
           </p>
 
           {pro.serviceAreas.length > 0 && (
@@ -122,7 +132,7 @@ export default function ProfessionalDetailPage({
             <SectionHead title={tr(REVIEWS_HEAD, locale)} />
             {reviews.length === 0 ? (
               <p className="rounded-xl border border-dashed border-slate-300 p-6 text-sm text-slate-500">
-                {t(locale, 'pros.noReviews')}
+                {t(locale, configured ? 'review.none' : 'pros.noReviews')}
               </p>
             ) : (
               <ul className="space-y-4">
@@ -132,16 +142,24 @@ export default function ProfessionalDetailPage({
                       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
                           <span className="text-sm font-semibold text-slate-900">{r.author}</span>
-                          {r.verified && <Pill tone="emerald">✓ {tr(VERIFIED, locale)}</Pill>}
+                          {r.verified
+                            ? <Pill tone="emerald">✓ {tr(VERIFIED, locale)}</Pill>
+                            : <Pill tone="amber">{t(locale, 'review.pending')}</Pill>}
                         </div>
                         <span className="text-xs text-slate-400">{r.date}</span>
                       </div>
                       <div className="mb-1 text-sm"><Stars rating={r.rating} /></div>
-                      <p className="text-sm leading-relaxed text-slate-600">{tr(r.body, locale)}</p>
+                      <p className="text-sm leading-relaxed text-slate-600">{r.body}</p>
                     </Card>
                   </li>
                 ))}
               </ul>
+            )}
+            <p className="mt-3 text-xs text-slate-400">{t(locale, 'review.verifiedNote')}</p>
+            {configured && (
+              <div className="mt-4">
+                <ReviewForm proSlug={pro.slug} locale={locale} />
+              </div>
             )}
           </section>
 
@@ -151,7 +169,7 @@ export default function ProfessionalDetailPage({
         <aside className="space-y-6">
           <Card>
             <h2 className="mb-3 text-lg font-semibold text-slate-900">{t(locale, 'listing.contactVisit')}</h2>
-            <LeadForm locale={locale} />
+            <LeadForm locale={locale} proSlug={pro.slug} source="pro" />
           </Card>
 
           <Card>

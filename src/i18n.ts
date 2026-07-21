@@ -277,6 +277,17 @@ const UI = {
   'mat.category': { pt: 'Categoria', en: 'Category', nl: 'Categorie' },
   'mat.requestQuote': { pt: 'Pedir orçamento', en: 'Request a quote', nl: 'Offerte aanvragen' },
 
+  // Reviews
+  'review.write': { pt: 'Escrever avaliação', en: 'Write a review', nl: 'Beoordeling schrijven' },
+  'review.rating': { pt: 'Classificação', en: 'Rating', nl: 'Beoordeling' },
+  'review.text': { pt: 'A sua avaliação', en: 'Your review', nl: 'Jouw beoordeling' },
+  'review.submit': { pt: 'Publicar avaliação', en: 'Post review', nl: 'Beoordeling plaatsen' },
+  'review.thanks': { pt: 'Obrigado! A sua avaliação aguarda verificação.', en: 'Thanks! Your review is pending verification.', nl: 'Bedankt! Je beoordeling wacht op verificatie.' },
+  'review.loginTo': { pt: 'Entre para escrever uma avaliação.', en: 'Log in to write a review.', nl: 'Log in om een beoordeling te schrijven.' },
+  'review.pending': { pt: 'Aguarda verificação', en: 'Pending verification', nl: 'Wacht op verificatie' },
+  'review.none': { pt: 'Ainda sem avaliações. Seja o primeiro.', en: 'No reviews yet. Be the first.', nl: 'Nog geen beoordelingen. Wees de eerste.' },
+  'review.verifiedNote': { pt: '“Verificado” significa que há prova de uma transação ou projeto real (com controlo humano, nunca só por IA).', en: '“Verified” means there is proof of a real transaction or project (human-checked, never AI-only).', nl: '“Geverifieerd” betekent dat er bewijs is van een echte transactie of project (menselijke controle, nooit alleen AI).' },
+
   // Verification centre
   'veri.title': { pt: 'Confiança & verificação', en: 'Trust & verification', nl: 'Vertrouwen & verificatie' },
   'veri.intro': { pt: 'Seis níveis de verificação. Cada nível exige provas próprias; as verificações sensíveis nunca são feitas apenas por IA — há sempre controlo humano.', en: 'Six verification levels. Each level requires its own proof; sensitive checks are never done by AI alone — there is always human control.', nl: 'Zes verificatieniveaus. Elk niveau vereist eigen bewijs; gevoelige controles gebeuren nooit alleen door AI — er is altijd menselijke controle.' },

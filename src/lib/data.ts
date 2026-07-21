@@ -47,3 +47,22 @@ export async function fetchListingBySlug(slug: string): Promise<Listing | undefi
   if (error || !data) return demoGetListing(slug);
   return rowToListing(data as ListingRow);
 }
+
+export interface ReviewView { author: string; rating: number; verified: boolean; date: string; body: string }
+interface ReviewRow { author_name: string | null; rating: number; verified: boolean; body: string | null; created_at: string }
+
+/** Reviews for a professional from the DB (empty when not configured). */
+export async function fetchReviews(proSlug: string): Promise<ReviewView[]> {
+  const supabase = getServerSupabase();
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from('reviews')
+    .select('author_name,rating,verified,body,created_at')
+    .eq('pro_slug', proSlug)
+    .order('created_at', { ascending: false });
+  if (error || !data) return [];
+  return (data as ReviewRow[]).map((r) => ({
+    author: r.author_name || 'Anónimo', rating: r.rating, verified: r.verified,
+    date: (r.created_at ?? '').slice(0, 10), body: r.body ?? '',
+  }));
+}
