@@ -456,7 +456,10 @@ export async function requestBoost(listingId: string): Promise<string | null> {
   const ctx = await uid();
   if (!ctx) return isSupabaseConfigured ? 'auth' : 'demo';
   const { error } = await ctx.supa.from('boost_requests').insert({ listing_id: listingId, requester: ctx.id, status: 'pending' });
-  return error ? error.message : null;
+  // A duplicate pending request (unique index, 0018) means it's already queued —
+  // treat that as success rather than an error.
+  if (error) return error.code === '23505' ? null : error.message;
+  return null;
 }
 
 export interface BoostRequestItem { id: string; listing_id: string; requester: string; status: string; created_at: string; listingTitle: TL | null }

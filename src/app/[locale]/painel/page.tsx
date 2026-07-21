@@ -295,7 +295,9 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
               <h2 className="text-lg font-semibold">{t(locale, 'dash.myTenders')}</h2>
               <Link href={`/${locale}/concursos/novo`} className="text-sm font-medium text-brand hover:underline">{t(locale, 'dash.postTender')}</Link>
             </div>
-            {myTenders && myTenders.length > 0 ? (
+            {myTenders === null ? (
+              <div className="h-16" aria-hidden />
+            ) : myTenders.length > 0 ? (
               <div className="space-y-2">
                 {myTenders.map((tn) => (
                   <Card key={tn.id} className="flex flex-wrap items-center justify-between gap-2">
@@ -327,7 +329,9 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
               <h2 className="text-lg font-semibold">{t(locale, 'dash.myProjects')}</h2>
               <Link href={`/${locale}/projetos/novo`} className="text-sm font-medium text-brand hover:underline">{t(locale, 'dash.newProject')}</Link>
             </div>
-            {myProjects && myProjects.length > 0 ? (
+            {myProjects === null ? (
+              <div className="h-16" aria-hidden />
+            ) : myProjects.length > 0 ? (
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {myProjects.map((pj) => (
                   <Card key={pj.id}>

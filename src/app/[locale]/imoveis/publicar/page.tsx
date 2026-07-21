@@ -113,10 +113,18 @@ export default function PublishWizardPage({ params }: { params: { locale: Locale
     }
   }, []);
 
+  // Detect the native app after mount (avoids an SSR/client hydration mismatch).
+  const [native, setNative] = useState(false);
+  useEffect(() => { setNative(isNativeApp()); }, []);
+
+  function refreshPreviews(files: File[]): void {
+    previews.forEach((u) => URL.revokeObjectURL(u)); // avoid leaking old blob URLs
+    setPreviews(files.map((file) => URL.createObjectURL(file)));
+  }
   function onPickPhotos(list: FileList | null): void {
     const files = list ? Array.from(list).slice(0, 12) : [];
     setPhotos(files);
-    setPreviews(files.map((file) => URL.createObjectURL(file)));
+    refreshPreviews(files);
   }
 
   // Native app only: append a photo taken with the device camera.
@@ -125,7 +133,7 @@ export default function PublishWizardPage({ params }: { params: { locale: Locale
     if (!file) return;
     const next = [...photos, file].slice(0, 12);
     setPhotos(next);
-    setPreviews(next.map((f) => URL.createObjectURL(f)));
+    refreshPreviews(next);
   }
 
   if (!ready) return <div className="h-40" aria-hidden />;
@@ -314,7 +322,7 @@ export default function PublishWizardPage({ params }: { params: { locale: Locale
                 onChange={(e) => onPickPhotos(e.target.files)}
                 className={`${input} cursor-pointer`}
               />
-              {isNativeApp() && (
+              {native && (
                 <button
                   type="button"
                   onClick={() => void addCameraPhoto()}
