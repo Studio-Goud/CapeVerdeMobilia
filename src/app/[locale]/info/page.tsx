@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { t, tr, formatDate, type Locale } from '@/i18n';
+import { t, tr, formatDate, type Locale, type TL } from '@/i18n';
 import { fetchPublications, type InfoItem } from '@/lib/data';
 import { PageTitle, Card, Pill } from '@/components/ui';
 
@@ -11,6 +11,31 @@ const STATUS_TONE: Record<InfoItem['officialStatus'], 'emerald' | 'slate' | 'amb
   outdated: 'coral',
 };
 
+// Trilingual labels for the known info-centre pillars. Unknown categories fall
+// back to their raw slug so a new category still renders (never a missing key).
+const CATEGORY_LABEL: Record<string, TL> = {
+  arrendamento: { pt: 'Arrendamento', en: 'Renting', nl: 'Huren' },
+  compra: { pt: 'Compra e venda', en: 'Buying & selling', nl: 'Kopen & verkopen' },
+  construcao: { pt: 'Construção', en: 'Building', nl: 'Bouwen' },
+  impostos: { pt: 'Impostos', en: 'Taxes', nl: 'Belastingen' },
+};
+const OTHER_LABEL: TL = { pt: 'Outros', en: 'Other', nl: 'Overige' };
+
+function groupByCategory(items: InfoItem[]): { key: string; label: TL; items: InfoItem[] }[] {
+  const order: string[] = [];
+  const map = new Map<string, InfoItem[]>();
+  for (const item of items) {
+    const key = item.category && CATEGORY_LABEL[item.category] ? item.category : (item.category ?? '__other');
+    if (!map.has(key)) { map.set(key, []); order.push(key); }
+    map.get(key)!.push(item);
+  }
+  return order.map((key) => ({
+    key,
+    label: CATEGORY_LABEL[key] ?? (key === '__other' ? OTHER_LABEL : { pt: key, en: key, nl: key }),
+    items: map.get(key)!,
+  }));
+}
+
 export default async function InfoCentrePage({ params }: { params: { locale: Locale } }): Promise<JSX.Element> {
   const locale = params.locale;
   const items = await fetchPublications();
@@ -19,8 +44,11 @@ export default async function InfoCentrePage({ params }: { params: { locale: Loc
     <div className="space-y-6">
       <PageTitle title={t(locale, 'info.title')} intro={t(locale, 'info.intro')} />
 
-      <ul className="space-y-4">
-        {items.map((item) => {
+      {groupByCategory(items).map((group) => (
+        <section key={group.key} className="space-y-4">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">{tr(group.label, locale)}</h2>
+          <ul className="space-y-4">
+        {group.items.map((item) => {
           const statusLabel = t(locale, ('ostatus.' + item.officialStatus) as 'ostatus.official');
           const summary = item.summary ? tr(item.summary, locale) : null;
           return (
@@ -72,7 +100,9 @@ export default async function InfoCentrePage({ params }: { params: { locale: Loc
             </li>
           );
         })}
-      </ul>
+          </ul>
+        </section>
+      ))}
 
       <p className="text-xs text-slate-500">{t(locale, 'proc.disclaimer')}</p>
     </div>
