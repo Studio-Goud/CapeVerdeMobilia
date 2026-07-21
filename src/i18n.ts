@@ -133,6 +133,17 @@ const UI = {
   'info.version': { pt: 'Versão', en: 'Version', nl: 'Versie' },
   'info.updated': { pt: 'Atualizado', en: 'Updated', nl: 'Bijgewerkt' },
   'info.validFrom': { pt: 'Válido desde', en: 'Valid from', nl: 'Geldig vanaf' },
+  'info.source': { pt: 'Fonte oficial', en: 'Official source', nl: 'Officiële bron' },
+  'info.category': { pt: 'Categoria', en: 'Category', nl: 'Categorie' },
+  'info.readMore': { pt: 'Ler mais', en: 'Read more', nl: 'Lees meer' },
+  'info.reportOutdated': { pt: 'Reportar como desatualizado', en: 'Report as outdated', nl: 'Melden als verouderd' },
+  'info.reportSent': { pt: 'Obrigado — vamos rever esta informação.', en: 'Thanks — we will review this information.', nl: 'Bedankt — we bekijken deze informatie.' },
+  'info.editorLink': { pt: 'Editor de informação', en: 'Information editor', nl: 'Info-redactie' },
+  'ostatus.official': { pt: 'Oficial', en: 'Official', nl: 'Officieel' },
+  'ostatus.summary': { pt: 'Resumo da plataforma', en: 'Platform summary', nl: 'Platformsamenvatting' },
+  'ostatus.unconfirmed': { pt: 'Não confirmado', en: 'Not confirmed', nl: 'Niet bevestigd' },
+  'ostatus.outdated': { pt: 'Desatualizado', en: 'Outdated', nl: 'Verouderd' },
+  'ostatus.in_revision': { pt: 'Em revisão', en: 'In revision', nl: 'In herziening' },
 
   // Procedures
   'proc.title': { pt: 'Procedimentos passo a passo', en: 'Step-by-step procedures', nl: 'Procedures stap voor stap' },

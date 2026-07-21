@@ -130,6 +130,7 @@ export function SiteFooter({ locale }: { locale: Locale }): JSX.Element {
             {link('/painel', 'nav.dashboard')}
             {link('/precos', 'nav.pricing')}
             {link('/investir', 'nav.investir')}
+            {link('/info/editor', 'info.editorLink')}
           </ul>
         </div>
       </div>

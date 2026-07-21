@@ -225,6 +225,57 @@ export async function fetchAllListingsForMod(): Promise<AdminListing[] | null> {
   return (data ?? []) as AdminListing[];
 }
 
+// ---------------------------------------------------------------------------
+// Official information centre — editor (admin) + report outdated
+// ---------------------------------------------------------------------------
+export interface EditablePublication {
+  id?: string; slug: string; category: string; title: TL; gov_entity: string;
+  official_status: string; version: number; source_url: string; summary: TL; body: TL; status: string;
+}
+export interface AdminPublication { id: string; slug: string; title: TL; category: string | null; official_status: string; status: string; version: number; updated_at: string }
+
+export async function fetchAllPublicationsForEditor(): Promise<AdminPublication[] | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return null;
+  const { data, error } = await supa.from('publications').select('id,slug,title,category,official_status,status,version,updated_at').order('updated_at', { ascending: false });
+  if (error) return null;
+  return (data ?? []) as AdminPublication[];
+}
+
+export async function savePublication(pub: EditablePublication): Promise<string | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return 'demo';
+  const row = {
+    slug: pub.slug, category: pub.category, title: pub.title, gov_entity: pub.gov_entity,
+    official_status: pub.official_status, version: pub.version, source_url: pub.source_url || null,
+    summary: pub.summary, body: pub.body, status: pub.status,
+    published_at: pub.status === 'published' ? new Date().toISOString() : null,
+    updated_at: new Date().toISOString(),
+  };
+  if (pub.id) {
+    const { error } = await supa.from('publications').update(row).eq('id', pub.id);
+    return error ? error.message : null;
+  }
+  const { error } = await supa.from('publications').insert(row);
+  return error ? error.message : null;
+}
+
+export async function deletePublication(id: string): Promise<string | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return 'demo';
+  const { error } = await supa.from('publications').delete().eq('id', id);
+  return error ? error.message : null;
+}
+
+/** Report a publication as outdated (anyone, incl. anonymous). */
+export async function reportPublicationOutdated(publicationId: string | null, note: string): Promise<string | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return 'demo';
+  const { data: auth } = await supa.auth.getUser();
+  const { error } = await supa.from('publication_flags').insert({ publication_id: publicationId, reporter_id: auth.user?.id ?? null, note });
+  return error ? error.message : null;
+}
+
 /** Adds a favorite. Returns 'ok', 'demo' (not configured), 'auth' (not logged in), or an error string. */
 export async function saveFavorite(listingId: string): Promise<'ok' | 'demo' | 'auth' | string> {
   const supa = getBrowserSupabase();
