@@ -60,8 +60,13 @@ create trigger guard_review_verified
 create or replace function public.rr_set_landlord()
 returns trigger language plpgsql security definer set search_path = public as $$
 begin
+  -- Derive landlord_id from the listing so a tenant can't target a victim.
+  -- With no listing_id there is no owner to point to; force null rather than
+  -- trusting the client-supplied value.
   if new.listing_id is not null then
     new.landlord_id := (select owner from public.listings where id = new.listing_id);
+  else
+    new.landlord_id := null;
   end if;
   return new;
 end $$;

@@ -61,10 +61,10 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     if (configured) {
       const supabase = getBrowserSupabase();
       if (!supabase) { setReady(true); return; }
-      supabase.auth.getUser().then(async ({ data }) => {
-        setUser(await resolveUser(supabase, data.user));
-        setReady(true);
-      });
+      supabase.auth.getUser()
+        .then(async ({ data }) => { setUser(await resolveUser(supabase, data.user)); })
+        .catch(() => { /* keep user null on init failure */ })
+        .finally(() => setReady(true));
       const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
         void resolveUser(supabase, session?.user ?? null).then(setUser);
       });
