@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { t, tr, type Locale, type TL } from '@/i18n';
@@ -33,6 +33,7 @@ const KINDS: { v: string; l: TL }[] = [
   { v: 'COMMERCIAL', l: { pt: 'Comercial', en: 'Commercial', nl: 'Commercieel' } },
   { v: 'NEW_DEVELOPMENT', l: { pt: 'Novo projeto', en: 'New development', nl: 'Nieuwbouw' } },
   { v: 'HOLIDAY_RENT', l: { pt: 'Férias', en: 'Holiday', nl: 'Vakantie' } },
+  { v: 'SERVICE', l: { pt: 'Serviço', en: 'Service', nl: 'Dienst' } },
 ];
 const ISLANDS = ['São Vicente', 'Santiago', 'Sal', 'Boa Vista', 'Santo Antão', 'Fogo', 'São Nicolau', 'Maio', 'Brava'];
 
@@ -54,6 +55,12 @@ export default function NewListingPage({ params }: { params: { locale: Locale } 
   const router = useRouter();
   const { ready, user, configured } = useAuth();
   const [f, setF] = useState({ titlePt: '', titleEn: '', titleNl: '', desc: '', kind: 'PROPERTY_SALE', island: 'São Vicente', municipality: '', price: '', onRequest: false, thumb: '', publish: true });
+
+  // Preselect kind from ?kind= (e.g. the "advertise a service" link).
+  useEffect(() => {
+    const k = new URLSearchParams(window.location.search).get('kind');
+    if (k && KINDS.some((x) => x.v === k)) setF((s) => ({ ...s, kind: k }));
+  }, []);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

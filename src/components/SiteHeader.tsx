@@ -22,6 +22,7 @@ function groups(locale: Locale): NavGroup[] {
     ] },
     { key: 'nav.group.pros', items: [
       { key: 'nav.profissionais', href: p('/profissionais') },
+      { key: 'nav.services', href: p('/servicos') },
       { key: 'nav.materials', href: p('/materiais') },
       { key: 'nav.postJob', href: p('/pedidos/novo') },
     ] },

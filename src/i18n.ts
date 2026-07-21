@@ -28,6 +28,7 @@ const UI = {
   'nav.map': { pt: 'Mapa', en: 'Map', nl: 'Kaart' },
   'nav.profissionais': { pt: 'Diretório de profissionais', en: 'Professionals directory', nl: 'Professionals-gids' },
   'nav.materials': { pt: 'Materiais & fornecedores', en: 'Materials & suppliers', nl: 'Bouwmaterialen & leveranciers' },
+  'nav.services': { pt: 'Serviços', en: 'Services', nl: 'Diensten' },
   'nav.postJob': { pt: 'Publicar pedido', en: 'Post a job', nl: 'Opdracht plaatsen' },
   'nav.wizard': { pt: 'Assistente de passos', en: 'Step assistant', nl: 'Stappen-assistent' },
   'nav.projects': { pt: 'Projetos de obra', en: 'Building projects', nl: 'Bouwprojecten' },
@@ -112,6 +113,13 @@ const UI = {
   'pros.intro': { pt: 'Encontre profissionais verificados para construção, renovação e serviços. As avaliações “verificadas” têm prova de uma transação ou projeto real.', en: 'Find verified professionals for construction, renovation and services. “Verified” reviews have proof of a real transaction or project.', nl: 'Vind geverifieerde professionals voor bouw, renovatie en diensten. “Geverifieerde” reviews hebben bewijs van een echte transactie of project.' },
   'pros.noReviews': { pt: 'Sem avaliações', en: 'No reviews', nl: 'Geen reviews' },
   'pros.requestQuote': { pt: 'Pedir orçamento', en: 'Request a quote', nl: 'Offerte aanvragen' },
+
+  // Services (service advertisements)
+  'services.title': { pt: 'Serviços anunciados', en: 'Advertised services', nl: 'Aangeboden diensten' },
+  'services.intro': { pt: 'Serviços oferecidos por profissionais e empresas. Publique o seu próprio serviço numa secção separada dos imóveis.', en: 'Services offered by professionals and businesses. Post your own service in a section separate from properties.', nl: 'Diensten aangeboden door professionals en bedrijven. Plaats je eigen dienst in een aparte sectie los van het vastgoed.' },
+  'services.post': { pt: 'Anunciar um serviço', en: 'Advertise a service', nl: 'Dienst aanbieden' },
+  'services.from': { pt: 'A partir de', en: 'From', nl: 'Vanaf' },
+  'services.none': { pt: 'Ainda não há serviços anunciados.', en: 'No services advertised yet.', nl: 'Nog geen diensten aangeboden.' },
 
   // Official info
   'info.title': { pt: 'Centro de informação oficial', en: 'Official information centre', nl: 'Centrum voor officiële informatie' },
@@ -384,6 +392,16 @@ export const LISTINGS: Listing[] = [
     priceAmount: 9800000, priceOnRequest: false, isFeatured: false, documentStatus: 'DECLARED', island: 'São Vicente', municipality: 'São Vicente',
     thumbnail: img('Baia das Gatas'), publishedAt: '2026-07-01', lastVerifiedAt: null, riskNotes: null,
     property: { type: 'APARTMENT', bedrooms: 2, bathrooms: 2, builtAreaSqm: 95, plotAreaSqm: null }, land: null },
+  { id: 's1', slug: 'servico-canalizacao-mindelo', kind: 'SERVICE',
+    title: { pt: 'Serviço de canalização e águas — Mindelo', en: 'Plumbing & water service — Mindelo', nl: 'Loodgieters- en waterdienst — Mindelo' },
+    description: { pt: 'Instalação e reparação de canalização, sistemas de água e sanitários. Resposta rápida em São Vicente. (Dados fictícios.)', en: 'Installation and repair of plumbing, water systems and sanitary ware. Fast response on São Vicente. (Fictional data.)', nl: 'Installatie en reparatie van leidingwerk, watersystemen en sanitair. Snelle service op São Vicente. (Fictieve data.)' },
+    priceAmount: 3500, priceOnRequest: false, isFeatured: false, documentStatus: 'DECLARED', island: 'São Vicente', municipality: 'São Vicente',
+    thumbnail: img('Servico canalizacao'), publishedAt: '2026-07-08', lastVerifiedAt: null, riskNotes: null, property: null, land: null },
+  { id: 's2', slug: 'servico-arquitetura-licenciamento', kind: 'SERVICE',
+    title: { pt: 'Projetos de arquitetura e licenciamento', en: 'Architecture projects and permits', nl: 'Architectuurontwerp en vergunningen' },
+    description: { pt: 'Elaboração de projetos e apoio no licenciamento junto das câmaras municipais. (Dados fictícios.)', en: 'Project design and support with municipal permitting. (Fictional data.)', nl: 'Ontwerp van projecten en ondersteuning bij vergunningen bij de gemeenten. (Fictieve data.)' },
+    priceAmount: null, priceOnRequest: true, isFeatured: false, documentStatus: 'DECLARED', island: 'São Vicente', municipality: 'São Vicente',
+    thumbnail: img('Servico arquitetura'), publishedAt: '2026-07-06', lastVerifiedAt: null, riskNotes: null, property: null, land: null },
 ];
 
 export const PROFESSIONALS: Professional[] = [

@@ -26,17 +26,35 @@ function rowToListing(r: ListingRow): Listing {
   };
 }
 
-/** Published listings from the DB, or demo listings when none/not configured. */
+const demoProperties = (): Listing[] => LISTINGS.filter((l) => l.kind !== 'SERVICE');
+const demoServices = (): Listing[] => LISTINGS.filter((l) => l.kind === 'SERVICE');
+
+/** Published property/land listings (services excluded), or demo fallback. */
 export async function fetchListings(): Promise<Listing[]> {
   const supabase = getServerSupabase();
-  if (!supabase) return LISTINGS;
+  if (!supabase) return demoProperties();
   const { data, error } = await supabase
     .from('listings')
     .select('*')
     .eq('status', 'published')
+    .neq('kind', 'SERVICE')
     .order('is_featured', { ascending: false })
     .order('published_at', { ascending: false });
-  if (error || !data || data.length === 0) return LISTINGS;
+  if (error || !data || data.length === 0) return demoProperties();
+  return (data as ListingRow[]).map(rowToListing);
+}
+
+/** Published service advertisements, or demo fallback. */
+export async function fetchServiceListings(): Promise<Listing[]> {
+  const supabase = getServerSupabase();
+  if (!supabase) return demoServices();
+  const { data, error } = await supabase
+    .from('listings')
+    .select('*')
+    .eq('status', 'published')
+    .eq('kind', 'SERVICE')
+    .order('published_at', { ascending: false });
+  if (error || !data || data.length === 0) return demoServices();
   return (data as ListingRow[]).map(rowToListing);
 }
 
