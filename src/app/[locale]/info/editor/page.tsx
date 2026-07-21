@@ -169,6 +169,10 @@ export default function InfoEditorPage({ params }: { params: { locale: Locale } 
       official_status: row.official_status,
       version: row.version,
       status: row.status,
+      gov_entity: row.gov_entity ?? '',
+      source_url: row.source_url ?? '',
+      summary: { ...EMPTY_TL, ...(row.summary ?? {}) },
+      body: { ...EMPTY_TL, ...(row.body ?? {}) },
     });
     setError(null);
     setNotice(null);

@@ -12,6 +12,7 @@ yet migrated, so the live site never breaks while you catch up.
 | 0004 | `migrations/0004_rentals_and_admin.sql` | `rental_requests`, `is_admin()`, admin/trust RLS | ✅ done |
 | 0005 | `migrations/0005_messages.sql` | `messages` (chat between rental parties) | ✅ done |
 | 0006 | `migrations/0006_publications.sql` | `publications` + `publication_flags` (official info centre) + seeds | ⏳ **to run** |
+| 0007 | `migrations/0007_admin_delete_listings.sql` | admin delete policy on `listings` (moderators can remove listings) | ⏳ **to run** |
 
 ## Roles
 - Make yourself admin (trust/ops + info editor):

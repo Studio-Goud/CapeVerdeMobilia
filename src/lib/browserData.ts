@@ -115,7 +115,7 @@ export interface RentalRequestItem {
 
 export async function createRentalRequest(input: { listingId: string; landlordId: string | null; start: string; end: string; message: string }): Promise<string | null> {
   const ctx = await uid();
-  if (!ctx) return 'auth';
+  if (!ctx) return 'demo';
   const { error } = await ctx.supa.from('rental_requests').insert({
     listing_id: input.listingId, tenant_id: ctx.id, landlord_id: input.landlordId,
     start_date: input.start || null, end_date: input.end || null, message: input.message || null, status: 'pending',
@@ -232,12 +232,16 @@ export interface EditablePublication {
   id?: string; slug: string; category: string; title: TL; gov_entity: string;
   official_status: string; version: number; source_url: string; summary: TL; body: TL; status: string;
 }
-export interface AdminPublication { id: string; slug: string; title: TL; category: string | null; official_status: string; status: string; version: number; updated_at: string }
+export interface AdminPublication {
+  id: string; slug: string; title: TL; category: string | null; official_status: string; status: string; version: number; updated_at: string;
+  gov_entity: string | null; source_url: string | null; summary: TL | null; body: TL | null;
+}
 
 export async function fetchAllPublicationsForEditor(): Promise<AdminPublication[] | null> {
   const supa = getBrowserSupabase();
   if (!supa) return null;
-  const { data, error } = await supa.from('publications').select('id,slug,title,category,official_status,status,version,updated_at').order('updated_at', { ascending: false });
+  // select('*') so editing loads the full row (summary/body/entity/source) and never wipes it on save
+  const { data, error } = await supa.from('publications').select('*').order('updated_at', { ascending: false });
   if (error) return null;
   return (data ?? []) as AdminPublication[];
 }

@@ -39,10 +39,10 @@ export function LeadForm({ locale, listingId, proSlug, recipient, source = 'cont
   }
   return (
     <form onSubmit={onSubmit} className="mt-2 space-y-2 text-sm">
-      <input required value={form.name} onChange={set('name')} placeholder={t(locale, 'lead.name')} className="w-full rounded border px-2 py-1.5" />
-      <input type="email" value={form.email} onChange={set('email')} placeholder={t(locale, 'lead.email')} className="w-full rounded border px-2 py-1.5" />
-      <input value={form.phone} onChange={set('phone')} placeholder={t(locale, 'lead.phone')} className="w-full rounded border px-2 py-1.5" />
-      <textarea required value={form.message} onChange={set('message')} rows={3} placeholder={t(locale, 'lead.message')} className="w-full rounded border px-2 py-1.5" />
+      <input required value={form.name} onChange={set('name')} aria-label={t(locale, 'lead.name')} placeholder={t(locale, 'lead.name')} className="w-full rounded border px-2 py-1.5" />
+      <input type="email" value={form.email} onChange={set('email')} aria-label={t(locale, 'lead.email')} placeholder={t(locale, 'lead.email')} className="w-full rounded border px-2 py-1.5" />
+      <input value={form.phone} onChange={set('phone')} aria-label={t(locale, 'lead.phone')} placeholder={t(locale, 'lead.phone')} className="w-full rounded border px-2 py-1.5" />
+      <textarea required value={form.message} onChange={set('message')} rows={3} aria-label={t(locale, 'lead.message')} placeholder={t(locale, 'lead.message')} className="w-full rounded border px-2 py-1.5" />
       {error && <p className="rounded bg-red-50 px-2 py-1.5 text-xs text-red-700">{error}</p>}
       <button disabled={busy} className="w-full rounded-lg bg-brand px-3 py-2 font-semibold text-white disabled:opacity-60">{t(locale, 'common.send')}</button>
     </form>
