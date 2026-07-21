@@ -18,7 +18,7 @@ function groups(locale: Locale): NavGroup[] {
       { key: 'nav.land', href: p('/imoveis?kind=LAND') },
       { key: 'nav.newDev', href: p('/imoveis?kind=NEW_DEVELOPMENT') },
       { key: 'nav.commercial', href: p('/imoveis?kind=COMMERCIAL') },
-      { key: 'nav.map', href: p('/imoveis'), soon: true },
+      { key: 'nav.map', href: p('/mapa') },
     ] },
     { key: 'nav.group.pros', items: [
       { key: 'nav.profissionais', href: p('/profissionais') },

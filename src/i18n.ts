@@ -320,7 +320,7 @@ export interface Listing {
   id: string; slug: string; kind: string; title: TL; description: TL;
   priceAmount: number | null; priceOnRequest: boolean; isFeatured: boolean;
   documentStatus: string; island: string; municipality: string; thumbnail: string;
-  owner?: string | null;
+  owner?: string | null; latitude?: number | null; longitude?: number | null;
   publishedAt: string; lastVerifiedAt: string | null; riskNotes: TL | null;
   property: { type: string; bedrooms: number | null; bathrooms: number | null; builtAreaSqm: number | null; plotAreaSqm: number | null } | null;
   land: { type: string; areaSqm: number | null; zoning: TL | null; buildable: boolean } | null;
@@ -368,38 +368,38 @@ export const LISTINGS: Listing[] = [
     title: { pt: 'Villa com vista mar — Monte Sossego, Mindelo', en: 'Sea-view villa — Monte Sossego, Mindelo', nl: 'Villa met zeezicht — Monte Sossego, Mindelo' },
     description: { pt: 'Villa de 3 quartos com vista para a baía de Mindelo. Documentos declarados, verificação pendente. (Dados fictícios.)', en: '3-bedroom villa overlooking Mindelo bay. Documents declared, verification pending. (Fictional data.)', nl: 'Villa met 3 slaapkamers en uitzicht op de baai van Mindelo. Documenten opgegeven, verificatie in behandeling. (Fictieve data.)' },
     priceAmount: 18500000, priceOnRequest: false, isFeatured: true, documentStatus: 'DECLARED', island: 'São Vicente', municipality: 'São Vicente',
-    thumbnail: img('Villa Mindelo'), publishedAt: '2026-06-10', lastVerifiedAt: null, riskNotes: null,
+    thumbnail: img('Villa Mindelo'), latitude: 16.876, longitude: -24.995, publishedAt: '2026-06-10', lastVerifiedAt: null, riskNotes: null,
     property: { type: 'VILLA', bedrooms: 3, bathrooms: 2, builtAreaSqm: 180, plotAreaSqm: 420 }, land: null },
   { id: 'l2', slug: 'terreno-600m2-monte-sossego', kind: 'LAND',
     title: { pt: 'Terreno para construção 600 m² — Monte Sossego', en: 'Building land 600 m² — Monte Sossego', nl: 'Bouwgrond 600 m² — Monte Sossego' },
     description: { pt: 'Terreno construível com boa exposição. Zonamento e viabilidade a confirmar com a Câmara Municipal. (Dados fictícios.)', en: 'Buildable plot with good aspect. Zoning and feasibility to be confirmed with the municipality. (Fictional data.)', nl: 'Bebouwbaar perceel met goede ligging. Bestemming en haalbaarheid te bevestigen bij de gemeente. (Fictieve data.)' },
     priceAmount: 4200000, priceOnRequest: false, isFeatured: false, documentStatus: 'DECLARED', island: 'São Vicente', municipality: 'São Vicente',
-    thumbnail: img('Terreno Sossego'), publishedAt: '2026-06-14', lastVerifiedAt: null,
+    thumbnail: img('Terreno Sossego'), latitude: 16.879, longitude: -24.999, publishedAt: '2026-06-14', lastVerifiedAt: null,
     riskNotes: { pt: 'Zonamento e viabilidade de construção requerem confirmação municipal.', en: 'Zoning and buildability require municipal confirmation.', nl: 'Bestemming en bebouwbaarheid vereisen bevestiging door de gemeente.' },
     property: null, land: { type: 'BUILDING_LAND', areaSqm: 600, zoning: { pt: 'Residencial (a confirmar)', en: 'Residential (to confirm)', nl: 'Residentieel (te bevestigen)' }, buildable: true } },
   { id: 'l3', slug: 'apartamento-t2-centro-mindelo', kind: 'PROPERTY_RENT',
     title: { pt: 'Apartamento T2 no centro histórico de Mindelo', en: '2-bed apartment in Mindelo old town', nl: 'Appartement (2 slk) in het oude centrum van Mindelo' },
     description: { pt: 'Apartamento renovado perto do Mercado Municipal. Documentos verificados. (Dados fictícios.)', en: 'Renovated apartment near the Municipal Market. Documents verified. (Fictional data.)', nl: 'Gerenoveerd appartement vlak bij de gemeentelijke markt. Documenten geverifieerd. (Fictieve data.)' },
     priceAmount: 65000, priceOnRequest: false, isFeatured: false, documentStatus: 'VERIFIED', island: 'São Vicente', municipality: 'São Vicente',
-    thumbnail: img('T2 Centro'), publishedAt: '2026-06-20', lastVerifiedAt: '2026-06-22', riskNotes: null,
+    thumbnail: img('T2 Centro'), latitude: 16.886, longitude: -24.988, publishedAt: '2026-06-20', lastVerifiedAt: '2026-06-22', riskNotes: null,
     property: { type: 'APARTMENT', bedrooms: 2, bathrooms: 1, builtAreaSqm: 85, plotAreaSqm: null }, land: null },
   { id: 'l4', slug: 'moradia-santa-maria-sal', kind: 'HOLIDAY_RENT',
     title: { pt: 'Moradia de férias — Santa Maria, Sal', en: 'Holiday home — Santa Maria, Sal', nl: 'Vakantiewoning — Santa Maria, Sal' },
     description: { pt: 'Moradia T3 a 300 m da praia. Ideal para arrendamento turístico. (Dados fictícios.)', en: '3-bedroom house 300 m from the beach. Ideal for holiday rental. (Fictional data.)', nl: 'Woning met 3 slaapkamers op 300 m van het strand. Ideaal voor vakantieverhuur. (Fictieve data.)' },
     priceAmount: 120000, priceOnRequest: false, isFeatured: true, documentStatus: 'UPLOADED', island: 'Sal', municipality: 'Sal',
-    thumbnail: img('Santa Maria'), publishedAt: '2026-06-25', lastVerifiedAt: null, riskNotes: null,
+    thumbnail: img('Santa Maria'), latitude: 16.598, longitude: -22.906, publishedAt: '2026-06-25', lastVerifiedAt: null, riskNotes: null,
     property: { type: 'HOUSE', bedrooms: 3, bathrooms: 2, builtAreaSqm: 140, plotAreaSqm: 300 }, land: null },
   { id: 'l5', slug: 'espaco-comercial-plateau-praia', kind: 'COMMERCIAL',
     title: { pt: 'Espaço comercial — Plateau, Praia', en: 'Commercial space — Plateau, Praia', nl: 'Commerciële ruimte — Plateau, Praia' },
     description: { pt: 'Loja de rés-do-chão na zona do Plateau. Preço sob consulta. (Dados fictícios.)', en: 'Ground-floor shop in the Plateau area. Price on request. (Fictional data.)', nl: 'Winkel op de begane grond in de Plateau-wijk. Prijs op aanvraag. (Fictieve data.)' },
     priceAmount: null, priceOnRequest: true, isFeatured: false, documentStatus: 'DECLARED', island: 'Santiago', municipality: 'Praia',
-    thumbnail: img('Plateau Praia'), publishedAt: '2026-05-30', lastVerifiedAt: null, riskNotes: null,
+    thumbnail: img('Plateau Praia'), latitude: 14.917, longitude: -23.51, publishedAt: '2026-05-30', lastVerifiedAt: null, riskNotes: null,
     property: { type: 'COMMERCIAL', bedrooms: null, bathrooms: 1, builtAreaSqm: 110, plotAreaSqm: null }, land: null },
   { id: 'l6', slug: 'projeto-novo-baia-das-gatas', kind: 'NEW_DEVELOPMENT',
     title: { pt: 'Novo projeto — condomínio Baía das Gatas', en: 'New development — Baía das Gatas condominium', nl: 'Nieuw project — condominium Baía das Gatas' },
     description: { pt: 'Projeto de 8 apartamentos em fase de pré-venda. (Dados fictícios.)', en: '8-apartment project in pre-sale phase. (Fictional data.)', nl: 'Project van 8 appartementen in de voorverkoopfase. (Fictieve data.)' },
     priceAmount: 9800000, priceOnRequest: false, isFeatured: false, documentStatus: 'DECLARED', island: 'São Vicente', municipality: 'São Vicente',
-    thumbnail: img('Baia das Gatas'), publishedAt: '2026-07-01', lastVerifiedAt: null, riskNotes: null,
+    thumbnail: img('Baia das Gatas'), latitude: 16.872, longitude: -24.918, publishedAt: '2026-07-01', lastVerifiedAt: null, riskNotes: null,
     property: { type: 'APARTMENT', bedrooms: 2, bathrooms: 2, builtAreaSqm: 95, plotAreaSqm: null }, land: null },
   { id: 's1', slug: 'servico-canalizacao-mindelo', kind: 'SERVICE',
     title: { pt: 'Serviço de canalização e águas — Mindelo', en: 'Plumbing & water service — Mindelo', nl: 'Loodgieters- en waterdienst — Mindelo' },

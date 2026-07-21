@@ -4,16 +4,19 @@ import { fetchListingBySlug, fetchListings } from '@/lib/data';
 import { OfficialTag, ListingCard, SectionHead } from '@/components/ui';
 import { LeadForm } from '@/components/LeadForm';
 import { SaveButton } from '@/components/SaveButton';
+import { MapExplorer } from '@/components/MapExplorer';
+import { coordsFor } from '@/lib/geo';
 
 const SIMILAR: TL = { pt: 'Imóveis semelhantes', en: 'Similar properties', nl: 'Vergelijkbaar aanbod' };
 const LOCATION: TL = { pt: 'Localização', en: 'Location', nl: 'Locatie' };
-const MAP_SOON: TL = { pt: 'Mapa interativo em breve', en: 'Interactive map coming soon', nl: 'Interactieve kaart binnenkort' };
+const MAP_SOON: TL = { pt: 'Localização aproximada', en: 'Approximate location', nl: 'Locatie bij benadering' };
 
 export default async function ListingDetailPage({ params }: { params: { locale: Locale; slug: string } }): Promise<JSX.Element> {
   const locale = params.locale;
   const l = await fetchListingBySlug(params.slug);
   if (!l) notFound();
   const similar = (await fetchListings()).filter((o) => o.island === l.island && o.slug !== l.slug).slice(0, 3);
+  const loc = coordsFor(l);
 
   return (
     <div className="grid gap-8 lg:grid-cols-3">
@@ -63,9 +66,19 @@ export default async function ListingDetailPage({ params }: { params: { locale: 
         <SaveButton listingId={l.id} locale={locale} />
         <div className="rounded-xl border border-slate-200 bg-white p-4">
           <h2 className="text-sm font-semibold text-slate-700">{tr(LOCATION, locale)}</h2>
-          <div className="mt-2 flex aspect-[4/3] items-center justify-center rounded-lg bg-gradient-to-br from-brand-50 to-sand-100 text-center text-xs text-slate-500">
-            <span>📍 {l.municipality}, {l.island}<br />{tr(MAP_SOON, locale)}</span>
-          </div>
+          {loc ? (
+            <div className="mt-2">
+              <MapExplorer
+                points={[{ slug: l.slug, title: tr(l.title, locale), island: l.island, price: formatPrice(locale, l.priceAmount, l.priceOnRequest), href: `/${locale}/imoveis/${l.slug}`, lat: loc.lat, lng: loc.lng }]}
+                center={loc} height="190px" zoom={13}
+              />
+              <p className="mt-1.5 text-xs text-slate-500">📍 {l.municipality}, {l.island} · {tr(MAP_SOON, locale)}</p>
+            </div>
+          ) : (
+            <div className="mt-2 flex aspect-[4/3] items-center justify-center rounded-lg bg-gradient-to-br from-brand-50 to-sand-100 text-center text-xs text-slate-500">
+              <span>📍 {l.municipality}, {l.island}</span>
+            </div>
+          )}
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-4">
           <h2 className="text-sm font-semibold text-slate-700">{t(locale, 'listing.trust')}</h2>
