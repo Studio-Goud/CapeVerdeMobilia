@@ -149,6 +149,7 @@ export function SiteFooter({ locale }: { locale: Locale }): JSX.Element {
           <p>{t(locale, 'footer.demo')}</p>
           <ul className="flex flex-wrap gap-x-4 gap-y-1">
             {link('/termos', 'footer.terms')}
+            {link('/privacidade', 'footer.privacy')}
             {link('/info', 'nav.info')}
           </ul>
         </div>
