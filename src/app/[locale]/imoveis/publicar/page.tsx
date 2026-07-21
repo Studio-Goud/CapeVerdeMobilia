@@ -7,6 +7,7 @@ import { t, tr, type Locale, type TL } from '@/i18n';
 import { useAuth } from '@/components/Auth';
 import { getBrowserSupabase } from '@/lib/supabase/client';
 import { uploadFile, publicUrl, fileExt } from '@/lib/storage';
+import { isNativeApp, takePhotoAsFile } from '@/lib/native';
 
 const KINDS: { v: string; l: TL }[] = [
   { v: 'PROPERTY_SALE', l: { pt: 'Casa para venda', en: 'Home for sale', nl: 'Woning te koop' } },
@@ -116,6 +117,15 @@ export default function PublishWizardPage({ params }: { params: { locale: Locale
     const files = list ? Array.from(list).slice(0, 12) : [];
     setPhotos(files);
     setPreviews(files.map((file) => URL.createObjectURL(file)));
+  }
+
+  // Native app only: append a photo taken with the device camera.
+  async function addCameraPhoto(): Promise<void> {
+    const file = await takePhotoAsFile();
+    if (!file) return;
+    const next = [...photos, file].slice(0, 12);
+    setPhotos(next);
+    setPreviews(next.map((f) => URL.createObjectURL(f)));
   }
 
   if (!ready) return <div className="h-40" aria-hidden />;
@@ -304,6 +314,15 @@ export default function PublishWizardPage({ params }: { params: { locale: Locale
                 onChange={(e) => onPickPhotos(e.target.files)}
                 className={`${input} cursor-pointer`}
               />
+              {isNativeApp() && (
+                <button
+                  type="button"
+                  onClick={() => void addCameraPhoto()}
+                  className="mt-2 inline-flex items-center gap-2 rounded-lg border border-brand px-3 py-2 text-sm font-semibold text-brand hover:bg-brand-50"
+                >
+                  📷 {tr({ pt: 'Tirar foto', en: 'Take photo', nl: 'Foto maken' }, locale)}
+                </button>
+              )}
               <p className="mt-1 text-xs text-slate-400">
                 {tr(
                   {
