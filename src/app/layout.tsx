@@ -9,6 +9,12 @@ export const metadata: Metadata = {
   description: 'Djarvista — a porta digital para imóveis, terra, construção e informação oficial em Cabo Verde. Property, land, building and official information — PT / EN / NL.',
   applicationName: 'Djarvista',
   keywords: ['Cabo Verde', 'Cape Verde', 'imóveis', 'vastgoed', 'real estate', 'São Vicente', 'arrendamento', 'construção', 'Djarvista'],
+  manifest: '/manifest.webmanifest',
+  appleWebApp: { capable: true, title: 'Djarvista', statusBarStyle: 'default' },
+  icons: {
+    icon: [{ url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' }, { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' }],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
   openGraph: {
     type: 'website',
     siteName: 'Djarvista',
