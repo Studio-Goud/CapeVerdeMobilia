@@ -166,7 +166,7 @@ export default function EditListingPage({ params }: { params: { locale: Locale; 
       kind: f.kind,
       island: f.island,
       municipality: f.municipality,
-      price_amount: f.onRequest || !f.price ? null : Number(f.price),
+      price_amount: f.onRequest || !f.price ? null : Math.round(Number(f.price)),
       price_on_request: f.onRequest,
       photos: merged,
       thumbnail: merged[0] ?? thumbnail ?? null,

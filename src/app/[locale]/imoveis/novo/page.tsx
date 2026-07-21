@@ -105,7 +105,7 @@ export default function NewListingPage({ params }: { params: { locale: Locale } 
     }
     const { error: err } = await supabase.from('listings').insert({
       owner, slug, kind: f.kind, title, description,
-      price_amount: f.onRequest || !f.price ? null : Number(f.price),
+      price_amount: f.onRequest || !f.price ? null : Math.round(Number(f.price)),
       price_on_request: f.onRequest, island: f.island, municipality: f.municipality || f.island,
       thumbnail: photoUrls[0] ?? null, photos: photoUrls, status: f.publish ? 'published' : 'draft',
       published_at: f.publish ? new Date().toISOString() : null,

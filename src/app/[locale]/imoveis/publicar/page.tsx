@@ -166,6 +166,7 @@ export default function PublishWizardPage({ params }: { params: { locale: Locale
     const supabase = getBrowserSupabase();
     if (!supabase) {
       setBusy(false);
+      setError('not-configured');
       return;
     }
     const { data: auth } = await supabase.auth.getUser();
@@ -179,14 +180,16 @@ export default function PublishWizardPage({ params }: { params: { locale: Locale
     const description: TL = { pt: f.desc, en: f.desc, nl: f.desc };
     const slug = `${slugify(f.titlePt) || 'anuncio'}-${Date.now().toString(36)}`;
     const photoUrls: string[] = [];
+    const uploadedPaths: string[] = [];
     for (let i = 0; i < photos.length; i++) {
       const up = await uploadFile('listing-photos', `${owner}/${slug}/${i}.${fileExt(photos[i].name)}`, photos[i]);
       if (up.error) {
+        if (uploadedPaths.length) await supabase.storage.from('listing-photos').remove(uploadedPaths);
         setBusy(false);
         setError(up.error);
         return;
       }
-      if (up.path) photoUrls.push(publicUrl('listing-photos', up.path));
+      if (up.path) { uploadedPaths.push(up.path); photoUrls.push(publicUrl('listing-photos', up.path)); }
     }
     const { error: err } = await supabase.from('listings').insert({
       owner,
@@ -194,7 +197,7 @@ export default function PublishWizardPage({ params }: { params: { locale: Locale
       kind: f.kind,
       title,
       description,
-      price_amount: f.onRequest || !f.price ? null : Number(f.price),
+      price_amount: f.onRequest || !f.price ? null : Math.round(Number(f.price)),
       price_on_request: f.onRequest,
       island: f.island,
       municipality: f.municipality || f.island,
@@ -205,6 +208,7 @@ export default function PublishWizardPage({ params }: { params: { locale: Locale
     });
     setBusy(false);
     if (err) {
+      if (uploadedPaths.length) await supabase.storage.from('listing-photos').remove(uploadedPaths);
       setError(err.message);
       return;
     }

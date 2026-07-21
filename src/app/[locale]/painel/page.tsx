@@ -23,6 +23,7 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
   const [favs, setFavs] = useState<Listing[] | null>(null);
   const [rentals, setRentals] = useState<RentalRequestItem[] | null>(null);
   const [bookings, setBookings] = useState<Booking[] | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
 
   const isBiz = !!user && (user.role === 'business' || user.role === 'admin');
 
@@ -38,18 +39,32 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
   }, [configured, user, isBiz, reloadBiz]);
 
   async function rentalAction(id: string, status: 'accepted' | 'declined'): Promise<void> {
-    await setRentalRequestStatus(id, status);
+    setActionError(null);
+    const err = await setRentalRequestStatus(id, status);
+    if (err) { setActionError(err); return; }
     await reloadBiz();
   }
   const rrLabel = (s: string): string => t(locale, `rr.status.${s}` as 'rr.status.pending');
 
+  async function withdrawRequest(id: string): Promise<void> {
+    if (!window.confirm(t(locale, 'dash.confirmWithdraw'))) return;
+    setActionError(null);
+    const err = await setRentalRequestStatus(id, 'withdrawn');
+    if (err) { setActionError(err); return; }
+    setRentals(await fetchMyRentalRequests());
+  }
+
   async function togglePublish(l: OwnedListing): Promise<void> {
-    await setListingStatus(l.id, l.status === 'published' ? 'draft' : 'published');
+    setActionError(null);
+    const err = await setListingStatus(l.id, l.status === 'published' ? 'draft' : 'published');
+    if (err) { setActionError(err); return; }
     await reloadBiz();
   }
   async function removeListing(l: OwnedListing): Promise<void> {
     if (!window.confirm(t(locale, 'dash.confirmDelete'))) return;
-    await deleteListing(l.id);
+    setActionError(null);
+    const err = await deleteListing(l.id);
+    if (err) { setActionError(err); return; }
     await reloadBiz();
   }
 
@@ -83,6 +98,13 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
           </div>
         )}
       </header>
+
+      {actionError && (
+        <div role="alert" className="flex items-center justify-between gap-3 rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-sm text-red-700">
+          <span>{t(locale, 'dash.actionError')}</span>
+          <button onClick={() => setActionError(null)} className="shrink-0 text-xs font-semibold text-red-600 hover:underline">{t(locale, 'common.close')}</button>
+        </div>
+      )}
 
       {isBiz ? (
         <>
@@ -165,7 +187,7 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
                   <Card key={r.id}>
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <p className="text-sm font-semibold text-slate-900">{r.listingTitle ? tr(r.listingTitle, locale) : '—'}</p>
-                      <Pill tone={r.status === 'accepted' ? 'emerald' : r.status === 'declined' ? 'slate' : 'amber'}>{rrLabel(r.status)}</Pill>
+                      <Pill tone={r.status === 'accepted' ? 'emerald' : r.status === 'declined' || r.status === 'withdrawn' ? 'slate' : 'amber'}>{rrLabel(r.status)}</Pill>
                     </div>
                     <p className="mt-1 text-xs text-slate-500">{r.start_date ?? '—'} → {r.end_date ?? '—'}</p>
                     {r.message && <p className="mt-1 text-sm text-slate-700">{r.message}</p>}
@@ -261,8 +283,9 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
                       <p className="text-xs text-slate-500">{r.start_date ?? '—'} → {r.end_date ?? '—'}</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Pill tone={r.status === 'accepted' ? 'emerald' : r.status === 'declined' ? 'slate' : 'amber'}>{rrLabel(r.status)}</Pill>
+                      <Pill tone={r.status === 'accepted' ? 'emerald' : r.status === 'declined' || r.status === 'withdrawn' ? 'slate' : 'amber'}>{rrLabel(r.status)}</Pill>
                       {r.status === 'accepted' && <Link href={`/${locale}/mensagens/${r.id}`} className="rounded-lg bg-brand px-3 py-1.5 text-xs font-semibold text-white hover:bg-brand-dark">{t(locale, 'dash.message')}</Link>}
+                      {r.status === 'pending' && <button onClick={() => void withdrawRequest(r.id)} className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-50">{t(locale, 'dash.withdraw')}</button>}
                     </div>
                   </Card>
                 ))}
