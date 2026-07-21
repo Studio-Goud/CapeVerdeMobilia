@@ -7,7 +7,8 @@ import { PROJECTS } from '@/content';
 import { useAuth } from '@/components/Auth';
 import {
   fetchBusinessDashboard, fetchMyFavorites, fetchLeads, setListingStatus, deleteListing,
-  type BusinessDashboard, type LeadItem, type OwnedListing,
+  fetchIncomingRentalRequests, fetchMyRentalRequests, setRentalRequestStatus,
+  type BusinessDashboard, type LeadItem, type OwnedListing, type RentalRequestItem,
 } from '@/lib/browserData';
 import { Card, Stat, Pill, TrustBadge } from '@/components/ui';
 
@@ -19,19 +20,26 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
   const [biz, setBiz] = useState<BusinessDashboard | null>(null);
   const [leads, setLeads] = useState<LeadItem[] | null>(null);
   const [favs, setFavs] = useState<Listing[] | null>(null);
+  const [rentals, setRentals] = useState<RentalRequestItem[] | null>(null);
 
   const isBiz = !!user && (user.role === 'business' || user.role === 'admin');
 
   const reloadBiz = useCallback(async () => {
-    const [b, l] = await Promise.all([fetchBusinessDashboard(), fetchLeads()]);
-    setBiz(b); setLeads(l);
+    const [b, l, r] = await Promise.all([fetchBusinessDashboard(), fetchLeads(), fetchIncomingRentalRequests()]);
+    setBiz(b); setLeads(l); setRentals(r);
   }, []);
 
   useEffect(() => {
     if (!configured || !user) return;
     if (isBiz) void reloadBiz();
-    else void fetchMyFavorites().then(setFavs);
+    else { void fetchMyFavorites().then(setFavs); void fetchMyRentalRequests().then(setRentals); }
   }, [configured, user, isBiz, reloadBiz]);
+
+  async function rentalAction(id: string, status: 'accepted' | 'declined'): Promise<void> {
+    await setRentalRequestStatus(id, status);
+    await reloadBiz();
+  }
+  const rrLabel = (s: string): string => t(locale, `rr.status.${s}` as 'rr.status.pending');
 
   async function togglePublish(l: OwnedListing): Promise<void> {
     await setListingStatus(l.id, l.status === 'published' ? 'draft' : 'published');
@@ -99,6 +107,9 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
                     <img src={l.thumbnail} alt="" className="h-12 w-16 shrink-0 rounded-lg object-cover" />
                     <Link href={`/${locale}/imoveis/${l.slug}`} className="min-w-0 flex-1 truncate text-sm font-medium text-slate-900 hover:text-brand">{tr(l.title, locale)}</Link>
                     <Pill tone={l.status === 'published' ? 'emerald' : 'slate'}>{t(locale, l.status === 'published' ? 'dash.statusPublished' : 'dash.statusDraft')}</Pill>
+                    <Link href={`/${locale}/imoveis/${l.slug}/editar`} className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-brand hover:text-brand">
+                      {t(locale, 'dash.edit')}
+                    </Link>
                     <button onClick={() => void togglePublish(l)} className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-brand hover:text-brand">
                       {t(locale, l.status === 'published' ? 'dash.unpublish' : 'dash.publish')}
                     </button>
@@ -140,6 +151,33 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
               </div>
             ) : (
               <Card><p className="text-sm text-slate-500">{t(locale, 'dash.noLeads')}</p></Card>
+            )}
+          </section>
+
+          {/* Incoming rental requests */}
+          <section>
+            <h2 className="mb-3 text-lg font-semibold">{t(locale, 'dash.rentalRequests')}</h2>
+            {rentals && rentals.length > 0 ? (
+              <div className="space-y-2">
+                {rentals.map((r) => (
+                  <Card key={r.id}>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <p className="text-sm font-semibold text-slate-900">{r.listingTitle ? tr(r.listingTitle, locale) : '—'}</p>
+                      <Pill tone={r.status === 'accepted' ? 'emerald' : r.status === 'declined' ? 'slate' : 'amber'}>{rrLabel(r.status)}</Pill>
+                    </div>
+                    <p className="mt-1 text-xs text-slate-500">{r.start_date ?? '—'} → {r.end_date ?? '—'}</p>
+                    {r.message && <p className="mt-1 text-sm text-slate-700">{r.message}</p>}
+                    {r.status === 'pending' && (
+                      <div className="mt-2 flex gap-2">
+                        <button onClick={() => void rentalAction(r.id, 'accepted')} className="rounded-lg border border-emerald-200 px-3 py-1.5 text-xs font-semibold text-emerald-700 hover:bg-emerald-50">{t(locale, 'dash.accept')}</button>
+                        <button onClick={() => void rentalAction(r.id, 'declined')} className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50">{t(locale, 'dash.decline')}</button>
+                      </div>
+                    )}
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <Card><p className="text-sm text-slate-500">{t(locale, 'dash.noRentals')}</p></Card>
             )}
           </section>
 
@@ -193,6 +231,25 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
               </div>
             ) : (
               <Card><p className="text-sm text-slate-500">{t(locale, 'dash.empty')}</p></Card>
+            )}
+          </section>
+
+          <section>
+            <h2 className="mb-3 text-lg font-semibold">{t(locale, 'dash.myRentalRequests')}</h2>
+            {rentals && rentals.length > 0 ? (
+              <div className="space-y-2">
+                {rentals.map((r) => (
+                  <Card key={r.id} className="flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                      <p className="text-sm font-medium text-slate-900">{r.listingTitle ? tr(r.listingTitle, locale) : '—'}</p>
+                      <p className="text-xs text-slate-500">{r.start_date ?? '—'} → {r.end_date ?? '—'}</p>
+                    </div>
+                    <Pill tone={r.status === 'accepted' ? 'emerald' : r.status === 'declined' ? 'slate' : 'amber'}>{rrLabel(r.status)}</Pill>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <Card><p className="text-sm text-slate-500">{t(locale, 'dash.noRentals')}</p></Card>
             )}
           </section>
 

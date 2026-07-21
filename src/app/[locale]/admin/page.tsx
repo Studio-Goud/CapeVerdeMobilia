@@ -1,149 +1,188 @@
 'use client';
 
-import { useState } from 'react';
-import { t, tr, type Locale } from '@/i18n';
-import { PageTitle, Card, Pill, OfficialTag } from '@/components/ui';
+import { useCallback, useEffect, useState } from 'react';
+import { tr, type Locale, type TL, verifLabel } from '@/i18n';
+import { useAuth } from '@/components/Auth';
+import { PageTitle, Card, Pill } from '@/components/ui';
+import { signedUrl } from '@/lib/storage';
+import {
+  fetchPendingVerifications,
+  reviewVerification,
+  fetchAllListingsForMod,
+  setListingStatus,
+  deleteListing,
+  type AdminVerification,
+  type AdminListing,
+} from '@/lib/browserData';
 
-// --- Localized string helper type (matches i18n TL shape) ---
-type TL = { pt: string; en: string; nl: string };
+type Tab = 'verifications' | 'listings';
 
-// --- Page-specific labels (inline, fictional demo UI) ---
+// Verification level accepted by verifLabel — derived, so we avoid `any` and an extra import.
+type VerifLevel = Parameters<typeof verifLabel>[1];
+
+// --- Inline copy (PT / EN / NL) ---------------------------------------------
 const L = {
+  title: { pt: 'Consola de moderação', en: 'Moderation console', nl: 'Moderatieconsole' },
   intro: {
-    pt: 'Consola de demonstração de operações de confiança. Todas as ações são locais e não têm efeito real — nada é publicado nem alterado em sistemas oficiais.',
-    en: 'Demo trust-operations console. All actions are local and have no real effect — nothing is published or changed in official systems.',
-    nl: 'Demo-console voor vertrouwensoperaties. Alle acties zijn lokaal en hebben geen echt effect — er wordt niets gepubliceerd of gewijzigd in officiële systemen.',
+    pt: 'Área da equipa de confiança e operações: rever pedidos de verificação e moderar anúncios.',
+    en: 'Trust & operations team area: review verification requests and moderate listings.',
+    nl: 'Gebied voor het vertrouwens- en operationsteam: verificatieaanvragen beoordelen en advertenties modereren.',
   },
-  tabModeration: { pt: 'Fila de moderação', en: 'Moderation queue', nl: 'Moderatiewachtrij' },
-  tabPublications: { pt: 'Publicações oficiais (editor)', en: 'Official publications (editor)', nl: 'Officiële publicaties (editor)' },
-  pending: { pt: 'Pendente', en: 'Pending', nl: 'In behandeling' },
-  approved: { pt: 'Aprovado', en: 'Approved', nl: 'Goedgekeurd' },
-  rejected: { pt: 'Rejeitado', en: 'Rejected', nl: 'Afgewezen' },
+  notConfigured: {
+    pt: 'A verificação e a moderação ficam disponíveis assim que a base de dados estiver ligada.',
+    en: 'Verification and moderation become available once the database is connected.',
+    nl: 'Verificatie en moderatie worden beschikbaar zodra de database is verbonden.',
+  },
+  adminsOnlyTitle: {
+    pt: 'Área reservada à equipa de confiança e operações',
+    en: 'Reserved for the trust & operations team',
+    nl: 'Gereserveerd voor het vertrouwens- en operationsteam',
+  },
+  adminsOnlyBody: {
+    pt: 'Esta secção é apenas para administradores. A sua conta não tem esse acesso.',
+    en: 'This section is for admins only. Your account does not have that access.',
+    nl: 'Deze sectie is alleen voor beheerders. Je account heeft die toegang niet.',
+  },
+  adminHint: {
+    pt: 'Um perfil pode receber o papel de administrador no Supabase:',
+    en: 'An admin role can be granted in Supabase:',
+    nl: 'Een beheerdersrol kan worden toegekend in Supabase:',
+  },
+  tabVerifications: { pt: 'Verificações', en: 'Verifications', nl: 'Verificaties' },
+  tabListings: { pt: 'Anúncios', en: 'Listings', nl: 'Advertenties' },
+  loading: { pt: 'A carregar…', en: 'Loading…', nl: 'Laden…' },
+  noVerifications: {
+    pt: 'Sem pedidos de verificação pendentes.',
+    en: 'No pending verification requests.',
+    nl: 'Geen openstaande verificatieaanvragen.',
+  },
+  noListings: { pt: 'Sem anúncios para moderar.', en: 'No listings to moderate.', nl: 'Geen advertenties om te modereren.' },
+  user: { pt: 'Utilizador', en: 'User', nl: 'Gebruiker' },
+  docType: { pt: 'Tipo de documento', en: 'Document type', nl: 'Documenttype' },
+  level: { pt: 'Nível pedido', en: 'Level requested', nl: 'Aangevraagd niveau' },
+  submitted: { pt: 'Enviado', en: 'Submitted', nl: 'Ingediend' },
+  viewDocument: { pt: 'Ver documento', en: 'View document', nl: 'Document bekijken' },
+  viewSelfie: { pt: 'Ver selfie', en: 'View selfie', nl: 'Selfie bekijken' },
   approve: { pt: 'Aprovar', en: 'Approve', nl: 'Goedkeuren' },
   reject: { pt: 'Rejeitar', en: 'Reject', nl: 'Afwijzen' },
   publish: { pt: 'Publicar', en: 'Publish', nl: 'Publiceren' },
-  draft: { pt: 'Rascunho', en: 'Draft', nl: 'Concept' },
-  published: { pt: 'Publicado', en: 'Published', nl: 'Gepubliceerd' },
-  pendingCount: { pt: 'itens pendentes', en: 'pending items', nl: 'items in behandeling' },
-  reason: { pt: 'Motivo', en: 'Reason', nl: 'Reden' },
-  authority: { pt: 'Entidade responsável', en: 'Responsible authority', nl: 'Verantwoordelijke instantie' },
-  typeListing: { pt: 'Anúncio', en: 'Listing', nl: 'Advertentie' },
-  typeVerification: { pt: 'Verificação', en: 'Verification', nl: 'Verificatie' },
-  typeReview: { pt: 'Avaliação denunciada', en: 'Reported review', nl: 'Gerapporteerde review' },
-  publishedNote: {
-    pt: 'Apresentado com estilo oficial nesta demonstração.',
-    en: 'Shown with official styling in this demo.',
-    nl: 'Weergegeven met officiële stijl in deze demo.',
-  },
-  draftNote: {
-    pt: 'Ainda em rascunho — não confirmado oficialmente.',
-    en: 'Still a draft — not officially confirmed.',
-    nl: 'Nog een concept — niet officieel bevestigd.',
-  },
+  unpublish: { pt: 'Despublicar', en: 'Unpublish', nl: 'Depubliceren' },
+  del: { pt: 'Eliminar', en: 'Delete', nl: 'Verwijderen' },
+  confirmDelete: { pt: 'Eliminar este anúncio?', en: 'Delete this listing?', nl: 'Deze advertentie verwijderen?' },
+  statusPublished: { pt: 'Publicado', en: 'Published', nl: 'Gepubliceerd' },
+  statusDraft: { pt: 'Rascunho', en: 'Draft', nl: 'Concept' },
+  dash: { pt: '—', en: '—', nl: '—' },
 } satisfies Record<string, TL>;
 
-// --- Moderation queue types & data ---
-type ModerationType = 'listing' | 'verification' | 'review';
-type ModerationStatus = 'pending' | 'approved' | 'rejected';
+// --- Small button styles -----------------------------------------------------
+const BTN_BASE = 'rounded-lg border px-3 py-1.5 text-xs font-semibold transition disabled:opacity-40';
+const BTN_NEUTRAL = `${BTN_BASE} border-slate-300 text-slate-700 hover:bg-slate-50`;
+const BTN_APPROVE = `${BTN_BASE} border-emerald-300 text-emerald-700 hover:bg-emerald-50`;
+const BTN_DANGER = `${BTN_BASE} border-red-300 text-red-600 hover:bg-red-50`;
 
-interface ModerationItem {
-  id: string;
-  type: ModerationType;
-  title: TL;
-  reason: TL;
-  status: ModerationStatus;
+function formatDate(locale: Locale, iso: string): string {
+  const loc = locale === 'nl' ? 'nl-NL' : locale === 'en' ? 'en-GB' : 'pt-PT';
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? iso : new Intl.DateTimeFormat(loc, { dateStyle: 'medium' }).format(d);
 }
-
-const INITIAL_MODERATION: ModerationItem[] = [
-  {
-    id: 'm1',
-    type: 'listing',
-    title: { pt: 'Villa com vista mar — Monte Sossego, Mindelo', en: 'Sea-view villa — Monte Sossego, Mindelo', nl: 'Villa met zeezicht — Monte Sossego, Mindelo' },
-    reason: { pt: 'Novo anúncio a aguardar revisão de fotos e preço.', en: 'New listing awaiting photo and price review.', nl: 'Nieuwe advertentie wacht op controle van foto’s en prijs.' },
-    status: 'pending',
-  },
-  {
-    id: 'm2',
-    type: 'verification',
-    title: { pt: 'Construções Djar — pedido de nível “Documentos verificados”', en: 'Construções Djar — request for “Documents verified” level', nl: 'Construções Djar — aanvraag niveau “Documenten geverifieerd”' },
-    reason: { pt: 'Documentos de empresa carregados; requer controlo humano.', en: 'Business documents uploaded; requires human check.', nl: 'Bedrijfsdocumenten geüpload; vereist menselijke controle.' },
-    status: 'pending',
-  },
-  {
-    id: 'm3',
-    type: 'listing',
-    title: { pt: 'Terreno para construção 600 m² — Monte Sossego', en: 'Building land 600 m² — Monte Sossego', nl: 'Bouwgrond 600 m² — Monte Sossego' },
-    reason: { pt: 'Zonamento declarado pelo vendedor a confirmar.', en: 'Seller-declared zoning to be confirmed.', nl: 'Door verkoper opgegeven bestemming te bevestigen.' },
-    status: 'pending',
-  },
-  {
-    id: 'm4',
-    type: 'review',
-    title: { pt: 'Avaliação denunciada sobre “Elétrica Mindelo”', en: 'Reported review about “Elétrica Mindelo”', nl: 'Gerapporteerde review over “Elétrica Mindelo”' },
-    reason: { pt: 'Denunciada como possivelmente falsa; sem prova de transação.', en: 'Reported as possibly fake; no proof of transaction.', nl: 'Gerapporteerd als mogelijk nep; geen bewijs van transactie.' },
-    status: 'pending',
-  },
-];
-
-const MODERATION_TYPE_LABEL: Record<ModerationType, TL> = {
-  listing: L.typeListing,
-  verification: L.typeVerification,
-  review: L.typeReview,
-};
-
-// --- Publications types & data ---
-type PublicationStatus = 'draft' | 'published';
-
-interface AdminPublication {
-  id: string;
-  title: TL;
-  authority: string;
-  version: number;
-  status: PublicationStatus;
-}
-
-const INITIAL_PUBLICATIONS: AdminPublication[] = [
-  {
-    id: 'pub1',
-    title: { pt: 'Requisitos da licença de construção — São Vicente (demo)', en: 'Building permit requirements — São Vicente (demo)', nl: 'Vereisten bouwvergunning — São Vicente (demo)' },
-    authority: 'Câmara Municipal de São Vicente (demo)',
-    version: 1,
-    status: 'draft',
-  },
-  {
-    id: 'pub2',
-    title: { pt: 'Reforma fiscal imobiliária 2026: cITI e cIPI (demo)', en: '2026 real-estate tax reform: cITI and cIPI (demo)', nl: 'Vastgoedbelastinghervorming 2026: cITI en cIPI (demo)' },
-    authority: 'Portal informativo Djarvista (demo)',
-    version: 2,
-    status: 'published',
-  },
-  {
-    id: 'pub3',
-    title: { pt: 'Guia “Empresa no Dia” — passos de registo (demo)', en: '“Empresa no Dia” guide — registration steps (demo)', nl: 'Gids “Empresa no Dia” — registratiestappen (demo)' },
-    authority: 'Casa do Cidadão (demo)',
-    version: 1,
-    status: 'draft',
-  },
-];
-
-type Tab = 'moderation' | 'publications';
 
 export default function AdminPage({ params }: { params: { locale: Locale } }): JSX.Element {
   const locale = params.locale;
-  const [tab, setTab] = useState<Tab>('moderation');
-  const [items, setItems] = useState<ModerationItem[]>(INITIAL_MODERATION);
-  const [publications, setPublications] = useState<AdminPublication[]>(INITIAL_PUBLICATIONS);
+  const { ready, user, configured } = useAuth();
 
-  const setStatus = (id: string, status: ModerationStatus): void => {
-    setItems((prev) => prev.map((it) => (it.id === id ? { ...it, status } : it)));
-  };
+  const [tab, setTab] = useState<Tab>('verifications');
+  const [verifs, setVerifs] = useState<AdminVerification[] | null>(null);
+  const [listings, setListings] = useState<AdminListing[] | null>(null);
+  const [busy, setBusy] = useState(false);
 
-  const publishItem = (id: string): void => {
-    setPublications((prev) => prev.map((p) => (p.id === id ? { ...p, status: 'published' } : p)));
-  };
+  const isAdmin = Boolean(user) && user?.role === 'admin';
 
-  const pendingCount = items.filter((it) => it.status === 'pending').length;
+  const loadVerifs = useCallback(async (): Promise<void> => {
+    setVerifs(null);
+    const rows = await fetchPendingVerifications();
+    setVerifs(rows ?? []);
+  }, []);
 
+  const loadListings = useCallback(async (): Promise<void> => {
+    setListings(null);
+    const rows = await fetchAllListingsForMod();
+    setListings(rows ?? []);
+  }, []);
+
+  useEffect(() => {
+    if (!ready || !configured || !isAdmin) return;
+    if (tab === 'verifications') void loadVerifs();
+    else void loadListings();
+  }, [ready, configured, isAdmin, tab, loadVerifs, loadListings]);
+
+  // --- Actions ---------------------------------------------------------------
+  const openDoc = useCallback(async (path: string): Promise<void> => {
+    const url = await signedUrl('verification-docs', path);
+    if (url) window.open(url, '_blank', 'noopener,noreferrer');
+  }, []);
+
+  const decide = useCallback(
+    async (req: AdminVerification, approve: boolean): Promise<void> => {
+      setBusy(true);
+      await reviewVerification(req.id, req.user_id, approve, req.level_requested);
+      setBusy(false);
+      await loadVerifs();
+    },
+    [loadVerifs],
+  );
+
+  const changeStatus = useCallback(
+    async (id: string, status: 'published' | 'draft'): Promise<void> => {
+      setBusy(true);
+      await setListingStatus(id, status);
+      setBusy(false);
+      await loadListings();
+    },
+    [loadListings],
+  );
+
+  const removeListing = useCallback(
+    async (id: string): Promise<void> => {
+      if (!window.confirm(tr(L.confirmDelete, locale))) return;
+      setBusy(true);
+      await deleteListing(id);
+      setBusy(false);
+      await loadListings();
+    },
+    [loadListings, locale],
+  );
+
+  // --- Guards ----------------------------------------------------------------
+  if (!ready) return <div className="min-h-[40vh]" />;
+
+  if (!configured) {
+    return (
+      <div className="mx-auto w-full max-w-4xl">
+        <PageTitle title={tr(L.title, locale)} intro={tr(L.intro, locale)} />
+        <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+          {tr(L.notConfigured, locale)}
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="mx-auto w-full max-w-4xl">
+        <PageTitle title={tr(L.title, locale)} intro={tr(L.intro, locale)} />
+        <Card>
+          <h2 className="text-base font-semibold text-slate-900">{tr(L.adminsOnlyTitle, locale)}</h2>
+          <p className="mt-1 text-sm text-slate-600">{tr(L.adminsOnlyBody, locale)}</p>
+          <p className="mt-3 text-xs text-slate-400">{tr(L.adminHint, locale)}</p>
+          <code className="mt-1 block overflow-x-auto rounded-lg bg-slate-100 px-3 py-2 text-xs text-slate-500">
+            update public.profiles set role=&#39;admin&#39; where id=&#39;&lt;user-id&gt;&#39;
+          </code>
+        </Card>
+      </div>
+    );
+  }
+
+  // --- Console ---------------------------------------------------------------
   const tabBtn = (value: Tab, label: string): JSX.Element => (
     <button
       type="button"
@@ -159,134 +198,117 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
 
   return (
     <div className="mx-auto w-full max-w-4xl">
-      <PageTitle title={t(locale, 'nav.admin')} intro={tr(L.intro, locale)} />
+      <PageTitle title={tr(L.title, locale)} intro={tr(L.intro, locale)} />
 
       <div className="mb-6 flex flex-wrap gap-2 rounded-xl border border-slate-200 bg-white p-1 shadow-card">
-        {tabBtn('moderation', tr(L.tabModeration, locale))}
-        {tabBtn('publications', tr(L.tabPublications, locale))}
+        {tabBtn('verifications', tr(L.tabVerifications, locale))}
+        {tabBtn('listings', tr(L.tabListings, locale))}
       </div>
 
-      {tab === 'moderation' ? (
-        <section className="space-y-4">
-          <div className="flex items-center justify-between gap-3">
-            <h2 className="text-lg font-semibold text-slate-900">{tr(L.tabModeration, locale)}</h2>
-            <Pill tone={pendingCount > 0 ? 'amber' : 'emerald'}>
-              {pendingCount} {tr(L.pendingCount, locale)}
-            </Pill>
-          </div>
-
-          <p className="text-xs text-slate-400">{t(locale, 'common.demoAction')}</p>
-
-          <ul className="space-y-3">
-            {items.map((it) => {
-              const decided = it.status !== 'pending';
-              const statusTone = it.status === 'approved' ? 'emerald' : it.status === 'rejected' ? 'coral' : 'slate';
-              const statusLabel = it.status === 'approved' ? tr(L.approved, locale) : it.status === 'rejected' ? tr(L.rejected, locale) : tr(L.pending, locale);
-              return (
-                <li key={it.id}>
-                  <Card
-                    className={
-                      it.status === 'approved'
-                        ? 'border-emerald-300 bg-emerald-50'
-                        : it.status === 'rejected'
-                          ? 'border-red-300 bg-red-50'
-                          : undefined
-                    }
-                  >
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                      <div className="min-w-0">
-                        <div className="mb-1 flex flex-wrap items-center gap-2">
-                          <Pill tone="brand">{tr(MODERATION_TYPE_LABEL[it.type], locale)}</Pill>
-                          <Pill tone={statusTone}>{statusLabel}</Pill>
-                        </div>
-                        <h3 className="text-sm font-semibold text-slate-900">{tr(it.title, locale)}</h3>
-                        <p className="mt-1 text-sm text-slate-600">
-                          <span className="font-medium text-slate-500">{tr(L.reason, locale)}: </span>
-                          {tr(it.reason, locale)}
-                        </p>
-                      </div>
-                      <div className="flex shrink-0 gap-2">
-                        <button
-                          type="button"
-                          onClick={() => setStatus(it.id, 'approved')}
-                          disabled={it.status === 'approved'}
-                          className="rounded-lg bg-emerald-600 px-3 py-1.5 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:opacity-40"
-                        >
-                          {tr(L.approve, locale)}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setStatus(it.id, 'rejected')}
-                          disabled={it.status === 'rejected'}
-                          className="rounded-lg bg-red-500 px-3 py-1.5 text-sm font-semibold text-white transition hover:bg-red-600 disabled:opacity-40"
-                        >
-                          {tr(L.reject, locale)}
-                        </button>
-                      </div>
+      {tab === 'verifications' ? (
+        <section className="space-y-3">
+          {verifs === null ? (
+            <p className="text-sm text-slate-500">{tr(L.loading, locale)}</p>
+          ) : verifs.length === 0 ? (
+            <Card>
+              <p className="text-sm text-slate-500">{tr(L.noVerifications, locale)}</p>
+            </Card>
+          ) : (
+            verifs.map((req) => (
+              <Card key={req.id}>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="min-w-0 space-y-1 text-sm">
+                    <p className="font-mono text-xs text-slate-500">
+                      {tr(L.user, locale)}: {req.user_id.slice(0, 8)}…
+                    </p>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Pill tone="brand">{verifLabel(locale, req.level_requested as VerifLevel)}</Pill>
+                      {req.doc_type && (
+                        <span className="text-slate-600">
+                          {tr(L.docType, locale)}: {req.doc_type}
+                        </span>
+                      )}
                     </div>
-                    {decided && (
-                      <p className="mt-3 border-t border-slate-200/70 pt-2 text-xs text-slate-400">
-                        {t(locale, 'common.demoAction')}
-                      </p>
+                    <p className="text-xs text-slate-400">
+                      {tr(L.submitted, locale)}: {formatDate(locale, req.created_at)}
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-2 sm:justify-end">
+                    {req.doc_path && (
+                      <button type="button" className={BTN_NEUTRAL} onClick={() => void openDoc(req.doc_path as string)}>
+                        {tr(L.viewDocument, locale)}
+                      </button>
                     )}
-                  </Card>
-                </li>
-              );
-            })}
-          </ul>
+                    {req.selfie_path && (
+                      <button type="button" className={BTN_NEUTRAL} onClick={() => void openDoc(req.selfie_path as string)}>
+                        {tr(L.viewSelfie, locale)}
+                      </button>
+                    )}
+                    <button type="button" disabled={busy} className={BTN_APPROVE} onClick={() => void decide(req, true)}>
+                      {tr(L.approve, locale)}
+                    </button>
+                    <button type="button" disabled={busy} className={BTN_DANGER} onClick={() => void decide(req, false)}>
+                      {tr(L.reject, locale)}
+                    </button>
+                  </div>
+                </div>
+              </Card>
+            ))
+          )}
         </section>
       ) : (
-        <section className="space-y-4">
-          <h2 className="text-lg font-semibold text-slate-900">{tr(L.tabPublications, locale)}</h2>
-          <p className="text-xs text-slate-400">{t(locale, 'common.demoAction')}</p>
-
-          <ul className="space-y-3">
-            {publications.map((p) => {
-              const isPublished = p.status === 'published';
+        <section className="space-y-3">
+          {listings === null ? (
+            <p className="text-sm text-slate-500">{tr(L.loading, locale)}</p>
+          ) : listings.length === 0 ? (
+            <Card>
+              <p className="text-sm text-slate-500">{tr(L.noListings, locale)}</p>
+            </Card>
+          ) : (
+            listings.map((item) => {
+              const isPublished = item.status === 'published';
               return (
-                <li key={p.id}>
-                  <Card
-                    className={
-                      isPublished ? 'border-emerald-300 bg-emerald-50/60' : 'border-amber-200 bg-amber-50/50'
-                    }
-                  >
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                      <div className="min-w-0">
-                        <div className="mb-1 flex flex-wrap items-center gap-2">
-                          <OfficialTag variant={isPublished ? 'official' : 'unconfirmed'} locale={locale} />
-                          <Pill tone={isPublished ? 'emerald' : 'amber'}>
-                            {isPublished ? tr(L.published, locale) : tr(L.draft, locale)}
-                          </Pill>
-                        </div>
-                        <h3 className={'text-sm font-semibold ' + (isPublished ? 'text-emerald-900' : 'text-slate-900')}>
-                          {tr(p.title, locale)}
-                        </h3>
-                        <p className="mt-1 text-xs text-slate-500">
-                          {tr(L.authority, locale)}: {p.authority}
-                        </p>
-                        <p className="text-xs text-slate-500">
-                          {t(locale, 'info.version')} {p.version}
-                        </p>
-                        <p className={'mt-1 text-xs ' + (isPublished ? 'text-emerald-700' : 'text-amber-700')}>
-                          {isPublished ? tr(L.publishedNote, locale) : tr(L.draftNote, locale)}
-                        </p>
+                <Card key={item.id}>
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="min-w-0 space-y-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Pill tone={isPublished ? 'emerald' : 'slate'}>
+                          {isPublished ? tr(L.statusPublished, locale) : tr(L.statusDraft, locale)}
+                        </Pill>
+                        <span className="text-xs text-slate-400">{item.island ?? tr(L.dash, locale)}</span>
                       </div>
-                      <div className="flex shrink-0 items-start">
+                      <h3 className="truncate text-sm font-semibold text-slate-900">{tr(item.title, locale)}</h3>
+                      <p className="text-xs text-slate-400">{formatDate(locale, item.created_at)}</p>
+                    </div>
+                    <div className="flex flex-wrap gap-2 sm:justify-end">
+                      {isPublished ? (
                         <button
                           type="button"
-                          onClick={() => publishItem(p.id)}
-                          disabled={isPublished}
-                          className="rounded-lg bg-brand px-3 py-1.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-40"
+                          disabled={busy}
+                          className={BTN_NEUTRAL}
+                          onClick={() => void changeStatus(item.id, 'draft')}
+                        >
+                          {tr(L.unpublish, locale)}
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          disabled={busy}
+                          className={BTN_APPROVE}
+                          onClick={() => void changeStatus(item.id, 'published')}
                         >
                           {tr(L.publish, locale)}
                         </button>
-                      </div>
+                      )}
+                      <button type="button" disabled={busy} className={BTN_DANGER} onClick={() => void removeListing(item.id)}>
+                        {tr(L.del, locale)}
+                      </button>
                     </div>
-                  </Card>
-                </li>
+                  </div>
+                </Card>
               );
-            })}
-          </ul>
+            })
+          )}
         </section>
       )}
     </div>

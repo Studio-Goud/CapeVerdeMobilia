@@ -94,6 +94,95 @@ export async function fetchMyFavorites(): Promise<Listing[] | null> {
   return rows.map(toListing);
 }
 
+// ---------------------------------------------------------------------------
+// Listing edit
+// ---------------------------------------------------------------------------
+export async function updateListing(id: string, patch: Record<string, unknown>): Promise<string | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return 'demo';
+  const { error } = await supa.from('listings').update(patch).eq('id', id);
+  return error ? error.message : null;
+}
+
+// ---------------------------------------------------------------------------
+// Rental requests
+// ---------------------------------------------------------------------------
+export interface RentalRequestItem {
+  id: string; listing_id: string | null; tenant_id: string; landlord_id: string | null;
+  start_date: string | null; end_date: string | null; message: string | null; status: string; created_at: string;
+  listingTitle: TL | null;
+}
+
+export async function createRentalRequest(input: { listingId: string; landlordId: string | null; start: string; end: string; message: string }): Promise<string | null> {
+  const ctx = await uid();
+  if (!ctx) return 'auth';
+  const { error } = await ctx.supa.from('rental_requests').insert({
+    listing_id: input.listingId, tenant_id: ctx.id, landlord_id: input.landlordId,
+    start_date: input.start || null, end_date: input.end || null, message: input.message || null, status: 'pending',
+  });
+  return error ? error.message : null;
+}
+
+async function fetchRentalRequests(column: 'tenant_id' | 'landlord_id'): Promise<RentalRequestItem[] | null> {
+  const ctx = await uid();
+  if (!ctx) return null;
+  const { data } = await ctx.supa
+    .from('rental_requests')
+    .select('id,listing_id,tenant_id,landlord_id,start_date,end_date,message,status,created_at,listings(title)')
+    .eq(column, ctx.id)
+    .order('created_at', { ascending: false });
+  return (data ?? []).map((d) => {
+    const rel = (d as unknown as { listings: { title: TL } | { title: TL }[] | null }).listings;
+    const listing = Array.isArray(rel) ? rel[0] ?? null : rel;
+    const row = d as unknown as RentalRequestItem;
+    return { ...row, listingTitle: listing?.title ?? null };
+  });
+}
+export const fetchIncomingRentalRequests = (): Promise<RentalRequestItem[] | null> => fetchRentalRequests('landlord_id');
+export const fetchMyRentalRequests = (): Promise<RentalRequestItem[] | null> => fetchRentalRequests('tenant_id');
+
+export async function setRentalRequestStatus(id: string, status: 'accepted' | 'declined' | 'withdrawn'): Promise<string | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return 'demo';
+  const { error } = await supa.from('rental_requests').update({ status }).eq('id', id);
+  return error ? error.message : null;
+}
+
+// ---------------------------------------------------------------------------
+// Admin (trust/ops) — requires the caller's profile.role = 'admin'
+// ---------------------------------------------------------------------------
+export interface AdminVerification { id: string; user_id: string; doc_type: string | null; doc_path: string | null; selfie_path: string | null; level_requested: string; status: string; created_at: string }
+export interface AdminListing { id: string; slug: string; title: TL; status: string; island: string | null; owner: string | null; created_at: string }
+
+export async function fetchPendingVerifications(): Promise<AdminVerification[] | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return null;
+  const { data, error } = await supa.from('verification_requests').select('*').eq('status', 'pending').order('created_at', { ascending: false });
+  if (error) return null;
+  return (data ?? []) as AdminVerification[];
+}
+
+/** Approve or reject a verification request; on approval, raise the user's level. */
+export async function reviewVerification(reqId: string, userId: string, approve: boolean, level = 'L1_IDENTITY'): Promise<string | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return 'demo';
+  const { error: e1 } = await supa.from('verification_requests').update({ status: approve ? 'approved' : 'rejected' }).eq('id', reqId);
+  if (e1) return e1.message;
+  if (approve) {
+    const { error: e2 } = await supa.from('profiles').update({ verification_level: level }).eq('id', userId);
+    if (e2) return e2.message;
+  }
+  return null;
+}
+
+export async function fetchAllListingsForMod(): Promise<AdminListing[] | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return null;
+  const { data, error } = await supa.from('listings').select('id,slug,title,status,island,owner,created_at').order('created_at', { ascending: false }).limit(100);
+  if (error) return null;
+  return (data ?? []) as AdminListing[];
+}
+
 /** Adds a favorite. Returns 'ok', 'demo' (not configured), 'auth' (not logged in), or an error string. */
 export async function saveFavorite(listingId: string): Promise<'ok' | 'demo' | 'auth' | string> {
   const supa = getBrowserSupabase();

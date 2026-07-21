@@ -5,7 +5,11 @@ import { OfficialTag, ListingCard, SectionHead } from '@/components/ui';
 import { LeadForm } from '@/components/LeadForm';
 import { SaveButton } from '@/components/SaveButton';
 import { MapExplorer } from '@/components/MapExplorer';
+import { RentalRequestForm } from '@/components/RentalRequestForm';
 import { coordsFor } from '@/lib/geo';
+
+const RENT_KINDS = ['PROPERTY_RENT', 'HOLIDAY_RENT'];
+const RENT_TITLE: TL = { pt: 'Pedir para arrendar', en: 'Request to rent', nl: 'Huuraanvraag doen' };
 
 const SIMILAR: TL = { pt: 'Imóveis semelhantes', en: 'Similar properties', nl: 'Vergelijkbaar aanbod' };
 const LOCATION: TL = { pt: 'Localização', en: 'Location', nl: 'Locatie' };
@@ -75,6 +79,12 @@ export default async function ListingDetailPage({ params }: { params: { locale: 
 
       <aside className="space-y-4">
         <SaveButton listingId={l.id} locale={locale} />
+        {RENT_KINDS.includes(l.kind) && (
+          <div className="rounded-xl border border-brand-200 bg-brand-50/40 p-4">
+            <h2 className="mb-2 text-sm font-semibold text-slate-700">{tr(RENT_TITLE, locale)}</h2>
+            <RentalRequestForm locale={locale} listingId={l.id} landlordId={l.owner} />
+          </div>
+        )}
         <div className="rounded-xl border border-slate-200 bg-white p-4">
           <h2 className="text-sm font-semibold text-slate-700">{tr(LOCATION, locale)}</h2>
           {loc ? (

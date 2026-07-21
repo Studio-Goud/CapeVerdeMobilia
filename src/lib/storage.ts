@@ -14,6 +14,13 @@ export function publicUrl(bucket: string, path: string): string {
   return supa ? supa.storage.from(bucket).getPublicUrl(path).data.publicUrl : '';
 }
 
+export async function signedUrl(bucket: string, path: string, expiresIn = 120): Promise<string | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return null;
+  const { data } = await supa.storage.from(bucket).createSignedUrl(path, expiresIn);
+  return data?.signedUrl ?? null;
+}
+
 export const fileExt = (name: string): string => {
   const parts = name.split('.');
   return parts.length > 1 ? parts.pop()!.toLowerCase() : 'bin';
