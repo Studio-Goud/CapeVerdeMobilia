@@ -1,12 +1,20 @@
-import { t, tr, verifLabel, type Locale } from '@/i18n';
+import Link from 'next/link';
+import { t, tr, verifLabel, type Locale, type TL } from '@/i18n';
 import { VERIFICATION_LEVELS } from '@/content';
 import { PageTitle } from '@/components/ui';
+
+const CTA: TL = { pt: 'Verificar a minha identidade', en: 'Verify my identity', nl: 'Mijn identiteit verifiëren' };
 
 export default function VerificationPage({ params }: { params: { locale: Locale } }): JSX.Element {
   const locale = params.locale;
   return (
     <div>
       <PageTitle title={t(locale, 'veri.title')} intro={t(locale, 'veri.intro')} />
+      <div className="-mt-2 mb-6">
+        <Link href={`/${locale}/verificar`} className="inline-block rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-dark">
+          {tr(CTA, locale)}
+        </Link>
+      </div>
       <ol className="space-y-3">
         {VERIFICATION_LEVELS.map((v, i) => {
           const strong = v.code === 'L4' || v.code === 'L5';
