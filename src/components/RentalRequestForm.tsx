@@ -25,6 +25,11 @@ const COPY = {
     en: 'Demo — the request is not sent without an active backend.',
     nl: 'Demo — de aanvraag wordt niet verzonden zonder actieve backend.',
   },
+  sessionExpired: {
+    pt: 'A sua sessão expirou. Entre novamente para enviar o pedido.',
+    en: 'Your session has expired. Please log in again to send the request.',
+    nl: 'Uw sessie is verlopen. Log opnieuw in om de aanvraag te versturen.',
+  },
   success: {
     pt: 'Pedido enviado ao senhorio.',
     en: 'Request sent to the landlord.',
@@ -86,7 +91,9 @@ export function RentalRequestForm({ locale, listingId, landlordId }: RentalReque
       setDone(true);
       return;
     }
-    setError(result === 'demo' ? tr(COPY.demo, locale) : result);
+    if (result === 'demo') setError(tr(COPY.demo, locale));
+    else if (result === 'auth') setError(tr(COPY.sessionExpired, locale));
+    else setError(result);
   }
 
   return (

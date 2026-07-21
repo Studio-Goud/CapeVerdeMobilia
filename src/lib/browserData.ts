@@ -1,5 +1,6 @@
 // Client-side data access (browser Supabase client). Used by dashboard & favorites.
 import { getBrowserSupabase } from './supabase/client';
+import { isSupabaseConfigured } from './supabase/env';
 import type { Listing, TL } from '@/i18n';
 
 const PLACEHOLDER = 'https://placehold.co/1200x800/003893/ffffff?text=Djarvista';
@@ -115,7 +116,8 @@ export interface RentalRequestItem {
 
 export async function createRentalRequest(input: { listingId: string; landlordId: string | null; start: string; end: string; message: string }): Promise<string | null> {
   const ctx = await uid();
-  if (!ctx) return 'demo';
+  // No backend → demo notice. Backend present but no session → ask to re-login.
+  if (!ctx) return isSupabaseConfigured ? 'auth' : 'demo';
   const { error } = await ctx.supa.from('rental_requests').insert({
     listing_id: input.listingId, tenant_id: ctx.id, landlord_id: input.landlordId,
     start_date: input.start || null, end_date: input.end || null, message: input.message || null, status: 'pending',

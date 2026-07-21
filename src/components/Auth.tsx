@@ -34,6 +34,24 @@ function mapUser(u: User | null): DemoUser | null {
   return { name, role, email: u.email ?? undefined };
 }
 
+/**
+ * Resolve the user with the DB as the source of truth for `role`. The admin
+ * console and info editor gate on `role === 'admin'`, and admin is granted by
+ * setting `profiles.role` (never in user_metadata) — so trusting metadata alone
+ * would leave the console unreachable. We overlay the DB role on the metadata map.
+ */
+async function resolveUser(
+  supabase: NonNullable<ReturnType<typeof getBrowserSupabase>>,
+  u: User | null,
+): Promise<DemoUser | null> {
+  const mapped = mapUser(u);
+  if (!mapped || !u) return mapped;
+  const { data } = await supabase.from('profiles').select('role').eq('id', u.id).maybeSingle();
+  const dbRole = (data as { role?: string } | null)?.role;
+  if (dbRole === 'private' || dbRole === 'business' || dbRole === 'admin') mapped.role = dbRole;
+  return mapped;
+}
+
 export function AuthProvider({ children }: { children: ReactNode }): JSX.Element {
   const [user, setUser] = useState<DemoUser | null>(null);
   const [ready, setReady] = useState(false);
@@ -43,12 +61,12 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     if (configured) {
       const supabase = getBrowserSupabase();
       if (!supabase) { setReady(true); return; }
-      supabase.auth.getUser().then(({ data }) => {
-        setUser(mapUser(data.user));
+      supabase.auth.getUser().then(async ({ data }) => {
+        setUser(await resolveUser(supabase, data.user));
         setReady(true);
       });
       const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-        setUser(mapUser(session?.user ?? null));
+        void resolveUser(supabase, session?.user ?? null).then(setUser);
       });
       return () => sub.subscription.unsubscribe();
     }

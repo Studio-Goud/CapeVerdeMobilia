@@ -94,6 +94,15 @@ export default function EditListingPage({ params }: { params: { locale: Locale; 
       const { data } = await supabase.from('listings').select('*').eq('slug', slug).maybeSingle();
       if (!active) return;
       const row = (data as ListingRow | null) ?? null;
+      // Only the owner may edit. Published listings are world-readable, so a
+      // non-owner could otherwise open the form and get a false "saved" (the
+      // RLS-filtered UPDATE affects 0 rows and returns no error).
+      const { data: auth } = await supabase.auth.getUser();
+      if (!active) return;
+      if (row && auth.user && row.owner && row.owner !== auth.user.id) {
+        setLoading(false);
+        return;
+      }
       if (row) {
         setListing(row);
         setPhotos(Array.isArray(row.photos) ? row.photos : []);
