@@ -236,6 +236,14 @@ const UI = {
   'dash.openTenders': { pt: 'Ver concursos abertos', en: 'View open tenders', nl: 'Open aanbestedingen' },
   'dash.active': { pt: 'ativo(s)', en: 'active', nl: 'actief' },
   'dash.pending': { pt: 'pendente(s)', en: 'pending', nl: 'in behandeling' },
+  'dash.noLeads': { pt: 'Ainda sem pedidos recebidos.', en: 'No leads received yet.', nl: 'Nog geen leads ontvangen.' },
+  'dash.publish': { pt: 'Publicar', en: 'Publish', nl: 'Publiceren' },
+  'dash.unpublish': { pt: 'Despublicar', en: 'Unpublish', nl: 'Depubliceren' },
+  'dash.delete': { pt: 'Eliminar', en: 'Delete', nl: 'Verwijderen' },
+  'dash.confirmDelete': { pt: 'Eliminar este anúncio?', en: 'Delete this listing?', nl: 'Deze advertentie verwijderen?' },
+  'dash.statusDraft': { pt: 'Rascunho', en: 'Draft', nl: 'Concept' },
+  'dash.statusPublished': { pt: 'Publicado', en: 'Published', nl: 'Gepubliceerd' },
+  'dash.on': { pt: 'sobre', en: 'on', nl: 'over' },
 
   // Wizard
   'wiz.title': { pt: 'Assistente de passos', en: 'Step assistant', nl: 'Stappen-assistent' },
@@ -312,6 +320,7 @@ export interface Listing {
   id: string; slug: string; kind: string; title: TL; description: TL;
   priceAmount: number | null; priceOnRequest: boolean; isFeatured: boolean;
   documentStatus: string; island: string; municipality: string; thumbnail: string;
+  owner?: string | null;
   publishedAt: string; lastVerifiedAt: string | null; riskNotes: TL | null;
   property: { type: string; bedrooms: number | null; bathrooms: number | null; builtAreaSqm: number | null; plotAreaSqm: number | null } | null;
   land: { type: string; areaSqm: number | null; zoning: TL | null; buildable: boolean } | null;

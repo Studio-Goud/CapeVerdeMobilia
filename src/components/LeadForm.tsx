@@ -7,8 +7,8 @@ import { getBrowserSupabase } from '@/lib/supabase/client';
 const isUuid = (v: string | undefined): v is string => !!v && /^[0-9a-f]{8}-[0-9a-f-]{27,}$/i.test(v);
 
 /** Contact / lead form. Writes to Supabase when configured; otherwise acknowledges (demo). */
-export function LeadForm({ locale, listingId, proSlug, source = 'contact' }: {
-  locale: Locale; listingId?: string; proSlug?: string; source?: string;
+export function LeadForm({ locale, listingId, proSlug, recipient, source = 'contact' }: {
+  locale: Locale; listingId?: string; proSlug?: string; recipient?: string | null; source?: string;
 }): JSX.Element {
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -25,7 +25,8 @@ export function LeadForm({ locale, listingId, proSlug, source = 'contact' }: {
       setBusy(true);
       const { error: err } = await supabase.from('leads').insert({
         name: form.name, email: form.email || null, phone: form.phone || null, message: form.message,
-        listing_id: isUuid(listingId) ? listingId : null, pro_slug: proSlug ?? null, source,
+        listing_id: isUuid(listingId) ? listingId : null, pro_slug: proSlug ?? null,
+        recipient: isUuid(recipient ?? undefined) ? recipient : null, source,
       });
       setBusy(false);
       if (err) { setError(err.message); return; }

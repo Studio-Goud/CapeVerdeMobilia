@@ -82,7 +82,7 @@ export default async function ListingDetailPage({ params }: { params: { locale: 
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-4">
           <h2 className="text-sm font-semibold text-slate-700">{t(locale, 'listing.contactVisit')}</h2>
-          <LeadForm locale={locale} listingId={l.id} source="listing" />
+          <LeadForm locale={locale} listingId={l.id} recipient={l.owner} source="listing" />
         </div>
       </aside>
     </div>

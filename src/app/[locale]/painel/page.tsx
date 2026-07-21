@@ -1,11 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { t, tr, formatEur, cveToEur, LISTINGS, type Locale, type Listing, type TL } from '@/i18n';
+import { t, tr, formatEur, cveToEur, formatDate, LISTINGS, type Locale, type Listing, type TL } from '@/i18n';
 import { PROJECTS } from '@/content';
 import { useAuth } from '@/components/Auth';
-import { fetchBusinessDashboard, fetchMyFavorites, type BusinessDashboard } from '@/lib/browserData';
+import {
+  fetchBusinessDashboard, fetchMyFavorites, fetchLeads, setListingStatus, deleteListing,
+  type BusinessDashboard, type LeadItem, type OwnedListing,
+} from '@/lib/browserData';
 import { Card, Stat, Pill, TrustBadge } from '@/components/ui';
 
 const EMPTY_LISTINGS: TL = { pt: 'Ainda não publicou anúncios.', en: 'You have not published any listings yet.', nl: 'Je hebt nog geen advertenties geplaatst.' };
@@ -14,15 +17,31 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
   const locale = params.locale;
   const { ready, user, configured } = useAuth();
   const [biz, setBiz] = useState<BusinessDashboard | null>(null);
+  const [leads, setLeads] = useState<LeadItem[] | null>(null);
   const [favs, setFavs] = useState<Listing[] | null>(null);
 
   const isBiz = !!user && (user.role === 'business' || user.role === 'admin');
 
+  const reloadBiz = useCallback(async () => {
+    const [b, l] = await Promise.all([fetchBusinessDashboard(), fetchLeads()]);
+    setBiz(b); setLeads(l);
+  }, []);
+
   useEffect(() => {
     if (!configured || !user) return;
-    if (isBiz) { void fetchBusinessDashboard().then(setBiz); }
-    else { void fetchMyFavorites().then(setFavs); }
-  }, [configured, user, isBiz]);
+    if (isBiz) void reloadBiz();
+    else void fetchMyFavorites().then(setFavs);
+  }, [configured, user, isBiz, reloadBiz]);
+
+  async function togglePublish(l: OwnedListing): Promise<void> {
+    await setListingStatus(l.id, l.status === 'published' ? 'draft' : 'published');
+    await reloadBiz();
+  }
+  async function removeListing(l: OwnedListing): Promise<void> {
+    if (!window.confirm(t(locale, 'dash.confirmDelete'))) return;
+    await deleteListing(l.id);
+    await reloadBiz();
+  }
 
   if (!ready) return <div className="h-40" aria-hidden />;
 
@@ -64,28 +83,63 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
             <Stat label={t(locale, 'dash.reviews')} value={configured ? '—' : '★ 4.6'} hint={configured ? undefined : '8'} />
           </div>
 
-          {/* Real listings owned by this business */}
+          {/* Listings management */}
           <section>
             <div className="mb-3 flex items-center justify-between">
               <h2 className="text-lg font-semibold">{t(locale, 'dash.myListings')}</h2>
               <Link href={`/${locale}/imoveis/novo`} className="text-sm font-medium text-brand hover:underline">{t(locale, 'dash.newListing')}</Link>
             </div>
-            {configured ? (
-              biz && biz.listings.length > 0 ? (
-                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                  {biz.listings.map((l) => (
-                    <Link key={l.id} href={`/${locale}/imoveis/${l.slug}`} className="flex gap-3 rounded-xl border border-slate-200 bg-white p-3 hover:shadow-card">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={l.thumbnail} alt="" className="h-16 w-20 shrink-0 rounded-lg object-cover" />
-                      <div><p className="line-clamp-2 text-sm font-medium text-slate-900">{tr(l.title, locale)}</p><p className="text-xs text-slate-500">{l.island}</p></div>
-                    </Link>
-                  ))}
-                </div>
-              ) : (
-                <Card><p className="text-sm text-slate-500">{tr(EMPTY_LISTINGS, locale)}</p></Card>
-              )
-            ) : (
+            {!configured ? (
               <Card><p className="text-sm text-slate-500">{t(locale, 'dash.empty')}</p></Card>
+            ) : biz && biz.listings.length > 0 ? (
+              <div className="space-y-2">
+                {biz.listings.map((l) => (
+                  <Card key={l.id} className="flex flex-wrap items-center gap-3">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={l.thumbnail} alt="" className="h-12 w-16 shrink-0 rounded-lg object-cover" />
+                    <Link href={`/${locale}/imoveis/${l.slug}`} className="min-w-0 flex-1 truncate text-sm font-medium text-slate-900 hover:text-brand">{tr(l.title, locale)}</Link>
+                    <Pill tone={l.status === 'published' ? 'emerald' : 'slate'}>{t(locale, l.status === 'published' ? 'dash.statusPublished' : 'dash.statusDraft')}</Pill>
+                    <button onClick={() => void togglePublish(l)} className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:border-brand hover:text-brand">
+                      {t(locale, l.status === 'published' ? 'dash.unpublish' : 'dash.publish')}
+                    </button>
+                    <button onClick={() => void removeListing(l)} className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50">
+                      {t(locale, 'dash.delete')}
+                    </button>
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <Card><p className="text-sm text-slate-500">{tr(EMPTY_LISTINGS, locale)}</p></Card>
+            )}
+          </section>
+
+          {/* Leads inbox */}
+          <section>
+            <h2 className="mb-3 text-lg font-semibold">{t(locale, 'dash.incomingLeads')}</h2>
+            {!configured ? (
+              <Card><p className="text-sm text-slate-500">{t(locale, 'dash.empty')}</p></Card>
+            ) : leads && leads.length > 0 ? (
+              <div className="space-y-2">
+                {leads.map((ld) => (
+                  <Card key={ld.id}>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <p className="text-sm font-semibold text-slate-900">{ld.name}</p>
+                      <span className="text-xs text-slate-400">{formatDate(locale, ld.created_at)}</span>
+                    </div>
+                    {ld.listingTitle && <p className="text-xs text-slate-500">{t(locale, 'dash.on')} “{tr(ld.listingTitle, locale)}”</p>}
+                    <p className="mt-1 text-sm text-slate-700">{ld.message}</p>
+                    {(ld.email || ld.phone) && (
+                      <p className="mt-2 text-xs text-slate-500">
+                        {ld.email && <a href={`mailto:${ld.email}`} className="text-brand hover:underline">{ld.email}</a>}
+                        {ld.email && ld.phone && ' · '}
+                        {ld.phone && <a href={`tel:${ld.phone}`} className="text-brand hover:underline">{ld.phone}</a>}
+                      </p>
+                    )}
+                  </Card>
+                ))}
+              </div>
+            ) : (
+              <Card><p className="text-sm text-slate-500">{t(locale, 'dash.noLeads')}</p></Card>
             )}
           </section>
 
