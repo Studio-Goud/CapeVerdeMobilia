@@ -1,22 +1,64 @@
-import { t, tr, formatEur, cveToEur, type Locale } from '@/i18n';
-import { PROJECTS } from '@/content';
+import Link from 'next/link';
+import { t, tr, formatEur, cveToEur, type Locale, type TL } from '@/i18n';
+import { fetchProjects, type ProjectView } from '@/lib/data';
 import { PageTitle, Card, Pill } from '@/components/ui';
 
-export default function ProjectsPage({ params }: { params: { locale: Locale } }): JSX.Element {
+const ISLANDS = ['', 'São Vicente', 'Santo Antão', 'Santiago', 'Sal', 'Boa Vista', 'São Nicolau', 'Fogo', 'Maio', 'Brava'];
+const one = (v: string | string[] | undefined): string | undefined => (Array.isArray(v) ? v[0] : v);
+
+const ADD_PROJECT_CTA: TL = {
+  pt: 'Adicionar um projeto',
+  en: 'Add a project',
+  nl: 'Project toevoegen',
+};
+
+export default async function ProjectsPage({
+  params, searchParams,
+}: {
+  params: { locale: Locale };
+  searchParams: Record<string, string | string[] | undefined>;
+}): Promise<JSX.Element> {
   const locale = params.locale;
+  const island = one(searchParams.island) ?? '';
+  const rows = await fetchProjects(island);
+
   return (
     <div>
       <PageTitle title={t(locale, 'proj.title')} intro={t(locale, 'proj.intro')} />
+
+      <Link
+        href={`/${locale}/projetos/novo`}
+        className="mb-5 inline-block rounded-lg border border-brand px-3 py-1.5 text-sm font-semibold text-brand"
+      >
+        {tr(ADD_PROJECT_CTA, locale)}
+      </Link>
+
+      <form className="mb-5 flex flex-wrap items-end gap-3 rounded-xl border border-slate-200 bg-white p-4">
+        <label className="flex flex-col text-sm">
+          <span className="mb-1 text-slate-600">{t(locale, 'common.island')}</span>
+          <select name="island" defaultValue={island} className="rounded-lg border border-slate-300 px-3 py-1.5">
+            {ISLANDS.map((i) => <option key={i} value={i}>{i || t(locale, 'common.all')}</option>)}
+          </select>
+        </label>
+        <button className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white">{t(locale, 'common.filter')}</button>
+      </form>
+
+      <p className="mb-3 text-sm text-slate-500">{rows.length} {t(locale, 'common.results')}</p>
+
       <div className="grid gap-4 md:grid-cols-2">
-        {PROJECTS.map((p) => (
+        {rows.map((p: ProjectView) => (
           <Card key={p.id}>
+            {p.cover && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={p.cover} alt={tr(p.name, locale)} className="mb-3 h-40 w-full rounded object-cover" />
+            )}
             <div className="flex items-start justify-between gap-2">
               <div>
                 <h2 className="font-semibold text-slate-900">{tr(p.name, locale)}</h2>
                 <p className="text-xs text-slate-500">{p.island} · {p.contractor}</p>
               </div>
               <Pill tone={p.status === 'DONE' ? 'emerald' : p.status === 'IN_PROGRESS' ? 'brand' : 'amber'}>
-                {t(locale, `proj.status.${p.status}` as 'proj.status.PLANNING')}
+                {t(locale, ('proj.status.' + p.status) as 'proj.status.PLANNING')}
               </Pill>
             </div>
 
@@ -39,7 +81,9 @@ export default function ProjectsPage({ params }: { params: { locale: Locale } })
               ))}
             </ul>
 
-            <p className="mt-3 text-sm font-semibold text-brand">{t(locale, 'proj.budget')}: {formatEur(cveToEur(p.budgetCve))}</p>
+            <p className="mt-3 text-sm font-semibold text-brand">
+              {t(locale, 'proj.budget')}: {p.budgetCve != null ? formatEur(cveToEur(p.budgetCve)) : t(locale, 'common.priceOnRequest')}
+            </p>
           </Card>
         ))}
       </div>

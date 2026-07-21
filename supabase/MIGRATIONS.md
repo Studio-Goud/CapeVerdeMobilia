@@ -19,6 +19,8 @@ yet migrated, so the live site never breaks while you catch up.
 | 0011 | `migrations/0011_publications_tenancy_rights.sql` | rent/deposit/updates rights-and-duties article (RGAU / INE) | ✅ done |
 | 0012 | `migrations/0012_professionals.sql` | real professionals directory (business users own a profile) + RLS | ⏳ **to run** |
 | 0013 | `migrations/0013_suppliers.sql` | real materials-suppliers directory (+ admin-only `verified`) + RLS | ⏳ **to run** |
+| 0014 | `migrations/0014_tenders.sql` | real tenders + bids (concursos), public bid count | ⏳ **to run** |
+| 0015 | `migrations/0015_projects.sql` | real construction-project portfolio (projetos) | ⏳ **to run** |
 
 ## Roles
 - Make yourself admin (trust/ops + info editor):

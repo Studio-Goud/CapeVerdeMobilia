@@ -373,3 +373,90 @@ export async function upsertSupplier(input: MySupplier): Promise<string | null> 
   const { error } = await ctx.supa.from('suppliers').upsert(row, { onConflict: 'user_id' });
   return error ? error.message : null;
 }
+
+// ---------------------------------------------------------------------------
+// Tenders (concursos) + bids
+// ---------------------------------------------------------------------------
+export interface TenderInput {
+  id?: string; slug: string; title: TL; description: TL; island: string;
+  kind: 'PUBLIC' | 'PRIVATE'; budget_cve: number | null; deadline: string | null; status: string;
+}
+export interface MyTender { id: string; slug: string; title: TL; status: string; bids_count: number; deadline: string | null }
+
+/** Create or update a tender the current user owns. */
+export async function upsertTender(input: TenderInput): Promise<string | null> {
+  const ctx = await uid();
+  if (!ctx) return isSupabaseConfigured ? 'auth' : 'demo';
+  const row = {
+    ...(input.id ? { id: input.id } : {}), owner: ctx.id, slug: input.slug, title: input.title,
+    description: input.description, island: input.island || null, kind: input.kind,
+    budget_cve: input.budget_cve, deadline: input.deadline || null, status: input.status,
+  };
+  const { error } = await ctx.supa.from('tenders').upsert(row);
+  return error ? error.message : null;
+}
+
+/** Tenders posted by the current user. */
+export async function fetchMyTenders(): Promise<MyTender[] | null> {
+  const ctx = await uid();
+  if (!ctx) return null;
+  const { data } = await ctx.supa.from('tenders').select('id,slug,title,status,bids_count,deadline').eq('owner', ctx.id).order('created_at', { ascending: false });
+  return (data ?? []) as MyTender[];
+}
+
+/** Submit (or update) the current user's bid on a tender. Returns null on success. */
+export async function submitBid(input: { tenderId: string; amount: number | null; message: string }): Promise<string | null> {
+  const ctx = await uid();
+  if (!ctx) return isSupabaseConfigured ? 'auth' : 'demo';
+  const { error } = await ctx.supa.from('tender_bids').upsert(
+    { tender_id: input.tenderId, bidder_id: ctx.id, amount_cve: input.amount, message: input.message || null },
+    { onConflict: 'tender_id,bidder_id' },
+  );
+  return error ? error.message : null;
+}
+
+export interface BidItem { id: string; bidder_id: string; amount_cve: number | null; message: string | null; created_at: string }
+/** Bids on a tender (visible to the tender owner). */
+export async function fetchTenderBids(tenderId: string): Promise<BidItem[] | null> {
+  const ctx = await uid();
+  if (!ctx) return null;
+  const { data } = await ctx.supa.from('tender_bids').select('*').eq('tender_id', tenderId).order('created_at', { ascending: false });
+  return (data ?? []) as BidItem[];
+}
+
+// ---------------------------------------------------------------------------
+// Projects portfolio (projetos)
+// ---------------------------------------------------------------------------
+export interface ProjectInput {
+  id?: string; slug: string; name: TL; description: TL; island: string;
+  status: string; progress: number; budget_cve: number | null; contractor: string;
+  cover: string | null; milestones: { label: TL; done: boolean }[]; visibility: string;
+}
+export interface MyProject { id: string; slug: string; name: TL; status: string; visibility: string; progress: number }
+
+export async function upsertProject(input: ProjectInput): Promise<string | null> {
+  const ctx = await uid();
+  if (!ctx) return isSupabaseConfigured ? 'auth' : 'demo';
+  const row = {
+    ...(input.id ? { id: input.id } : {}), owner: ctx.id, slug: input.slug, name: input.name,
+    description: input.description, island: input.island || null, status: input.status,
+    progress: input.progress, budget_cve: input.budget_cve, contractor: input.contractor || null,
+    cover: input.cover, milestones: input.milestones, visibility: input.visibility,
+  };
+  const { error } = await ctx.supa.from('projects').upsert(row);
+  return error ? error.message : null;
+}
+
+export async function fetchMyProjects(): Promise<MyProject[] | null> {
+  const ctx = await uid();
+  if (!ctx) return null;
+  const { data } = await ctx.supa.from('projects').select('id,slug,name,status,visibility,progress').eq('owner', ctx.id).order('created_at', { ascending: false });
+  return (data ?? []) as MyProject[];
+}
+
+export async function deleteProject(id: string): Promise<string | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return 'demo';
+  const { error } = await supa.from('projects').delete().eq('id', id);
+  return error ? error.message : null;
+}

@@ -4,7 +4,7 @@ import {
   LISTINGS, getListing as demoGetListing, PROFESSIONALS, getProfessional as demoGetProfessional,
   type Listing, type TL, type VerificationLevel,
 } from '@/i18n';
-import { SUPPLIERS } from '@/content';
+import { SUPPLIERS, TENDERS, PROJECTS } from '@/content';
 import { getServerSupabase } from './supabase/server';
 import { PLACEHOLDER_IMAGE as PLACEHOLDER } from './placeholder';
 
@@ -299,4 +299,100 @@ export async function fetchSuppliers(island?: string): Promise<SupplierView[]> {
     id: r.id, userId: r.user_id, slug: r.slug, name: r.name, category: r.category, island: r.island ?? '',
     description: r.description, priceFrom: r.price_from, phone: r.phone, verified: r.verified,
   }));
+}
+
+// ---------------------------------------------------------------------------
+// Tenders (concursos) — real when configured; demo fallback otherwise.
+// ---------------------------------------------------------------------------
+export interface TenderView {
+  id: string; slug: string | null; title: TL; description: TL | null; island: string;
+  kind: 'PUBLIC' | 'PRIVATE'; budgetCve: number | null; deadline: string | null; bids: number; ownerId: string | null;
+}
+interface TenderRow {
+  id: string; owner: string; slug: string; title: TL; description: TL | null; island: string | null;
+  kind: 'PUBLIC' | 'PRIVATE'; budget_cve: number | null; deadline: string | null; bids_count: number;
+}
+function demoToTender(t: (typeof TENDERS)[number]): TenderView {
+  return {
+    id: t.id, slug: null, title: t.title, description: null, island: t.island, kind: t.kind,
+    budgetCve: t.budgetCve, deadline: t.deadline, bids: t.bids, ownerId: null,
+  };
+}
+function tenderRowToView(r: TenderRow): TenderView {
+  return {
+    id: r.id, slug: r.slug, title: r.title, description: r.description, island: r.island ?? '',
+    kind: r.kind, budgetCve: r.budget_cve, deadline: r.deadline, bids: r.bids_count, ownerId: r.owner,
+  };
+}
+export async function fetchTenders(island?: string): Promise<TenderView[]> {
+  const supabase = getServerSupabase();
+  if (!supabase) {
+    const demo = TENDERS.map(demoToTender);
+    return island ? demo.filter((t) => t.island === island) : demo;
+  }
+  let query = supabase.from('tenders').select('*').neq('status', 'draft');
+  if (island) query = query.eq('island', island);
+  const { data, error } = await query.order('created_at', { ascending: false });
+  if (error || !data || data.length === 0) {
+    const demo = TENDERS.map(demoToTender);
+    return island ? demo.filter((t) => t.island === island) : demo;
+  }
+  return (data as TenderRow[]).map(tenderRowToView);
+}
+export async function fetchTenderBySlug(slug: string): Promise<TenderView | undefined> {
+  const supabase = getServerSupabase();
+  if (!supabase) return undefined;
+  const { data, error } = await supabase.from('tenders').select('*').eq('slug', slug).neq('status', 'draft').maybeSingle();
+  if (error || !data) return undefined;
+  return tenderRowToView(data as TenderRow);
+}
+
+// ---------------------------------------------------------------------------
+// Projects portfolio (projetos) — real when configured; demo fallback otherwise.
+// ---------------------------------------------------------------------------
+export interface Milestone { label: TL; done: boolean }
+export interface ProjectView {
+  id: string; slug: string | null; name: TL; description: TL | null; island: string;
+  status: 'PLANNING' | 'IN_PROGRESS' | 'REVIEW' | 'DONE'; progress: number; budgetCve: number | null;
+  contractor: string; cover: string | null; milestones: Milestone[];
+}
+interface ProjectRow {
+  id: string; slug: string; name: TL; description: TL | null; island: string | null;
+  status: ProjectView['status']; progress: number; budget_cve: number | null;
+  contractor: string | null; cover: string | null; milestones: Milestone[] | null;
+}
+function demoToProject(p: (typeof PROJECTS)[number]): ProjectView {
+  return {
+    id: p.id, slug: null, name: p.name, description: null, island: p.island, status: p.status,
+    progress: p.progress, budgetCve: p.budgetCve, contractor: p.contractor, cover: null, milestones: p.milestones,
+  };
+}
+function projectRowToView(r: ProjectRow): ProjectView {
+  return {
+    id: r.id, slug: r.slug, name: r.name, description: r.description, island: r.island ?? '',
+    status: r.status, progress: r.progress, budgetCve: r.budget_cve, contractor: r.contractor ?? '',
+    cover: r.cover, milestones: Array.isArray(r.milestones) ? r.milestones : [],
+  };
+}
+export async function fetchProjects(island?: string): Promise<ProjectView[]> {
+  const supabase = getServerSupabase();
+  if (!supabase) {
+    const demo = PROJECTS.map(demoToProject);
+    return island ? demo.filter((p) => p.island === island) : demo;
+  }
+  let query = supabase.from('projects').select('*').eq('visibility', 'published');
+  if (island) query = query.eq('island', island);
+  const { data, error } = await query.order('created_at', { ascending: false });
+  if (error || !data || data.length === 0) {
+    const demo = PROJECTS.map(demoToProject);
+    return island ? demo.filter((p) => p.island === island) : demo;
+  }
+  return (data as ProjectRow[]).map(projectRowToView);
+}
+export async function fetchProjectBySlug(slug: string): Promise<ProjectView | undefined> {
+  const supabase = getServerSupabase();
+  if (!supabase) return undefined;
+  const { data, error } = await supabase.from('projects').select('*').eq('slug', slug).eq('visibility', 'published').maybeSingle();
+  if (error || !data) return undefined;
+  return projectRowToView(data as ProjectRow);
 }
