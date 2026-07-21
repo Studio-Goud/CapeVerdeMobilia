@@ -18,6 +18,7 @@ yet migrated, so the live site never breaks while you catch up.
 | 0010 | `migrations/0010_publications_construction.sql` | building-permit info article (RNOTPU / DL 57/2015 / PDM) | ✅ done |
 | 0011 | `migrations/0011_publications_tenancy_rights.sql` | rent/deposit/updates rights-and-duties article (RGAU / INE) | ✅ done |
 | 0012 | `migrations/0012_professionals.sql` | real professionals directory (business users own a profile) + RLS | ⏳ **to run** |
+| 0013 | `migrations/0013_suppliers.sql` | real materials-suppliers directory (+ admin-only `verified`) + RLS | ⏳ **to run** |
 
 ## Roles
 - Make yourself admin (trust/ops + info editor):

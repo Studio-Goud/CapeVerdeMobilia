@@ -273,6 +273,8 @@ const UI = {
   'dash.proProfileTitle': { pt: 'Perfil profissional', en: 'Professional profile', nl: 'Professioneel profiel' },
   'dash.proProfileBody': { pt: 'Apareça no diretório de profissionais e receba pedidos de clientes.', en: 'Appear in the professionals directory and receive client leads.', nl: 'Verschijn in de vakmensen-gids en ontvang aanvragen van klanten.' },
   'dash.proProfileCta': { pt: 'Criar / editar perfil', en: 'Create / edit profile', nl: 'Profiel aanmaken / bewerken' },
+  'dash.supplierTitle': { pt: 'Perfil de fornecedor', en: 'Supplier profile', nl: 'Leveranciersprofiel' },
+  'dash.supplierBody': { pt: 'Apareça no diretório de materiais e receba pedidos de orçamento.', en: 'Appear in the materials directory and receive quote requests.', nl: 'Verschijn in de materialen-gids en ontvang offerteaanvragen.' },
   'dash.confirmWithdraw': { pt: 'Retirar este pedido de arrendamento?', en: 'Withdraw this rental request?', nl: 'Deze huuraanvraag intrekken?' },
   'dash.statusDraft': { pt: 'Rascunho', en: 'Draft', nl: 'Concept' },
   'dash.statusPublished': { pt: 'Publicado', en: 'Published', nl: 'Gepubliceerd' },

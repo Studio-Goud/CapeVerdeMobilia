@@ -333,3 +333,43 @@ export async function upsertProfessional(input: MyProfessional): Promise<string 
   const { error } = await ctx.supa.from('professionals').upsert(row, { onConflict: 'user_id' });
   return error ? error.message : null;
 }
+
+// ---------------------------------------------------------------------------
+// Supplier profile (materials directory — one per business user)
+// ---------------------------------------------------------------------------
+export interface MySupplier {
+  id?: string; slug: string; name: string; category: TL; island: string;
+  description: TL; price_from: TL | null; phone: string; status: string;
+}
+interface MySupplierRow {
+  id: string; slug: string; name: string; category: TL | null; island: string | null;
+  description: TL | null; price_from: TL | null; phone: string | null; status: string;
+}
+
+/** The current user's supplier profile, or null if none/not logged in. */
+export async function fetchMySupplier(): Promise<MySupplier | null> {
+  const ctx = await uid();
+  if (!ctx) return null;
+  const { data } = await ctx.supa.from('suppliers').select('*').eq('user_id', ctx.id).maybeSingle();
+  if (!data) return null;
+  const r = data as MySupplierRow;
+  return {
+    id: r.id, slug: r.slug, name: r.name,
+    category: { ...EMPTY_TL, ...(r.category ?? {}) }, island: r.island ?? '',
+    description: { ...EMPTY_TL, ...(r.description ?? {}) }, price_from: r.price_from,
+    phone: r.phone ?? '', status: r.status,
+  };
+}
+
+/** Create or update the current user's supplier profile (unique per user). */
+export async function upsertSupplier(input: MySupplier): Promise<string | null> {
+  const ctx = await uid();
+  if (!ctx) return isSupabaseConfigured ? 'auth' : 'demo';
+  const row = {
+    user_id: ctx.id, slug: input.slug, name: input.name, category: input.category,
+    island: input.island || null, description: input.description,
+    price_from: input.price_from, phone: input.phone || null, status: input.status,
+  };
+  const { error } = await ctx.supa.from('suppliers').upsert(row, { onConflict: 'user_id' });
+  return error ? error.message : null;
+}

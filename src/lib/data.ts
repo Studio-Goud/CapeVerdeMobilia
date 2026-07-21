@@ -4,6 +4,7 @@ import {
   LISTINGS, getListing as demoGetListing, PROFESSIONALS, getProfessional as demoGetProfessional,
   type Listing, type TL, type VerificationLevel,
 } from '@/i18n';
+import { SUPPLIERS } from '@/content';
 import { getServerSupabase } from './supabase/server';
 import { PLACEHOLDER_IMAGE as PLACEHOLDER } from './placeholder';
 
@@ -259,4 +260,43 @@ export async function fetchProfessionalBySlug(slug: string): Promise<ProProfile 
     bio: r.bio, category: r.category, serviceAreas: r.service_areas ?? [], priceIndication: r.price_indication,
     phone: r.phone, verificationLevel: verifOf(r), ratingAvg: s ? s.avg : null, ratingCount: s ? s.count : 0,
   };
+}
+
+// ---------------------------------------------------------------------------
+// Building-materials suppliers directory (real when configured; demo fallback).
+// ---------------------------------------------------------------------------
+export interface SupplierView {
+  id: string; userId: string | null; slug: string | null; name: string; category: TL;
+  island: string; description: TL | null; priceFrom: TL | null; phone: string | null; verified: boolean;
+}
+interface SupplierRow {
+  id: string; user_id: string; slug: string; name: string; category: TL; island: string | null;
+  description: TL | null; price_from: TL | null; phone: string | null; verified: boolean;
+}
+
+function demoToSupplier(s: (typeof SUPPLIERS)[number]): SupplierView {
+  return {
+    id: s.id, userId: null, slug: null, name: s.name, category: s.category, island: s.island,
+    description: null, priceFrom: s.priceFrom, phone: null, verified: s.verified,
+  };
+}
+
+/** Published suppliers, optionally filtered by island. */
+export async function fetchSuppliers(island?: string): Promise<SupplierView[]> {
+  const supabase = getServerSupabase();
+  if (!supabase) {
+    const demo = SUPPLIERS.map(demoToSupplier);
+    return island ? demo.filter((s) => s.island === island) : demo;
+  }
+  let query = supabase.from('suppliers').select('*').eq('status', 'published');
+  if (island) query = query.eq('island', island);
+  const { data, error } = await query.order('verified', { ascending: false }).order('created_at', { ascending: false });
+  if (error || !data || data.length === 0) {
+    const demo = SUPPLIERS.map(demoToSupplier);
+    return island ? demo.filter((s) => s.island === island) : demo;
+  }
+  return (data as SupplierRow[]).map((r) => ({
+    id: r.id, userId: r.user_id, slug: r.slug, name: r.name, category: r.category, island: r.island ?? '',
+    description: r.description, priceFrom: r.price_from, phone: r.phone, verified: r.verified,
+  }));
 }
