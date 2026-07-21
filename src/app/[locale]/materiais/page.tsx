@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { t, tr, whatsappLink, type Locale, type TL } from '@/i18n';
 import { fetchSuppliers, type SupplierView } from '@/lib/data';
-import { PageTitle, Card, Pill } from '@/components/ui';
+import { PageTitle, Card, Pill, EmptyState } from '@/components/ui';
 
 const ISLANDS = ['', 'São Vicente', 'Santo Antão', 'Santiago', 'Sal', 'Boa Vista', 'São Nicolau', 'Fogo', 'Maio', 'Brava'];
 const one = (v: string | string[] | undefined): string | undefined => (Array.isArray(v) ? v[0] : v);
@@ -44,6 +44,15 @@ export default async function MaterialsPage({
       </form>
 
       <p className="mb-3 text-sm text-slate-500">{rows.length} {t(locale, 'common.results')}</p>
+
+      {rows.length === 0 && (
+        <EmptyState
+          icon="🧱"
+          message={tr({ pt: 'Ainda não há fornecedores aqui. É fornecedor? Adicione o seu negócio.', en: 'No suppliers here yet. Are you a supplier? Add your business.', nl: 'Nog geen leveranciers hier. Leverancier? Voeg je bedrijf toe.' }, locale)}
+          ctaHref={`/${locale}/materiais/novo`}
+          ctaLabel={tr({ pt: 'Adicionar negócio', en: 'Add business', nl: 'Bedrijf toevoegen' }, locale)}
+        />
+      )}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {rows.map((s: SupplierView) => (

@@ -97,6 +97,19 @@ export function ListingCard({ l, locale }: { l: Listing; locale: Locale }): JSX.
   );
 }
 
+/** Shared empty-state card for directory/list pages with no content yet. */
+export function EmptyState({ icon = '🏝️', message, ctaHref, ctaLabel }: { icon?: string; message: string; ctaHref?: string; ctaLabel?: string }): JSX.Element {
+  return (
+    <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-slate-300 bg-white/60 px-6 py-12 text-center">
+      <span aria-hidden className="text-3xl">{icon}</span>
+      <p className="max-w-md text-sm font-medium text-slate-600">{message}</p>
+      {ctaHref && ctaLabel && (
+        <Link href={ctaHref} className="mt-1 rounded-lg bg-coral px-4 py-2 text-sm font-semibold text-white hover:bg-coral-600">{ctaLabel}</Link>
+      )}
+    </div>
+  );
+}
+
 export function ListingGrid({ rows, locale }: { rows: Listing[]; locale: Locale }): JSX.Element {
   if (rows.length === 0) {
     return (

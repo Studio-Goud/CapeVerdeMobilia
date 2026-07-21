@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { t, tr, formatDate, formatEur, cveToEur, type Locale, type TL } from '@/i18n';
 import { fetchTenders, type TenderView } from '@/lib/data';
-import { PageTitle, Card, Pill } from '@/components/ui';
+import { PageTitle, Card, Pill, EmptyState } from '@/components/ui';
 
 const ISLANDS = ['', 'São Vicente', 'Santo Antão', 'Santiago', 'Sal', 'Boa Vista', 'São Nicolau', 'Fogo', 'Maio', 'Brava'];
 const one = (v: string | string[] | undefined): string | undefined => (Array.isArray(v) ? v[0] : v);
@@ -44,6 +44,15 @@ export default async function TendersPage({
       </form>
 
       <p className="mb-3 text-sm text-slate-500">{rows.length} {t(locale, 'common.results')}</p>
+
+      {rows.length === 0 && (
+        <EmptyState
+          icon="📋"
+          message={tr({ pt: 'Ainda não há concursos abertos. Precisa de um serviço? Publique um concurso.', en: 'No open tenders yet. Need a service? Post a tender.', nl: 'Nog geen open aanbestedingen. Dienst nodig? Plaats een aanbesteding.' }, locale)}
+          ctaHref={`/${locale}/concursos/novo`}
+          ctaLabel={tr({ pt: 'Publicar concurso', en: 'Post a tender', nl: 'Aanbesteding plaatsen' }, locale)}
+        />
+      )}
 
       <div className="space-y-3">
         {rows.map((td: TenderView) => (

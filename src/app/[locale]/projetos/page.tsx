@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { t, tr, formatEur, cveToEur, type Locale, type TL } from '@/i18n';
 import { fetchProjects, type ProjectView } from '@/lib/data';
-import { PageTitle, Card, Pill } from '@/components/ui';
+import { PageTitle, Card, Pill, EmptyState } from '@/components/ui';
 
 const ISLANDS = ['', 'São Vicente', 'Santo Antão', 'Santiago', 'Sal', 'Boa Vista', 'São Nicolau', 'Fogo', 'Maio', 'Brava'];
 const one = (v: string | string[] | undefined): string | undefined => (Array.isArray(v) ? v[0] : v);
@@ -44,6 +44,15 @@ export default async function ProjectsPage({
       </form>
 
       <p className="mb-3 text-sm text-slate-500">{rows.length} {t(locale, 'common.results')}</p>
+
+      {rows.length === 0 && (
+        <EmptyState
+          icon="🏗️"
+          message={tr({ pt: 'Ainda não há projetos aqui. Mostre o seu trabalho: adicione um projeto.', en: 'No projects here yet. Show your work: add a project.', nl: 'Nog geen projecten hier. Laat je werk zien: voeg een project toe.' }, locale)}
+          ctaHref={`/${locale}/projetos/novo`}
+          ctaLabel={tr({ pt: 'Adicionar projeto', en: 'Add project', nl: 'Project toevoegen' }, locale)}
+        />
+      )}
 
       <div className="grid gap-4 md:grid-cols-2">
         {rows.map((p: ProjectView) => (

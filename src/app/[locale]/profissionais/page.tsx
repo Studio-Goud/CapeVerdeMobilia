@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { t, tr, type Locale, type TL } from '@/i18n';
 import { fetchProfessionals, type ProProfile } from '@/lib/data';
-import { PageTitle, TrustBadge, Card } from '@/components/ui';
+import { PageTitle, TrustBadge, Card, EmptyState } from '@/components/ui';
 
 const AREAS = ['', 'São Vicente', 'Santiago', 'Sal', 'Santo Antão'];
 const one = (v: string | string[] | undefined): string | undefined => (Array.isArray(v) ? v[0] : v);
@@ -44,6 +44,15 @@ export default async function ProfessionalsPage({
       </form>
 
       <p className="mb-3 text-sm text-slate-500">{rows.length} {t(locale, 'common.results')}</p>
+
+      {rows.length === 0 && (
+        <EmptyState
+          icon="🧰"
+          message={tr({ pt: 'Ainda não há profissionais aqui. Seja o primeiro a criar o seu perfil.', en: 'No professionals here yet. Be the first to create your profile.', nl: 'Nog geen professionals hier. Wees de eerste met een profiel.' }, locale)}
+          ctaHref={`/${locale}/profissionais/novo`}
+          ctaLabel={tr({ pt: 'Criar perfil', en: 'Create profile', nl: 'Profiel aanmaken' }, locale)}
+        />
+      )}
 
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {rows.map((p: ProProfile) => (
