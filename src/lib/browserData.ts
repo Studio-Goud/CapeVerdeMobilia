@@ -148,6 +148,48 @@ export async function setRentalRequestStatus(id: string, status: 'accepted' | 'd
   return error ? error.message : null;
 }
 
+export async function currentUserId(): Promise<string | null> {
+  const ctx = await uid();
+  return ctx?.id ?? null;
+}
+
+// ---------------------------------------------------------------------------
+// Messaging (between the two parties of a rental request)
+// ---------------------------------------------------------------------------
+export interface Message { id: string; sender_id: string; body: string; created_at: string }
+
+export async function fetchMessages(requestId: string): Promise<Message[] | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return null;
+  const { data, error } = await supa.from('messages').select('id,sender_id,body,created_at').eq('request_id', requestId).order('created_at', { ascending: true });
+  if (error) return null;
+  return (data ?? []) as Message[];
+}
+
+export async function sendMessage(requestId: string, body: string): Promise<string | null> {
+  const ctx = await uid();
+  if (!ctx) return 'auth';
+  const { error } = await ctx.supa.from('messages').insert({ request_id: requestId, sender_id: ctx.id, body });
+  return error ? error.message : null;
+}
+
+// ---------------------------------------------------------------------------
+// Bookings (accepted rental requests) for the availability calendar
+// ---------------------------------------------------------------------------
+export interface Booking { start: string | null; end: string | null; listingTitle: TL | null }
+
+export async function fetchMyBookings(): Promise<Booking[] | null> {
+  const ctx = await uid();
+  if (!ctx) return null;
+  const { data } = await ctx.supa.from('rental_requests').select('start_date,end_date,listings(title)').eq('landlord_id', ctx.id).eq('status', 'accepted');
+  return (data ?? []).map((d) => {
+    const rel = (d as unknown as { listings: { title: TL } | { title: TL }[] | null }).listings;
+    const listing = Array.isArray(rel) ? rel[0] ?? null : rel;
+    const row = d as unknown as { start_date: string | null; end_date: string | null };
+    return { start: row.start_date, end: row.end_date, listingTitle: listing?.title ?? null };
+  });
+}
+
 // ---------------------------------------------------------------------------
 // Admin (trust/ops) — requires the caller's profile.role = 'admin'
 // ---------------------------------------------------------------------------

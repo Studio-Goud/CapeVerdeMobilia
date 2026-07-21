@@ -30,7 +30,7 @@ export default async function ListingsPage({
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-3">
         <h1 className="text-2xl font-bold">{t(locale, 'nav.imoveis')}</h1>
-        <Link href={`/${locale}/imoveis/novo`} className="rounded-lg bg-coral px-4 py-2 text-sm font-semibold text-white hover:bg-coral-600">{t(locale, 'dash.newListing')}</Link>
+        <Link href={`/${locale}/imoveis/publicar`} className="rounded-lg bg-coral px-4 py-2 text-sm font-semibold text-white hover:bg-coral-600">{t(locale, 'dash.newListing')}</Link>
       </div>
       <form className="flex flex-wrap items-end gap-3 rounded-xl border border-slate-200 bg-white p-4">
         <label className="flex flex-col text-sm"><span className="mb-1 text-slate-600">{t(locale, 'common.search')}</span>

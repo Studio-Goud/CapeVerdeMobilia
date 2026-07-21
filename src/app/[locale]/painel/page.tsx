@@ -7,10 +7,11 @@ import { PROJECTS } from '@/content';
 import { useAuth } from '@/components/Auth';
 import {
   fetchBusinessDashboard, fetchMyFavorites, fetchLeads, setListingStatus, deleteListing,
-  fetchIncomingRentalRequests, fetchMyRentalRequests, setRentalRequestStatus,
-  type BusinessDashboard, type LeadItem, type OwnedListing, type RentalRequestItem,
+  fetchIncomingRentalRequests, fetchMyRentalRequests, setRentalRequestStatus, fetchMyBookings,
+  type BusinessDashboard, type LeadItem, type OwnedListing, type RentalRequestItem, type Booking,
 } from '@/lib/browserData';
 import { Card, Stat, Pill, TrustBadge } from '@/components/ui';
+import AvailabilityCalendar from '@/components/AvailabilityCalendar';
 
 const EMPTY_LISTINGS: TL = { pt: 'Ainda não publicou anúncios.', en: 'You have not published any listings yet.', nl: 'Je hebt nog geen advertenties geplaatst.' };
 
@@ -21,12 +22,13 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
   const [leads, setLeads] = useState<LeadItem[] | null>(null);
   const [favs, setFavs] = useState<Listing[] | null>(null);
   const [rentals, setRentals] = useState<RentalRequestItem[] | null>(null);
+  const [bookings, setBookings] = useState<Booking[] | null>(null);
 
   const isBiz = !!user && (user.role === 'business' || user.role === 'admin');
 
   const reloadBiz = useCallback(async () => {
-    const [b, l, r] = await Promise.all([fetchBusinessDashboard(), fetchLeads(), fetchIncomingRentalRequests()]);
-    setBiz(b); setLeads(l); setRentals(r);
+    const [b, l, r, bk] = await Promise.all([fetchBusinessDashboard(), fetchLeads(), fetchIncomingRentalRequests(), fetchMyBookings()]);
+    setBiz(b); setLeads(l); setRentals(r); setBookings(bk);
   }, []);
 
   useEffect(() => {
@@ -95,7 +97,7 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
           <section>
             <div className="mb-3 flex items-center justify-between">
               <h2 className="text-lg font-semibold">{t(locale, 'dash.myListings')}</h2>
-              <Link href={`/${locale}/imoveis/novo`} className="text-sm font-medium text-brand hover:underline">{t(locale, 'dash.newListing')}</Link>
+              <Link href={`/${locale}/imoveis/publicar`} className="text-sm font-medium text-brand hover:underline">{t(locale, 'dash.newListing')}</Link>
             </div>
             {!configured ? (
               <Card><p className="text-sm text-slate-500">{t(locale, 'dash.empty')}</p></Card>
@@ -173,6 +175,9 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
                         <button onClick={() => void rentalAction(r.id, 'declined')} className="rounded-lg border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-600 hover:bg-red-50">{t(locale, 'dash.decline')}</button>
                       </div>
                     )}
+                    {r.status === 'accepted' && (
+                      <div className="mt-2"><Link href={`/${locale}/mensagens/${r.id}`} className="inline-block rounded-lg bg-brand px-3 py-1.5 text-xs font-semibold text-white hover:bg-brand-dark">{t(locale, 'dash.message')}</Link></div>
+                    )}
                   </Card>
                 ))}
               </div>
@@ -180,6 +185,17 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
               <Card><p className="text-sm text-slate-500">{t(locale, 'dash.noRentals')}</p></Card>
             )}
           </section>
+
+          {bookings && bookings.length > 0 && (
+            <section>
+              <h2 className="mb-3 text-lg font-semibold">{t(locale, 'dash.availability')}</h2>
+              <AvailabilityCalendar
+                booked={bookings.map((b) => ({ start: b.start, end: b.end, label: b.listingTitle ? tr(b.listingTitle, locale) : undefined }))}
+                locale={locale}
+                months={2}
+              />
+            </section>
+          )}
 
           <section>
             <div className="mb-3 flex items-center justify-between">
@@ -203,7 +219,7 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
           </section>
 
           <div className="flex flex-wrap gap-2">
-            <Link href={`/${locale}/imoveis/novo`} className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white">{t(locale, 'dash.newListing')}</Link>
+            <Link href={`/${locale}/imoveis/publicar`} className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white">{t(locale, 'dash.newListing')}</Link>
             <Link href={`/${locale}/concursos`} className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700">{t(locale, 'dash.openTenders')}</Link>
             <Link href={`/${locale}/verificacao`} className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700">{t(locale, 'dash.raiseLevel')}</Link>
             <Link href={`/${locale}/admin`} className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700">{t(locale, 'nav.admin')}</Link>
@@ -244,7 +260,10 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
                       <p className="text-sm font-medium text-slate-900">{r.listingTitle ? tr(r.listingTitle, locale) : '—'}</p>
                       <p className="text-xs text-slate-500">{r.start_date ?? '—'} → {r.end_date ?? '—'}</p>
                     </div>
-                    <Pill tone={r.status === 'accepted' ? 'emerald' : r.status === 'declined' ? 'slate' : 'amber'}>{rrLabel(r.status)}</Pill>
+                    <div className="flex items-center gap-2">
+                      <Pill tone={r.status === 'accepted' ? 'emerald' : r.status === 'declined' ? 'slate' : 'amber'}>{rrLabel(r.status)}</Pill>
+                      {r.status === 'accepted' && <Link href={`/${locale}/mensagens/${r.id}`} className="rounded-lg bg-brand px-3 py-1.5 text-xs font-semibold text-white hover:bg-brand-dark">{t(locale, 'dash.message')}</Link>}
+                    </div>
                   </Card>
                 ))}
               </div>
