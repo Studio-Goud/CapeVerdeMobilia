@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getProcedure, t, tr, type Locale } from '@/i18n';
 import { OfficialTag } from '@/components/ui';
+import { JsonLd } from '@/components/JsonLd';
+import { howToJsonLd, breadcrumbJsonLd } from '@/lib/jsonld';
 import { altLangs } from '@/lib/seo';
 
 export function generateMetadata({ params }: { params: { locale: Locale; slug: string } }): Metadata {
@@ -17,6 +19,12 @@ export default function ProcedureDetailPage({ params }: { params: { locale: Loca
   if (!proc) notFound();
   return (
     <article className="mx-auto max-w-3xl space-y-6">
+      <JsonLd data={breadcrumbJsonLd([
+        { name: 'Djarvista', url: `/${locale}` },
+        { name: tr({ pt: 'Procedimentos', en: 'Procedures', nl: 'Procedures' }, locale), url: `/${locale}/procedimentos` },
+        { name: tr(proc.title, locale), url: `/${locale}/procedimentos/${proc.slug}` },
+      ])} />
+      <JsonLd data={howToJsonLd(proc, locale)} />
       <header>
         <div className="flex flex-wrap items-center gap-2">
           <h1 className="text-2xl font-bold">{tr(proc.title, locale)}</h1>
