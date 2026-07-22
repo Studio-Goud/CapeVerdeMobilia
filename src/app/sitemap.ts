@@ -1,4 +1,6 @@
 import type { MetadataRoute } from 'next';
+import { PROCEDURES } from '@/i18n';
+import { fetchProfessionals, fetchListings } from '@/lib/data';
 
 const BASE = 'https://www.djarvista.com';
 const LOCALES = ['pt', 'en', 'nl'];
@@ -9,14 +11,23 @@ const PATHS = [
   '/entrar', '/registar',
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  return LOCALES.flatMap((l) =>
-    PATHS.map((p) => ({
-      url: `${BASE}/${l}${p}`,
-      lastModified: now,
-      changeFrequency: 'weekly' as const,
-      priority: p === '' ? 1 : 0.7,
-    })),
-  );
+  const entry = (path: string, priority: number): MetadataRoute.Sitemap =>
+    LOCALES.map((l) => ({ url: `${BASE}/${l}${path}`, lastModified: now, changeFrequency: 'weekly' as const, priority }));
+
+  const staticEntries = PATHS.flatMap((p) => entry(p, p === '' ? 1 : 0.7));
+
+  // Dynamic content — one entry per real profile / listing / procedure, per locale.
+  const dynamicPaths: string[] = PROCEDURES.map((p) => `/procedimentos/${p.slug}`);
+  try {
+    const [pros, listings] = await Promise.all([fetchProfessionals(), fetchListings()]);
+    for (const p of pros) dynamicPaths.push(`/profissionais/${p.slug}`);
+    for (const l of listings) dynamicPaths.push(`/imoveis/${l.slug}`);
+  } catch {
+    // Backend unreachable at build time → ship the static map only.
+  }
+  const dynamicEntries = dynamicPaths.flatMap((p) => entry(p, 0.6));
+
+  return [...staticEntries, ...dynamicEntries];
 }

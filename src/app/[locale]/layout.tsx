@@ -6,6 +6,8 @@ import { SiteFooter } from '@/components/ui';
 import { SiteHeader } from '@/components/SiteHeader';
 import { AuthProvider } from '@/components/Auth';
 import { HtmlLang } from '@/components/HtmlLang';
+import { JsonLd } from '@/components/JsonLd';
+import { orgWebsiteGraph } from '@/lib/jsonld';
 import { isSupabaseConfigured } from '@/lib/supabase/env';
 
 export function generateStaticParams(): { locale: Locale }[] {
@@ -33,6 +35,7 @@ export default function LocaleLayout({
   return (
     <AuthProvider>
       <HtmlLang locale={locale} />
+      <JsonLd data={orgWebsiteGraph(locale)} />
       {!isSupabaseConfigured && (
         <div className="bg-coral-600 px-4 py-1.5 text-center text-xs font-medium text-white">
           {t(locale, 'demo.banner')}

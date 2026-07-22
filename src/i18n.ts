@@ -70,6 +70,7 @@ const UI = {
   'common.type': { pt: 'Tipo', en: 'Type', nl: 'Type' },
   'common.all': { pt: 'Todos', en: 'All', nl: 'Alle' },
   'common.category': { pt: 'Categoria', en: 'Category', nl: 'Categorie' },
+  'dir.searchPlaceholder': { pt: 'Nome, categoria…', en: 'Name, category…', nl: 'Naam, categorie…' },
   'common.optional': { pt: 'opcional', en: 'optional', nl: 'optioneel' },
   'common.continue': { pt: 'Continuar', en: 'Continue', nl: 'Doorgaan' },
   'common.next': { pt: 'Seguinte', en: 'Next', nl: 'Volgende' },

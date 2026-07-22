@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { t, tr, formatPrice, formatDate, docLabel, type Locale, type TL } from '@/i18n';
 import { fetchListingBySlug, fetchListings } from '@/lib/data';
+import { JsonLd } from '@/components/JsonLd';
+import { listingJsonLd } from '@/lib/jsonld';
 import { OfficialTag, ListingCard, SectionHead } from '@/components/ui';
 import { LeadForm } from '@/components/LeadForm';
 import { SaveButton } from '@/components/SaveButton';
@@ -39,6 +41,7 @@ export default async function ListingDetailPage({ params }: { params: { locale: 
 
   return (
     <div className="grid gap-8 lg:grid-cols-3">
+      <JsonLd data={listingJsonLd(l, locale)} />
       <div className="lg:col-span-2">
         {l.isFeatured && <span className="mb-2 inline-block rounded bg-coral-600 px-2 py-0.5 text-xs font-semibold text-white">{t(locale, 'common.sponsored')}</span>}
         <h1 className="text-2xl font-bold">{tr(l.title, locale)}</h1>

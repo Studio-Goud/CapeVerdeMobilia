@@ -21,6 +21,7 @@ export default async function ProfessionalsPage({
   const locale = params.locale;
   const area = one(searchParams.area) ?? '';
   const cat = one(searchParams.cat) ?? '';
+  const q = (one(searchParams.q) ?? '').trim();
   const rows = await fetchProfessionals(area);
 
   // Distinct professions present (within the current island), most common first.
@@ -28,13 +29,20 @@ export default async function ProfessionalsPage({
   for (const p of rows) if (p.category) counts.set(p.category, (counts.get(p.category) ?? 0) + 1);
   const cats = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([c]) => c);
 
-  const shown = cat ? rows.filter((p) => p.category === cat) : rows;
+  let shown = cat ? rows.filter((p) => p.category === cat) : rows;
+  if (q) {
+    const needle = q.toLowerCase();
+    shown = shown.filter((p) =>
+      `${p.displayName} ${tr(p.headline, locale)} ${p.category ?? ''} ${p.bio ? tr(p.bio, locale) : ''}`
+        .toLowerCase().includes(needle));
+  }
 
-  // Build a filter href that keeps the island and sets the profession.
+  // Build a filter href that keeps the island + search and sets the profession.
   const hrefFor = (c: string): string => {
     const qs = new URLSearchParams();
     if (area) qs.set('area', area);
     if (c) qs.set('cat', c);
+    if (q) qs.set('q', q);
     const s = qs.toString();
     return `/${locale}/profissionais${s ? `?${s}` : ''}`;
   };
@@ -56,12 +64,16 @@ export default async function ProfessionalsPage({
 
       <form className="mb-4 flex flex-wrap items-end gap-3 rounded-xl border border-slate-200 bg-white p-4">
         <label className="flex flex-col text-sm">
+          <span className="mb-1 text-slate-600">{t(locale, 'common.search')}</span>
+          <input name="q" defaultValue={q} placeholder={t(locale, 'dir.searchPlaceholder')} className="rounded-lg border border-slate-300 px-3 py-1.5" />
+        </label>
+        <label className="flex flex-col text-sm">
           <span className="mb-1 text-slate-600">{t(locale, 'common.island')}</span>
           <select name="area" defaultValue={area} className="rounded-lg border border-slate-300 px-3 py-1.5">
             {AREAS.map((a) => <option key={a} value={a}>{a || t(locale, 'common.all')}</option>)}
           </select>
         </label>
-        {/* keep the chosen profession when switching island */}
+        {/* keep the chosen profession when switching island / searching */}
         {cat && <input type="hidden" name="cat" value={cat} />}
         <button className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white">{t(locale, 'common.filter')}</button>
       </form>

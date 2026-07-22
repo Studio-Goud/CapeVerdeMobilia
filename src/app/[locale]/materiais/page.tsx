@@ -22,6 +22,7 @@ export default async function MaterialsPage({
   const locale = params.locale;
   const island = one(searchParams.island) ?? '';
   const cat = one(searchParams.cat) ?? '';
+  const q = (one(searchParams.q) ?? '').trim();
   const rows = await fetchSuppliers(island);
 
   // Distinct categories present (keyed on the PT value), most common first.
@@ -32,12 +33,19 @@ export default async function MaterialsPage({
     if (e) e.n += 1; else counts.set(k, { tl: s.category, n: 1 });
   }
   const cats = [...counts.entries()].sort((a, b) => b[1].n - a[1].n || a[0].localeCompare(b[0]));
-  const shown = cat ? rows.filter((s) => s.category.pt === cat) : rows;
+  let shown = cat ? rows.filter((s) => s.category.pt === cat) : rows;
+  if (q) {
+    const needle = q.toLowerCase();
+    shown = shown.filter((s) =>
+      `${s.name} ${tr(s.category, locale)} ${s.description ? tr(s.description, locale) : ''}`
+        .toLowerCase().includes(needle));
+  }
 
   const hrefFor = (c: string): string => {
     const qs = new URLSearchParams();
     if (island) qs.set('island', island);
     if (c) qs.set('cat', c);
+    if (q) qs.set('q', q);
     const s = qs.toString();
     return `/${locale}/materiais${s ? `?${s}` : ''}`;
   };
@@ -58,6 +66,10 @@ export default async function MaterialsPage({
       </Link>
 
       <form className="mb-4 flex flex-wrap items-end gap-3 rounded-xl border border-slate-200 bg-white p-4">
+        <label className="flex flex-col text-sm">
+          <span className="mb-1 text-slate-600">{t(locale, 'common.search')}</span>
+          <input name="q" defaultValue={q} placeholder={t(locale, 'dir.searchPlaceholder')} className="rounded-lg border border-slate-300 px-3 py-1.5" />
+        </label>
         <label className="flex flex-col text-sm">
           <span className="mb-1 text-slate-600">{t(locale, 'common.island')}</span>
           <select name="island" defaultValue={island} className="rounded-lg border border-slate-300 px-3 py-1.5">
