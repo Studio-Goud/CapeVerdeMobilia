@@ -12,6 +12,7 @@ Zie ook: `APP_STORE.md` (Apple-draaiboek), `PAYMENTS.md` (verdienmodel),
 - **Contractgenerator** (pro-forma, self-service) met links naar de wetsartikelen.
 - **Verificatie**: ID/paspoort + selfie upload → admin-review → trust-level.
 - **Officieel informatiecentrum**: 6 gebronde, drietalige artikelen (huur, belasting, kopen, bouwen), gegroepeerd per pijler.
+- **Procedures (stap-voor-stap)**: 3 uitgelegde trajecten (terrein kopen + bouwen · bestaande woning kopen · bedrijf oprichten) met narratief overzicht ("hoe het meestal verloopt"), CV-specifieke "let op"-punten en per stap uitleg + documenten + tip — drietalig, indicatief (geen juridisch advies).
 - **Directories (echt, met RLS):**
   - **Profissionais** — profiel aanmaken/bewerken, reviews, leads bereiken de professional.
   - **Materiais** — leveranciersprofiel, WhatsApp-offerte (alleen mét nummer), admin-`verified`.
@@ -30,16 +31,16 @@ Grote controle uitgevoerd (4 parallelle audits). Opgelost:
 - **Portugees (pt-PT)**: "A Djarvista", pesquisas, formeel register, PT-plannamen, "à venda", anúncios.
 - **Correctheid**: gesloten-concurs biedformulier, admin-foutmeldingen, e-mailredirect, lokale datums, taalwissel behoudt filters.
 - **Toegankelijkheid**: `<html lang>` per taal, taalwissel op mobiel, coral-contrast, tap-target hamburger, "A enviar…"-states.
+- **Favicon**: tab-icoon toonde een leeg blauw vlak (kapotte 192- + apple-touch-PNG's die de correcte SVG overschreven); nu vector-SVG als primair tab-icoon + geregenereerde PNG's (D + koraal-zon).
 
 ## 🗄️ Migraties
-0001–0017 zijn gedraaid. **0018 nog te draaien** (`0018_featured_guard.sql`): alleen admins mogen `is_featured` zetten + max 1 openstaande boost per advertentie. Bestand + SQL staat klaar; ook in `MIGRATIONS.md`.
+0001–0018 zijn gedraaid — inclusief `0018_featured_guard.sql` (alleen admins mogen `is_featured` zetten + max 1 openstaande boost per advertentie). Zie `MIGRATIONS.md`.
 
 ## ⚠️ Alleen jij kunt dit doen
-1. **Migratie 0018 draaien** in Supabase → SQL Editor (beveiligingsfix).
-2. **`service_role`-sleutel roteren** (stond meerdere keren in de chat; de app gebruikt 'm niet, dus roteren breekt niets).
-3. **Juridische `[…]`-placeholders** invullen in `/termos` en `/privacidade` (rechtsvorm, adres) + juridische check.
-4. **Apple App Store**: volg `APP_STORE.md` (Mac + Apple Developer-account $99/jaar nodig): `npx cap add ios` → Xcode → signing → archive → upload → listing (`store/metadata.md`) → submit.
-5. **Echte content**: eerste advertenties/profielen plaatsen (of makelaars uitnodigen — `outreach/`) en **echte foto's / hero-beeld** aanleveren. De live site oogt leeg tot er echt aanbod is (bewust — geen nepdata).
+1. **`service_role`-sleutel roteren** (stond meerdere keren in de chat; de app gebruikt 'm niet, dus roteren breekt niets).
+2. **Juridische `[…]`-placeholders** invullen in `/termos` en `/privacidade` (rechtsvorm, adres) + juridische check.
+3. **Apple App Store**: volg `APP_STORE.md` (Mac + Apple Developer-account $99/jaar nodig): `npx cap add ios` → Xcode → signing → archive → upload → listing (`store/metadata.md`) → submit.
+4. **Echte content**: eerste advertenties/profielen plaatsen (of makelaars uitnodigen — `outreach/`) en **echte foto's / hero-beeld** aanleveren. De live site oogt leeg tot er echt aanbod is (bewust — geen nepdata).
 
 ## 🔜 Optionele polish (geen fouten, jouw keuze)
 - Kleine tap-targets vergroten; contact-CTA's op mobiel hoger zetten; desktop-dropdowns toetsenbordvriendelijk; uploadvoortgang bij meerdere foto's; `slate-400`→`slate-500` info-teksten.
