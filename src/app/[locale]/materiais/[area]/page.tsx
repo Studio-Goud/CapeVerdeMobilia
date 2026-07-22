@@ -67,7 +67,9 @@ export default async function MaterialsLandingPage({ params }: { params: Params 
             <Card key={s.id}>
               <div className="flex items-start justify-between gap-2">
                 <h2 className="font-semibold text-slate-900">{s.name}</h2>
-                {s.seeded ? <SeededBadge locale={locale} /> : s.verified && <Pill tone="emerald">✓</Pill>}
+                {s.verified
+                  ? <Pill tone="emerald">✓ {tr({ pt: 'Verificado', en: 'Verified', nl: 'Geverifieerd' }, locale)}</Pill>
+                  : s.seeded ? <SeededBadge locale={locale} /> : null}
               </div>
               <p className="mt-1 text-sm text-slate-600">{tr(s.category, locale)}</p>
               <p className="text-xs text-slate-500">{s.island}</p>

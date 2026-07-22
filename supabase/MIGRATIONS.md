@@ -30,6 +30,7 @@ yet migrated, so the live site never breaks while you catch up.
 | 0022 | `migrations/0022_publications_seo.sql` | seed 5 sourced info articles (buying, NIF, taxes cITI/cIPI 2026, inheritance, condominium) — trilingual, FACT/ASSUMPTION-marked, for SEO. Run after 0011 | ✅ done |
 | 0023 | `migrations/0023_bomclima_verified_service_ad.sql` | Bomclima: operator-verify the seeded professional (`professionals.verified_level`) + publish a claimable service advert (`listings` gets nullable owner + provenance). Photos are site assets. Run **after** 0021 | ✅ done |
 | 0024 | `migrations/0024_listing_contact_phone.sql` | `listings.phone` → "Peça orçamento" WhatsApp/call button on service adverts; sets Bomclima's number. Run **after** 0023 | ⏳ **to run** |
+| 0025 | `migrations/0025_seed_3as.sql` | add 3 AS (electrical-materials importer/wholesaler, São Vicente) as a seeded + **verified**, claimable supplier — from its invoice (NIF 275341100) + www.3as.cv. Run **after** 0020 | ⏳ **to run** |
 
 ## Roles
 - Make yourself admin (trust/ops + info editor):
