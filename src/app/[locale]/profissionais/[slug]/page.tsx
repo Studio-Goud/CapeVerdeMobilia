@@ -11,6 +11,7 @@ import { ReviewForm } from '@/components/ReviewForm';
 import { ClaimBusiness } from '@/components/ClaimBusiness';
 import { JsonLd } from '@/components/JsonLd';
 import { professionalJsonLd } from '@/lib/jsonld';
+import { altLangs } from '@/lib/seo';
 
 const ABOUT: TL = { pt: 'Sobre', en: 'About', nl: 'Over' };
 const SERVICES: TL = { pt: 'Serviços', en: 'Services', nl: 'Diensten' };
@@ -88,7 +89,7 @@ export async function generateMetadata({
   if (!pro) return { title: 'Djarvista' };
   const title = `${pro.displayName} · Djarvista`;
   const description = tr(pro.headline, params.locale).slice(0, 180);
-  return { title, description, openGraph: { title, description } };
+  return { title, description, alternates: altLangs(params.locale, `/profissionais/${params.slug}`), openGraph: { title, description } };
 }
 
 export default async function ProfessionalDetailPage({

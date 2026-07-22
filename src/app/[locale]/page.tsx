@@ -1,7 +1,15 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { t, tr, type Locale, type UIKey } from '@/i18n';
 import { fetchListings, fetchProfessionals } from '@/lib/data';
 import { ListingGrid, SectionHead, Card, TrustBadge } from '@/components/ui';
+import { pageMeta } from '@/lib/seo';
+
+export function generateMetadata({ params }: { params: { locale: Locale } }): Metadata {
+  return pageMeta(params.locale, '',
+    { pt: 'Imóveis, serviços e informação oficial em Cabo Verde', en: 'Property, services and official information in Cabo Verde', nl: 'Vastgoed, diensten en overheidsinformatie in Kaapverdië' },
+    { pt: 'A porta digital para imóveis, terra, construção, profissionais e informação oficial em Cabo Verde — São Vicente e além. PT · EN · NL.', en: 'The digital gateway to property, land, building, professionals and official information in Cabo Verde — São Vicente and beyond. PT · EN · NL.', nl: 'De digitale toegangspoort tot vastgoed, grond, bouw, professionals en overheidsinformatie in Kaapverdië — São Vicente en verder. PT · EN · NL.' });
+}
 
 interface ModuleCard { icon: string; titleKey: UIKey; href: string }
 

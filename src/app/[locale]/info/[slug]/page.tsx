@@ -3,13 +3,14 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { t, tr, formatDate, type Locale } from '@/i18n';
 import { fetchPublicationBySlug, type InfoItem } from '@/lib/data';
+import { altLangs } from '@/lib/seo';
 
 export async function generateMetadata({ params }: { params: { locale: Locale; slug: string } }): Promise<Metadata> {
   const item = await fetchPublicationBySlug(params.slug);
   if (!item) return { title: 'Djarvista' };
   const title = tr(item.title, params.locale);
   const description = item.summary ? tr(item.summary, params.locale).slice(0, 180) : undefined;
-  return { title, description, openGraph: { title, description } };
+  return { title, description, alternates: altLangs(params.locale, `/info/${params.slug}`), openGraph: { title, description } };
 }
 import { PageTitle, Card, Pill } from '@/components/ui';
 import { ReportOutdated } from '@/components/ReportOutdated';

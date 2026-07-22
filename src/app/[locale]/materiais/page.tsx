@@ -1,7 +1,15 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { t, tr, whatsappLink, quoteMessage, type Locale, type TL } from '@/i18n';
 import { fetchSuppliers, type SupplierView } from '@/lib/data';
 import { PageTitle, Card, Pill, EmptyState, SeededBadge, SourceLine, QuoteContact } from '@/components/ui';
+import { pageMeta } from '@/lib/seo';
+
+export function generateMetadata({ params }: { params: { locale: Locale } }): Metadata {
+  return pageMeta(params.locale, '/materiais',
+    { pt: 'Materiais de construção e fornecedores em Cabo Verde', en: 'Building materials and suppliers in Cabo Verde', nl: 'Bouwmaterialen en leveranciers in Kaapverdië' },
+    { pt: 'Fornecedores de materiais de construção, ferragens e tintas em São Vicente e Cabo Verde. Peça orçamento diretamente.', en: 'Building-materials, hardware and paint suppliers in São Vicente and Cabo Verde. Request a quote directly.', nl: 'Leveranciers van bouwmaterialen, ijzerwaren en verf in São Vicente en Kaapverdië. Vraag direct een offerte aan.' });
+}
 import { ClaimBusiness } from '@/components/ClaimBusiness';
 
 const ISLANDS = ['', 'São Vicente', 'Santo Antão', 'Santiago', 'Sal', 'Boa Vista', 'São Nicolau', 'Fogo', 'Maio', 'Brava'];

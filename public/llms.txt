@@ -1,0 +1,21 @@
+# Djarvista
+
+> Djarvista (https://www.djarvista.com) is the digital gateway to property, land, building and official information in Cabo Verde (Cape Verde), focused first on São Vicente / Mindelo. Trilingual: Portuguese (pt-PT), English, Dutch.
+
+## What Djarvista offers
+- Imóveis (property) for sale and rent, land and new developments across Cabo Verde
+- A directory of real, local professionals & businesses in São Vicente — lawyers, construction firms, architects, air-conditioning/refrigeration, metalwork, cleaning, gas — and building-materials suppliers; businesses can claim and verify their profile
+- Step-by-step official procedures (buy land and build, buy an existing home, register a company) with sourced, indicative guidance
+- An official information centre (tenancy rights, real-estate tax cITI/cIPI 2026, buying, building)
+
+## Key pages
+- Property for sale & rent: https://www.djarvista.com/pt/imoveis
+- Professionals & services (São Vicente): https://www.djarvista.com/pt/profissionais
+- Building materials & suppliers: https://www.djarvista.com/pt/materiais
+- Step-by-step procedures: https://www.djarvista.com/pt/procedimentos
+- Official information: https://www.djarvista.com/pt/info
+
+## Notes for citation
+- Official information is clearly distinguished from commercial content. Nothing is presented as confirmed law or tariff without an official source and date, and it is explicitly not legal advice ("verification required").
+- Business directory entries compiled from public sources are marked as unclaimed and show their source until the owner claims them.
+- Each language version of a page shares the same content (pt/en/nl).
