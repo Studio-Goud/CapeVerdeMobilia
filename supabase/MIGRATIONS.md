@@ -25,6 +25,7 @@ yet migrated, so the live site never breaks while you catch up.
 | 0017 | `migrations/0017_boost_requests.sql` | boost/feature-listing requests (revenue loop) + RLS | ✅ done |
 | 0018 | `migrations/0018_featured_guard.sql` | **security**: only admins set is_featured; dedup pending boosts | ✅ done |
 | 0019 | `migrations/0019_claimable_profiles.sql` | claimable "phone-book" directory profiles (seeded from public sources, owner can claim; admin approves via `approve_claim`) | ⏳ **to run** |
+| 0020 | `migrations/0020_seed_sao_vicente.sql` | seed: 25 real São Vicente businesses (20 professionals + 5 suppliers), unclaimed + sourced. Sources in `SEED_0020_SOURCES.md`. Run **after** 0019 | ⏳ **to run** |
 
 ## Roles
 - Make yourself admin (trust/ops + info editor):
