@@ -21,7 +21,7 @@ Phone numbers are transcribed as published; owners can correct them on claiming.
 
 ---
 
-## Seeded — Professionals (20)
+## Seeded — Professionals (21 — incl. Bomclima via `0021`)
 
 ### Lawyers — all on the OACV in-force roll (06-07-2026)
 | Business | Phone | Source |
@@ -53,6 +53,7 @@ Phone numbers are transcribed as published; owners can correct them on claiming.
 | Business | Phone | Source |
 |---|---|---|
 | Soteclima, Lda (air-conditioning / HVAC) | +238 353 22 07 | Own site *(content dated — phone-check advised)* |
+| Bomclima, Lda (air-conditioning / refrigeration) | +238 987 27 43 | Own Facebook page (bomclima84) + local confirmation — added via `0021` |
 | SOSSIR, Lda (cleaning, since 1996) | +238 232 78 28 | Câmara + own site |
 | Boavista Limpeza (cleaning) | +238 231 76 77 | AfricaBizInfo + Cleaners10 |
 | Enacol, S.A. — gás (Mindelo) | +238 430 60 60 | Own site (gas home-delivery line) |

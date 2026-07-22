@@ -69,6 +69,7 @@ const UI = {
   'common.island': { pt: 'Ilha', en: 'Island', nl: 'Eiland' },
   'common.type': { pt: 'Tipo', en: 'Type', nl: 'Type' },
   'common.all': { pt: 'Todos', en: 'All', nl: 'Alle' },
+  'common.category': { pt: 'Categoria', en: 'Category', nl: 'Categorie' },
   'common.optional': { pt: 'opcional', en: 'optional', nl: 'optioneel' },
   'common.continue': { pt: 'Continuar', en: 'Continue', nl: 'Doorgaan' },
   'common.next': { pt: 'Seguinte', en: 'Next', nl: 'Volgende' },
