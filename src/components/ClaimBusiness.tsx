@@ -6,7 +6,7 @@ import { t, type Locale } from '@/i18n';
 import { useAuth } from './Auth';
 import { submitClaim, type ClaimProfileType } from '@/lib/browserData';
 
-/** "Is this your business? Claim it" — on seeded (unclaimed) directory profiles.
+/** "Is this your business? Claim it" - on seeded (unclaimed) directory profiles.
  *  Files a claim request that the trust & ops team reviews manually. */
 export function ClaimBusiness({ locale, profileType, profileId, compact = false }: {
   locale: Locale; profileType: ClaimProfileType; profileId: string; compact?: boolean;
@@ -29,7 +29,7 @@ export function ClaimBusiness({ locale, profileType, profileId, compact = false 
     return (
       <p className={compact ? 'text-xs text-slate-500' : 'text-sm text-slate-600'}>
         <Link href={`/${locale}/entrar`} className="font-semibold text-brand hover:underline">{t(locale, 'claim.cta')}</Link>
-        {' — '}{t(locale, 'claim.loginFirst')}
+        {' - '}{t(locale, 'claim.loginFirst')}
       </p>
     );
   }

@@ -9,7 +9,7 @@ export interface Project {
 }
 
 export const PROJECTS: Project[] = [
-  { id: 'pr1', name: { pt: 'Villa Monte Sossego — construção nova', en: 'Villa Monte Sossego — new build', nl: 'Villa Monte Sossego — nieuwbouw' },
+  { id: 'pr1', name: { pt: 'Villa Monte Sossego - construção nova', en: 'Villa Monte Sossego - new build', nl: 'Villa Monte Sossego - nieuwbouw' },
     island: 'São Vicente', status: 'IN_PROGRESS', progress: 45, budgetCve: 12500000, contractor: 'Construções Djar',
     milestones: [
       { label: { pt: 'Fundações', en: 'Foundations', nl: 'Fundering' }, done: true },
@@ -24,7 +24,7 @@ export const PROJECTS: Project[] = [
       { label: { pt: 'Licença', en: 'Permit', nl: 'Vergunning' }, done: false },
       { label: { pt: 'Obra', en: 'Works', nl: 'Uitvoering' }, done: false },
     ] },
-  { id: 'pr3', name: { pt: 'Moradia Santa Maria — piscina', en: 'Santa Maria house — pool', nl: 'Woning Santa Maria — zwembad' },
+  { id: 'pr3', name: { pt: 'Moradia Santa Maria - piscina', en: 'Santa Maria house - pool', nl: 'Woning Santa Maria - zwembad' },
     island: 'Sal', status: 'REVIEW', progress: 85, budgetCve: 2100000, contractor: 'Canalizações Oceano',
     milestones: [
       { label: { pt: 'Escavação', en: 'Excavation', nl: 'Uitgraven' }, done: true },
@@ -40,11 +40,11 @@ export interface Tender {
 }
 
 export const TENDERS: Tender[] = [
-  { id: 't1', title: { pt: 'Instalação elétrica — moradia T3', en: 'Electrical installation — 3-bed house', nl: 'Elektra-installatie — woning 3 slk' },
+  { id: 't1', title: { pt: 'Instalação elétrica - moradia T3', en: 'Electrical installation - 3-bed house', nl: 'Elektra-installatie - woning 3 slk' },
     island: 'São Vicente', kind: 'PRIVATE', deadline: '2026-08-05', budgetCve: 450000, bids: 4 },
   { id: 't2', title: { pt: 'Reabilitação de espaço público (demo)', en: 'Public space refurbishment (demo)', nl: 'Renovatie openbare ruimte (demo)' },
     island: 'São Vicente', kind: 'PUBLIC', deadline: '2026-08-20', budgetCve: 8500000, bids: 2 },
-  { id: 't3', title: { pt: 'Projeto de arquitetura — villa vista mar', en: 'Architecture project — sea-view villa', nl: 'Architectuurproject — villa met zeezicht' },
+  { id: 't3', title: { pt: 'Projeto de arquitetura - villa vista mar', en: 'Architecture project - sea-view villa', nl: 'Architectuurproject - villa met zeezicht' },
     island: 'São Vicente', kind: 'PRIVATE', deadline: '2026-07-30', budgetCve: null, bids: 6 },
   { id: 't4', title: { pt: 'Fornecimento de cimento e agregados', en: 'Supply of cement and aggregates', nl: 'Levering cement en toeslagmaterialen' },
     island: 'Sal', kind: 'PRIVATE', deadline: '2026-08-12', budgetCve: 1200000, bids: 3 },

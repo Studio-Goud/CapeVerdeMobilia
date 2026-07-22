@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { t, tr, type Locale } from '@/i18n';
 import { PageTitle, Card, Pill, Stat, SectionHead } from '@/components/ui';
 
-/** Inline trilingual string literal (PT / EN / NL) — page-specific investor copy. */
+/** Inline trilingual string literal (PT / EN / NL) - page-specific investor copy. */
 type TL = { pt: string; en: string; nl: string };
 /** A titled content block rendered as a Card. */
 interface Block { h: TL; body: TL }
@@ -19,19 +19,19 @@ const COPY = {
     nl: 'Investeerdersoverzicht · concept',
   },
   heroTitle: {
-    pt: 'Djarvista — infraestrutura digital independente para Cabo Verde',
-    en: 'Djarvista — independent digital infrastructure for Cabo Verde',
-    nl: 'Djarvista — onafhankelijke digitale infrastructuur voor Kaapverdië',
+    pt: 'Djarvista - infraestrutura digital independente para Cabo Verde',
+    en: 'Djarvista - independent digital infrastructure for Cabo Verde',
+    nl: 'Djarvista - onafhankelijke digitale infrastructuur voor Kaapverdië',
   },
   positioning: {
-    pt: 'Uma infraestrutura digital independente que liga cidadãos, empreendedores, investidores, profissionais e entidades públicas — a começar por São Vicente.',
-    en: 'Independent digital infrastructure connecting citizens, entrepreneurs, investors, professionals and public bodies — starting on São Vicente.',
-    nl: 'Onafhankelijke digitale infrastructuur die burgers, ondernemers, investeerders, professionals en overheidsinstanties verbindt — te beginnen op São Vicente.',
+    pt: 'Uma infraestrutura digital independente que liga cidadãos, empreendedores, investidores, profissionais e entidades públicas - a começar por São Vicente.',
+    en: 'Independent digital infrastructure connecting citizens, entrepreneurs, investors, professionals and public bodies - starting on São Vicente.',
+    nl: 'Onafhankelijke digitale infrastructuur die burgers, ondernemers, investeerders, professionals en overheidsinstanties verbindt - te beginnen op São Vicente.',
   },
   disclaimer: {
-    pt: 'Aviso: todos os números, mercados e enquadramentos legais nesta página são indicativos e representam pressupostos a validar. Este é um conceito em fase inicial — nada aqui constitui facto confirmado nem aconselhamento de investimento.',
-    en: 'Notice: all figures, markets and legal references on this page are indicative and represent assumptions to be validated. This is an early-stage concept — nothing here is a confirmed fact or investment advice.',
-    nl: 'Let op: alle cijfers, markten en juridische verwijzingen op deze pagina zijn indicatief en betreffen aannames die nog gevalideerd moeten worden. Dit is een concept in een vroege fase — niets hier is een bevestigd feit of beleggingsadvies.',
+    pt: 'Aviso: todos os números, mercados e enquadramentos legais nesta página são indicativos e representam pressupostos a validar. Este é um conceito em fase inicial - nada aqui constitui facto confirmado nem aconselhamento de investimento.',
+    en: 'Notice: all figures, markets and legal references on this page are indicative and represent assumptions to be validated. This is an early-stage concept - nothing here is a confirmed fact or investment advice.',
+    nl: 'Let op: alle cijfers, markten en juridische verwijzingen op deze pagina zijn indicatief en betreffen aannames die nog gevalideerd moeten worden. Dit is een concept in een vroege fase - niets hier is een bevestigd feit of beleggingsadvies.',
   },
   assumption: { pt: 'pressuposto', en: 'assumption', nl: 'aanname' },
   toValidate: { pt: 'a validar', en: 'to validate', nl: 'te valideren' },
@@ -44,9 +44,9 @@ const PROBLEM: Block = {
     nl: '1. Het probleem',
   },
   body: {
-    pt: 'Em Cabo Verde, a informação sobre terra, imóveis, licenças de construção e profissionais está fragmentada e é difícil de verificar. Documentos, procedimentos e contactos dispersam-se por fontes informais, o que gera desconfiança, atrasos e risco para quem compra, constrói ou investe — sobretudo para a diáspora e investidores externos.',
-    en: 'In Cabo Verde, information on land, property, building permits and professionals is fragmented and hard to verify. Documents, procedures and contacts are scattered across informal sources, creating mistrust, delays and risk for anyone buying, building or investing — especially the diaspora and external investors.',
-    nl: 'In Kaapverdië is informatie over grond, vastgoed, bouwvergunningen en professionals versnipperd en moeilijk te verifiëren. Documenten, procedures en contacten liggen verspreid over informele bronnen, wat wantrouwen, vertraging en risico oplevert voor wie koopt, bouwt of investeert — vooral voor de diaspora en buitenlandse investeerders.',
+    pt: 'Em Cabo Verde, a informação sobre terra, imóveis, licenças de construção e profissionais está fragmentada e é difícil de verificar. Documentos, procedimentos e contactos dispersam-se por fontes informais, o que gera desconfiança, atrasos e risco para quem compra, constrói ou investe - sobretudo para a diáspora e investidores externos.',
+    en: 'In Cabo Verde, information on land, property, building permits and professionals is fragmented and hard to verify. Documents, procedures and contacts are scattered across informal sources, creating mistrust, delays and risk for anyone buying, building or investing - especially the diaspora and external investors.',
+    nl: 'In Kaapverdië is informatie over grond, vastgoed, bouwvergunningen en professionals versnipperd en moeilijk te verifiëren. Documenten, procedures en contacten liggen verspreid over informele bronnen, wat wantrouwen, vertraging en risico oplevert voor wie koopt, bouwt of investeert - vooral voor de diaspora en buitenlandse investeerders.',
   },
 };
 
@@ -57,9 +57,9 @@ const SOLUTION: Block = {
     nl: '2. De oplossing',
   },
   body: {
-    pt: 'Uma plataforma digital única, independente e trilingue (PT/EN/NL) que reúne imóveis, terrenos, construção, profissionais e informação oficial num só ecossistema — com verificação de confiança no centro. O objetivo é tornar a informação encontrável, verificável e acionável.',
-    en: 'A single, independent, trilingual (PT/EN/NL) platform bringing property, land, construction, professionals and official information into one ecosystem — with trust verification at its core. The goal is to make information findable, verifiable and actionable.',
-    nl: 'Eén onafhankelijk, drietalig (PT/EN/NL) platform dat vastgoed, grond, bouw, professionals en officiële informatie samenbrengt in één ecosysteem — met vertrouwensverificatie als kern. Het doel: informatie vindbaar, verifieerbaar en bruikbaar maken.',
+    pt: 'Uma plataforma digital única, independente e trilingue (PT/EN/NL) que reúne imóveis, terrenos, construção, profissionais e informação oficial num só ecossistema - com verificação de confiança no centro. O objetivo é tornar a informação encontrável, verificável e acionável.',
+    en: 'A single, independent, trilingual (PT/EN/NL) platform bringing property, land, construction, professionals and official information into one ecosystem - with trust verification at its core. The goal is to make information findable, verifiable and actionable.',
+    nl: 'Eén onafhankelijk, drietalig (PT/EN/NL) platform dat vastgoed, grond, bouw, professionals en officiële informatie samenbrengt in één ecosysteem - met vertrouwensverificatie als kern. Het doel: informatie vindbaar, verifieerbaar en bruikbaar maken.',
   },
 };
 
@@ -108,7 +108,7 @@ const VALUE_LEVELS: Block[] = [
 
 const MARKET_PHASES: Block[] = [
   {
-    h: { pt: 'Fase 1 — Piloto São Vicente', en: 'Phase 1 — São Vicente pilot', nl: 'Fase 1 — Pilot São Vicente' },
+    h: { pt: 'Fase 1 - Piloto São Vicente', en: 'Phase 1 - São Vicente pilot', nl: 'Fase 1 - Pilot São Vicente' },
     body: {
       pt: 'Validar o modelo numa ilha, com foco em Mindelo, onde o mercado e a comunidade são concentrados.',
       en: 'Validate the model on one island, focused on Mindelo, where the market and community are concentrated.',
@@ -116,7 +116,7 @@ const MARKET_PHASES: Block[] = [
     },
   },
   {
-    h: { pt: 'Fase 2 — Outras ilhas', en: 'Phase 2 — Other islands', nl: 'Fase 2 — Andere eilanden' },
+    h: { pt: 'Fase 2 - Outras ilhas', en: 'Phase 2 - Other islands', nl: 'Fase 2 - Andere eilanden' },
     body: {
       pt: 'Expandir para Santiago, Sal e Boa Vista, reaproveitando processos e verificação.',
       en: 'Expand to Santiago, Sal and Boa Vista, reusing processes and verification.',
@@ -124,7 +124,7 @@ const MARKET_PHASES: Block[] = [
     },
   },
   {
-    h: { pt: 'Fase 3 — Nacional', en: 'Phase 3 — National', nl: 'Fase 3 — Nationaal' },
+    h: { pt: 'Fase 3 - Nacional', en: 'Phase 3 - National', nl: 'Fase 3 - Nationaal' },
     body: {
       pt: 'Cobertura nacional e parcerias mais amplas com entidades e associações profissionais.',
       en: 'National coverage and broader partnerships with public bodies and professional associations.',
@@ -132,7 +132,7 @@ const MARKET_PHASES: Block[] = [
     },
   },
   {
-    h: { pt: 'Fase 4 — Estados-ilha internacionais', en: 'Phase 4 — International island states', nl: 'Fase 4 — Internationale eilandstaten' },
+    h: { pt: 'Fase 4 - Estados-ilha internacionais', en: 'Phase 4 - International island states', nl: 'Fase 4 - Internationale eilandstaten' },
     body: {
       pt: 'Levar o modelo a outros estados-ilha com desafios semelhantes de informação e confiança.',
       en: 'Take the model to other island states facing similar information and trust challenges.',
@@ -200,9 +200,9 @@ const TRACTION: Block[] = [
   {
     h: { pt: 'Plataforma trilingue ao vivo', en: 'Live trilingual platform', nl: 'Live drietalig platform' },
     body: {
-      pt: 'A plataforma está no ar em PT/EN/NL, com backend real: contas, anúncios, arrendamento, verificação e informação oficial — a começar por São Vicente.',
-      en: 'The platform is live in PT/EN/NL on a real backend: accounts, listings, renting, verification and official information — starting on São Vicente.',
-      nl: 'Het platform is live in PT/EN/NL op een echte backend: accounts, advertenties, verhuur, verificatie en officiële informatie — te beginnen op São Vicente.',
+      pt: 'A plataforma está no ar em PT/EN/NL, com backend real: contas, anúncios, arrendamento, verificação e informação oficial - a começar por São Vicente.',
+      en: 'The platform is live in PT/EN/NL on a real backend: accounts, listings, renting, verification and official information - starting on São Vicente.',
+      nl: 'Het platform is live in PT/EN/NL op een echte backend: accounts, advertenties, verhuur, verificatie en officiële informatie - te beginnen op São Vicente.',
     },
   },
   {
@@ -215,25 +215,21 @@ const TRACTION: Block[] = [
   },
 ];
 
-const STATS: { label: TL; value: string; hint: TL }[] = [
+// Real, verifiable status only - no invented pilot/projection numbers.
+const STATS: { label: TL; value: TL; hint: TL }[] = [
   {
-    label: { pt: 'Profissionais no piloto', en: 'Pilot professionals', nl: 'Professionals in pilot' },
-    value: '50',
-    hint: COPY.toValidate,
+    label: { pt: 'Plataforma', en: 'Platform', nl: 'Platform' },
+    value: { pt: 'Ao vivo', en: 'Live', nl: 'Live' },
+    hint: { pt: 'com backend real', en: 'on a real backend', nl: 'met echte backend' },
   },
   {
-    label: { pt: 'Anúncios verificados (mês 6)', en: 'Verified listings (month 6)', nl: 'Geverifieerde advertenties (maand 6)' },
-    value: '150',
-    hint: COPY.toValidate,
+    label: { pt: 'Ilha piloto', en: 'Pilot island', nl: 'Pilot-eiland' },
+    value: { pt: 'São Vicente', en: 'São Vicente', nl: 'São Vicente' },
+    hint: { pt: 'foco em Mindelo', en: 'focused on Mindelo', nl: 'gericht op Mindelo' },
   },
   {
-    label: { pt: 'Ilhas na fase inicial', en: 'Islands in initial phase', nl: 'Eilanden in beginfase' },
-    value: '1',
-    hint: COPY.assumption,
-  },
-  {
-    label: { pt: 'Idiomas suportados', en: 'Supported languages', nl: 'Ondersteunde talen' },
-    value: '3',
+    label: { pt: 'Idiomas', en: 'Languages', nl: 'Talen' },
+    value: { pt: '3', en: '3', nl: '3' },
     hint: { pt: 'PT · EN · NL', en: 'PT · EN · NL', nl: 'PT · EN · NL' },
   },
 ];
@@ -248,9 +244,9 @@ const ASK: Block = {
 };
 
 const CLOSING: TL = {
-  pt: 'Documentação de estratégia completa — deck para investidores, análise de mercado e modelo financeiro — disponível a pedido.',
-  en: 'A complete set of strategy documents — investor deck, market analysis and financial model — available on request.',
-  nl: 'Een volledige set strategiedocumenten — investeerdersdeck, marktanalyse en financieel model — beschikbaar op aanvraag.',
+  pt: 'Documentação de estratégia completa - deck para investidores, análise de mercado e modelo financeiro - disponível a pedido.',
+  en: 'A complete set of strategy documents - investor deck, market analysis and financial model - available on request.',
+  nl: 'Een volledige set strategiedocumenten - investeerdersdeck, marktanalyse en financieel model - beschikbaar op aanvraag.',
 };
 
 export default function InvestirPage({ params }: { params: { locale: Locale } }): JSX.Element {
@@ -279,17 +275,16 @@ export default function InvestirPage({ params }: { params: { locale: Locale } })
         {tr(COPY.disclaimer, locale)}
       </div>
 
-      {/* Indicative metrics */}
+      {/* Current status - real, verifiable facts only */}
       <section>
         <div className="mb-3 flex items-center gap-2">
           <h2 className="text-xl font-semibold text-slate-900">
-            {tr({ pt: 'Métricas indicativas', en: 'Indicative metrics', nl: 'Indicatieve cijfers' }, locale)}
+            {tr({ pt: 'Estado atual', en: 'Current status', nl: 'Huidige status' }, locale)}
           </h2>
-          <Pill tone="amber">{tr(COPY.assumption, locale)}</Pill>
         </div>
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <div className="grid gap-3 sm:grid-cols-3">
           {STATS.map((s) => (
-            <Stat key={s.value + tr(s.label, locale)} label={tr(s.label, locale)} value={s.value} hint={tr(s.hint, locale)} />
+            <Stat key={tr(s.label, locale)} label={tr(s.label, locale)} value={tr(s.value, locale)} hint={tr(s.hint, locale)} />
           ))}
         </div>
       </section>
@@ -393,9 +388,9 @@ export default function InvestirPage({ params }: { params: { locale: Locale } })
             <p className="text-xs uppercase tracking-wide text-white/70">
               {tr({ pt: 'Ronda alvo', en: 'Target round', nl: 'Doelronde' }, locale)}
             </p>
-            <p className="mt-1 text-3xl font-bold">€ ———</p>
+            <p className="mt-1 text-3xl font-bold">€ ---</p>
             <p className="mt-1 text-sm text-white/80">
-              {tr({ pt: '(indicativo — a definir)', en: '(indicative — to be defined)', nl: '(indicatief — nader te bepalen)' }, locale)}
+              {tr({ pt: '(indicativo - a definir)', en: '(indicative - to be defined)', nl: '(indicatief - nader te bepalen)' }, locale)}
             </p>
           </div>
           <div className="flex items-center">

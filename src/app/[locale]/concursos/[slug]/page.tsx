@@ -55,7 +55,7 @@ export default async function TenderDetailPage({ params }: { params: { locale: L
             <dl className="grid gap-3 sm:grid-cols-3">
               <div>
                 <dt className="text-xs font-medium uppercase tracking-wide text-slate-400">{tr(ISLAND, locale)}</dt>
-                <dd className="mt-0.5 text-sm font-medium text-slate-900">{tender.island || '—'}</dd>
+                <dd className="mt-0.5 text-sm font-medium text-slate-900">{tender.island || '-'}</dd>
               </div>
               <div>
                 <dt className="text-xs font-medium uppercase tracking-wide text-slate-400">{t(locale, 'tend.deadline')}</dt>
@@ -83,7 +83,7 @@ export default async function TenderDetailPage({ params }: { params: { locale: L
               <BidForm locale={locale} tenderId={tender.id} />
             ) : (
               <p className="rounded-lg bg-slate-50 px-3 py-2 text-sm font-medium text-slate-600">
-                {tr({ pt: 'Este concurso está fechado — já não aceita propostas.', en: 'This tender is closed — no longer accepting bids.', nl: 'Deze aanbesteding is gesloten — geen inschrijvingen meer mogelijk.' }, locale)}
+                {tr({ pt: 'Este concurso está fechado - já não aceita propostas.', en: 'This tender is closed - no longer accepting bids.', nl: 'Deze aanbesteding is gesloten - geen inschrijvingen meer mogelijk.' }, locale)}
               </p>
             )}
           </Card>

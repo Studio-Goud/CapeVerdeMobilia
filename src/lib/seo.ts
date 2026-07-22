@@ -4,7 +4,7 @@ import { tr, type Locale, type TL } from '@/i18n';
 const BASE = 'https://www.djarvista.com';
 
 /** Correct per-page canonical + hreflang alternates. `path` is the sub-path
- *  WITHOUT the locale prefix — '' for the locale home, '/imoveis', '/imoveis/x'. */
+ *  WITHOUT the locale prefix - '' for the locale home, '/imoveis', '/imoveis/x'. */
 export function altLangs(locale: Locale, path: string): Metadata['alternates'] {
   return {
     canonical: `${BASE}/${locale}${path}`,
@@ -38,7 +38,7 @@ const PAGES: Record<string, { title: TL; description: TL }> = {
   },
   '/contrato': {
     title: { pt: 'Gerador de contrato de arrendamento (Cabo Verde)', en: 'Rental contract generator (Cabo Verde)', nl: 'Huurcontract-generator (Kaapverdië)' },
-    description: { pt: 'Gere um contrato de arrendamento pro-forma para Cabo Verde, com ligações aos artigos da lei. Self-service, indicativo — não é aconselhamento jurídico.', en: 'Generate a pro-forma tenancy contract for Cabo Verde, with links to the law. Self-service, indicative — not legal advice.', nl: 'Genereer een pro-forma huurcontract voor Kaapverdië, met verwijzingen naar de wet. Self-service, indicatief — geen juridisch advies.' },
+    description: { pt: 'Gere um contrato de arrendamento pro-forma para Cabo Verde, com ligações aos artigos da lei. Self-service, indicativo - não é aconselhamento jurídico.', en: 'Generate a pro-forma tenancy contract for Cabo Verde, with links to the law. Self-service, indicative - not legal advice.', nl: 'Genereer een pro-forma huurcontract voor Kaapverdië, met verwijzingen naar de wet. Self-service, indicatief - geen juridisch advies.' },
   },
   '/assistente': {
     title: { pt: 'Assistente de construção em Cabo Verde', en: 'Building assistant for Cabo Verde', nl: 'Bouw-assistent voor Kaapverdië' },
@@ -58,10 +58,10 @@ const PAGES: Record<string, { title: TL; description: TL }> = {
   },
   '/investir': {
     title: { pt: 'Investir em imóveis em Cabo Verde', en: 'Investing in property in Cabo Verde', nl: 'Investeren in vastgoed in Kaapverdië' },
-    description: { pt: 'Investir em imóveis em Cabo Verde e São Vicente: tipos, custos, impostos (cITI/cIPI) e passos, para a diáspora e investidores. Guia indicativo.', en: 'Investing in property in Cabo Verde and São Vicente: types, costs, taxes (cITI/cIPI) and steps — for the diaspora and investors. Indicative.', nl: 'Investeren in vastgoed in Kaapverdië en São Vicente: soorten, kosten, belasting (cITI/cIPI) en stappen — voor de diaspora en investeerders. Indicatief.' },
+    description: { pt: 'Investir em imóveis em Cabo Verde e São Vicente: tipos, custos, impostos (cITI/cIPI) e passos, para a diáspora e investidores. Guia indicativo.', en: 'Investing in property in Cabo Verde and São Vicente: types, costs, taxes (cITI/cIPI) and steps - for the diaspora and investors. Indicative.', nl: 'Investeren in vastgoed in Kaapverdië en São Vicente: soorten, kosten, belasting (cITI/cIPI) en stappen - voor de diaspora en investeerders. Indicatief.' },
   },
   '/precos': {
-    title: { pt: 'Preços e planos — Djarvista', en: 'Pricing and plans — Djarvista', nl: 'Prijzen en abonnementen — Djarvista' },
+    title: { pt: 'Preços e planos - Djarvista', en: 'Pricing and plans - Djarvista', nl: 'Prijzen en abonnementen - Djarvista' },
     description: { pt: 'Preços da Djarvista: base gratuita e planos justos para anunciar imóveis e serviços em Cabo Verde. Sem custos escondidos.', en: 'Djarvista pricing: a free base and fair plans to list property and services in Cabo Verde. No hidden costs.', nl: 'Djarvista-prijzen: gratis basis en eerlijke abonnementen om vastgoed en diensten in Kaapverdië te adverteren. Geen verborgen kosten.' },
   },
   '/verificacao': {

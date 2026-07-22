@@ -23,7 +23,7 @@ import {
 
 type Tab = 'verifications' | 'listings' | 'boosts' | 'claims';
 
-// Verification level accepted by verifLabel — derived, so we avoid `any` and an extra import.
+// Verification level accepted by verifLabel - derived, so we avoid `any` and an extra import.
 type VerifLevel = Parameters<typeof verifLabel>[1];
 
 // --- Inline copy (PT / EN / NL) ---------------------------------------------
@@ -58,7 +58,7 @@ const L = {
   tabListings: { pt: 'Anúncios', en: 'Listings', nl: 'Advertenties' },
   tabBoosts: { pt: 'Destaques', en: 'Boosts', nl: 'Uitlichtingen' },
   noBoosts: { pt: 'Sem pedidos de destaque pendentes.', en: 'No pending boost requests.', nl: 'Geen openstaande uitlicht-aanvragen.' },
-  boostHint: { pt: 'Aprovar coloca o anúncio em destaque (pagamento tratado à parte — ver PAYMENTS.md).', en: 'Approving features the listing (payment handled separately — see PAYMENTS.md).', nl: 'Goedkeuren licht de advertentie uit (betaling apart — zie PAYMENTS.md).' },
+  boostHint: { pt: 'Aprovar coloca o anúncio em destaque (pagamento tratado à parte - ver PAYMENTS.md).', en: 'Approving features the listing (payment handled separately - see PAYMENTS.md).', nl: 'Goedkeuren licht de advertentie uit (betaling apart - zie PAYMENTS.md).' },
   tabClaims: { pt: 'Reclamações', en: 'Claims', nl: 'Claims' },
   noClaims: { pt: 'Sem pedidos de reclamação pendentes.', en: 'No pending claim requests.', nl: 'Geen openstaande claimverzoeken.' },
   claimHint: { pt: 'Verifique manualmente (ligue para o número do negócio) antes de aprovar. Aprovar atribui o perfil ao utilizador e encaminha os contactos guardados.', en: 'Verify manually (call the business number) before approving. Approving assigns the profile to the user and forwards stored leads.', nl: 'Controleer handmatig (bel het nummer van het bedrijf) vóór goedkeuring. Goedkeuren wijst het profiel toe aan de gebruiker en stuurt bewaarde leads door.' },
@@ -85,7 +85,7 @@ const L = {
   confirmDelete: { pt: 'Eliminar este anúncio?', en: 'Delete this listing?', nl: 'Deze advertentie verwijderen?' },
   statusPublished: { pt: 'Publicado', en: 'Published', nl: 'Gepubliceerd' },
   statusDraft: { pt: 'Rascunho', en: 'Draft', nl: 'Concept' },
-  dash: { pt: '—', en: '—', nl: '—' },
+  dash: { pt: '-', en: '-', nl: '-' },
 } satisfies Record<string, TL>;
 
 // --- Small button styles -----------------------------------------------------

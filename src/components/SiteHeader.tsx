@@ -106,7 +106,7 @@ export function SiteHeader({ locale }: { locale: Locale }): JSX.Element {
         </nav>
 
         <div className="flex items-center gap-2">
-          {/* Language switch is always visible — it's the platform's core trilingual promise. */}
+          {/* Language switch is always visible - it's the platform's core trilingual promise. */}
           <LanguageSwitcher current={locale} />
           <div className="hidden md:block"><AuthArea locale={locale} /></div>
           <button

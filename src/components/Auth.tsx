@@ -37,7 +37,7 @@ function mapUser(u: User | null): DemoUser | null {
 /**
  * Resolve the user with the DB as the source of truth for `role`. The admin
  * console and info editor gate on `role === 'admin'`, and admin is granted by
- * setting `profiles.role` (never in user_metadata) — so trusting metadata alone
+ * setting `profiles.role` (never in user_metadata) - so trusting metadata alone
  * would leave the console unreachable. We overlay the DB role on the metadata map.
  */
 async function resolveUser(

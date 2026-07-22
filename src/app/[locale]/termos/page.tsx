@@ -4,14 +4,14 @@ import { PageTitle, Card } from '@/components/ui';
 
 // Termos de Utilização / Terms of Service / Gebruiksvoorwaarden.
 // Fully trilingual (pt/en/nl) via inline TL objects rendered with tr(obj, locale).
-// CONCEPT document — pending legal review. Portuguese is primary.
+// CONCEPT document - pending legal review. Portuguese is primary.
 
 const TITLE: TL = { pt: 'Termos de Utilização', en: 'Terms of Service', nl: 'Gebruiksvoorwaarden' };
 
 const BANNER: TL = {
-  pt: 'Rascunho — verificação jurídica necessária',
-  en: 'Draft — pending legal review',
-  nl: 'CONCEPT — juridische verificatie vereist',
+  pt: 'Rascunho - verificação jurídica necessária',
+  en: 'Draft - pending legal review',
+  nl: 'CONCEPT - juridische verificatie vereist',
 };
 
 const INTRO: TL = {
@@ -44,17 +44,17 @@ const SECTIONS: Section[] = [
       {
         kind: 'p',
         text: {
-          pt: 'A plataforma é operada por [Djarvista — forma jurídica/registo a preencher], com sede em [morada a preencher]. Contacto: info@djarvista.com.',
-          en: 'The platform is operated by [Djarvista — legal form/registration to be completed], with registered office at [address to be completed]. Contact: info@djarvista.com.',
-          nl: 'Het platform wordt geëxploiteerd door [Djarvista — rechtsvorm/registratie in te vullen], gevestigd te [adres in te vullen]. Contact: info@djarvista.com.',
+          pt: 'A plataforma é operada por [Djarvista - forma jurídica/registo a preencher], com sede em [morada a preencher]. Contacto: info@djarvista.com.',
+          en: 'The platform is operated by [Djarvista - legal form/registration to be completed], with registered office at [address to be completed]. Contact: info@djarvista.com.',
+          nl: 'Het platform wordt geëxploiteerd door [Djarvista - rechtsvorm/registratie in te vullen], gevestigd te [adres in te vullen]. Contact: info@djarvista.com.',
         },
       },
     ],
   },
   {
     heading: {
-      pt: '2. O que a Djarvista é — e o que NÃO é',
-      en: '2. What the service is — and what it is NOT',
+      pt: '2. O que a Djarvista é - e o que NÃO é',
+      en: '2. What the service is - and what it is NOT',
       nl: '2. Wat de dienst wél en NIET is',
     },
     blocks: [
@@ -262,9 +262,9 @@ const SECTIONS: Section[] = [
       {
         kind: 'p',
         text: {
-          pt: 'Estes termos regem-se pela lei de Cabo Verde (a confirmar). Para quaisquer questões relacionadas com estes termos ou com a plataforma, contacte info@djarvista.com. Entidade responsável: [Djarvista — forma jurídica/registo a preencher], [morada a preencher].',
-          en: 'These terms are governed by the law of Cabo Verde (to confirm). For any questions regarding these terms or the platform, contact info@djarvista.com. Responsible entity: [Djarvista — legal form/registration to be completed], [address to be completed].',
-          nl: 'Deze voorwaarden worden beheerst door het recht van Kaapverdië (te bevestigen). Voor vragen over deze voorwaarden of het platform kunt u contact opnemen via info@djarvista.com. Verantwoordelijke entiteit: [Djarvista — rechtsvorm/registratie in te vullen], [adres in te vullen].',
+          pt: 'Estes termos regem-se pela lei de Cabo Verde (a confirmar). Para quaisquer questões relacionadas com estes termos ou com a plataforma, contacte info@djarvista.com. Entidade responsável: [Djarvista - forma jurídica/registo a preencher], [morada a preencher].',
+          en: 'These terms are governed by the law of Cabo Verde (to confirm). For any questions regarding these terms or the platform, contact info@djarvista.com. Responsible entity: [Djarvista - legal form/registration to be completed], [address to be completed].',
+          nl: 'Deze voorwaarden worden beheerst door het recht van Kaapverdië (te bevestigen). Voor vragen over deze voorwaarden of het platform kunt u contact opnemen via info@djarvista.com. Verantwoordelijke entiteit: [Djarvista - rechtsvorm/registratie in te vullen], [adres in te vullen].',
         },
       },
     ],

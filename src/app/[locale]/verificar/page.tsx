@@ -10,7 +10,7 @@ import { TrustBadge } from '@/components/ui';
 
 const TXT = {
   title: { pt: 'Verificar a minha identidade', en: 'Verify my identity', nl: 'Mijn identiteit verifiëren' } as TL,
-  intro: { pt: 'Envie um documento de identificação para aumentar o seu nível de confiança. A verificação é feita por pessoas da nossa equipa — nunca apenas por IA.', en: 'Upload an identity document to raise your trust level. Verification is done by our team — never by AI alone.', nl: 'Upload een identiteitsbewijs om je vertrouwensniveau te verhogen. Verificatie wordt door ons team gedaan — nooit alleen door AI.' } as TL,
+  intro: { pt: 'Envie um documento de identificação para aumentar o seu nível de confiança. A verificação é feita por pessoas da nossa equipa - nunca apenas por IA.', en: 'Upload an identity document to raise your trust level. Verification is done by our team - never by AI alone.', nl: 'Upload een identiteitsbewijs om je vertrouwensniveau te verhogen. Verificatie wordt door ons team gedaan - nooit alleen door AI.' } as TL,
   privacy: { pt: 'Os seus documentos são guardados de forma privada e cifrada, acessíveis apenas a si e à equipa de verificação, usados só para este fim, e podem ser apagados a seu pedido.', en: 'Your documents are stored privately and encrypted, accessible only to you and the verification team, used only for this purpose, and can be deleted on request.', nl: 'Je documenten worden privé en versleuteld opgeslagen, alleen toegankelijk voor jou en het verificatieteam, uitsluitend hiervoor gebruikt, en op verzoek verwijderbaar.' } as TL,
   docType: { pt: 'Tipo de documento', en: 'Document type', nl: 'Type document' } as TL,
   docFile: { pt: 'Documento (foto ou PDF)', en: 'Document (photo or PDF)', nl: 'Document (foto of PDF)' } as TL,

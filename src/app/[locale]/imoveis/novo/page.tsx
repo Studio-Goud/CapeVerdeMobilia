@@ -23,7 +23,7 @@ const TXT = {
   price: { pt: 'Preço (CVE)', en: 'Price (CVE)', nl: 'Prijs (CVE)' } as TL,
   onRequest: { pt: 'Preço sob consulta', en: 'Price on request', nl: 'Prijs op aanvraag' } as TL,
   photos: { pt: 'Fotografias', en: 'Photos', nl: 'Foto’s' } as TL,
-  photosHint: { pt: 'Adicione várias fotos — a primeira é a foto de capa. Diretamente do telemóvel ou galeria.', en: 'Add several photos — the first is the cover photo. Straight from your phone or gallery.', nl: 'Voeg meerdere foto’s toe — de eerste is de omslagfoto. Direct vanaf je telefoon of galerij.' } as TL,
+  photosHint: { pt: 'Adicione várias fotos - a primeira é a foto de capa. Diretamente do telemóvel ou galeria.', en: 'Add several photos - the first is the cover photo. Straight from your phone or gallery.', nl: 'Voeg meerdere foto’s toe - de eerste is de omslagfoto. Direct vanaf je telefoon of galerij.' } as TL,
   uploading: { pt: 'A carregar fotos…', en: 'Uploading photos…', nl: 'Foto’s uploaden…' } as TL,
   publish: { pt: 'Publicar imediatamente', en: 'Publish immediately', nl: 'Direct publiceren' } as TL,
   submit: { pt: 'Guardar anúncio', en: 'Save listing', nl: 'Advertentie opslaan' } as TL,

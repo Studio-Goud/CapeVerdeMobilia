@@ -22,7 +22,7 @@ export function getServerSupabase(): SupabaseClient | null {
         try {
           toSet.forEach(({ name, value, options }) => cookieStore.set(name, value, options));
         } catch {
-          /* called from a Server Component — ignore, middleware handles refresh */
+          /* called from a Server Component - ignore, middleware handles refresh */
         }
       },
     },

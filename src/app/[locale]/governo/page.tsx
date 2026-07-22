@@ -10,9 +10,9 @@ import { PageTitle, Card, Pill, OfficialTag, SectionHead } from '@/components/ui
 // --- Page-specific content (trilingual PT / EN / NL) ---------------------
 
 const HERO_TITLE: TL = {
-  pt: 'A Djarvista não substitui o Estado — torna a informação oficial mais fácil de encontrar, compreender e consultar.',
-  en: 'Djarvista does not replace the government — it makes official information easier to find, understand and access.',
-  nl: 'Djarvista vervangt de overheid niet — het maakt officiële informatie makkelijker te vinden, te begrijpen en te bereiken.',
+  pt: 'A Djarvista não substitui o Estado - torna a informação oficial mais fácil de encontrar, compreender e consultar.',
+  en: 'Djarvista does not replace the government - it makes official information easier to find, understand and access.',
+  nl: 'Djarvista vervangt de overheid niet - het maakt officiële informatie makkelijker te vinden, te begrijpen en te bereiken.',
 };
 
 const HERO_INTRO: TL = {
@@ -142,17 +142,17 @@ const HANDLE_EXAMPLES: { variant: 'official' | 'summary' | 'unconfirmed'; note: 
   {
     variant: 'summary',
     note: {
-      pt: 'Resumo da plataforma para leitura mais fácil — não substitui o documento oficial.',
-      en: 'Platform summary for easier reading — it does not replace the official document.',
-      nl: 'Platformsamenvatting voor gemakkelijker lezen — vervangt het officiële document niet.',
+      pt: 'Resumo da plataforma para leitura mais fácil - não substitui o documento oficial.',
+      en: 'Platform summary for easier reading - it does not replace the official document.',
+      nl: 'Platformsamenvatting voor gemakkelijker lezen - vervangt het officiële document niet.',
     },
   },
   {
     variant: 'unconfirmed',
     note: {
-      pt: 'Ainda não confirmado oficialmente — marcado como tal até publicação.',
-      en: 'Not yet officially confirmed — marked as such until published.',
-      nl: 'Nog niet officieel bevestigd — als zodanig gemarkeerd tot publicatie.',
+      pt: 'Ainda não confirmado oficialmente - marcado como tal até publicação.',
+      en: 'Not yet officially confirmed - marked as such until published.',
+      nl: 'Nog niet officieel bevestigd - als zodanig gemarkeerd tot publicatie.',
     },
   },
 ];
@@ -200,9 +200,9 @@ const SAFEGUARD_HEAD: TL = {
 };
 
 const SAFEGUARD_HUMAN: TL = {
-  pt: 'As verificações sensíveis nunca são feitas apenas por inteligência artificial — existe sempre controlo humano.',
-  en: 'Sensitive verifications are never carried out by AI alone — there is always human control.',
-  nl: 'Gevoelige verificaties worden nooit alleen door AI uitgevoerd — er is altijd menselijke controle.',
+  pt: 'As verificações sensíveis nunca são feitas apenas por inteligência artificial - existe sempre controlo humano.',
+  en: 'Sensitive verifications are never carried out by AI alone - there is always human control.',
+  nl: 'Gevoelige verificaties worden nooit alleen door AI uitgevoerd - er is altijd menselijke controle.',
 };
 
 const SAFEGUARD_LEGAL: TL = {

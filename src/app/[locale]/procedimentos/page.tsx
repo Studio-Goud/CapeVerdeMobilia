@@ -11,11 +11,11 @@ export function generateMetadata({ params }: { params: { locale: Locale } }): Me
 }
 
 // Official São Vicente offices that the procedures point to. Verified public
-// bodies — kept visually distinct from the commercial directory (a government
+// bodies - kept visually distinct from the commercial directory (a government
 // office is not a business to claim). Contacts are indicative; confirm hours.
 const OFFICES: { name: TL; role: TL; address: TL; phone?: string }[] = [
   {
-    name: { pt: 'Casa do Cidadão — Mindelo', en: 'Casa do Cidadão — Mindelo', nl: 'Casa do Cidadão — Mindelo' },
+    name: { pt: 'Casa do Cidadão - Mindelo', en: 'Casa do Cidadão - Mindelo', nl: 'Casa do Cidadão - Mindelo' },
     role: { pt: 'Certidões, criação de empresa (Empresa no Dia), NIF e registos.', en: 'Certificates, company creation (Empresa no Dia), NIF and registrations.', nl: 'Uittreksels, bedrijf oprichten (Empresa no Dia), NIF en registraties.' },
     address: { pt: 'Rua Senador Vera-Cruz, Mindelo', en: 'Rua Senador Vera-Cruz, Mindelo', nl: 'Rua Senador Vera-Cruz, Mindelo' },
     phone: '+238 231 79 17',
@@ -36,7 +36,7 @@ const OFFICES: { name: TL; role: TL; address: TL; phone?: string }[] = [
     address: { pt: 'Monte Sossego, Mindelo', en: 'Monte Sossego, Mindelo', nl: 'Monte Sossego, Mindelo' },
   },
   {
-    name: { pt: 'Ordem dos Advogados — Delegação de São Vicente', en: 'Bar Association — São Vicente delegation', nl: 'Orde van Advocaten — afdeling São Vicente' },
+    name: { pt: 'Ordem dos Advogados - Delegação de São Vicente', en: 'Bar Association - São Vicente delegation', nl: 'Orde van Advocaten - afdeling São Vicente' },
     role: { pt: 'Confirmar a inscrição de um advogado.', en: 'Confirm a lawyer’s registration.', nl: 'De inschrijving van een advocaat bevestigen.' },
     address: { pt: 'Rua Senador Vera-Cruz, Mindelo', en: 'Rua Senador Vera-Cruz, Mindelo', nl: 'Rua Senador Vera-Cruz, Mindelo' },
     phone: '+238 232 27 72',
@@ -45,9 +45,9 @@ const OFFICES: { name: TL; role: TL; address: TL; phone?: string }[] = [
 
 const OFFICES_HEAD: TL = { pt: 'Onde tratar (São Vicente)', en: 'Where to go (São Vicente)', nl: 'Waar te regelen (São Vicente)' };
 const OFFICES_INTRO: TL = {
-  pt: 'Serviços oficiais que os procedimentos acima referem. Informação indicativa — confirme sempre horários e requisitos junto da entidade.',
-  en: 'Official services referenced by the procedures above. Indicative information — always confirm hours and requirements with the office.',
-  nl: 'Officiële diensten waarnaar de procedures hierboven verwijzen. Indicatieve informatie — bevestig openingstijden en vereisten altijd bij de instantie.',
+  pt: 'Serviços oficiais que os procedimentos acima referem. Informação indicativa - confirme sempre horários e requisitos junto da entidade.',
+  en: 'Official services referenced by the procedures above. Indicative information - always confirm hours and requirements with the office.',
+  nl: 'Officiële diensten waarnaar de procedures hierboven verwijzen. Indicatieve informatie - bevestig openingstijden en vereisten altijd bij de instantie.',
 };
 
 export default function ProceduresPage({ params }: { params: { locale: Locale } }): JSX.Element {
@@ -66,7 +66,7 @@ export default function ProceduresPage({ params }: { params: { locale: Locale } 
         ))}
       </ul>
 
-      {/* Official offices — verified public bodies, distinct from the commercial directory */}
+      {/* Official offices - verified public bodies, distinct from the commercial directory */}
       <section className="rounded-2xl border border-emerald-200 bg-emerald-50/40 p-4 sm:p-5">
         <div className="mb-1 flex flex-wrap items-center gap-2">
           <h2 className="text-lg font-semibold text-slate-900">{tr(OFFICES_HEAD, locale)}</h2>

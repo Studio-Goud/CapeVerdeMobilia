@@ -193,7 +193,7 @@ export async function fetchMyBookings(): Promise<Booking[] | null> {
 }
 
 // ---------------------------------------------------------------------------
-// Admin (trust/ops) — requires the caller's profile.role = 'admin'
+// Admin (trust/ops) - requires the caller's profile.role = 'admin'
 // ---------------------------------------------------------------------------
 export interface AdminVerification { id: string; user_id: string; doc_type: string | null; doc_path: string | null; selfie_path: string | null; level_requested: string; status: string; created_at: string }
 export interface AdminListing { id: string; slug: string; title: TL; status: string; island: string | null; owner: string | null; created_at: string }
@@ -228,7 +228,7 @@ export async function fetchAllListingsForMod(): Promise<AdminListing[] | null> {
 }
 
 // ---------------------------------------------------------------------------
-// Official information centre — editor (admin) + report outdated
+// Official information centre - editor (admin) + report outdated
 // ---------------------------------------------------------------------------
 export interface EditablePublication {
   id?: string; slug: string; category: string; title: TL; gov_entity: string;
@@ -294,7 +294,7 @@ export async function saveFavorite(listingId: string): Promise<'ok' | 'demo' | '
 }
 
 // ---------------------------------------------------------------------------
-// Professional profile (owned by a business user — one per user)
+// Professional profile (owned by a business user - one per user)
 // ---------------------------------------------------------------------------
 export interface MyProfessional {
   id?: string; slug: string; display_name: string; headline: TL; bio: TL;
@@ -335,7 +335,7 @@ export async function upsertProfessional(input: MyProfessional): Promise<string 
 }
 
 // ---------------------------------------------------------------------------
-// Supplier profile (materials directory — one per business user)
+// Supplier profile (materials directory - one per business user)
 // ---------------------------------------------------------------------------
 export interface MySupplier {
   id?: string; slug: string; name: string; category: TL; island: string;
@@ -449,14 +449,14 @@ export async function setProjectVisibility(id: string, visibility: 'published' |
 }
 
 // ---------------------------------------------------------------------------
-// Boost / feature requests (revenue loop) — request → admin approves → featured
+// Boost / feature requests (revenue loop) - request → admin approves → featured
 // ---------------------------------------------------------------------------
 /** Owner requests to feature one of their listings. */
 export async function requestBoost(listingId: string): Promise<string | null> {
   const ctx = await uid();
   if (!ctx) return isSupabaseConfigured ? 'auth' : 'demo';
   const { error } = await ctx.supa.from('boost_requests').insert({ listing_id: listingId, requester: ctx.id, status: 'pending' });
-  // A duplicate pending request (unique index, 0018) means it's already queued —
+  // A duplicate pending request (unique index, 0018) means it's already queued -
   // treat that as success rather than an error.
   if (error) return error.code === '23505' ? null : error.message;
   return null;
@@ -494,7 +494,7 @@ export async function resolveBoost(reqId: string, listingId: string, approve: bo
 }
 
 // ---------------------------------------------------------------------------
-// Claim requests — seeded "phone-book" profiles → owner claims → admin approves
+// Claim requests - seeded "phone-book" profiles → owner claims → admin approves
 // ---------------------------------------------------------------------------
 export type ClaimProfileType = 'professional' | 'supplier';
 
@@ -508,7 +508,7 @@ export async function submitClaim(
     profile_type: profileType, profile_id: profileId, requester: ctx.id,
     message: message || null, contact_phone: contactPhone || null, status: 'pending',
   });
-  // Duplicate pending claim (unique index) — treat as already queued.
+  // Duplicate pending claim (unique index) - treat as already queued.
   if (error) return error.code === '23505' ? 'duplicate' : error.message;
   return null;
 }

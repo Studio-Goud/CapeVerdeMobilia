@@ -17,9 +17,9 @@ const NL_LBL: TL = { pt: 'Neerlandês', en: 'Dutch', nl: 'Nederlands' };
 const REQUIRED: TL = { pt: 'obrigatório', en: 'required', nl: 'verplicht' };
 const OPTIONAL: TL = { pt: 'opcional', en: 'optional', nl: 'optioneel' };
 
-/** Compose "Base — qualifier" while staying trilingual. */
+/** Compose "Base - qualifier" while staying trilingual. */
 function ql(base: TL, qual: TL): TL {
-  return { pt: `${base.pt} — ${qual.pt}`, en: `${base.en} — ${qual.en}`, nl: `${base.nl} — ${qual.nl}` };
+  return { pt: `${base.pt} - ${qual.pt}`, en: `${base.en} - ${qual.en}`, nl: `${base.nl} - ${qual.nl}` };
 }
 
 function slugify(s: string): string {
@@ -210,7 +210,7 @@ export default function TenderFormPage({ params }: { params: { locale: Locale } 
           </fieldset>
 
           <label className="block text-sm">
-            <span className="text-slate-600">{t(locale, 'common.island')} — {tr(REQUIRED, locale)}</span>
+            <span className="text-slate-600">{t(locale, 'common.island')} - {tr(REQUIRED, locale)}</span>
             <select value={f.island} onChange={(e) => upd('island', e.target.value)} className={input}>
               <option value="">{tr({ pt: 'Selecione a ilha', en: 'Select island', nl: 'Selecteer eiland' }, locale)}</option>
               {ISLANDS.map((i) => (
@@ -229,7 +229,7 @@ export default function TenderFormPage({ params }: { params: { locale: Locale } 
 
           <div className="grid gap-3 sm:grid-cols-2">
             <label className="block text-sm">
-              <span className="text-slate-600">{t(locale, 'tend.budget')} — {tr(OPTIONAL, locale)}</span>
+              <span className="text-slate-600">{t(locale, 'tend.budget')} - {tr(OPTIONAL, locale)}</span>
               <input
                 type="number"
                 min="0"
@@ -239,7 +239,7 @@ export default function TenderFormPage({ params }: { params: { locale: Locale } 
               />
             </label>
             <label className="block text-sm">
-              <span className="text-slate-600">{t(locale, 'tend.deadline')} — {tr(OPTIONAL, locale)}</span>
+              <span className="text-slate-600">{t(locale, 'tend.deadline')} - {tr(OPTIONAL, locale)}</span>
               <input
                 type="date"
                 value={f.deadline}

@@ -34,7 +34,7 @@ export default function ProcedureDetailPage({ params }: { params: { locale: Loca
         <p className="mt-1 text-xs text-slate-400">{proc.govEntity} · {t(locale, 'proc.estDuration')} ~{proc.estimatedDays} {t(locale, 'proc.days')}</p>
       </header>
 
-      {/* How it usually goes — narrative overview */}
+      {/* How it usually goes - narrative overview */}
       {proc.overview && (
         <section className="rounded-xl border border-brand-100 bg-brand-50/60 p-4">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-brand-700">{t(locale, 'proc.overview')}</h2>

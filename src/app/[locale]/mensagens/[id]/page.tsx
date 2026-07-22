@@ -19,9 +19,9 @@ const NEED_LOGIN: TL = {
   nl: 'Je moet inloggen om dit gesprek te zien.',
 };
 const EMPTY: TL = {
-  pt: 'Ainda sem mensagens — escreva a primeira.',
-  en: 'No messages yet — write the first one.',
-  nl: 'Nog geen berichten — schrijf het eerste.',
+  pt: 'Ainda sem mensagens - escreva a primeira.',
+  en: 'No messages yet - write the first one.',
+  nl: 'Nog geen berichten - schrijf het eerste.',
 };
 const PLACEHOLDER: TL = { pt: 'Escreva uma mensagem…', en: 'Write a message…', nl: 'Schrijf een bericht…' };
 const SEND: TL = { pt: 'Enviar', en: 'Send', nl: 'Versturen' };

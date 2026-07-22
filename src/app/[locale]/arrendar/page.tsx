@@ -17,9 +17,9 @@ const HERO_TITLE: TL = {
 };
 
 const HERO_SUBTITLE: TL = {
-  pt: 'A Djarvista dá-lhe as ferramentas para publicar, receber pedidos e formalizar o arrendamento — com confiança e transparência.',
-  en: 'Djarvista gives you the tools to list, receive requests and formalise the rental — with trust and transparency.',
-  nl: 'Djarvista geeft je de tools om te plaatsen, aanvragen te ontvangen en de verhuur te formaliseren — met vertrouwen en transparantie.',
+  pt: 'A Djarvista dá-lhe as ferramentas para publicar, receber pedidos e formalizar o arrendamento - com confiança e transparência.',
+  en: 'Djarvista gives you the tools to list, receive requests and formalise the rental - with trust and transparency.',
+  nl: 'Djarvista geeft je de tools om te plaatsen, aanvragen te ontvangen en de verhuur te formaliseren - met vertrouwen en transparantie.',
 };
 
 const CTA_LIST: TL = {
