@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { PROCEDURES } from '@/i18n';
 import { fetchProfessionals, fetchListings } from '@/lib/data';
+import { landingPaths } from '@/lib/landings';
 
 const BASE = 'https://www.djarvista.com';
 const LOCALES = ['pt', 'en', 'nl'];
@@ -18,6 +19,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticEntries = PATHS.flatMap((p) => entry(p, p === '' ? 1 : 0.7));
 
+  // Category × island landing pages (high-intent, place-specific SEO targets).
+  const landingEntries = landingPaths().flatMap((p) => entry(p, 0.8));
+
   // Dynamic content — one entry per real profile / listing / procedure, per locale.
   const dynamicPaths: string[] = PROCEDURES.map((p) => `/procedimentos/${p.slug}`);
   try {
@@ -29,5 +33,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
   const dynamicEntries = dynamicPaths.flatMap((p) => entry(p, 0.6));
 
-  return [...staticEntries, ...dynamicEntries];
+  return [...staticEntries, ...landingEntries, ...dynamicEntries];
 }
