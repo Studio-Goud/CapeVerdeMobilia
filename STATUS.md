@@ -36,22 +36,35 @@ Grote controle uitgevoerd (4 parallelle audits). Opgelost:
 
 ## 🔎 SEO / GEO (live)
 Structured data (JSON-LD: Organization + WebSite/zoekbox, LocalBusiness per professional,
-RealEstateListing per woning), dynamische sitemap (alle profielen/advertenties/procedures),
+RealEstateListing per woning, BreadcrumbList + CollectionPage op landingspagina's),
+dynamische sitemap (alle profielen/advertenties/procedures/landingspagina's),
 per-pagina hreflang + canonical, keyword-titels, directory-zoekbalk, `llms.txt`.
+Screaming-Frog-schoon: unieke title/description/canonical/hreflang + 1× H1 per publieke
+pagina; privé/klant-pagina's op `noindex` via middleware.
+- **Categorie-/eiland-landingspagina's (live)** — de hoog-intentie zoekopdrachten waar de
+  algemene lijstpagina's niet op ranken:
+  - `/imoveis/<deal>/<eiland>` — venda, terrenos, arrendar, ferias, novos-projetos, comercial
+  - `/profissionais/<categorie>/<eiland>` — advogados, ar-condicionado, construção civil, arquitetura, serralharia, despachante, limpeza, gás
+  - `/materiais/<eiland>` — eilanden: São Vicente, Sal, Santiago, Boa Vista
+  Elk met keyword-titel/H1 (drietalig, "Cabo Verde" voor disambiguatie), breadcrumb,
+  gefilterde resultaten, unieke eiland-koopgids (geen thin content) en interne links
+  (footer "procuras populares" + verwante-zoekopdracht-chips).
+- **Live bezoekers meten**: Vercel Web Analytics staat aan; GA4 is ingebouwd en wacht op
+  `NEXT_PUBLIC_GA_ID` (env-gated) → GA4 Realtime toont live bezoekers.
 Playbooks in de repo: `SEO_GROWTH_PLAN.md`, `SEO_KEYWORD_MAP.md`, `SEO_OFFSITE_PACK.md`,
-`MARKETING_OUTREACH_ADS.md`. Volgende stap: categorie-/eiland-landingspagina's bouwen.
+`MARKETING_OUTREACH_ADS.md`.
 
 ## 🗄️ Migraties
-0001–0021 zijn gedraaid (telefoonboek + São Vicente-seed + Bomclima). **0022 nog te draaien**
-(`0022_publications_seo.sql`): 5 gebronde info-artikelen (kopen, NIF, cITI/cIPI, erfrecht,
-condomínio). Zie `MIGRATIONS.md`.
+0001–0022 zijn gedraaid (telefoonboek + São Vicente-seed + Bomclima + 5 gebronde
+info-artikelen: kopen, NIF, cITI/cIPI, erfrecht, condomínio). Zie `MIGRATIONS.md`.
 
 ## ⚠️ Alleen jij kunt dit doen
-1. **Migraties 0019 + 0020 draaien** in Supabase → SQL Editor (telefoonboek + São Vicente-seed live).
-2. **`service_role`-sleutel roteren** (stond meerdere keren in de chat; de app gebruikt 'm niet, dus roteren breekt niets).
-3. **Juridische `[…]`-placeholders** invullen in `/termos` en `/privacidade` (rechtsvorm, adres) + juridische check.
-4. **Apple App Store**: volg `APP_STORE.md` (Mac + Apple Developer-account $99/jaar nodig): `npx cap add ios` → Xcode → signing → archive → upload → listing (`store/metadata.md`) → submit.
-5. **Echte content**: meer advertenties/profielen (of makelaars uitnodigen — `outreach/`) en **echte foto's / hero-beeld**. Losse ambachten (loodgieters, watertrucks) lokaal verzamelen — die zijn online niet te vinden.
+1. **GA4 aankoppelen voor live bezoekers**: maak een GA4-property → kopieer de Measurement ID (`G-XXXXXXXXXX`) → zet als `NEXT_PUBLIC_GA_ID` in Vercel → Project → Environment Variables → redeploy. Daarna toont GA4 → Reports → Realtime live bezoekers. (Vercel Web Analytics draait al automatisch.)
+2. **Google Search Console + Bing Webmaster**: domein verifiëren en `https://www.djarvista.com/sitemap.xml` indienen zodat de nieuwe landingspagina's snel geïndexeerd worden.
+3. **`service_role`-sleutel roteren** (stond meerdere keren in de chat; de app gebruikt 'm niet, dus roteren breekt niets).
+4. **Juridische `[…]`-placeholders** invullen in `/termos` en `/privacidade` (rechtsvorm, adres) + juridische check.
+5. **Apple App Store**: volg `APP_STORE.md` (Mac + Apple Developer-account $99/jaar nodig): `npx cap add ios` → Xcode → signing → archive → upload → listing (`store/metadata.md`) → submit.
+6. **Echte content**: meer advertenties/profielen (of makelaars uitnodigen — `outreach/`) en **echte foto's / hero-beeld**. Losse ambachten (loodgieters, watertrucks) lokaal verzamelen — die zijn online niet te vinden.
 
 ## 🔜 Optionele polish (geen fouten, jouw keuze)
 - Kleine tap-targets vergroten; contact-CTA's op mobiel hoger zetten; desktop-dropdowns toetsenbordvriendelijk; uploadvoortgang bij meerdere foto's; `slate-400`→`slate-500` info-teksten.
