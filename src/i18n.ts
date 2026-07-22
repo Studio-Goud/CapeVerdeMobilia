@@ -128,6 +128,21 @@ const UI = {
   'pros.noReviews': { pt: 'Sem avaliações', en: 'No reviews', nl: 'Geen reviews' },
   'pros.requestQuote': { pt: 'Pedir orçamento', en: 'Request a quote', nl: 'Offerte aanvragen' },
 
+  // Seeded ("phone-book") directory entries + claim flow
+  'claim.unclaimed': { pt: 'Não reclamado', en: 'Unclaimed', nl: 'Niet geclaimd' },
+  'claim.seededNote': { pt: 'Listagem criada a partir de fontes públicas. Ainda não foi reclamada pelo proprietário.', en: 'Listing created from public sources. It has not yet been claimed by the owner.', nl: 'Vermelding samengesteld uit openbare bronnen. Nog niet geclaimd door de eigenaar.' },
+  'claim.source': { pt: 'Fonte', en: 'Source', nl: 'Bron' },
+  'claim.cta': { pt: 'É o seu negócio? Reclame este perfil', en: 'Is this your business? Claim this profile', nl: 'Is dit jouw bedrijf? Claim dit profiel' },
+  'claim.loginFirst': { pt: 'Inicie sessão (conta empresarial) para reclamar este perfil.', en: 'Log in (business account) to claim this profile.', nl: 'Log in (zakelijk account) om dit profiel te claimen.' },
+  'claim.explain': { pt: 'Diga-nos quem é e como podemos confirmar que o negócio é seu (por ex., o número de telefone do negócio). A nossa equipa verifica cada pedido manualmente.', en: 'Tell us who you are and how we can confirm the business is yours (e.g. the business phone number). Our team verifies every request manually.', nl: 'Vertel ons wie je bent en hoe we kunnen bevestigen dat het bedrijf van jou is (bijv. het telefoonnummer van het bedrijf). Ons team controleert elke aanvraag handmatig.' },
+  'claim.message': { pt: 'Quem é e qual é a sua ligação ao negócio?', en: 'Who are you and what is your connection to the business?', nl: 'Wie ben je en wat is je band met het bedrijf?' },
+  'claim.phone': { pt: 'Telefone para verificação', en: 'Phone for verification', nl: 'Telefoon voor verificatie' },
+  'claim.submit': { pt: 'Enviar pedido de reclamação', en: 'Submit claim request', nl: 'Claimverzoek versturen' },
+  'claim.sent': { pt: 'Pedido enviado. A nossa equipa vai verificar e entrar em contacto.', en: 'Request sent. Our team will verify and get in touch.', nl: 'Verzoek verstuurd. Ons team controleert het en neemt contact op.' },
+  'claim.already': { pt: 'Já existe um pedido pendente para este perfil.', en: 'There is already a pending request for this profile.', nl: 'Er is al een lopende aanvraag voor dit profiel.' },
+  'claim.contactDirect': { pt: 'Contacto (fonte pública)', en: 'Contact (public source)', nl: 'Contact (openbare bron)' },
+  'claim.leadsAfterClaim': { pt: 'O formulário de contacto fica ativo depois de o perfil ser reclamado pelo proprietário.', en: 'The contact form becomes active once the owner claims this profile.', nl: 'Het contactformulier wordt actief zodra de eigenaar dit profiel heeft geclaimd.' },
+
   // Services (service advertisements)
   'services.title': { pt: 'Serviços anunciados', en: 'Advertised services', nl: 'Aangeboden diensten' },
   'services.intro': { pt: 'Serviços oferecidos por profissionais e empresas. Publique o seu próprio serviço numa secção separada dos imóveis.', en: 'Services offered by professionals and businesses. Post your own service in a section separate from properties.', nl: 'Diensten aangeboden door professionals en bedrijven. Plaats je eigen dienst in een aparte sectie los van het vastgoed.' },

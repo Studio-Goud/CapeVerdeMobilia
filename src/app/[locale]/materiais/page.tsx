@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { t, tr, whatsappLink, type Locale, type TL } from '@/i18n';
 import { fetchSuppliers, type SupplierView } from '@/lib/data';
-import { PageTitle, Card, Pill, EmptyState } from '@/components/ui';
+import { PageTitle, Card, Pill, EmptyState, SeededBadge, SourceLine } from '@/components/ui';
+import { ClaimBusiness } from '@/components/ClaimBusiness';
 
 const ISLANDS = ['', 'São Vicente', 'Santo Antão', 'Santiago', 'Sal', 'Boa Vista', 'São Nicolau', 'Fogo', 'Maio', 'Brava'];
 const one = (v: string | string[] | undefined): string | undefined => (Array.isArray(v) ? v[0] : v);
@@ -59,20 +60,33 @@ export default async function MaterialsPage({
           <Card key={s.id}>
             <div className="flex items-start justify-between gap-2">
               <h2 className="font-semibold text-slate-900">{s.name}</h2>
-              {s.verified && <Pill tone="emerald">✓</Pill>}
+              {s.seeded ? <SeededBadge locale={locale} /> : s.verified && <Pill tone="emerald">✓</Pill>}
             </div>
             <p className="mt-1 text-sm text-slate-600">{tr(s.category, locale)}</p>
             <p className="text-xs text-slate-500">{s.island}</p>
             {s.priceFrom && <p className="mt-2 text-sm font-medium text-brand">{tr(s.priceFrom, locale)}</p>}
             {s.description && <p className="mt-2 line-clamp-2 text-sm text-slate-600">{tr(s.description, locale)}</p>}
             {s.phone && (
-              <a
-                href={whatsappLink(`${tr(s.category, locale)} — ${s.name}`, s.phone)}
-                target="_blank" rel="noopener noreferrer"
-                className="mt-3 inline-block rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-brand hover:text-brand"
-              >
-                {t(locale, 'mat.requestQuote')}
-              </a>
+              s.seeded ? (
+                <p className="mt-3 text-sm text-slate-600">
+                  {t(locale, 'claim.contactDirect')}:{' '}
+                  <a href={`tel:${s.phone}`} className="font-medium text-brand hover:underline">{s.phone}</a>
+                </p>
+              ) : (
+                <a
+                  href={whatsappLink(`${tr(s.category, locale)} — ${s.name}`, s.phone)}
+                  target="_blank" rel="noopener noreferrer"
+                  className="mt-3 inline-block rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-brand hover:text-brand"
+                >
+                  {t(locale, 'mat.requestQuote')}
+                </a>
+              )
+            )}
+            {s.seeded && (
+              <div className="mt-3 space-y-2 border-t border-slate-100 pt-3">
+                <SourceLine locale={locale} name={s.sourceName} url={s.sourceUrl} date={s.sourcedAt} />
+                <ClaimBusiness locale={locale} profileType="supplier" profileId={s.id} compact />
+              </div>
             )}
           </Card>
         ))}

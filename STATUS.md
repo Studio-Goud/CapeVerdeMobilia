@@ -18,6 +18,7 @@ Zie ook: `APP_STORE.md` (Apple-draaiboek), `PAYMENTS.md` (verdienmodel),
   - **Materiais** — leveranciersprofiel, WhatsApp-offerte (alleen mét nummer), admin-`verified`.
   - **Concursos** — plaatsen, bieden, eigenaar ziet biedingen, open/sluiten, gesloten = geen biedingen.
   - **Projetos** — portfolio met voortgang/mijlpalen + cover.
+- **Telefoonboek (claimbaar)**: bedrijven kunnen als "niet-geclaimd" op de site staan met bron+datum; de echte eigenaar claimt → admin keurt goed (`approve_claim`) → profiel + bewaarde leads gaan over. Badge + bronregel tonen de herkomst. Migratie `0019`; eerste seed = 25 échte São Vicente-bedrijven (`0020`, gebrond — zie `supabase/SEED_0020_SOURCES.md`).
 - **Dashboard-beheer**: mijn advertenties, leads, huuraanvragen, **mijn concursos** + **mijn projetos** (beheren), agenda, directory-profielen.
 - **Verdienmodel**: "Destacar"-lus (aanvraag → admin keurt goed → `is_featured`). Gateway-opties in `PAYMENTS.md`.
 - **Admin/moderatie**: verificaties, advertenties, **Destaques**-tab, info-editor; met foutmeldingen.
@@ -34,13 +35,16 @@ Grote controle uitgevoerd (4 parallelle audits). Opgelost:
 - **Favicon**: tab-icoon toonde een leeg blauw vlak (kapotte 192- + apple-touch-PNG's die de correcte SVG overschreven); nu vector-SVG als primair tab-icoon + geregenereerde PNG's (D + koraal-zon).
 
 ## 🗄️ Migraties
-0001–0018 zijn gedraaid — inclusief `0018_featured_guard.sql` (alleen admins mogen `is_featured` zetten + max 1 openstaande boost per advertentie). Zie `MIGRATIONS.md`.
+0001–0018 zijn gedraaid. **0019 + 0020 nog te draaien** (Supabase → SQL Editor):
+`0019_claimable_profiles.sql` (claimbaar telefoonboek) en daarna
+`0020_seed_sao_vicente.sql` (25 échte São Vicente-bedrijven, gebrond). Zie `MIGRATIONS.md`.
 
 ## ⚠️ Alleen jij kunt dit doen
-1. **`service_role`-sleutel roteren** (stond meerdere keren in de chat; de app gebruikt 'm niet, dus roteren breekt niets).
-2. **Juridische `[…]`-placeholders** invullen in `/termos` en `/privacidade` (rechtsvorm, adres) + juridische check.
-3. **Apple App Store**: volg `APP_STORE.md` (Mac + Apple Developer-account $99/jaar nodig): `npx cap add ios` → Xcode → signing → archive → upload → listing (`store/metadata.md`) → submit.
-4. **Echte content**: eerste advertenties/profielen plaatsen (of makelaars uitnodigen — `outreach/`) en **echte foto's / hero-beeld** aanleveren. De live site oogt leeg tot er echt aanbod is (bewust — geen nepdata).
+1. **Migraties 0019 + 0020 draaien** in Supabase → SQL Editor (telefoonboek + São Vicente-seed live).
+2. **`service_role`-sleutel roteren** (stond meerdere keren in de chat; de app gebruikt 'm niet, dus roteren breekt niets).
+3. **Juridische `[…]`-placeholders** invullen in `/termos` en `/privacidade` (rechtsvorm, adres) + juridische check.
+4. **Apple App Store**: volg `APP_STORE.md` (Mac + Apple Developer-account $99/jaar nodig): `npx cap add ios` → Xcode → signing → archive → upload → listing (`store/metadata.md`) → submit.
+5. **Echte content**: meer advertenties/profielen (of makelaars uitnodigen — `outreach/`) en **echte foto's / hero-beeld**. Losse ambachten (loodgieters, watertrucks) lokaal verzamelen — die zijn online niet te vinden.
 
 ## 🔜 Optionele polish (geen fouten, jouw keuze)
 - Kleine tap-targets vergroten; contact-CTA's op mobiel hoger zetten; desktop-dropdowns toetsenbordvriendelijk; uploadvoortgang bij meerdere foto's; `slate-400`→`slate-500` info-teksten.
