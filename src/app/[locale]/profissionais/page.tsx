@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { t, tr, type Locale, type TL } from '@/i18n';
 import { fetchProfessionals, type ProProfile } from '@/lib/data';
-import { PageTitle, TrustBadge, Card, EmptyState } from '@/components/ui';
+import { PageTitle, TrustBadge, Card, EmptyState, Pill, SeededBadge } from '@/components/ui';
 
 const AREAS = ['', 'São Vicente', 'Santiago', 'Sal', 'Santo Antão'];
 const one = (v: string | string[] | undefined): string | undefined => (Array.isArray(v) ? v[0] : v);
@@ -63,8 +63,9 @@ export default async function ProfessionalsPage({
                   <Link href={`/${locale}/profissionais/${p.slug}`} className="font-semibold text-slate-900 hover:text-brand">{p.displayName}</Link>
                   <p className="text-sm text-slate-500">{tr(p.headline, locale)}</p>
                 </div>
-                <TrustBadge level={p.verificationLevel} locale={locale} />
+                {p.seeded ? <SeededBadge locale={locale} /> : <TrustBadge level={p.verificationLevel} locale={locale} />}
               </div>
+              {p.category && <div className="mt-2"><Pill tone="brand">{p.category}</Pill></div>}
               <p className="mt-3 text-xs text-slate-500">{p.serviceAreas.join(', ')} · {p.ratingAvg ? `★ ${p.ratingAvg.toFixed(1)} (${p.ratingCount})` : t(locale, 'pros.noReviews')}</p>
               {p.priceIndication && <p className="mt-1 text-xs text-slate-400">{tr(p.priceIndication, locale)}</p>}
               <Link href={`/${locale}/profissionais/${p.slug}`} className="mt-3 inline-block rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-brand hover:text-brand">

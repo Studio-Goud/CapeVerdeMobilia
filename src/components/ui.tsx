@@ -33,6 +33,35 @@ export function OfficialTag({ variant, locale }: { variant: 'official' | 'summar
   return <span className={cn('inline-flex rounded px-2 py-0.5 text-xs font-semibold', cls)}>{t(locale, key)}</span>;
 }
 
+/** Badge for seeded ("phone-book") directory entries compiled from public sources. */
+export function SeededBadge({ locale }: { locale: Locale }): JSX.Element {
+  return (
+    <span
+      title={t(locale, 'claim.seededNote')}
+      className="inline-flex items-center gap-1 rounded-full bg-sand-100 px-2 py-0.5 text-xs font-medium text-slate-600"
+    >
+      <span aria-hidden>📖</span>{t(locale, 'claim.unclaimed')}
+    </span>
+  );
+}
+
+/** Provenance line for a seeded entry: "Source: <name> · <date>". */
+export function SourceLine({ locale, name, url, date }: {
+  locale: Locale; name: string | null; url: string | null; date: string | null;
+}): JSX.Element | null {
+  if (!name && !url) return null;
+  const label = name ?? url;
+  return (
+    <p className="text-xs text-slate-400">
+      {t(locale, 'claim.source')}:{' '}
+      {url
+        ? <a href={url} target="_blank" rel="noopener noreferrer" className="underline hover:text-brand">{label}</a>
+        : label}
+      {date ? ` · ${date}` : ''}
+    </p>
+  );
+}
+
 /** Section heading with optional "view all" link. */
 export function SectionHead({ title, href, linkLabel }: { title: string; href?: string; linkLabel?: string }): JSX.Element {
   return (

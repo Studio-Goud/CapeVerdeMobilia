@@ -176,11 +176,13 @@ export interface ProProfile {
   headline: TL; bio: TL | null; category: string | null;
   serviceAreas: string[]; priceIndication: TL | null; phone: string | null;
   verificationLevel: VerificationLevel; ratingAvg: number | null; ratingCount: number;
+  seeded: boolean; sourceName: string | null; sourceUrl: string | null; sourcedAt: string | null;
 }
 interface ProRow {
-  id: string; user_id: string; slug: string; display_name: string;
+  id: string; user_id: string | null; slug: string; display_name: string;
   headline: TL; bio: TL | null; category: string | null; service_areas: string[] | null;
   price_indication: TL | null; phone: string | null;
+  source_name?: string | null; source_url?: string | null; sourced_at?: string | null;
   profiles: { verification_level: VerificationLevel } | { verification_level: VerificationLevel }[] | null;
 }
 
@@ -190,6 +192,7 @@ function demoToProProfile(p: (typeof PROFESSIONALS)[number]): ProProfile {
     id: p.id, userId: null, slug: p.slug, displayName: p.displayName, headline: p.headline,
     bio: null, category: null, serviceAreas: p.serviceAreas, priceIndication: p.priceIndication,
     phone: null, verificationLevel: p.verificationLevel, ratingAvg: p.ratingAvg, ratingCount: p.ratingCount,
+    seeded: false, sourceName: null, sourceUrl: null, sourcedAt: null,
   };
 }
 
@@ -234,6 +237,7 @@ export async function fetchProfessionals(area?: string): Promise<ProProfile[]> {
       id: r.id, userId: r.user_id, slug: r.slug, displayName: r.display_name, headline: r.headline,
       bio: r.bio, category: r.category, serviceAreas: r.service_areas ?? [], priceIndication: r.price_indication,
       phone: r.phone, verificationLevel: verifOf(r), ratingAvg: s ? s.avg : null, ratingCount: s ? s.count : 0,
+      seeded: r.user_id === null, sourceName: r.source_name ?? null, sourceUrl: r.source_url ?? null, sourcedAt: r.sourced_at ?? null,
     };
   });
 }
@@ -255,6 +259,7 @@ export async function fetchProfessionalBySlug(slug: string): Promise<ProProfile 
     id: r.id, userId: r.user_id, slug: r.slug, displayName: r.display_name, headline: r.headline,
     bio: r.bio, category: r.category, serviceAreas: r.service_areas ?? [], priceIndication: r.price_indication,
     phone: r.phone, verificationLevel: verifOf(r), ratingAvg: s ? s.avg : null, ratingCount: s ? s.count : 0,
+    seeded: r.user_id === null, sourceName: r.source_name ?? null, sourceUrl: r.source_url ?? null, sourcedAt: r.sourced_at ?? null,
   };
 }
 
@@ -264,16 +269,19 @@ export async function fetchProfessionalBySlug(slug: string): Promise<ProProfile 
 export interface SupplierView {
   id: string; userId: string | null; slug: string | null; name: string; category: TL;
   island: string; description: TL | null; priceFrom: TL | null; phone: string | null; verified: boolean;
+  seeded: boolean; sourceName: string | null; sourceUrl: string | null; sourcedAt: string | null;
 }
 interface SupplierRow {
-  id: string; user_id: string; slug: string; name: string; category: TL; island: string | null;
+  id: string; user_id: string | null; slug: string; name: string; category: TL; island: string | null;
   description: TL | null; price_from: TL | null; phone: string | null; verified: boolean;
+  source_name?: string | null; source_url?: string | null; sourced_at?: string | null;
 }
 
 function demoToSupplier(s: (typeof SUPPLIERS)[number]): SupplierView {
   return {
     id: s.id, userId: null, slug: null, name: s.name, category: s.category, island: s.island,
     description: null, priceFrom: s.priceFrom, phone: null, verified: s.verified,
+    seeded: false, sourceName: null, sourceUrl: null, sourcedAt: null,
   };
 }
 
@@ -291,6 +299,7 @@ export async function fetchSuppliers(island?: string): Promise<SupplierView[]> {
   return (data as SupplierRow[]).map((r) => ({
     id: r.id, userId: r.user_id, slug: r.slug, name: r.name, category: r.category, island: r.island ?? '',
     description: r.description, priceFrom: r.price_from, phone: r.phone, verified: r.verified,
+    seeded: r.user_id === null, sourceName: r.source_name ?? null, sourceUrl: r.source_url ?? null, sourcedAt: r.sourced_at ?? null,
   }));
 }
 

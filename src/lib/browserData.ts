@@ -494,6 +494,69 @@ export async function resolveBoost(reqId: string, listingId: string, approve: bo
 }
 
 // ---------------------------------------------------------------------------
+// Claim requests — seeded "phone-book" profiles → owner claims → admin approves
+// ---------------------------------------------------------------------------
+export type ClaimProfileType = 'professional' | 'supplier';
+
+/** Logged-in user asks to claim a seeded (unclaimed) directory profile. */
+export async function submitClaim(
+  profileType: ClaimProfileType, profileId: string, message: string, contactPhone: string,
+): Promise<string | null> {
+  const ctx = await uid();
+  if (!ctx) return isSupabaseConfigured ? 'auth' : 'demo';
+  const { error } = await ctx.supa.from('claim_requests').insert({
+    profile_type: profileType, profile_id: profileId, requester: ctx.id,
+    message: message || null, contact_phone: contactPhone || null, status: 'pending',
+  });
+  // Duplicate pending claim (unique index) — treat as already queued.
+  if (error) return error.code === '23505' ? 'duplicate' : error.message;
+  return null;
+}
+
+export interface ClaimRequestItem {
+  id: string; profile_type: ClaimProfileType; profile_id: string; requester: string;
+  message: string | null; contact_phone: string | null; status: string; created_at: string;
+  profileName: string | null;
+}
+
+/** Admin: pending claim requests, with the target profile's display name. */
+export async function fetchClaimRequests(): Promise<ClaimRequestItem[] | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return null;
+  const { data, error } = await supa
+    .from('claim_requests')
+    .select('id,profile_type,profile_id,requester,message,contact_phone,status,created_at')
+    .eq('status', 'pending')
+    .order('created_at', { ascending: false });
+  if (error || !data) return null;
+  const rows = data as unknown as Omit<ClaimRequestItem, 'profileName'>[];
+  const proIds = rows.filter((r) => r.profile_type === 'professional').map((r) => r.profile_id);
+  const supIds = rows.filter((r) => r.profile_type === 'supplier').map((r) => r.profile_id);
+  const names = new Map<string, string>();
+  if (proIds.length > 0) {
+    const { data: pros } = await supa.from('professionals').select('id,display_name').in('id', proIds);
+    for (const p of (pros ?? []) as { id: string; display_name: string }[]) names.set(p.id, p.display_name);
+  }
+  if (supIds.length > 0) {
+    const { data: sups } = await supa.from('suppliers').select('id,name').in('id', supIds);
+    for (const s of (sups ?? []) as { id: string; name: string }[]) names.set(s.id, s.name);
+  }
+  return rows.map((r) => ({ ...r, profileName: names.get(r.profile_id) ?? null }));
+}
+
+/** Admin: approve (atomic RPC assigns owner + backfills leads) or reject. */
+export async function resolveClaim(reqId: string, approve: boolean): Promise<string | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return 'demo';
+  if (approve) {
+    const { error } = await supa.rpc('approve_claim', { req_id: reqId });
+    return error ? error.message : null;
+  }
+  const { error } = await supa.from('claim_requests').update({ status: 'rejected' }).eq('id', reqId);
+  return error ? error.message : null;
+}
+
+// ---------------------------------------------------------------------------
 // Projects portfolio (projetos)
 // ---------------------------------------------------------------------------
 export interface ProjectInput {

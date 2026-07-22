@@ -5,9 +5,10 @@ import { t, tr, type Locale, type TL, verifLabel } from '@/i18n';
 import { REVIEWS } from '@/content';
 import { fetchProfessionalBySlug, fetchReviews, type ProProfile, type ReviewView } from '@/lib/data';
 import { isSupabaseConfigured } from '@/lib/supabase/env';
-import { PageTitle, Card, Pill, TrustBadge, SectionHead } from '@/components/ui';
+import { PageTitle, Card, Pill, TrustBadge, SectionHead, SeededBadge, SourceLine } from '@/components/ui';
 import { LeadForm } from '@/components/LeadForm';
 import { ReviewForm } from '@/components/ReviewForm';
+import { ClaimBusiness } from '@/components/ClaimBusiness';
 
 const ABOUT: TL = { pt: 'Sobre', en: 'About', nl: 'Over' };
 const SERVICES: TL = { pt: 'Serviços', en: 'Services', nl: 'Diensten' };
@@ -116,8 +117,18 @@ export default async function ProfessionalDetailPage({
         <div className="lg:col-span-2">
           <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
             <PageTitle title={pro.displayName} intro={tr(pro.headline, locale)} />
-            <TrustBadge level={pro.verificationLevel} locale={locale} />
+            <div className="flex flex-wrap items-center gap-2">
+              {pro.seeded && <SeededBadge locale={locale} />}
+              <TrustBadge level={pro.verificationLevel} locale={locale} />
+            </div>
           </div>
+
+          {pro.seeded && (
+            <div className="-mt-2 mb-5 space-y-1 rounded-lg border border-sand-200 bg-sand-50 px-3 py-2">
+              <p className="text-xs text-slate-600">{t(locale, 'claim.seededNote')}</p>
+              <SourceLine locale={locale} name={pro.sourceName} url={pro.sourceUrl} date={pro.sourcedAt} />
+            </div>
+          )}
 
           <p className="-mt-2 mb-5 text-sm text-slate-600">
             {reviews.length > 0
@@ -202,12 +213,20 @@ export default async function ProfessionalDetailPage({
             <h2 className="mb-3 text-lg font-semibold text-slate-900">{t(locale, 'listing.contactVisit')}</h2>
             {pro.phone && (
               <p className="mb-3 text-sm text-slate-600">
-                {tr(CONTACT_PHONE, locale)}:{' '}
+                {pro.seeded ? t(locale, 'claim.contactDirect') : tr(CONTACT_PHONE, locale)}:{' '}
                 <a href={`tel:${pro.phone}`} className="font-medium text-brand hover:underline">{pro.phone}</a>
               </p>
             )}
-            <LeadForm locale={locale} proSlug={pro.slug} recipient={pro.userId} source="pro" />
+            {pro.seeded
+              ? <p className="text-xs text-slate-400">{t(locale, 'claim.leadsAfterClaim')}</p>
+              : <LeadForm locale={locale} proSlug={pro.slug} recipient={pro.userId} source="pro" />}
           </Card>
+
+          {pro.seeded && (
+            <Card className="border-brand-100 bg-brand-50/40">
+              <ClaimBusiness locale={locale} profileType="professional" profileId={pro.id} />
+            </Card>
+          )}
 
           <Card>
             <div className="mb-3 flex items-center justify-between gap-2">

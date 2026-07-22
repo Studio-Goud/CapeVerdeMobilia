@@ -13,12 +13,15 @@ import {
   deleteListing,
   fetchBoostRequests,
   resolveBoost,
+  fetchClaimRequests,
+  resolveClaim,
   type AdminVerification,
   type AdminListing,
   type BoostRequestItem,
+  type ClaimRequestItem,
 } from '@/lib/browserData';
 
-type Tab = 'verifications' | 'listings' | 'boosts';
+type Tab = 'verifications' | 'listings' | 'boosts' | 'claims';
 
 // Verification level accepted by verifLabel — derived, so we avoid `any` and an extra import.
 type VerifLevel = Parameters<typeof verifLabel>[1];
@@ -56,6 +59,11 @@ const L = {
   tabBoosts: { pt: 'Destaques', en: 'Boosts', nl: 'Uitlichtingen' },
   noBoosts: { pt: 'Sem pedidos de destaque pendentes.', en: 'No pending boost requests.', nl: 'Geen openstaande uitlicht-aanvragen.' },
   boostHint: { pt: 'Aprovar coloca o anúncio em destaque (pagamento tratado à parte — ver PAYMENTS.md).', en: 'Approving features the listing (payment handled separately — see PAYMENTS.md).', nl: 'Goedkeuren licht de advertentie uit (betaling apart — zie PAYMENTS.md).' },
+  tabClaims: { pt: 'Reclamações', en: 'Claims', nl: 'Claims' },
+  noClaims: { pt: 'Sem pedidos de reclamação pendentes.', en: 'No pending claim requests.', nl: 'Geen openstaande claimverzoeken.' },
+  claimHint: { pt: 'Verifique manualmente (ligue para o número do negócio) antes de aprovar. Aprovar atribui o perfil ao utilizador e encaminha os contactos guardados.', en: 'Verify manually (call the business number) before approving. Approving assigns the profile to the user and forwards stored leads.', nl: 'Controleer handmatig (bel het nummer van het bedrijf) vóór goedkeuring. Goedkeuren wijst het profiel toe aan de gebruiker en stuurt bewaarde leads door.' },
+  claimProfile: { pt: 'Perfil', en: 'Profile', nl: 'Profiel' },
+  claimVerifyPhone: { pt: 'Telefone para verificação', en: 'Verification phone', nl: 'Verificatietelefoon' },
   loading: { pt: 'A carregar…', en: 'Loading…', nl: 'Laden…' },
   noVerifications: {
     pt: 'Sem pedidos de verificação pendentes.',
@@ -100,6 +108,7 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
   const [verifs, setVerifs] = useState<AdminVerification[] | null>(null);
   const [listings, setListings] = useState<AdminListing[] | null>(null);
   const [boosts, setBoosts] = useState<BoostRequestItem[] | null>(null);
+  const [claims, setClaims] = useState<ClaimRequestItem[] | null>(null);
   const [busy, setBusy] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
 
@@ -123,12 +132,19 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
     setBoosts(rows ?? []);
   }, []);
 
+  const loadClaims = useCallback(async (): Promise<void> => {
+    setClaims(null);
+    const rows = await fetchClaimRequests();
+    setClaims(rows ?? []);
+  }, []);
+
   useEffect(() => {
     if (!ready || !configured || !isAdmin) return;
     if (tab === 'verifications') void loadVerifs();
     else if (tab === 'listings') void loadListings();
+    else if (tab === 'claims') void loadClaims();
     else void loadBoosts();
-  }, [ready, configured, isAdmin, tab, loadVerifs, loadListings, loadBoosts]);
+  }, [ready, configured, isAdmin, tab, loadVerifs, loadListings, loadBoosts, loadClaims]);
 
   // --- Actions ---------------------------------------------------------------
   const openDoc = useCallback(async (path: string): Promise<void> => {
@@ -179,6 +195,17 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
       await loadBoosts();
     },
     [loadBoosts],
+  );
+
+  const decideClaim = useCallback(
+    async (req: ClaimRequestItem, approve: boolean): Promise<void> => {
+      setBusy(true); setActionError(null);
+      const err = await resolveClaim(req.id, approve);
+      setBusy(false);
+      if (err) { setActionError(err); return; }
+      await loadClaims();
+    },
+    [loadClaims],
   );
 
   // --- Guards ----------------------------------------------------------------
@@ -233,6 +260,7 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
         {tabBtn('verifications', tr(L.tabVerifications, locale))}
         {tabBtn('listings', tr(L.tabListings, locale))}
         {tabBtn('boosts', tr(L.tabBoosts, locale))}
+        {tabBtn('claims', tr(L.tabClaims, locale))}
       </div>
 
       {actionError && (
@@ -242,7 +270,44 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
         </div>
       )}
 
-      {tab === 'boosts' ? (
+      {tab === 'claims' ? (
+        <section className="space-y-3">
+          <p className="text-xs text-slate-400">{tr(L.claimHint, locale)}</p>
+          {claims === null ? (
+            <p className="text-sm text-slate-500">{tr(L.loading, locale)}</p>
+          ) : claims.length === 0 ? (
+            <Card><p className="text-sm text-slate-500">{tr(L.noClaims, locale)}</p></Card>
+          ) : (
+            claims.map((req) => (
+              <Card key={req.id}>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div className="min-w-0 space-y-1 text-sm">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Pill tone="brand">{req.profile_type}</Pill>
+                      <span className="font-semibold text-slate-900">{req.profileName ?? req.profile_id.slice(0, 8)}</span>
+                    </div>
+                    {req.message && <p className="whitespace-pre-line text-slate-600">{req.message}</p>}
+                    {req.contact_phone && (
+                      <p className="text-xs text-slate-500">
+                        {tr(L.claimVerifyPhone, locale)}:{' '}
+                        <a href={`tel:${req.contact_phone}`} className="font-medium text-brand hover:underline">{req.contact_phone}</a>
+                      </p>
+                    )}
+                    <p className="text-xs text-slate-400">
+                      {tr(L.user, locale)}: <span className="font-mono">{req.requester.slice(0, 8)}…</span>
+                      {' · '}{tr(L.submitted, locale)}: {formatDate(locale, req.created_at)}
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-2 sm:justify-end">
+                    <button type="button" disabled={busy} className={BTN_APPROVE} onClick={() => void decideClaim(req, true)}>{tr(L.approve, locale)}</button>
+                    <button type="button" disabled={busy} className={BTN_DANGER} onClick={() => void decideClaim(req, false)}>{tr(L.reject, locale)}</button>
+                  </div>
+                </div>
+              </Card>
+            ))
+          )}
+        </section>
+      ) : tab === 'boosts' ? (
         <section className="space-y-3">
           <p className="text-xs text-slate-400">{tr(L.boostHint, locale)}</p>
           {boosts === null ? (
