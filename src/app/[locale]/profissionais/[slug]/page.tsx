@@ -122,8 +122,8 @@ export default async function ProfessionalDetailPage({
           <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
             <PageTitle title={pro.displayName} intro={tr(pro.headline, locale)} />
             <div className="flex flex-wrap items-center gap-2">
-              {pro.seeded && <SeededBadge locale={locale} />}
-              <TrustBadge level={pro.verificationLevel} locale={locale} />
+              {pro.seeded && !pro.verifiedLevel && <SeededBadge locale={locale} />}
+              <TrustBadge level={pro.verifiedLevel ?? pro.verificationLevel} locale={locale} />
             </div>
           </div>
 
@@ -242,10 +242,10 @@ export default async function ProfessionalDetailPage({
           <Card>
             <div className="mb-3 flex items-center justify-between gap-2">
               <h2 className="text-lg font-semibold text-slate-900">{tr(TRUST, locale)}</h2>
-              <TrustBadge level={pro.verificationLevel} locale={locale} />
+              <TrustBadge level={pro.verifiedLevel ?? pro.verificationLevel} locale={locale} />
             </div>
             <p className="text-sm text-slate-600">
-              <span className="font-medium text-slate-700">{verifLabel(locale, pro.verificationLevel)}</span>
+              <span className="font-medium text-slate-700">{verifLabel(locale, pro.verifiedLevel ?? pro.verificationLevel)}</span>
               {' — '}
               {tr(TRUST_BODY, locale)}
             </p>

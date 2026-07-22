@@ -177,12 +177,16 @@ export interface ProProfile {
   serviceAreas: string[]; priceIndication: TL | null; phone: string | null;
   verificationLevel: VerificationLevel; ratingAvg: number | null; ratingCount: number;
   seeded: boolean; sourceName: string | null; sourceUrl: string | null; sourcedAt: string | null;
+  // Operator ("verified by Djarvista") trust level for seeded/vouched businesses that
+  // have no account yet. When set, the profile shows this trust badge but stays claimable.
+  verifiedLevel: VerificationLevel | null;
 }
 interface ProRow {
   id: string; user_id: string | null; slug: string; display_name: string;
   headline: TL; bio: TL | null; category: string | null; service_areas: string[] | null;
   price_indication: TL | null; phone: string | null;
   source_name?: string | null; source_url?: string | null; sourced_at?: string | null;
+  verified_level?: string | null;
   profiles: { verification_level: VerificationLevel } | { verification_level: VerificationLevel }[] | null;
 }
 
@@ -192,7 +196,7 @@ function demoToProProfile(p: (typeof PROFESSIONALS)[number]): ProProfile {
     id: p.id, userId: null, slug: p.slug, displayName: p.displayName, headline: p.headline,
     bio: null, category: null, serviceAreas: p.serviceAreas, priceIndication: p.priceIndication,
     phone: null, verificationLevel: p.verificationLevel, ratingAvg: p.ratingAvg, ratingCount: p.ratingCount,
-    seeded: false, sourceName: null, sourceUrl: null, sourcedAt: null,
+    seeded: false, sourceName: null, sourceUrl: null, sourcedAt: null, verifiedLevel: null,
   };
 }
 
@@ -238,6 +242,7 @@ export async function fetchProfessionals(area?: string): Promise<ProProfile[]> {
       bio: r.bio, category: r.category, serviceAreas: r.service_areas ?? [], priceIndication: r.price_indication,
       phone: r.phone, verificationLevel: verifOf(r), ratingAvg: s ? s.avg : null, ratingCount: s ? s.count : 0,
       seeded: r.user_id === null, sourceName: r.source_name ?? null, sourceUrl: r.source_url ?? null, sourcedAt: r.sourced_at ?? null,
+      verifiedLevel: (r.verified_level as VerificationLevel) ?? null,
     };
   });
 }
@@ -260,6 +265,7 @@ export async function fetchProfessionalBySlug(slug: string): Promise<ProProfile 
     bio: r.bio, category: r.category, serviceAreas: r.service_areas ?? [], priceIndication: r.price_indication,
     phone: r.phone, verificationLevel: verifOf(r), ratingAvg: s ? s.avg : null, ratingCount: s ? s.count : 0,
     seeded: r.user_id === null, sourceName: r.source_name ?? null, sourceUrl: r.source_url ?? null, sourcedAt: r.sourced_at ?? null,
+    verifiedLevel: (r.verified_level as VerificationLevel) ?? null,
   };
 }
 
