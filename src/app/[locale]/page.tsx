@@ -111,7 +111,7 @@ export default async function HomePage({ params }: { params: { locale: Locale } 
                   <p className="mt-0.5 text-sm text-slate-500">{tr(pro.headline, locale)}</p>
                   <div className="mt-2 flex items-center justify-between">
                     <span className="text-xs text-slate-500">{pro.ratingAvg ? `★ ${pro.ratingAvg.toFixed(1)} (${pro.ratingCount})` : t(locale, 'pros.noReviews')}</span>
-                    <TrustBadge level={pro.verificationLevel} locale={locale} />
+                    <TrustBadge level={pro.verifiedLevel ?? pro.verificationLevel} locale={locale} />
                   </div>
                 </Card>
               </li>

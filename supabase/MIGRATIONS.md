@@ -24,10 +24,11 @@ yet migrated, so the live site never breaks while you catch up.
 | 0016 | `migrations/0016_tender_bid_guards.sql` | only bid on open tenders; bidders can withdraw (patch to 0014) | ✅ done |
 | 0017 | `migrations/0017_boost_requests.sql` | boost/feature-listing requests (revenue loop) + RLS | ✅ done |
 | 0018 | `migrations/0018_featured_guard.sql` | **security**: only admins set is_featured; dedup pending boosts | ✅ done |
-| 0019 | `migrations/0019_claimable_profiles.sql` | claimable "phone-book" directory profiles (seeded from public sources, owner can claim; admin approves via `approve_claim`) | ⏳ **to run** |
-| 0020 | `migrations/0020_seed_sao_vicente.sql` | seed: 25 real São Vicente businesses (20 professionals + 5 suppliers), unclaimed + sourced. Sources in `SEED_0020_SOURCES.md`. Run **after** 0019 | ⏳ **to run** |
-| 0021 | `migrations/0021_seed_bomclima.sql` | add Bomclima, Lda (AC/refrigeration, São Vicente) — locally confirmed, sourced from its Facebook page. Run **after** 0020 | ⏳ **to run** |
-| 0022 | `migrations/0022_publications_seo.sql` | seed 5 sourced info articles (buying, NIF, taxes cITI/cIPI 2026, inheritance, condominium) — trilingual, FACT/ASSUMPTION-marked, for SEO. Run after 0011 | ⏳ **to run** |
+| 0019 | `migrations/0019_claimable_profiles.sql` | claimable "phone-book" directory profiles (seeded from public sources, owner can claim; admin approves via `approve_claim`) | ✅ done |
+| 0020 | `migrations/0020_seed_sao_vicente.sql` | seed: 25 real São Vicente businesses (20 professionals + 5 suppliers), unclaimed + sourced. Sources in `SEED_0020_SOURCES.md`. Run **after** 0019 | ✅ done |
+| 0021 | `migrations/0021_seed_bomclima.sql` | add Bomclima, Lda (AC/refrigeration, São Vicente) — locally confirmed, sourced from its Facebook page. Run **after** 0020 | ✅ done |
+| 0022 | `migrations/0022_publications_seo.sql` | seed 5 sourced info articles (buying, NIF, taxes cITI/cIPI 2026, inheritance, condominium) — trilingual, FACT/ASSUMPTION-marked, for SEO. Run after 0011 | ✅ done |
+| 0023 | `migrations/0023_bomclima_verified_service_ad.sql` | Bomclima: operator-verify the seeded professional (`professionals.verified_level`) + publish a claimable service advert (`listings` gets nullable owner + provenance). Photos are site assets. Run **after** 0021 | ⏳ **to run** |
 
 ## Roles
 - Make yourself admin (trust/ops + info editor):

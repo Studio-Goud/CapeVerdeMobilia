@@ -121,7 +121,9 @@ export default async function ProfessionalsPage({
                   <Link href={`/${locale}/profissionais/${p.slug}`} className="font-semibold text-slate-900 hover:text-brand">{p.displayName}</Link>
                   <p className="text-sm text-slate-500">{tr(p.headline, locale)}</p>
                 </div>
-                {p.seeded ? <SeededBadge locale={locale} /> : <TrustBadge level={p.verificationLevel} locale={locale} />}
+                {p.verifiedLevel
+                  ? <TrustBadge level={p.verifiedLevel} locale={locale} />
+                  : p.seeded ? <SeededBadge locale={locale} /> : <TrustBadge level={p.verificationLevel} locale={locale} />}
               </div>
               {p.category && <div className="mt-2"><Pill tone="brand">{proCategoryLabel(locale, p.category)}</Pill></div>}
               <p className="mt-3 text-xs text-slate-500">{p.serviceAreas.join(', ')} · {p.ratingAvg ? `★ ${p.ratingAvg.toFixed(1)} (${p.ratingCount})` : t(locale, 'pros.noReviews')}</p>
