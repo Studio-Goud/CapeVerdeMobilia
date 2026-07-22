@@ -1,6 +1,11 @@
+import { pageMetaFor as _pmf } from '@/lib/seo';
+import { isLocale as _isLoc } from '@/i18n';
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  return _pmf(_isLoc(params.locale) ? params.locale : 'pt', '/arrendar');
+}
 import Link from 'next/link';
 import { t, tr, type Locale, type TL } from '@/i18n';
-import { PageTitle, Card } from '@/components/ui';
+import { Card } from '@/components/ui';
 
 /** A titled block of trilingual copy rendered as a Card. */
 interface Block { h: TL; body: TL }
@@ -188,7 +193,10 @@ export default function RentalsHubPage({ params }: { params: { locale: Locale } 
 
       {/* 2. How it works */}
       <section>
-        <PageTitle title={tr(HOW_TITLE, locale)} intro={tr(HOW_INTRO, locale)} />
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">{tr(HOW_TITLE, locale)}</h2>
+          <p className="mt-2 max-w-3xl text-sm text-slate-600">{tr(HOW_INTRO, locale)}</p>
+        </div>
         <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((s, i) => (
             <li key={s.h.en}>
@@ -209,7 +217,10 @@ export default function RentalsHubPage({ params }: { params: { locale: Locale } 
 
       {/* 3. Safe & transparent */}
       <section>
-        <PageTitle title={tr(SAFE_TITLE, locale)} intro={tr(SAFE_INTRO, locale)} />
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">{tr(SAFE_TITLE, locale)}</h2>
+          <p className="mt-2 max-w-3xl text-sm text-slate-600">{tr(SAFE_INTRO, locale)}</p>
+        </div>
         <div className="grid gap-4 sm:grid-cols-3">
           {SAFE_FEATURES.map((f) => (
             <Card key={f.h.en} className="h-full rounded-2xl">

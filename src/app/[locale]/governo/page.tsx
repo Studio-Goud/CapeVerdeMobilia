@@ -1,3 +1,8 @@
+import { pageMetaFor as _pmf } from '@/lib/seo';
+import { isLocale as _isLoc } from '@/i18n';
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  return _pmf(_isLoc(params.locale) ? params.locale : 'pt', '/governo');
+}
 import Link from 'next/link';
 import { t, tr, type Locale, type TL } from '@/i18n';
 import { PageTitle, Card, Pill, OfficialTag, SectionHead } from '@/components/ui';

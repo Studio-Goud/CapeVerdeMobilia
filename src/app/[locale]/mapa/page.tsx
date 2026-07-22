@@ -1,3 +1,8 @@
+import { pageMetaFor as _pmf } from '@/lib/seo';
+import { isLocale as _isLoc } from '@/i18n';
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  return _pmf(_isLoc(params.locale) ? params.locale : 'pt', '/mapa');
+}
 import { t, tr, formatPrice, type Locale, type TL } from '@/i18n';
 import { fetchListings } from '@/lib/data';
 import { coordsFor, CV_CENTER, ISLAND_CENTERS } from '@/lib/geo';

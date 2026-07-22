@@ -4,9 +4,18 @@ import { SUPABASE_ANON_KEY, SUPABASE_URL, isSupabaseConfigured } from '@/lib/sup
 
 type CookieToSet = { name: string; value: string; options: CookieOptions };
 
+// Private / utility routes (login, forms, dashboards) — keep them out of search
+// indexes. Works for client-component pages too, which can't export metadata.
+const PRIVATE = /\/(painel|admin|entrar|registar|nova-senha|verificar|mensagens|editor|novo|publicar|editar)(\/|$)/;
+const noindex = (res: NextResponse, path: string): NextResponse => {
+  if (PRIVATE.test(path)) res.headers.set('X-Robots-Tag', 'noindex, nofollow');
+  return res;
+};
+
 /** Refreshes the Supabase auth session on each request. No-op in demo mode. */
 export async function middleware(request: NextRequest): Promise<NextResponse> {
-  if (!isSupabaseConfigured) return NextResponse.next();
+  const path = request.nextUrl.pathname;
+  if (!isSupabaseConfigured) return noindex(NextResponse.next(), path);
 
   let response = NextResponse.next({ request });
   const supabase = createServerClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
@@ -24,7 +33,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
 
   // Touch the session so tokens refresh and cookies are rewritten.
   await supabase.auth.getUser();
-  return response;
+  return noindex(response, path);
 }
 
 export const config = {
