@@ -276,18 +276,19 @@ export interface SupplierView {
   id: string; userId: string | null; slug: string | null; name: string; category: TL;
   island: string; description: TL | null; priceFrom: TL | null; phone: string | null; verified: boolean;
   seeded: boolean; sourceName: string | null; sourceUrl: string | null; sourcedAt: string | null;
+  thumbnail: string | null; isFeatured: boolean;
 }
 interface SupplierRow {
   id: string; user_id: string | null; slug: string; name: string; category: TL; island: string | null;
   description: TL | null; price_from: TL | null; phone: string | null; verified: boolean;
-  source_name?: string | null; source_url?: string | null; sourced_at?: string | null;
+  source_name?: string | null; source_url?: string | null; sourced_at?: string | null; thumbnail?: string | null; is_featured?: boolean | null;
 }
 
 function demoToSupplier(s: (typeof SUPPLIERS)[number]): SupplierView {
   return {
     id: s.id, userId: null, slug: null, name: s.name, category: s.category, island: s.island,
     description: null, priceFrom: s.priceFrom, phone: null, verified: s.verified,
-    seeded: false, sourceName: null, sourceUrl: null, sourcedAt: null,
+    seeded: false, sourceName: null, sourceUrl: null, sourcedAt: null, thumbnail: null, isFeatured: false,
   };
 }
 
@@ -306,6 +307,7 @@ export async function fetchSuppliers(island?: string): Promise<SupplierView[]> {
     id: r.id, userId: r.user_id, slug: r.slug, name: r.name, category: r.category, island: r.island ?? '',
     description: r.description, priceFrom: r.price_from, phone: r.phone, verified: r.verified,
     seeded: r.user_id === null, sourceName: r.source_name ?? null, sourceUrl: r.source_url ?? null, sourcedAt: r.sourced_at ?? null,
+    thumbnail: r.thumbnail ?? null, isFeatured: r.is_featured ?? false,
   }));
 }
 

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { t, tr, type Locale, type UIKey } from '@/i18n';
-import { fetchListings, fetchProfessionals } from '@/lib/data';
+import { t, tr, type Locale, type UIKey, type TL } from '@/i18n';
+import { fetchListings, fetchProfessionals, fetchServiceListings, fetchSuppliers } from '@/lib/data';
 import { ListingGrid, SectionHead, Card, TrustBadge } from '@/components/ui';
 import { pageMeta } from '@/lib/seo';
 
@@ -13,13 +13,30 @@ export function generateMetadata({ params }: { params: { locale: Locale } }): Me
 
 interface ModuleCard { icon: string; titleKey: UIKey; href: string }
 
+const FEATURED_TITLE: TL = { pt: 'Negócios em destaque', en: 'Featured businesses', nl: 'Uitgelichte bedrijven' };
+const FEATURED_INTRO: TL = {
+  pt: 'Empresas locais em destaque na Djarvista — verificadas e prontas a contactar.',
+  en: 'Local businesses featured on Djarvista — verified and ready to contact.',
+  nl: 'Lokale bedrijven uitgelicht op Djarvista — geverifieerd en direct te contacteren.',
+};
+const DESTAQUE: TL = { pt: 'Destaque', en: 'Featured', nl: 'Uitgelicht' };
+
 export default async function HomePage({ params }: { params: { locale: Locale } }): Promise<JSX.Element> {
   const locale = params.locale;
-  const [listings, professionals] = await Promise.all([
+  const [listings, professionals, featuredServices, featuredSuppliers] = await Promise.all([
     fetchListings().then((r) => r.slice(0, 6)),
     fetchProfessionals().then((r) => r.slice(0, 4)),
+    fetchServiceListings().then((r) => r.filter((s) => s.isFeatured)),
+    fetchSuppliers().then((r) => r.filter((s) => s.isFeatured)),
   ]);
   const p = (s: string): string => `/${locale}${s}`;
+
+  // Featured businesses (paid "Destacar" placement) — homepage visibility so
+  // advertising delivers real exposure. Only items that have an image are shown.
+  const featured = [
+    ...featuredServices.map((s) => ({ id: s.id, name: tr(s.title, locale), subtitle: `${s.municipality} · ${s.island}`.trim(), image: (s.photos && s.photos[0]) || s.thumbnail, href: p(`/imoveis/${s.slug}`) })),
+    ...featuredSuppliers.map((s) => ({ id: s.id, name: s.name, subtitle: tr(s.category, locale), image: s.thumbnail, href: p('/materiais') })),
+  ].filter((f) => Boolean(f.image));
 
   const modules: ModuleCard[] = [
     { icon: '🏠', titleKey: 'nav.imoveis', href: p('/imoveis') },
@@ -48,6 +65,31 @@ export default async function HomePage({ params }: { params: { locale: Locale } 
           <Link href={p('/assistente')} className="underline-offset-2 hover:underline">{t(locale, 'home.howTo')}</Link>
         </div>
       </section>
+
+      {/* Featured businesses — paid "Destacar" placement gets real homepage exposure */}
+      {featured.length > 0 && (
+        <section>
+          <div className="mb-4">
+            <h2 className="text-xl font-semibold text-slate-900">{tr(FEATURED_TITLE, locale)}</h2>
+            <p className="mt-1 text-sm text-slate-600">{tr(FEATURED_INTRO, locale)}</p>
+          </div>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {featured.map((f) => (
+              <Link key={f.id} href={f.href} className="group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-card transition hover:-translate-y-0.5 hover:shadow-lg">
+                <div className="relative aspect-[16/10] bg-slate-100">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={f.image as string} alt={f.name} className="h-full w-full object-cover" loading="lazy" />
+                  <span className="absolute left-2 top-2 rounded-full bg-coral-600 px-2 py-0.5 text-[11px] font-semibold text-white shadow-card">★ {tr(DESTAQUE, locale)}</span>
+                </div>
+                <div className="p-3">
+                  <p className="line-clamp-1 text-sm font-semibold text-slate-900 group-hover:text-brand">{f.name}</p>
+                  <p className="line-clamp-1 text-xs text-slate-500">{f.subtitle}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* List your property (two-sided marketplace entry) */}
       <section className="flex flex-col gap-4 rounded-2xl border border-coral/30 bg-coral-50/60 p-6 sm:flex-row sm:items-center sm:justify-between">
