@@ -9,6 +9,8 @@ import { PageTitle, Card, Pill, TrustBadge, SectionHead, SeededBadge, SourceLine
 import { LeadForm } from '@/components/LeadForm';
 import { ReviewForm } from '@/components/ReviewForm';
 import { ClaimBusiness } from '@/components/ClaimBusiness';
+import { JsonLd } from '@/components/JsonLd';
+import { professionalJsonLd } from '@/lib/jsonld';
 
 const ABOUT: TL = { pt: 'Sobre', en: 'About', nl: 'Over' };
 const SERVICES: TL = { pt: 'Serviços', en: 'Services', nl: 'Diensten' };
@@ -107,6 +109,7 @@ export default async function ProfessionalDetailPage({
 
   return (
     <div>
+      <JsonLd data={professionalJsonLd(pro, locale)} />
       <div className="mb-4">
         <Link href={`/${locale}/profissionais`} className="text-sm font-medium text-brand hover:underline">
           ← {t(locale, 'common.back')} · {t(locale, 'nav.profissionais')}
