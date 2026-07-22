@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import { t, tr, whatsappLink, type Locale, type TL } from '@/i18n';
+import { t, tr, whatsappLink, quoteMessage, type Locale, type TL } from '@/i18n';
 import { fetchSuppliers, type SupplierView } from '@/lib/data';
-import { PageTitle, Card, Pill, EmptyState, SeededBadge, SourceLine } from '@/components/ui';
+import { PageTitle, Card, Pill, EmptyState, SeededBadge, SourceLine, QuoteContact } from '@/components/ui';
 import { ClaimBusiness } from '@/components/ClaimBusiness';
 
 const ISLANDS = ['', 'São Vicente', 'Santo Antão', 'Santiago', 'Sal', 'Boa Vista', 'São Nicolau', 'Fogo', 'Maio', 'Brava'];
@@ -106,13 +106,10 @@ export default async function MaterialsPage({
             {s.description && <p className="mt-2 line-clamp-2 text-sm text-slate-600">{tr(s.description, locale)}</p>}
             {s.phone && (
               s.seeded ? (
-                <p className="mt-3 text-sm text-slate-600">
-                  {t(locale, 'claim.contactDirect')}:{' '}
-                  <a href={`tel:${s.phone}`} className="font-medium text-brand hover:underline">{s.phone}</a>
-                </p>
+                <div className="mt-3"><QuoteContact locale={locale} phone={s.phone} businessName={s.name} /></div>
               ) : (
                 <a
-                  href={whatsappLink(`${tr(s.category, locale)} — ${s.name}`, s.phone)}
+                  href={whatsappLink(quoteMessage(locale, s.name), s.phone)}
                   target="_blank" rel="noopener noreferrer"
                   className="mt-3 inline-block rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-700 hover:border-brand hover:text-brand"
                 >

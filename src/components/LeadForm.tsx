@@ -24,7 +24,8 @@ export function LeadForm({ locale, listingId, proSlug, recipient, source = 'cont
     if (supabase) {
       setBusy(true);
       const { error: err } = await supabase.from('leads').insert({
-        name: form.name, email: form.email || null, phone: form.phone || null, message: form.message,
+        name: form.name, email: form.email || null, phone: form.phone || null,
+        message: `${form.message}\n\n${t(locale, 'lead.viaSuffix')}`,
         listing_id: isUuid(listingId) ? listingId : null, pro_slug: proSlug ?? null,
         recipient: isUuid(recipient ?? undefined) ? recipient : null, source,
       });
@@ -44,6 +45,7 @@ export function LeadForm({ locale, listingId, proSlug, recipient, source = 'cont
       <input value={form.phone} onChange={set('phone')} aria-label={t(locale, 'lead.phone')} placeholder={t(locale, 'lead.phone')} className="w-full rounded border px-2 py-1.5" />
       <textarea required value={form.message} onChange={set('message')} rows={3} aria-label={t(locale, 'lead.message')} placeholder={t(locale, 'lead.message')} className="w-full rounded border px-2 py-1.5" />
       {error && <p className="rounded bg-red-50 px-2 py-1.5 text-xs text-red-700">{error}</p>}
+      <p className="text-xs text-slate-400">{t(locale, 'contact.viaNote')}</p>
       <button disabled={busy} className="w-full rounded-lg bg-brand px-3 py-2 font-semibold text-white disabled:opacity-60">{t(locale, 'common.send')}</button>
     </form>
   );

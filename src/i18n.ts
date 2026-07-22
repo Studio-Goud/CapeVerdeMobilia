@@ -201,6 +201,10 @@ const UI = {
   'lead.phone': { pt: 'Telefone / WhatsApp (opcional)', en: 'Phone / WhatsApp (optional)', nl: 'Telefoon / WhatsApp (optioneel)' },
   'lead.message': { pt: 'A sua mensagem', en: 'Your message', nl: 'Je bericht' },
   'lead.ok': { pt: 'Mensagem recebida. Entraremos em contacto em breve.', en: 'Message received. We will get in touch shortly.', nl: 'Bericht ontvangen. We nemen binnenkort contact op.' },
+  'lead.viaSuffix': { pt: '— pedido enviado através do Djarvista (djarvista.com)', en: '— request sent via Djarvista (djarvista.com)', nl: '— aanvraag verzonden via Djarvista (djarvista.com)' },
+  'contact.viaNote': { pt: 'O seu pedido mostra ao negócio que chegou através do Djarvista.', en: 'Your request shows the business it came through Djarvista.', nl: 'Je aanvraag laat het bedrijf zien dat die via Djarvista binnenkwam.' },
+  'contact.whatsapp': { pt: 'Pedir orçamento por WhatsApp', en: 'Request a quote on WhatsApp', nl: 'Offerte aanvragen via WhatsApp' },
+  'contact.call': { pt: 'Ligar', en: 'Call', nl: 'Bellen' },
 
   // Footer
   'footer.body': { pt: 'Infraestrutura digital independente para imóveis, construção e informação pública em Cabo Verde. A informação comercial é indicativa; a informação oficial é claramente identificada. A Djarvista não presta aconselhamento jurídico.', en: 'Independent digital infrastructure for property, building and public information in Cabo Verde. Commercial information is indicative; official information is clearly identified. Djarvista does not provide legal advice.', nl: 'Onafhankelijke digitale infrastructuur voor vastgoed, bouw en overheidsinformatie in Kaapverdië. Commerciële informatie is indicatief; officiële informatie is duidelijk herkenbaar. Djarvista geeft geen juridisch advies.' },
@@ -459,6 +463,22 @@ export const verifLabel = (l: Locale, v: VerificationLevel): string =>
   t(l, ({ L0_NONE: 'verif.L0', L1_IDENTITY: 'verif.L1', L2_BUSINESS: 'verif.L2', L3_DOCUMENTS: 'verif.L3', L4_TRANSACTION: 'verif.L4', L5_INSTITUTIONAL: 'verif.L5' } as Record<VerificationLevel, UIKey>)[v]);
 export function whatsappLink(message: string, to: string): string {
   return `https://wa.me/${to.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+}
+/** Cape Verde mobile numbers start with 9 or 5 (landlines start with 2 or 3).
+ *  Only mobiles reliably resolve on WhatsApp. */
+export function isMobileCV(phone: string): boolean {
+  const d = phone.replace(/[^0-9]/g, '').replace(/^238/, '');
+  return /^[95]/.test(d);
+}
+/** A WhatsApp/lead message the recipient can read as coming through Djarvista,
+ *  so both sides see the platform did its job. */
+export function quoteMessage(l: Locale, businessName: string): string {
+  const body: TL = {
+    pt: `Bom dia! Vi ${businessName} no Djarvista e gostaria de pedir um orçamento.`,
+    en: `Hello! I found ${businessName} on Djarvista and would like to request a quote.`,
+    nl: `Goedendag! Ik vond ${businessName} op Djarvista en wil graag een offerte aanvragen.`,
+  };
+  return `${tr(body, l)} ${t(l, 'lead.viaSuffix')}`;
 }
 const img = (label: string): string => placeholderImage(label);
 
