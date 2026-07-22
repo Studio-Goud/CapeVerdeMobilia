@@ -11,7 +11,7 @@ export function Wordmark({ className }: { className?: string }): JSX.Element {
         ı
         <span
           className="absolute left-1/2 -translate-x-1/2 rounded-full bg-coral"
-          style={{ top: '-0.30em', width: '0.17em', height: '0.17em' }}
+          style={{ top: '-0.06em', width: '0.18em', height: '0.18em' }}
         />
       </span>
       <span aria-hidden>sta</span>
