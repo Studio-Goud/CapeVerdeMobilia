@@ -15,10 +15,11 @@ Zie ook: `APP_STORE.md` (Apple-draaiboek), `PAYMENTS.md` (verdienmodel),
 - **Procedures (stap-voor-stap)**: 3 uitgelegde trajecten (terrein kopen + bouwen · bestaande woning kopen · bedrijf oprichten) met narratief overzicht ("hoe het meestal verloopt"), CV-specifieke "let op"-punten en per stap uitleg + documenten + tip — drietalig, indicatief (geen juridisch advies).
 - **Directories (echt, met RLS):**
   - **Profissionais** — profiel aanmaken/bewerken, reviews, leads bereiken de professional.
-  - **Materiais** — leveranciersprofiel, WhatsApp-offerte (alleen mét nummer), admin-`verified`.
+  - **Materiais** — leveranciersprofiel mét foto, WhatsApp-offerte (alleen mét nummer), "✓ Verificado"-badge (operator/admin).
   - **Concursos** — plaatsen, bieden, eigenaar ziet biedingen, open/sluiten, gesloten = geen biedingen.
   - **Projetos** — portfolio met voortgang/mijlpalen + cover.
 - **Telefoonboek (claimbaar)**: bedrijven kunnen als "niet-geclaimd" op de site staan met bron+datum; de echte eigenaar claimt → admin keurt goed (`approve_claim`) → profiel + bewaarde leads gaan over. Badge + bronregel tonen de herkomst. Migratie `0019`; eerste seed = 25 échte São Vicente-bedrijven (`0020`, gebrond — zie `supabase/SEED_0020_SOURCES.md`).
+- **Operator-verificatie + advertenties + uitlichten (verdienmodel zichtbaar)**: bedrijven zonder account kunnen "Geverifieerd door Djarvista" worden (blijft claimbaar). **Service-advertenties** (`kind=SERVICE`) met fotogalerij + directe **"Peça orçamento"** WhatsApp/bel-knop. Betaalde **uitlichting** (`is_featured`) toont bedrijven mét foto in **"Negócios em destaque"** op de homepage. Eerste voorbeelden: **Bomclima** (installateur, Serviços) + **3 AS** (importeur, Materiais) — losstaande bedrijven. Migraties `0023`–`0027`.
 - **Dashboard-beheer**: mijn advertenties, leads, huuraanvragen, **mijn concursos** + **mijn projetos** (beheren), agenda, directory-profielen.
 - **Verdienmodel**: "Destacar"-lus (aanvraag → admin keurt goed → `is_featured`). Gateway-opties in `PAYMENTS.md`.
 - **Admin/moderatie**: verificaties, advertenties, **Destaques**-tab, info-editor; met foutmeldingen.
@@ -55,8 +56,9 @@ Playbooks in de repo: `SEO_GROWTH_PLAN.md`, `SEO_KEYWORD_MAP.md`, `SEO_OFFSITE_P
 `MARKETING_OUTREACH_ADS.md`.
 
 ## 🗄️ Migraties
-0001–0022 zijn gedraaid (telefoonboek + São Vicente-seed + Bomclima + 5 gebronde
-info-artikelen: kopen, NIF, cITI/cIPI, erfrecht, condomínio). Zie `MIGRATIONS.md`.
+0001–0026 zijn gedraaid (telefoonboek + São Vicente-seed + Bomclima + 5 gebronde
+info-artikelen; operator-verificatie + Bomclima-advertentie + 3 AS-leverancier +
+homepage-uitlichting). Klein rest: `0027` (3 AS-kaart → logo). Zie `MIGRATIONS.md`.
 
 ## ⚠️ Alleen jij kunt dit doen
 1. **GA4 aankoppelen voor live bezoekers**: maak een GA4-property → kopieer de Measurement ID (`G-XXXXXXXXXX`) → zet als `NEXT_PUBLIC_GA_ID` in Vercel → Project → Environment Variables → redeploy. Daarna toont GA4 → Reports → Realtime live bezoekers. (Vercel Web Analytics draait al automatisch.)

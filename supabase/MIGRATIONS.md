@@ -29,9 +29,10 @@ yet migrated, so the live site never breaks while you catch up.
 | 0021 | `migrations/0021_seed_bomclima.sql` | add Bomclima, Lda (AC/refrigeration, São Vicente) — locally confirmed, sourced from its Facebook page. Run **after** 0020 | ✅ done |
 | 0022 | `migrations/0022_publications_seo.sql` | seed 5 sourced info articles (buying, NIF, taxes cITI/cIPI 2026, inheritance, condominium) — trilingual, FACT/ASSUMPTION-marked, for SEO. Run after 0011 | ✅ done |
 | 0023 | `migrations/0023_bomclima_verified_service_ad.sql` | Bomclima: operator-verify the seeded professional (`professionals.verified_level`) + publish a claimable service advert (`listings` gets nullable owner + provenance). Photos are site assets. Run **after** 0021 | ✅ done |
-| 0024 | `migrations/0024_listing_contact_phone.sql` | `listings.phone` → "Peça orçamento" WhatsApp/call button on service adverts; sets Bomclima's number. Run **after** 0023 | ⏳ **to run** |
-| 0025 | `migrations/0025_seed_3as.sql` | add 3 AS (electrical-materials importer/wholesaler, São Vicente) as a seeded + **verified**, claimable supplier — from its invoice (NIF 275341100) + www.3as.cv. Run **after** 0020 | ⏳ **to run** |
-| 0026 | `migrations/0026_featured_and_supplier_image.sql` | homepage "Negócios em destaque": `suppliers.thumbnail` + `suppliers.is_featured` (guarded); feature Bomclima's advert + 3 AS (with storefront image). Run **after** 0025 | ⏳ **to run** |
+| 0024 | `migrations/0024_listing_contact_phone.sql` | `listings.phone` → "Peça orçamento" WhatsApp/call button on service adverts; sets Bomclima's number. Run **after** 0023 | ✅ done |
+| 0025 | `migrations/0025_seed_3as.sql` | add 3 AS (electrical-materials importer/wholesaler, São Vicente) as a seeded + **verified**, claimable supplier — from its invoice (NIF 275341100) + www.3as.cv. Run **after** 0020 | ✅ done |
+| 0026 | `migrations/0026_featured_and_supplier_image.sql` | homepage "Negócios em destaque": `suppliers.thumbnail` + `suppliers.is_featured` (guarded); feature Bomclima's advert + 3 AS (with storefront image). Run **after** 0025 | ✅ done |
+| 0027 | `migrations/0027_3as_logo_card.sql` | 3 AS card image → official logo banner instead of the storefront photo. Run **after** 0026 | ⏳ **to run** |
 
 ## Roles
 - Make yourself admin (trust/ops + info editor):
