@@ -21,7 +21,30 @@ export default async function MaterialsPage({
 }): Promise<JSX.Element> {
   const locale = params.locale;
   const island = one(searchParams.island) ?? '';
+  const cat = one(searchParams.cat) ?? '';
   const rows = await fetchSuppliers(island);
+
+  // Distinct categories present (keyed on the PT value), most common first.
+  const counts = new Map<string, { tl: TL; n: number }>();
+  for (const s of rows) {
+    const k = s.category.pt;
+    const e = counts.get(k);
+    if (e) e.n += 1; else counts.set(k, { tl: s.category, n: 1 });
+  }
+  const cats = [...counts.entries()].sort((a, b) => b[1].n - a[1].n || a[0].localeCompare(b[0]));
+  const shown = cat ? rows.filter((s) => s.category.pt === cat) : rows;
+
+  const hrefFor = (c: string): string => {
+    const qs = new URLSearchParams();
+    if (island) qs.set('island', island);
+    if (c) qs.set('cat', c);
+    const s = qs.toString();
+    return `/${locale}/materiais${s ? `?${s}` : ''}`;
+  };
+  const chip = (active: boolean): string =>
+    ['rounded-full px-3 py-1.5 text-sm font-medium transition',
+      active ? 'bg-brand text-white' : 'border border-slate-200 bg-white text-slate-600 hover:border-brand hover:text-brand',
+    ].join(' ');
 
   return (
     <div>
@@ -34,19 +57,34 @@ export default async function MaterialsPage({
         {tr(SUPPLIER_CTA, locale)}
       </Link>
 
-      <form className="mb-5 flex flex-wrap items-end gap-3 rounded-xl border border-slate-200 bg-white p-4">
+      <form className="mb-4 flex flex-wrap items-end gap-3 rounded-xl border border-slate-200 bg-white p-4">
         <label className="flex flex-col text-sm">
           <span className="mb-1 text-slate-600">{t(locale, 'common.island')}</span>
           <select name="island" defaultValue={island} className="rounded-lg border border-slate-300 px-3 py-1.5">
             {ISLANDS.map((i) => <option key={i} value={i}>{i || t(locale, 'common.all')}</option>)}
           </select>
         </label>
+        {cat && <input type="hidden" name="cat" value={cat} />}
         <button className="rounded-lg bg-brand px-4 py-2 text-sm font-semibold text-white">{t(locale, 'common.filter')}</button>
       </form>
 
-      <p className="mb-3 text-sm text-slate-500">{rows.length} {t(locale, 'common.results')}</p>
+      {cats.length > 1 && (
+        <div className="mb-5">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">{t(locale, 'common.category')}</p>
+          <div className="flex flex-wrap gap-2">
+            <Link href={hrefFor('')} className={chip(!cat)}>{t(locale, 'common.all')}</Link>
+            {cats.map(([k, v]) => (
+              <Link key={k} href={hrefFor(k)} className={chip(cat === k)}>
+                {tr(v.tl, locale)} <span className={cat === k ? 'text-white/70' : 'text-slate-400'}>{v.n}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
 
-      {rows.length === 0 && (
+      <p className="mb-3 text-sm text-slate-500">{shown.length} {t(locale, 'common.results')}</p>
+
+      {shown.length === 0 && (
         <EmptyState
           icon="🧱"
           message={tr({ pt: 'Ainda não há fornecedores aqui. É fornecedor? Adicione o seu negócio.', en: 'No suppliers here yet. Are you a supplier? Add your business.', nl: 'Nog geen leveranciers hier. Leverancier? Voeg je bedrijf toe.' }, locale)}
@@ -56,7 +94,7 @@ export default async function MaterialsPage({
       )}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {rows.map((s: SupplierView) => (
+        {shown.map((s: SupplierView) => (
           <Card key={s.id}>
             <div className="flex items-start justify-between gap-2">
               <h2 className="font-semibold text-slate-900">{s.name}</h2>
