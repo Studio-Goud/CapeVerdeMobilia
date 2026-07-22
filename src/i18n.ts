@@ -127,6 +127,7 @@ const UI = {
   'pros.intro': { pt: 'Encontre profissionais verificados para construção, renovação e serviços. As avaliações “verificadas” têm prova de uma transação ou projeto real.', en: 'Find verified professionals for construction, renovation and services. “Verified” reviews have proof of a real transaction or project.', nl: 'Vind geverifieerde professionals voor bouw, renovatie en diensten. “Geverifieerde” reviews hebben bewijs van een echte transactie of project.' },
   'pros.noReviews': { pt: 'Sem avaliações', en: 'No reviews', nl: 'Geen reviews' },
   'pros.requestQuote': { pt: 'Pedir orçamento', en: 'Request a quote', nl: 'Offerte aanvragen' },
+  'pros.profession': { pt: 'Profissão', en: 'Profession', nl: 'Beroep' },
 
   // Seeded ("phone-book") directory entries + claim flow
   'claim.unclaimed': { pt: 'Não reclamado', en: 'Unclaimed', nl: 'Niet geclaimd' },
@@ -391,6 +392,25 @@ const UI = {
 
 export type UIKey = keyof typeof UI;
 export const t = (l: Locale, key: UIKey): string => tr(UI[key], l);
+
+// Trilingual labels for the known professional categories (the free-text `category`
+// stored on each professional). Keyed on the Portuguese value used in the seed.
+// Unknown / custom categories fall back to the raw string.
+export const PRO_CATEGORY_LABELS: Record<string, TL> = {
+  'Advogados': { pt: 'Advogados', en: 'Lawyers', nl: 'Advocaten' },
+  'Despachante oficial': { pt: 'Despachante oficial', en: 'Customs broker', nl: 'Douaneagent' },
+  'Construção civil': { pt: 'Construção civil', en: 'Construction', nl: 'Bouw' },
+  'Serralharia': { pt: 'Serralharia', en: 'Metalwork', nl: 'Metaalbouw' },
+  'Arquitetura': { pt: 'Arquitetura', en: 'Architecture', nl: 'Architectuur' },
+  'Climatização': { pt: 'Climatização', en: 'Air conditioning', nl: 'Airco' },
+  'Limpeza': { pt: 'Limpeza', en: 'Cleaning', nl: 'Schoonmaak' },
+  'Gás': { pt: 'Gás', en: 'Gas', nl: 'Gas' },
+};
+/** Trilingual label for a professional category; falls back to the raw value. */
+export const proCategoryLabel = (l: Locale, category: string): string => {
+  const tl = PRO_CATEGORY_LABELS[category];
+  return tl ? tr(tl, l) : category;
+};
 
 // --- Content types ---
 export type VerificationLevel = 'L0_NONE' | 'L1_IDENTITY' | 'L2_BUSINESS' | 'L3_DOCUMENTS' | 'L4_TRANSACTION' | 'L5_INSTITUTIONAL';
