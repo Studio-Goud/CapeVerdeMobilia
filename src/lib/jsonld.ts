@@ -69,6 +69,43 @@ export function professionalJsonLd(pro: ProProfile, locale: Locale): Record<stri
   return data;
 }
 
+/** Breadcrumb trail for a landing/detail page (helps Google show a breadcrumb). */
+export function breadcrumbJsonLd(items: { name: string; url: string }[]): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((it, i) => ({
+      '@type': 'ListItem', position: i + 1, name: it.name, item: `${BASE}${it.url}`,
+    })),
+  };
+}
+
+/** A category/island landing as a CollectionPage whose mainEntity is the list of
+ *  results — machine-readable "this page is a list of N things in a place". */
+export function collectionPageJsonLd(opts: {
+  path: string; name: string; description: string; locale: Locale;
+  items: { url: string; name: string }[];
+}): Record<string, unknown> {
+  const url = `${BASE}${opts.path}`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${url}#collection`,
+    url,
+    name: opts.name,
+    description: opts.description,
+    inLanguage: opts.locale,
+    isPartOf: { '@id': `${BASE}/#website` },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: opts.items.length,
+      itemListElement: opts.items.map((it, i) => ({
+        '@type': 'ListItem', position: i + 1, name: it.name, url: `${BASE}${it.url}`,
+      })),
+    },
+  };
+}
+
 /** A property advert as a RealEstateListing. */
 export function listingJsonLd(l: Listing, locale: Locale): Record<string, unknown> {
   const url = `${BASE}/${locale}/imoveis/${l.slug}`;

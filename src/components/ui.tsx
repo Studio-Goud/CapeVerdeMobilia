@@ -5,6 +5,7 @@ import {
   t, tr, formatPrice, docLabel, verifLabel, whatsappLink, quoteMessage, isMobileCV,
 } from '@/i18n';
 import { isSupabaseConfigured } from '@/lib/supabase/env';
+import { popularLandings } from '@/lib/landings';
 import { Wordmark } from './Wordmark';
 
 const cn = (...p: Array<string | false | null | undefined>): string => p.filter(Boolean).join(' ');
@@ -214,6 +215,19 @@ export function SiteFooter({ locale }: { locale: Locale }): JSX.Element {
             {link('/precos', 'nav.pricing')}
             {link('/investir', 'nav.investir')}
             {link('/info/editor', 'info.editorLink')}
+          </ul>
+        </div>
+      </div>
+      {/* Popular searches — site-wide internal links to the category/island landings */}
+      <div className="border-t border-slate-100">
+        <div className="mx-auto w-full max-w-6xl px-4 py-4">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
+            {tr({ pt: 'Procuras populares', en: 'Popular searches', nl: 'Populaire zoekopdrachten' }, locale)}
+          </p>
+          <ul className="flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-slate-600">
+            {popularLandings(locale).map((it) => (
+              <li key={it.href}><Link href={`/${locale}${it.href}`} className="hover:text-brand">{it.label}</Link></li>
+            ))}
           </ul>
         </div>
       </div>
