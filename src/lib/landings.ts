@@ -15,7 +15,7 @@ export const getArea = (slug: string): IslandGuide | undefined => AREAS[slug];
 type Copy = (area: string) => TL;
 
 // ---------------------------------------------------------------------------
-// Property landings — /imoveis/<deal>/<area>. `kind` matches the listing kind.
+// Property landings - /imoveis/<deal>/<area>. `kind` matches the listing kind.
 // ---------------------------------------------------------------------------
 export interface DealDef { slug: string; kind: string; label: TL; title: Copy; h1: Copy; desc: Copy; blurb: Copy }
 
@@ -26,7 +26,7 @@ export const PROPERTY_DEALS: Record<string, DealDef> = {
     title: (a) => ({ pt: `Casas à venda em ${a}, Cabo Verde`, en: `Houses for sale in ${a}, Cape Verde`, nl: `Huizen te koop op ${a}, Kaapverdië` }),
     h1: (a) => ({ pt: `Casas à venda em ${a}`, en: `Houses for sale in ${a}`, nl: `Huizen te koop op ${a}` }),
     desc: (a) => ({ pt: `Veja casas e apartamentos à venda em ${a}, Cabo Verde. Cada anúncio indica o estado dos documentos. Peça visita pelo Djarvista.`, en: `Browse houses and apartments for sale in ${a}, Cape Verde. Every listing shows its document status. Request a viewing via Djarvista.`, nl: `Bekijk huizen en appartementen te koop op ${a}, Kaapverdië. Elke advertentie toont de documentstatus. Vraag een bezichtiging via Djarvista.` }),
-    blurb: (a) => ({ pt: `Encontre casas e apartamentos à venda em ${a}, Cabo Verde. No Djarvista cada anúncio mostra o estado dos documentos e liga-o diretamente a quem vende — sem intermediários escondidos.`, en: `Find houses and apartments for sale in ${a}, Cabo Verde. On Djarvista every listing shows its document status and connects you directly to the seller — no hidden middlemen.`, nl: `Vind huizen en appartementen te koop op ${a}, Kaapverdië. Op Djarvista toont elke advertentie de documentstatus en verbindt je direct met de verkoper — zonder verborgen tussenpersonen.` }),
+    blurb: (a) => ({ pt: `Encontre casas e apartamentos à venda em ${a}, Cabo Verde. No Djarvista cada anúncio mostra o estado dos documentos e liga-o diretamente a quem vende - sem intermediários escondidos.`, en: `Find houses and apartments for sale in ${a}, Cabo Verde. On Djarvista every listing shows its document status and connects you directly to the seller - no hidden middlemen.`, nl: `Vind huizen en appartementen te koop op ${a}, Kaapverdië. Op Djarvista toont elke advertentie de documentstatus en verbindt je direct met de verkoper - zonder verborgen tussenpersonen.` }),
   },
   terrenos: {
     slug: 'terrenos', kind: 'LAND',
@@ -41,7 +41,7 @@ export const PROPERTY_DEALS: Record<string, DealDef> = {
     label: { pt: 'Arrendar', en: 'To rent', nl: 'Te huur' },
     title: (a) => ({ pt: `Casas para arrendar em ${a}, Cabo Verde`, en: `Homes to rent in ${a}, Cape Verde`, nl: `Huizen te huur op ${a}, Kaapverdië` }),
     h1: (a) => ({ pt: `Casas e apartamentos para arrendar em ${a}`, en: `Homes and apartments to rent in ${a}`, nl: `Huizen en appartementen te huur op ${a}` }),
-    desc: (a) => ({ pt: `Apartamentos e casas para arrendar em ${a}, Cabo Verde — arrendamento de longa duração, T1, T2 e T3.`, en: `Apartments and houses to rent long-term in ${a}, Cape Verde — T1, T2 and T3.`, nl: `Appartementen en huizen voor langere termijn te huur op ${a}, Kaapverdië — T1, T2 en T3.` }),
+    desc: (a) => ({ pt: `Apartamentos e casas para arrendar em ${a}, Cabo Verde - arrendamento de longa duração, T1, T2 e T3.`, en: `Apartments and houses to rent long-term in ${a}, Cape Verde - T1, T2 and T3.`, nl: `Appartementen en huizen voor langere termijn te huur op ${a}, Kaapverdië - T1, T2 en T3.` }),
     blurb: (a) => ({ pt: `Casas e apartamentos para arrendar em ${a}, Cabo Verde. A Djarvista dá-lhe também o gerador de contrato de arrendamento e a verificação de identidade para arrendar com confiança.`, en: `Houses and apartments to rent in ${a}, Cabo Verde. Djarvista also gives you the rental-contract generator and identity verification to rent with confidence.`, nl: `Huizen en appartementen te huur op ${a}, Kaapverdië. Djarvista biedt ook de huurcontract-generator en identiteitsverificatie om met vertrouwen te huren.` }),
   },
   ferias: {
@@ -66,13 +66,13 @@ export const PROPERTY_DEALS: Record<string, DealDef> = {
     title: (a) => ({ pt: `Imóveis comerciais em ${a}, Cabo Verde`, en: `Commercial property in ${a}, Cape Verde`, nl: `Bedrijfsvastgoed op ${a}, Kaapverdië` }),
     h1: (a) => ({ pt: `Imóveis comerciais em ${a}`, en: `Commercial property in ${a}`, nl: `Bedrijfsvastgoed op ${a}` }),
     desc: (a) => ({ pt: `Lojas, escritórios e espaços comerciais para comprar ou arrendar em ${a}, Cabo Verde.`, en: `Shops, offices and commercial space to buy or rent in ${a}, Cape Verde.`, nl: `Winkels, kantoren en bedrijfsruimte te koop of te huur op ${a}, Kaapverdië.` }),
-    blurb: (a) => ({ pt: `Espaços comerciais em ${a}, Cabo Verde — lojas, escritórios e armazéns para comprar ou arrendar. Contacte diretamente pelo Djarvista.`, en: `Commercial space in ${a}, Cabo Verde — shops, offices and warehouses to buy or rent. Contact directly through Djarvista.`, nl: `Bedrijfsruimte op ${a}, Kaapverdië — winkels, kantoren en loodsen te koop of te huur. Neem direct contact op via Djarvista.` }),
+    blurb: (a) => ({ pt: `Espaços comerciais em ${a}, Cabo Verde - lojas, escritórios e armazéns para comprar ou arrendar. Contacte diretamente pelo Djarvista.`, en: `Commercial space in ${a}, Cabo Verde - shops, offices and warehouses to buy or rent. Contact directly through Djarvista.`, nl: `Bedrijfsruimte op ${a}, Kaapverdië - winkels, kantoren en loodsen te koop of te huur. Neem direct contact op via Djarvista.` }),
   },
 };
 export const PROPERTY_DEAL_SLUGS: string[] = Object.keys(PROPERTY_DEALS);
 
 // ---------------------------------------------------------------------------
-// Professional landings — /profissionais/<category>/<area>.
+// Professional landings - /profissionais/<category>/<area>.
 // `category` must match the DB `professionals.category` value exactly.
 // ---------------------------------------------------------------------------
 const CLAIM_NOTE: TL = {
@@ -103,7 +103,7 @@ export const PRO_CATEGORIES: Record<string, CatDef> = {
     slug: 'construcao-civil', category: 'Construção civil',
     title: (a) => ({ pt: `Construção civil em ${a}, Cabo Verde`, en: `Construction firms in ${a}, Cape Verde`, nl: `Bouwbedrijven op ${a}, Kaapverdië` }),
     h1: (a) => ({ pt: `Construção civil em ${a}`, en: `Construction and builders in ${a}`, nl: `Bouw en aannemers op ${a}` }),
-    desc: (a) => ({ pt: `Empreiteiros e empresas de construção civil em ${a}, Cabo Verde — obras novas e remodelações.`, en: `Builders and construction companies in ${a}, Cape Verde — new builds and renovations.`, nl: `Aannemers en bouwbedrijven op ${a}, Kaapverdië — nieuwbouw en renovatie.` }),
+    desc: (a) => ({ pt: `Empreiteiros e empresas de construção civil em ${a}, Cabo Verde - obras novas e remodelações.`, en: `Builders and construction companies in ${a}, Cape Verde - new builds and renovations.`, nl: `Aannemers en bouwbedrijven op ${a}, Kaapverdië - nieuwbouw en renovatie.` }),
     blurb: (a) => withClaim({ pt: `Empreiteiros e empresas de construção civil em ${a}, Cabo Verde, para obras novas e remodelações.`, en: `Builders and construction companies in ${a}, Cabo Verde for new builds and renovations.`, nl: `Aannemers en bouwbedrijven op ${a}, Kaapverdië voor nieuwbouw en renovatie.` }),
   },
   arquitetura: {
@@ -131,8 +131,8 @@ export const PRO_CATEGORIES: Record<string, CatDef> = {
     slug: 'limpeza', category: 'Limpeza',
     title: (a) => ({ pt: `Serviços de limpeza em ${a}, Cabo Verde`, en: `Cleaning services in ${a}, Cape Verde`, nl: `Schoonmaakdiensten op ${a}, Kaapverdië` }),
     h1: (a) => ({ pt: `Serviços de limpeza em ${a}`, en: `Cleaning services in ${a}`, nl: `Schoonmaakdiensten op ${a}` }),
-    desc: (a) => ({ pt: `Empresas e serviços de limpeza em ${a}, Cabo Verde — doméstica, comercial e pós-obra.`, en: `Cleaning companies and services in ${a}, Cape Verde — domestic, commercial and post-construction.`, nl: `Schoonmaakbedrijven en -diensten op ${a}, Kaapverdië — huishoudelijk, commercieel en na de bouw.` }),
-    blurb: (a) => withClaim({ pt: `Empresas e serviços de limpeza em ${a}, Cabo Verde — limpeza doméstica, comercial e pós-obra.`, en: `Cleaning companies and services in ${a}, Cabo Verde — domestic, commercial and post-construction.`, nl: `Schoonmaakbedrijven en -diensten op ${a}, Kaapverdië — huishoudelijk, commercieel en na de bouw.` }),
+    desc: (a) => ({ pt: `Empresas e serviços de limpeza em ${a}, Cabo Verde - doméstica, comercial e pós-obra.`, en: `Cleaning companies and services in ${a}, Cape Verde - domestic, commercial and post-construction.`, nl: `Schoonmaakbedrijven en -diensten op ${a}, Kaapverdië - huishoudelijk, commercieel en na de bouw.` }),
+    blurb: (a) => withClaim({ pt: `Empresas e serviços de limpeza em ${a}, Cabo Verde - limpeza doméstica, comercial e pós-obra.`, en: `Cleaning companies and services in ${a}, Cabo Verde - domestic, commercial and post-construction.`, nl: `Schoonmaakbedrijven en -diensten op ${a}, Kaapverdië - huishoudelijk, commercieel en na de bouw.` }),
   },
   gas: {
     slug: 'gas', category: 'Gás',
@@ -145,12 +145,12 @@ export const PRO_CATEGORIES: Record<string, CatDef> = {
 export const PRO_CATEGORY_SLUGS: string[] = Object.keys(PRO_CATEGORIES);
 
 // ---------------------------------------------------------------------------
-// Materials landing — /materiais/<area> (suppliers filtered by island name).
+// Materials landing - /materiais/<area> (suppliers filtered by island name).
 // ---------------------------------------------------------------------------
 export const MATERIALS = {
   title: (a: string): TL => ({ pt: `Materiais de construção em ${a}, Cabo Verde`, en: `Building materials in ${a}, Cape Verde`, nl: `Bouwmaterialen op ${a}, Kaapverdië` }),
   h1: (a: string): TL => ({ pt: `Materiais de construção em ${a}`, en: `Building materials in ${a}`, nl: `Bouwmaterialen op ${a}` }),
-  desc: (a: string): TL => ({ pt: `Lojas e fornecedores de materiais de construção em ${a}, Cabo Verde — cimento, agregados e ferragens.`, en: `Building-material suppliers and shops in ${a}, Cape Verde — cement, aggregates and hardware.`, nl: `Leveranciers en winkels voor bouwmaterialen op ${a}, Kaapverdië — cement, granulaat en ijzerwaren.` }),
+  desc: (a: string): TL => ({ pt: `Lojas e fornecedores de materiais de construção em ${a}, Cabo Verde - cimento, agregados e ferragens.`, en: `Building-material suppliers and shops in ${a}, Cape Verde - cement, aggregates and hardware.`, nl: `Leveranciers en winkels voor bouwmaterialen op ${a}, Kaapverdië - cement, granulaat en ijzerwaren.` }),
   blurb: (a: string): TL => ({ pt: `Fornecedores de materiais de construção em ${a}, Cabo Verde. Perfis a partir de fontes públicas, prontos a serem reclamados pelo negócio.`, en: `Building-material suppliers in ${a}, Cabo Verde. Profiles from public sources, ready to be claimed by the business.`, nl: `Leveranciers van bouwmaterialen op ${a}, Kaapverdië. Profielen uit openbare bronnen, klaar om door het bedrijf te worden geclaimd.` }),
 };
 

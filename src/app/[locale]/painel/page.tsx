@@ -153,7 +153,7 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
             <Stat label={t(locale, 'dash.myListings')} value={configured ? (biz?.listings.length ?? '…') : '3'} />
             <Stat label={t(locale, 'dash.incomingLeads')} value={configured ? (biz?.leadsCount ?? '…') : '7'} />
             <Stat label={t(locale, 'dash.quotes')} value={configured ? '0' : '4'} />
-            <Stat label={t(locale, 'dash.reviews')} value={configured ? '—' : '★ 4.6'} hint={configured ? undefined : '8'} />
+            <Stat label={t(locale, 'dash.reviews')} value={configured ? '-' : '★ 4.6'} hint={configured ? undefined : '8'} />
           </div>
 
           {/* Directory profiles (professional + supplier) */}
@@ -256,10 +256,10 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
                 {rentals.map((r) => (
                   <Card key={r.id}>
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <p className="text-sm font-semibold text-slate-900">{r.listingTitle ? tr(r.listingTitle, locale) : '—'}</p>
+                      <p className="text-sm font-semibold text-slate-900">{r.listingTitle ? tr(r.listingTitle, locale) : '-'}</p>
                       <Pill tone={r.status === 'accepted' ? 'emerald' : r.status === 'declined' || r.status === 'withdrawn' ? 'slate' : 'amber'}>{rrLabel(r.status)}</Pill>
                     </div>
-                    <p className="mt-1 text-xs text-slate-500">{r.start_date ? formatDate(locale, r.start_date) : '—'} → {r.end_date ? formatDate(locale, r.end_date) : '—'}</p>
+                    <p className="mt-1 text-xs text-slate-500">{r.start_date ? formatDate(locale, r.start_date) : '-'} → {r.end_date ? formatDate(locale, r.end_date) : '-'}</p>
                     {r.message && <p className="mt-1 text-sm text-slate-700">{r.message}</p>}
                     {r.status === 'pending' && (
                       <div className="mt-2 flex gap-2">
@@ -398,8 +398,8 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
                 {rentals.map((r) => (
                   <Card key={r.id} className="flex flex-wrap items-center justify-between gap-2">
                     <div>
-                      <p className="text-sm font-medium text-slate-900">{r.listingTitle ? tr(r.listingTitle, locale) : '—'}</p>
-                      <p className="text-xs text-slate-500">{r.start_date ? formatDate(locale, r.start_date) : '—'} → {r.end_date ? formatDate(locale, r.end_date) : '—'}</p>
+                      <p className="text-sm font-medium text-slate-900">{r.listingTitle ? tr(r.listingTitle, locale) : '-'}</p>
+                      <p className="text-xs text-slate-500">{r.start_date ? formatDate(locale, r.start_date) : '-'} → {r.end_date ? formatDate(locale, r.end_date) : '-'}</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <Pill tone={r.status === 'accepted' ? 'emerald' : r.status === 'declined' || r.status === 'withdrawn' ? 'slate' : 'amber'}>{rrLabel(r.status)}</Pill>

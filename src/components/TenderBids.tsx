@@ -12,7 +12,7 @@ const COPY = {
 } satisfies Record<string, TL>;
 
 /**
- * Shows the bids on a tender — but only to the tender owner. RLS already limits
+ * Shows the bids on a tender - but only to the tender owner. RLS already limits
  * `tender_bids` reads to the owner (and each bidder to their own row), so this
  * component additionally gates on ownerId to avoid showing a bidder their single
  * row as if it were the owner's inbox.

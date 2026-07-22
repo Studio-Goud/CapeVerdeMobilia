@@ -46,9 +46,9 @@ const AUTH_MSG: TL = {
   nl: 'Je sessie is verlopen. Log opnieuw in.',
 };
 
-/** Compose "Base — qualifier" while staying trilingual. */
+/** Compose "Base - qualifier" while staying trilingual. */
 function ql(base: TL, qual: TL): TL {
-  return { pt: `${base.pt} — ${qual.pt}`, en: `${base.en} — ${qual.en}`, nl: `${base.nl} — ${qual.nl}` };
+  return { pt: `${base.pt} - ${qual.pt}`, en: `${base.en} - ${qual.en}`, nl: `${base.nl} - ${qual.nl}` };
 }
 
 function slugify(s: string): string {

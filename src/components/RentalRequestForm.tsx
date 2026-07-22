@@ -21,9 +21,9 @@ const COPY = {
   end: { pt: 'Data de fim', en: 'End date', nl: 'Einddatum' },
   message: { pt: 'Mensagem para o senhorio', en: 'Message to the landlord', nl: 'Bericht aan de verhuurder' },
   demo: {
-    pt: 'Demonstração — o pedido não é enviado sem backend ativo.',
-    en: 'Demo — the request is not sent without an active backend.',
-    nl: 'Demo — de aanvraag wordt niet verzonden zonder actieve backend.',
+    pt: 'Demonstração - o pedido não é enviado sem backend ativo.',
+    en: 'Demo - the request is not sent without an active backend.',
+    nl: 'Demo - de aanvraag wordt niet verzonden zonder actieve backend.',
   },
   sessionExpired: {
     pt: 'A sua sessão expirou. Entre novamente para enviar o pedido.',

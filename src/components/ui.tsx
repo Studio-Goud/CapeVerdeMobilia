@@ -218,7 +218,7 @@ export function SiteFooter({ locale }: { locale: Locale }): JSX.Element {
           </ul>
         </div>
       </div>
-      {/* Popular searches — site-wide internal links to the category/island landings */}
+      {/* Popular searches - site-wide internal links to the category/island landings */}
       <div className="border-t border-slate-100">
         <div className="mx-auto w-full max-w-6xl px-4 py-4">
           <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">

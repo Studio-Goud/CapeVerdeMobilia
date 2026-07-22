@@ -173,9 +173,9 @@ const A_LA_CARTE: AlaCarte[] = [
 const COPY = {
   title: { pt: 'Preços e planos', en: 'Pricing and plans', nl: 'Prijzen en pakketten' },
   intro: {
-    pt: 'O básico é grátis: qualquer residente pode anunciar para vender ou arrendar e procurar imóveis sem pagar. Só cobramos a quem recebe valor — profissionais, empresas, compradores estrangeiros e instituições.',
-    en: 'The basics are free: any resident can list to sell or rent and search properties without paying. We only charge those who receive value — professionals, businesses, foreign buyers and institutions.',
-    nl: 'De basis is gratis: elke inwoner kan plaatsen om te verkopen of verhuren en woningen zoeken zonder te betalen. We rekenen alleen bij wie waarde ontvangt — professionals, bedrijven, buitenlandse kopers en instellingen.',
+    pt: 'O básico é grátis: qualquer residente pode anunciar para vender ou arrendar e procurar imóveis sem pagar. Só cobramos a quem recebe valor - profissionais, empresas, compradores estrangeiros e instituições.',
+    en: 'The basics are free: any resident can list to sell or rent and search properties without paying. We only charge those who receive value - professionals, businesses, foreign buyers and institutions.',
+    nl: 'De basis is gratis: elke inwoner kan plaatsen om te verkopen of verhuren en woningen zoeken zonder te betalen. We rekenen alleen bij wie waarde ontvangt - professionals, bedrijven, buitenlandse kopers en instellingen.',
   },
   freeBandTitle: { pt: 'Grátis para sempre', en: 'Free forever', nl: 'Voor altijd gratis' },
   freeBandBody: {
@@ -186,9 +186,9 @@ const COPY = {
   plansHead: { pt: 'Planos', en: 'Plans', nl: 'Pakketten' },
   alaCarteHead: { pt: 'Serviços à la carte', en: 'À la carte services', nl: 'Losse diensten' },
   alaCarteIntro: {
-    pt: 'Micro-taxas opcionais para serviços de confiança. Use se precisar — o serviço básico não depende delas.',
-    en: 'Optional micro-fees for trust services. Use them if you need them — the basic service does not depend on them.',
-    nl: 'Optionele microkosten voor vertrouwensdiensten. Gebruik ze indien nodig — de basisdienst hangt er niet van af.',
+    pt: 'Micro-taxas opcionais para serviços de confiança. Use se precisar - o serviço básico não depende delas.',
+    en: 'Optional micro-fees for trust services. Use them if you need them - the basic service does not depend on them.',
+    nl: 'Optionele microkosten voor vertrouwensdiensten. Gebruik ze indien nodig - de basisdienst hangt er niet van af.',
   },
   disclaimerTitle: { pt: 'Valores indicativos', en: 'Indicative figures', nl: 'Indicatieve bedragen' },
   disclaimerBody: {

@@ -41,7 +41,7 @@ export default async function ListingDetailPage({ params }: { params: { locale: 
   const similar = (await fetchListings()).filter((o) => o.island === l.island && o.slug !== l.slug).slice(0, 3);
   const loc = coordsFor(l);
   const gallery = l.photos && l.photos.length > 0 ? l.photos : [l.thumbnail];
-  const contactName = tr(l.title, locale).split(' — ')[0].trim();
+  const contactName = tr(l.title, locale).split(' - ')[0].trim();
 
   return (
     <div className="grid gap-8 lg:grid-cols-3">

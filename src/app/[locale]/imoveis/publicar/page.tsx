@@ -158,9 +158,9 @@ export default function PublishWizardPage({ params }: { params: { locale: Locale
       <Notice locale={locale}>
         {tr(
           {
-            pt: 'Para publicar precisa de uma conta empresa/profissional. É rápido — pode sempre mudar mais tarde.',
-            en: 'To publish you need a business/professional account. It is quick — you can always switch later.',
-            nl: 'Om te plaatsen heb je een zakelijk/professional-account nodig. Het gaat snel — je kunt later altijd wisselen.',
+            pt: 'Para publicar precisa de uma conta empresa/profissional. É rápido - pode sempre mudar mais tarde.',
+            en: 'To publish you need a business/professional account. It is quick - you can always switch later.',
+            nl: 'Om te plaatsen heb je een zakelijk/professional-account nodig. Het gaat snel - je kunt later altijd wisselen.',
           },
           locale,
         )}
@@ -275,11 +275,11 @@ export default function PublishWizardPage({ params }: { params: { locale: Locale
             </label>
             <div className="grid gap-3 sm:grid-cols-2">
               <label className="block text-sm">
-                <span className="text-slate-600">{tr({ pt: 'Título (Inglês) — opcional', en: 'Title (English) — optional', nl: 'Titel (Engels) — optioneel' }, locale)}</span>
+                <span className="text-slate-600">{tr({ pt: 'Título (Inglês) - opcional', en: 'Title (English) - optional', nl: 'Titel (Engels) - optioneel' }, locale)}</span>
                 <input value={f.titleEn} onChange={(e) => upd('titleEn', e.target.value)} className={input} />
               </label>
               <label className="block text-sm">
-                <span className="text-slate-600">{tr({ pt: 'Título (Neerlandês) — opcional', en: 'Title (Dutch) — optional', nl: 'Titel (Nederlands) — optioneel' }, locale)}</span>
+                <span className="text-slate-600">{tr({ pt: 'Título (Neerlandês) - opcional', en: 'Title (Dutch) - optional', nl: 'Titel (Nederlands) - optioneel' }, locale)}</span>
                 <input value={f.titleNl} onChange={(e) => upd('titleNl', e.target.value)} className={input} />
               </label>
             </div>
@@ -334,9 +334,9 @@ export default function PublishWizardPage({ params }: { params: { locale: Locale
               <p className="mt-1 text-xs text-slate-400">
                 {tr(
                   {
-                    pt: 'Adicione várias fotos — a primeira é a foto de capa.',
-                    en: 'Add several photos — the first one is the cover photo.',
-                    nl: 'Voeg meerdere foto’s toe — de eerste is de omslagfoto.',
+                    pt: 'Adicione várias fotos - a primeira é a foto de capa.',
+                    en: 'Add several photos - the first one is the cover photo.',
+                    nl: 'Voeg meerdere foto’s toe - de eerste is de omslagfoto.',
                   },
                   locale,
                 )}
@@ -399,11 +399,11 @@ export default function PublishWizardPage({ params }: { params: { locale: Locale
               <dl className="space-y-1 text-slate-600">
                 <div className="flex justify-between gap-4">
                   <dt>{tr({ pt: 'Título', en: 'Title', nl: 'Titel' }, locale)}</dt>
-                  <dd className="text-right font-medium text-slate-900">{f.titlePt || '—'}</dd>
+                  <dd className="text-right font-medium text-slate-900">{f.titlePt || '-'}</dd>
                 </div>
                 <div className="flex justify-between gap-4">
                   <dt>{tr({ pt: 'Tipo', en: 'Type', nl: 'Type' }, locale)}</dt>
-                  <dd className="text-right font-medium text-slate-900">{kindLabel ? tr(kindLabel.l, locale) : '—'}</dd>
+                  <dd className="text-right font-medium text-slate-900">{kindLabel ? tr(kindLabel.l, locale) : '-'}</dd>
                 </div>
                 <div className="flex justify-between gap-4">
                   <dt>{tr({ pt: 'Ilha', en: 'Island', nl: 'Eiland' }, locale)}</dt>

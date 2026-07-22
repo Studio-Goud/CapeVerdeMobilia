@@ -22,7 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Category × island landing pages (high-intent, place-specific SEO targets).
   const landingEntries = landingPaths().flatMap((p) => entry(p, 0.8));
 
-  // Dynamic content — one entry per real profile / listing / procedure, per locale.
+  // Dynamic content - one entry per real profile / listing / procedure, per locale.
   const dynamicPaths: string[] = PROCEDURES.map((p) => `/procedimentos/${p.slug}`);
   try {
     const [pros, listings] = await Promise.all([fetchProfessionals(), fetchListings()]);

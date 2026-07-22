@@ -72,7 +72,7 @@ function Result({ locale, goal, island, onRestart }: { locale: Locale; goal: Goa
   return (
     <div className="mt-6 space-y-5 rounded-2xl border border-brand-200 bg-brand-50/50 p-5">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold text-slate-900">{t(locale, 'wiz.result')} — {island}</h2>
+        <h2 className="text-lg font-bold text-slate-900">{t(locale, 'wiz.result')} - {island}</h2>
         <button onClick={onRestart} className="text-sm font-medium text-brand hover:underline">{t(locale, 'common.restart')}</button>
       </div>
 

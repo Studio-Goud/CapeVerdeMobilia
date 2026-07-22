@@ -4,7 +4,7 @@ import { SUPABASE_ANON_KEY, SUPABASE_URL, isSupabaseConfigured } from '@/lib/sup
 
 type CookieToSet = { name: string; value: string; options: CookieOptions };
 
-// Private / utility routes (login, forms, dashboards) — keep them out of search
+// Private / utility routes (login, forms, dashboards) - keep them out of search
 // indexes. Works for client-component pages too, which can't export metadata.
 const PRIVATE = /\/(painel|admin|entrar|registar|nova-senha|verificar|mensagens|editor|novo|publicar|editar)(\/|$)/;
 const noindex = (res: NextResponse, path: string): NextResponse => {

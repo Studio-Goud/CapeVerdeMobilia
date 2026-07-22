@@ -81,7 +81,7 @@ export function breadcrumbJsonLd(items: { name: string; url: string }[]): Record
 }
 
 /** A category/island landing as a CollectionPage whose mainEntity is the list of
- *  results — machine-readable "this page is a list of N things in a place". */
+ *  results - machine-readable "this page is a list of N things in a place". */
 export function collectionPageJsonLd(opts: {
   path: string; name: string; description: string; locale: Locale;
   items: { url: string; name: string }[];

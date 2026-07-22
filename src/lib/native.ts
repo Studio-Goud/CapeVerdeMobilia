@@ -33,7 +33,7 @@ export async function takePhotoAsFile(): Promise<File | null> {
 /**
  * Register for push notifications (native only). Passes the device token to
  * `onToken` so the caller can store it server-side for sending. Requires APNs
- * setup in Xcode/App Store Connect to actually deliver — see APP_STORE.md §6b.
+ * setup in Xcode/App Store Connect to actually deliver - see APP_STORE.md §6b.
  */
 export async function registerPush(onToken?: (token: string) => void): Promise<void> {
   if (!isNativeApp()) return;
@@ -45,6 +45,6 @@ export async function registerPush(onToken?: (token: string) => void): Promise<v
     await PushNotifications.addListener('registration', (t) => onToken?.(t.value));
     await PushNotifications.register();
   } catch {
-    /* ignore — push simply stays off */
+    /* ignore - push simply stays off */
   }
 }

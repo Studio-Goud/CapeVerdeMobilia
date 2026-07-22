@@ -142,16 +142,16 @@ export default function ContractPage({ params }: { params: { locale: Locale } })
             <p className="mt-2"><b>Segundo Outorgante (Inquilino):</b> {V(f.tnName)}, portador(a) do documento de identificação n.º {V(f.tnDoc)}, com morada em {V(f.tnAddr)}.</p>
             <p className="mt-3">É celebrado o presente contrato de arrendamento, que se rege pelas cláusulas seguintes e, no omisso, pela lei cabo-verdiana aplicável.</p>
 
-            <p className="mt-4"><b>Cláusula 1.ª (Objeto)</b> — O Senhorio dá de arrendamento ao Inquilino o imóvel sito em {V(f.propAddr)}, {V(f.island)}, do tipo {V(f.type)}, {f.furnished === 'sim' ? 'mobilado' : 'não mobilado'}, destinado a habitação.</p>
-            <p className="mt-2"><b>Cláusula 2.ª (Prazo)</b> — O arrendamento tem início em {fmtDate(f.start)} e termo em {fmtDate(f.end)}, pelo período de {months(f.start, f.end)}, renovável por acordo escrito das partes.</p>
-            <p className="mt-2"><b>Cláusula 3.ª (Renda)</b> — A renda mensal é de {V(f.rent)} CVE, paga até ao dia {V(f.payday)} de cada mês.</p>
-            <p className="mt-2"><b>Cláusula 4.ª (Caução)</b> — A título de caução, o Inquilino entrega a quantia de {V(f.deposit)} CVE, a devolver no termo do contrato, deduzidas as importâncias devidas por danos ou incumprimento.</p>
-            <p className="mt-2"><b>Cláusula 5.ª (Despesas)</b> — As despesas de água, eletricidade e demais consumos ficam a cargo do {f.utilities === 'senhorio' ? 'Senhorio' : 'Inquilino'}.</p>
-            <p className="mt-2"><b>Cláusula 6.ª (Obrigações do Inquilino)</b> — Usar o imóvel com prudência para o fim habitacional, mantê-lo em bom estado de conservação, não o subarrendar nem ceder sem autorização escrita, e pagar a renda pontualmente.</p>
-            <p className="mt-2"><b>Cláusula 7.ª (Obrigações do Senhorio)</b> — Entregar o imóvel em bom estado, assegurar o gozo pacífico do arrendado e realizar as reparações que lhe competem.</p>
-            <p className="mt-2"><b>Cláusula 8.ª (Resolução)</b> — O incumprimento das obrigações confere à parte não faltosa o direito de resolver o contrato, nos termos da lei.</p>
-            {f.extra.trim() && <p className="mt-2"><b>Cláusula 9.ª (Cláusulas adicionais)</b> — {f.extra}</p>}
-            <p className="mt-2"><b>Cláusula {f.extra.trim() ? '10.ª' : '9.ª'} (Lei e foro)</b> — O presente contrato rege-se pela lei cabo-verdiana, sendo competente o foro da comarca da situação do imóvel.</p>
+            <p className="mt-4"><b>Cláusula 1.ª (Objeto)</b> - O Senhorio dá de arrendamento ao Inquilino o imóvel sito em {V(f.propAddr)}, {V(f.island)}, do tipo {V(f.type)}, {f.furnished === 'sim' ? 'mobilado' : 'não mobilado'}, destinado a habitação.</p>
+            <p className="mt-2"><b>Cláusula 2.ª (Prazo)</b> - O arrendamento tem início em {fmtDate(f.start)} e termo em {fmtDate(f.end)}, pelo período de {months(f.start, f.end)}, renovável por acordo escrito das partes.</p>
+            <p className="mt-2"><b>Cláusula 3.ª (Renda)</b> - A renda mensal é de {V(f.rent)} CVE, paga até ao dia {V(f.payday)} de cada mês.</p>
+            <p className="mt-2"><b>Cláusula 4.ª (Caução)</b> - A título de caução, o Inquilino entrega a quantia de {V(f.deposit)} CVE, a devolver no termo do contrato, deduzidas as importâncias devidas por danos ou incumprimento.</p>
+            <p className="mt-2"><b>Cláusula 5.ª (Despesas)</b> - As despesas de água, eletricidade e demais consumos ficam a cargo do {f.utilities === 'senhorio' ? 'Senhorio' : 'Inquilino'}.</p>
+            <p className="mt-2"><b>Cláusula 6.ª (Obrigações do Inquilino)</b> - Usar o imóvel com prudência para o fim habitacional, mantê-lo em bom estado de conservação, não o subarrendar nem ceder sem autorização escrita, e pagar a renda pontualmente.</p>
+            <p className="mt-2"><b>Cláusula 7.ª (Obrigações do Senhorio)</b> - Entregar o imóvel em bom estado, assegurar o gozo pacífico do arrendado e realizar as reparações que lhe competem.</p>
+            <p className="mt-2"><b>Cláusula 8.ª (Resolução)</b> - O incumprimento das obrigações confere à parte não faltosa o direito de resolver o contrato, nos termos da lei.</p>
+            {f.extra.trim() && <p className="mt-2"><b>Cláusula 9.ª (Cláusulas adicionais)</b> - {f.extra}</p>}
+            <p className="mt-2"><b>Cláusula {f.extra.trim() ? '10.ª' : '9.ª'} (Lei e foro)</b> - O presente contrato rege-se pela lei cabo-verdiana, sendo competente o foro da comarca da situação do imóvel.</p>
 
             <p className="mt-6">{V(f.place)}, {today}.</p>
             <div className="mt-10 flex justify-between gap-8 text-center text-[12px]">

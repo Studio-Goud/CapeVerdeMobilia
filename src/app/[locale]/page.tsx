@@ -8,16 +8,16 @@ import { pageMeta } from '@/lib/seo';
 export function generateMetadata({ params }: { params: { locale: Locale } }): Metadata {
   return pageMeta(params.locale, '',
     { pt: 'Imóveis, serviços e informação oficial em Cabo Verde', en: 'Property, services and official information in Cabo Verde', nl: 'Vastgoed, diensten en overheidsinformatie in Kaapverdië' },
-    { pt: 'A porta digital para imóveis, terra, construção, profissionais e informação oficial em Cabo Verde — São Vicente e além. PT · EN · NL.', en: 'The digital gateway to property, land, building, professionals and official information in Cabo Verde — São Vicente and beyond. PT · EN · NL.', nl: 'De digitale toegangspoort tot vastgoed, grond, bouw, professionals en overheidsinformatie in Kaapverdië — São Vicente en verder. PT · EN · NL.' });
+    { pt: 'A porta digital para imóveis, terra, construção, profissionais e informação oficial em Cabo Verde - São Vicente e além. PT · EN · NL.', en: 'The digital gateway to property, land, building, professionals and official information in Cabo Verde - São Vicente and beyond. PT · EN · NL.', nl: 'De digitale toegangspoort tot vastgoed, grond, bouw, professionals en overheidsinformatie in Kaapverdië - São Vicente en verder. PT · EN · NL.' });
 }
 
 interface ModuleCard { icon: string; titleKey: UIKey; href: string }
 
 const FEATURED_TITLE: TL = { pt: 'Negócios em destaque', en: 'Featured businesses', nl: 'Uitgelichte bedrijven' };
 const FEATURED_INTRO: TL = {
-  pt: 'Empresas locais em destaque na Djarvista — verificadas e prontas a contactar.',
-  en: 'Local businesses featured on Djarvista — verified and ready to contact.',
-  nl: 'Lokale bedrijven uitgelicht op Djarvista — geverifieerd en direct te contacteren.',
+  pt: 'Empresas locais em destaque na Djarvista - verificadas e prontas a contactar.',
+  en: 'Local businesses featured on Djarvista - verified and ready to contact.',
+  nl: 'Lokale bedrijven uitgelicht op Djarvista - geverifieerd en direct te contacteren.',
 };
 const DESTAQUE: TL = { pt: 'Destaque', en: 'Featured', nl: 'Uitgelicht' };
 
@@ -31,7 +31,7 @@ export default async function HomePage({ params }: { params: { locale: Locale } 
   ]);
   const p = (s: string): string => `/${locale}${s}`;
 
-  // Featured businesses (paid "Destacar" placement) — homepage visibility so
+  // Featured businesses (paid "Destacar" placement) - homepage visibility so
   // advertising delivers real exposure. Only items that have an image are shown.
   const featured = [
     ...featuredServices.map((s) => ({ id: s.id, name: tr(s.title, locale), subtitle: `${s.municipality} · ${s.island}`.trim(), image: (s.photos && s.photos[0]) || s.thumbnail, href: p(`/imoveis/${s.slug}`) })),
@@ -66,7 +66,7 @@ export default async function HomePage({ params }: { params: { locale: Locale } 
         </div>
       </section>
 
-      {/* Featured businesses — paid "Destacar" placement gets real homepage exposure */}
+      {/* Featured businesses - paid "Destacar" placement gets real homepage exposure */}
       {featured.length > 0 && (
         <section>
           <div className="mb-4">
@@ -141,7 +141,7 @@ export default async function HomePage({ params }: { params: { locale: Locale } 
         </div>
       </section>
 
-      {/* Professionals — only shown when there are real ones */}
+      {/* Professionals - only shown when there are real ones */}
       {professionals.length > 0 && (
         <section>
           <SectionHead title={t(locale, 'home.professionals')} href={p('/profissionais')} linkLabel={t(locale, 'common.viewAll')} />

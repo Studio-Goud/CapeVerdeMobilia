@@ -4,10 +4,10 @@ import type { MetadataRoute } from 'next';
 // iOS/Android wrappers. Served at /manifest.webmanifest.
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Djarvista — Cabo Verde',
+    name: 'Djarvista - Cabo Verde',
     short_name: 'Djarvista',
     description:
-      'Imóveis, terra, construção e informação oficial em Cabo Verde. Property, land, building and official information — PT / EN / NL.',
+      'Imóveis, terra, construção e informação oficial em Cabo Verde. Property, land, building and official information - PT / EN / NL.',
     id: '/',
     start_url: '/',
     scope: '/',

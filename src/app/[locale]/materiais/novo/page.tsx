@@ -27,9 +27,9 @@ const REQUIRED: TL = { pt: 'obrigatório', en: 'required', nl: 'verplicht' };
 const OPTIONAL: TL = { pt: 'opcional', en: 'optional', nl: 'optioneel' };
 const RECOMMENDED: TL = { pt: 'recomendado', en: 'recommended', nl: 'aanbevolen' };
 
-/** Compose "Base — qualifier" while staying trilingual. */
+/** Compose "Base - qualifier" while staying trilingual. */
 function ql(base: TL, qual: TL): TL {
-  return { pt: `${base.pt} — ${qual.pt}`, en: `${base.en} — ${qual.en}`, nl: `${base.nl} — ${qual.nl}` };
+  return { pt: `${base.pt} - ${qual.pt}`, en: `${base.en} - ${qual.en}`, nl: `${base.nl} - ${qual.nl}` };
 }
 
 function slugify(s: string): string {
@@ -174,7 +174,7 @@ export default function SupplierFormPage({ params }: { params: { locale: Locale 
       ? { pt: f.pricePt, en: f.priceEn || f.pricePt, nl: f.priceNl || f.pricePt }
       : null;
 
-    // Never regenerate the slug on edit — keep the fetched one so the public URL is stable.
+    // Never regenerate the slug on edit - keep the fetched one so the public URL is stable.
     const slug = isEdit && loadedSlug
       ? loadedSlug
       : `${slugify(f.name) || 'fornecedor'}-${Date.now().toString(36)}`;

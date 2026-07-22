@@ -27,14 +27,14 @@ const TRUST_BODY: TL = {
   nl: 'Het verificatieniveau geeft aan welke identiteits-, bedrijfs- en documentcontroles deze professional heeft afgerond.',
 };
 
-// Shown only when the professional has no real bio yet — generic, no fictional claims.
+// Shown only when the professional has no real bio yet - generic, no fictional claims.
 const ABOUT_FALLBACK: TL = {
   pt: 'Profissional disponível para projetos residenciais e comerciais em Cabo Verde. Entre em contacto para conhecer os serviços, a disponibilidade e receber um orçamento sem compromisso.',
   en: 'Professional available for residential and commercial projects across Cape Verde. Get in touch to learn about services, availability and to receive a no-obligation quote.',
   nl: 'Professional beschikbaar voor residentiële en commerciële projecten in Kaapverdië. Neem contact op voor informatie over diensten, beschikbaarheid en een vrijblijvende offerte.',
 };
 
-// Generic "what to expect" guide — not claimed as this professional's specific offering.
+// Generic "what to expect" guide - not claimed as this professional's specific offering.
 const SERVICES_INTRO: TL = {
   pt: 'O que geralmente esperar ao entrar em contacto:',
   en: 'What to generally expect when you get in touch:',
@@ -246,7 +246,7 @@ export default async function ProfessionalDetailPage({
             </div>
             <p className="text-sm text-slate-600">
               <span className="font-medium text-slate-700">{verifLabel(locale, pro.verifiedLevel ?? pro.verificationLevel)}</span>
-              {' — '}
+              {' - '}
               {tr(TRUST_BODY, locale)}
             </p>
           </Card>

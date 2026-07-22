@@ -20,9 +20,9 @@ const COPY = {
   amount: { pt: 'Valor (CVE)', en: 'Amount (CVE)', nl: 'Bedrag (CVE)' },
   message: { pt: 'Mensagem', en: 'Message', nl: 'Bericht' },
   demo: {
-    pt: 'Demonstração — a proposta não é enviada sem backend ativo.',
-    en: 'Demo — the bid is not sent without an active backend.',
-    nl: 'Demo — het bod wordt niet verzonden zonder actieve backend.',
+    pt: 'Demonstração - a proposta não é enviada sem backend ativo.',
+    en: 'Demo - the bid is not sent without an active backend.',
+    nl: 'Demo - het bod wordt niet verzonden zonder actieve backend.',
   },
   sessionExpired: {
     pt: 'A sua sessão expirou. Entre novamente para enviar a proposta.',

@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { tr, type Locale, type TL } from '@/i18n';
 import { PageTitle, Card, Pill } from '@/components/ui';
 
-// Djarvista — Privacy & Cookie Policy / Política de Privacidade e Cookies.
+// Djarvista - Privacy & Cookie Policy / Política de Privacidade e Cookies.
 // Server component, fully trilingual (PT primary / EN / NL). Concept draft:
 // the content describes the app's real data practices but is pending legal review.
 
@@ -20,15 +20,15 @@ const INTRO: TL = {
 };
 
 const META_DESC: TL = {
-  pt: 'Como a Djarvista recolhe, usa e protege os seus dados pessoais — conta, anúncios, mensagens e verificação de identidade.',
-  en: 'How Djarvista collects, uses and protects your personal data — account, listings, messages and identity verification.',
-  nl: 'Hoe Djarvista je persoonsgegevens verzamelt, gebruikt en beschermt — account, advertenties, berichten en identiteitsverificatie.',
+  pt: 'Como a Djarvista recolhe, usa e protege os seus dados pessoais - conta, anúncios, mensagens e verificação de identidade.',
+  en: 'How Djarvista collects, uses and protects your personal data - account, listings, messages and identity verification.',
+  nl: 'Hoe Djarvista je persoonsgegevens verzamelt, gebruikt en beschermt - account, advertenties, berichten en identiteitsverificatie.',
 };
 
 const CONCEPT_BANNER: TL = {
-  pt: 'Rascunho — verificação jurídica necessária',
-  en: 'Draft — pending legal review',
-  nl: 'CONCEPT — juridische verificatie vereist',
+  pt: 'Rascunho - verificação jurídica necessária',
+  en: 'Draft - pending legal review',
+  nl: 'CONCEPT - juridische verificatie vereist',
 };
 
 const CONCEPT_SUB: TL = {
@@ -56,9 +56,9 @@ const LBL_ADDRESS: TL = { pt: 'Morada', en: 'Address', nl: 'Adres' };
 const LBL_PRIVACY_CONTACT: TL = { pt: 'Contacto para privacidade', en: 'Privacy contact', nl: 'Privacycontact' };
 const LBL_GENERAL_CONTACT: TL = { pt: 'Contacto geral', en: 'General contact', nl: 'Algemeen contact' };
 const PH_ENTITY: TL = {
-  pt: '[Djarvista — forma jurídica/registo a preencher]',
-  en: '[Djarvista — legal form/registration to be completed]',
-  nl: '[Djarvista — rechtsvorm/registratie in te vullen]',
+  pt: '[Djarvista - forma jurídica/registo a preencher]',
+  en: '[Djarvista - legal form/registration to be completed]',
+  nl: '[Djarvista - rechtsvorm/registratie in te vullen]',
 };
 const PH_ADDRESS: TL = {
   pt: '[endereço a preencher]',
@@ -129,9 +129,9 @@ const DATA_ITEMS: { label: TL; body: TL }[] = [
       nl: 'Identiteitsverificatie',
     },
     body: {
-      pt: 'Uma imagem do documento de identificação ou passaporte e uma selfie, guardadas num bucket privado e analisadas por pessoal autorizado para atribuir um nível de confiança. São dados sensíveis — ver a secção 5.',
-      en: 'An image of your ID or passport and a selfie, stored in a private bucket and reviewed by authorized staff to assign a trust level. This is sensitive data — see section 5.',
-      nl: 'Een afbeelding van je identiteitsbewijs of paspoort en een selfie, opgeslagen in een privé-bucket en beoordeeld door bevoegd personeel om een vertrouwensniveau toe te kennen. Dit zijn gevoelige gegevens — zie sectie 5.',
+      pt: 'Uma imagem do documento de identificação ou passaporte e uma selfie, guardadas num bucket privado e analisadas por pessoal autorizado para atribuir um nível de confiança. São dados sensíveis - ver a secção 5.',
+      en: 'An image of your ID or passport and a selfie, stored in a private bucket and reviewed by authorized staff to assign a trust level. This is sensitive data - see section 5.',
+      nl: 'Een afbeelding van je identiteitsbewijs of paspoort en een selfie, opgeslagen in een privé-bucket en beoordeeld door bevoegd personeel om een vertrouwensniveau toe te kennen. Dit zijn gevoelige gegevens - zie sectie 5.',
     },
   },
 ];
@@ -143,9 +143,9 @@ const S3_TITLE: TL = {
   nl: 'Waarvoor we gegevens gebruiken (doeleinden)',
 };
 const S3_LIST: TL = {
-  pt: '• Operar e manter o mercado (imóveis, terrenos, serviços e profissionais).\n• Ligar as partes — por exemplo, colocar em contacto quem procura e quem anuncia.\n• Permitir a verificação e os níveis de confiança.\n• Garantir a segurança e prevenir fraude e abuso.\n• Melhorar o produto e a experiência de utilização.',
-  en: '• Operate and maintain the marketplace (property, land, services and professionals).\n• Connect the parties — for example, putting seekers and advertisers in touch.\n• Enable verification and trust levels.\n• Ensure security and prevent fraud and abuse.\n• Improve the product and the user experience.',
-  nl: '• De marktplaats laten werken en onderhouden (vastgoed, grond, diensten en professionals).\n• Partijen met elkaar verbinden — bijvoorbeeld zoekers en adverteerders in contact brengen.\n• Verificatie en vertrouwensniveaus mogelijk maken.\n• Beveiliging waarborgen en fraude en misbruik voorkomen.\n• Het product en de gebruikerservaring verbeteren.',
+  pt: '• Operar e manter o mercado (imóveis, terrenos, serviços e profissionais).\n• Ligar as partes - por exemplo, colocar em contacto quem procura e quem anuncia.\n• Permitir a verificação e os níveis de confiança.\n• Garantir a segurança e prevenir fraude e abuso.\n• Melhorar o produto e a experiência de utilização.',
+  en: '• Operate and maintain the marketplace (property, land, services and professionals).\n• Connect the parties - for example, putting seekers and advertisers in touch.\n• Enable verification and trust levels.\n• Ensure security and prevent fraud and abuse.\n• Improve the product and the user experience.',
+  nl: '• De marktplaats laten werken en onderhouden (vastgoed, grond, diensten en professionals).\n• Partijen met elkaar verbinden - bijvoorbeeld zoekers en adverteerders in contact brengen.\n• Verificatie en vertrouwensniveaus mogelijk maken.\n• Beveiliging waarborgen en fraude en misbruik voorkomen.\n• Het product en de gebruikerservaring verbeteren.',
 };
 
 // --- 4. Legal basis ---------------------------------------------------------
@@ -156,9 +156,9 @@ const S4_INTRO: TL = {
   nl: 'Het toepasselijke kader is de gegevensbeschermingswetgeving van Kaapverdië (te bevestigen). Afhankelijk van de situatie kan de verwerking gebaseerd zijn op:',
 };
 const S4_LIST: TL = {
-  pt: '• Execução de um contrato ou diligências a seu pedido — para lhe prestar o serviço (conta, anúncios, pedidos).\n• Consentimento — por exemplo, para a verificação de identidade, que é voluntária.\n• Interesse legítimo — segurança da plataforma e prevenção de fraude.\n• Cumprimento de obrigações legais, quando aplicável.',
-  en: '• Performance of a contract or steps at your request — to provide the service (account, listings, requests).\n• Consent — for example, for identity verification, which is voluntary.\n• Legitimate interest — platform security and fraud prevention.\n• Compliance with legal obligations, where applicable.',
-  nl: '• Uitvoering van een overeenkomst of stappen op jouw verzoek — om de dienst te leveren (account, advertenties, aanvragen).\n• Toestemming — bijvoorbeeld voor identiteitsverificatie, die vrijwillig is.\n• Gerechtvaardigd belang — beveiliging van het platform en fraudepreventie.\n• Nakoming van wettelijke verplichtingen, waar van toepassing.',
+  pt: '• Execução de um contrato ou diligências a seu pedido - para lhe prestar o serviço (conta, anúncios, pedidos).\n• Consentimento - por exemplo, para a verificação de identidade, que é voluntária.\n• Interesse legítimo - segurança da plataforma e prevenção de fraude.\n• Cumprimento de obrigações legais, quando aplicável.',
+  en: '• Performance of a contract or steps at your request - to provide the service (account, listings, requests).\n• Consent - for example, for identity verification, which is voluntary.\n• Legitimate interest - platform security and fraud prevention.\n• Compliance with legal obligations, where applicable.',
+  nl: '• Uitvoering van een overeenkomst of stappen op jouw verzoek - om de dienst te leveren (account, advertenties, aanvragen).\n• Toestemming - bijvoorbeeld voor identiteitsverificatie, die vrijwillig is.\n• Gerechtvaardigd belang - beveiliging van het platform en fraudepreventie.\n• Nakoming van wettelijke verplichtingen, waar van toepassing.',
 };
 const S4_NOTE: TL = {
   pt: 'As bases jurídicas exatas estão ainda a ser confirmadas.',
@@ -200,25 +200,25 @@ const S6_NOSALE: TL = {
   nl: 'We verkopen je persoonsgegevens niet.',
 };
 const S6_INTRO: TL = {
-  pt: 'Partilhamos dados apenas na medida necessária para prestar o serviço — por exemplo, a informação pública de um anúncio fica visível para todos, e uma mensagem que envia é entregue à contraparte. Para operar a plataforma, recorremos a fornecedores de infraestrutura (subcontratantes) que tratam dados por nossa conta e segundo as nossas instruções:',
-  en: 'We share data only as far as needed to provide the service — for example, a listing’s public information is visible to everyone, and a message you send is delivered to the counterparty. To run the platform, we use infrastructure providers (processors) that process data on our behalf and under our instructions:',
-  nl: 'We delen gegevens alleen voor zover nodig om de dienst te leveren — bijvoorbeeld: de openbare informatie van een advertentie is voor iedereen zichtbaar, en een bericht dat je verstuurt wordt aan de tegenpartij bezorgd. Om het platform te laten draaien, gebruiken we infrastructuuraanbieders (verwerkers) die gegevens namens ons en volgens onze instructies verwerken:',
+  pt: 'Partilhamos dados apenas na medida necessária para prestar o serviço - por exemplo, a informação pública de um anúncio fica visível para todos, e uma mensagem que envia é entregue à contraparte. Para operar a plataforma, recorremos a fornecedores de infraestrutura (subcontratantes) que tratam dados por nossa conta e segundo as nossas instruções:',
+  en: 'We share data only as far as needed to provide the service - for example, a listing’s public information is visible to everyone, and a message you send is delivered to the counterparty. To run the platform, we use infrastructure providers (processors) that process data on our behalf and under our instructions:',
+  nl: 'We delen gegevens alleen voor zover nodig om de dienst te leveren - bijvoorbeeld: de openbare informatie van een advertentie is voor iedereen zichtbaar, en een bericht dat je verstuurt wordt aan de tegenpartij bezorgd. Om het platform te laten draaien, gebruiken we infrastructuuraanbieders (verwerkers) die gegevens namens ons en volgens onze instructies verwerken:',
 };
 const PROCESSORS: { name: string; body: TL }[] = [
   {
     name: 'Supabase',
     body: {
-      pt: 'Base de dados e armazenamento de ficheiros — alojamento de dados de conta, anúncios, fotos e documentos de verificação.',
-      en: 'Database and file storage — hosting of account data, listings, photos and verification documents.',
-      nl: 'Database en bestandsopslag — hosting van accountgegevens, advertenties, foto’s en verificatiedocumenten.',
+      pt: 'Base de dados e armazenamento de ficheiros - alojamento de dados de conta, anúncios, fotos e documentos de verificação.',
+      en: 'Database and file storage - hosting of account data, listings, photos and verification documents.',
+      nl: 'Database en bestandsopslag - hosting van accountgegevens, advertenties, foto’s en verificatiedocumenten.',
     },
   },
   {
     name: 'Resend',
     body: {
-      pt: 'Envio de emails transacionais e de marca — por exemplo, confirmação de email e notificações.',
-      en: 'Sending transactional and branded emails — for example, email confirmation and notifications.',
-      nl: 'Versturen van transactionele en merk-e-mails — bijvoorbeeld e-mailbevestiging en meldingen.',
+      pt: 'Envio de emails transacionais e de marca - por exemplo, confirmação de email e notificações.',
+      en: 'Sending transactional and branded emails - for example, email confirmation and notifications.',
+      nl: 'Versturen van transactionele en merk-e-mails - bijvoorbeeld e-mailbevestiging en meldingen.',
     },
   },
   {
@@ -260,9 +260,9 @@ const S8_BODY: TL = {
 // --- 9. Your rights ---------------------------------------------------------
 const S9_TITLE: TL = { pt: 'Os seus direitos', en: 'Your rights', nl: 'Jouw rechten' };
 const S9_LIST: TL = {
-  pt: '• Acesso — saber que dados tratamos sobre si.\n• Retificação — corrigir dados incorretos ou desatualizados.\n• Eliminação — pedir a remoção dos seus dados.\n• Oposição — opor-se a determinado tratamento.',
-  en: '• Access — know what data we hold about you.\n• Rectification — correct inaccurate or outdated data.\n• Deletion — request removal of your data.\n• Objection — object to certain processing.',
-  nl: '• Inzage — weten welke gegevens we over je verwerken.\n• Rectificatie — onjuiste of verouderde gegevens corrigeren.\n• Verwijdering — verwijdering van je gegevens vragen.\n• Bezwaar — bezwaar maken tegen bepaalde verwerking.',
+  pt: '• Acesso - saber que dados tratamos sobre si.\n• Retificação - corrigir dados incorretos ou desatualizados.\n• Eliminação - pedir a remoção dos seus dados.\n• Oposição - opor-se a determinado tratamento.',
+  en: '• Access - know what data we hold about you.\n• Rectification - correct inaccurate or outdated data.\n• Deletion - request removal of your data.\n• Objection - object to certain processing.',
+  nl: '• Inzage - weten welke gegevens we over je verwerken.\n• Rectificatie - onjuiste of verouderde gegevens corrigeren.\n• Verwijdering - verwijdering van je gegevens vragen.\n• Bezwaar - bezwaar maken tegen bepaalde verwerking.',
 };
 const S9_NOTE: TL = {
   pt: 'Para exercer estes direitos, escreva para privacy@djarvista.com. A autoridade de controlo competente deverá ser a Comissão Nacional de Proteção de Dados (CNPD) de Cabo Verde (a confirmar).',
@@ -306,9 +306,9 @@ const LAST_UPDATED: TL = {
 };
 
 const FOOTER_NOTE: TL = {
-  pt: 'Documento em fase de conceito — sujeito a verificação jurídica. Não constitui aconselhamento jurídico. · Not legal advice · Geen juridisch advies.',
-  en: 'Concept-stage document — subject to legal review. Not legal advice. · Não constitui aconselhamento jurídico · Geen juridisch advies.',
-  nl: 'Document in conceptfase — onder voorbehoud van juridische controle. Geen juridisch advies. · Not legal advice · Não constitui aconselhamento jurídico.',
+  pt: 'Documento em fase de conceito - sujeito a verificação jurídica. Não constitui aconselhamento jurídico. · Not legal advice · Geen juridisch advies.',
+  en: 'Concept-stage document - subject to legal review. Not legal advice. · Não constitui aconselhamento jurídico · Geen juridisch advies.',
+  nl: 'Document in conceptfase - onder voorbehoud van juridische controle. Geen juridisch advies. · Not legal advice · Não constitui aconselhamento jurídico.',
 };
 
 export function generateMetadata({ params }: { params: { locale: Locale } }): Metadata {

@@ -1,5 +1,5 @@
 // Self-contained branded placeholder image for listings/thumbnails that have no
-// photo yet. Returns an inline SVG data URI — no external dependency (previously
+// photo yet. Returns an inline SVG data URI - no external dependency (previously
 // these were placehold.co boxes). Flag-blue gradient + island silhouette + sun,
 // matching the Djarvista brand, so an empty marketplace still looks finished.
 

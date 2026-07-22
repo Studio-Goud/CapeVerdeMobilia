@@ -1,4 +1,4 @@
-/** Djarvista wordmark — concept 01. The dot on the "i" is a rising coral sun.
+/** Djarvista wordmark - concept 01. The dot on the "i" is a rising coral sun.
  *  Uses a dotless "ı" (U+0131) so the sun can sit precisely as the tittle. */
 export function Wordmark({ className }: { className?: string }): JSX.Element {
   return (

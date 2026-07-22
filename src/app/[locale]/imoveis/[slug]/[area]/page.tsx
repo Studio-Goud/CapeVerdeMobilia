@@ -67,7 +67,7 @@ export default async function PropertyLandingPage({ params }: { params: Params }
         <ListingGrid rows={rows} locale={locale} />
       </div>
 
-      {/* Island buyer's guide — unique long-form content (not thin) */}
+      {/* Island buyer's guide - unique long-form content (not thin) */}
       <section className="rounded-2xl border border-slate-200 bg-white p-6">
         <h2 className="text-lg font-semibold text-slate-900">{tr({ pt: `Comprar em ${area.name}`, en: `Buying in ${area.name}`, nl: `Kopen op ${area.name}` }, locale)}</h2>
         <p className="mt-2 text-sm text-slate-600">{tr(area.intro, locale)}</p>
