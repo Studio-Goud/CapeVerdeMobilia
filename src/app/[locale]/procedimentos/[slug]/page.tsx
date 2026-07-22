@@ -1,6 +1,15 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getProcedure, t, tr, type Locale } from '@/i18n';
 import { OfficialTag } from '@/components/ui';
+import { altLangs } from '@/lib/seo';
+
+export function generateMetadata({ params }: { params: { locale: Locale; slug: string } }): Metadata {
+  const proc = getProcedure(params.slug);
+  const title = proc ? tr(proc.title, params.locale) : 'Djarvista';
+  const description = proc ? tr(proc.summary, params.locale).slice(0, 180) : undefined;
+  return { title, description, alternates: altLangs(params.locale, `/procedimentos/${params.slug}`) };
+}
 
 export default function ProcedureDetailPage({ params }: { params: { locale: Locale; slug: string } }): JSX.Element {
   const locale = params.locale;

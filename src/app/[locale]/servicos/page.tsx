@@ -1,3 +1,8 @@
+import { pageMetaFor as _pmf } from '@/lib/seo';
+import { isLocale as _isLoc } from '@/i18n';
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  return _pmf(_isLoc(params.locale) ? params.locale : 'pt', '/servicos');
+}
 import Link from 'next/link';
 import { fetchServiceListings } from '@/lib/data';
 import { t, tr, formatPrice, type Locale } from '@/i18n';

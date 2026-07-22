@@ -1,3 +1,8 @@
+import { pageMetaFor as _pmf } from '@/lib/seo';
+import { isLocale as _isLoc } from '@/i18n';
+export function generateMetadata({ params }: { params: { locale: string } }) {
+  return _pmf(_isLoc(params.locale) ? params.locale : 'pt', '/projetos');
+}
 import Link from 'next/link';
 import { t, tr, formatEur, cveToEur, type Locale, type TL } from '@/i18n';
 import { fetchProjects, type ProjectView } from '@/lib/data';

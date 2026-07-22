@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { Analytics } from '@vercel/analytics/react';
+import { GoogleAnalytics } from '@/components/GoogleAnalytics';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.djarvista.com'),
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: ReactNode }): JSX.E
       <body className="flex min-h-screen flex-col">
         {children}
         <Analytics />
+        <GoogleAnalytics />
       </body>
     </html>
   );
