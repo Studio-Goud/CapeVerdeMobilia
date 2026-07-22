@@ -1,7 +1,15 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { filterListings, t, type Locale } from '@/i18n';
 import { fetchListings } from '@/lib/data';
 import { ListingGrid } from '@/components/ui';
+import { pageMeta } from '@/lib/seo';
+
+export function generateMetadata({ params }: { params: { locale: Locale } }): Metadata {
+  return pageMeta(params.locale, '/imoveis',
+    { pt: 'Imóveis à venda e para arrendar em Cabo Verde', en: 'Property for sale and rent in Cabo Verde', nl: 'Vastgoed te koop en te huur in Kaapverdië' },
+    { pt: 'Casas, apartamentos e terrenos em São Vicente e em todo o Cabo Verde. Pesquise, filtre por ilha e contacte diretamente.', en: 'Houses, apartments and land in São Vicente and across Cabo Verde. Search, filter by island and contact directly.', nl: 'Huizen, appartementen en grond in São Vicente en heel Kaapverdië. Zoek, filter per eiland en neem direct contact op.' });
+}
 
 const ISLANDS = [['', 'all'], ['SV', 'São Vicente'], ['ST', 'Santiago'], ['SL', 'Sal'], ['BV', 'Boa Vista']] as const;
 const KINDS: [string, Record<Locale, string>][] = [

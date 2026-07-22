@@ -1,7 +1,15 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { t, tr, formatDate, type Locale, type TL } from '@/i18n';
 import { fetchPublications, type InfoItem } from '@/lib/data';
 import { PageTitle, Card, Pill } from '@/components/ui';
+import { pageMeta } from '@/lib/seo';
+
+export function generateMetadata({ params }: { params: { locale: Locale } }): Metadata {
+  return pageMeta(params.locale, '/info',
+    { pt: 'Informação oficial: arrendamento, impostos e construção em Cabo Verde', en: 'Official information: tenancy, taxes and building in Cabo Verde', nl: 'Officiële informatie: huur, belastingen en bouw in Kaapverdië' },
+    { pt: 'Artigos com fonte sobre arrendamento, impostos imobiliários (cITI/cIPI), compra e construção em Cabo Verde. Não é aconselhamento jurídico.', en: 'Sourced articles on tenancy, real-estate taxes (cITI/cIPI), buying and building in Cabo Verde. Not legal advice.', nl: 'Gebronde artikelen over huur, vastgoedbelasting (cITI/cIPI), kopen en bouwen in Kaapverdië. Geen juridisch advies.' });
+}
 
 const STATUS_TONE: Record<InfoItem['officialStatus'], 'emerald' | 'slate' | 'amber' | 'coral'> = {
   official: 'emerald',

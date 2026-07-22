@@ -4,6 +4,7 @@ import { t, tr, formatPrice, formatDate, docLabel, type Locale, type TL } from '
 import { fetchListingBySlug, fetchListings } from '@/lib/data';
 import { JsonLd } from '@/components/JsonLd';
 import { listingJsonLd } from '@/lib/jsonld';
+import { altLangs } from '@/lib/seo';
 import { OfficialTag, ListingCard, SectionHead } from '@/components/ui';
 import { LeadForm } from '@/components/LeadForm';
 import { SaveButton } from '@/components/SaveButton';
@@ -26,6 +27,7 @@ export async function generateMetadata({ params }: { params: { locale: Locale; s
   const image = (l.photos && l.photos[0]) || l.thumbnail;
   return {
     title, description,
+    alternates: altLangs(params.locale, `/imoveis/${params.slug}`),
     openGraph: { title, description, images: image ? [image] : undefined },
     twitter: { card: 'summary_large_image', title, description },
   };

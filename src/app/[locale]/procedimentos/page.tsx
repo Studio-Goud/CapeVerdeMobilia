@@ -1,6 +1,14 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { PROCEDURES, t, tr, type Locale, type TL } from '@/i18n';
 import { OfficialTag } from '@/components/ui';
+import { pageMeta } from '@/lib/seo';
+
+export function generateMetadata({ params }: { params: { locale: Locale } }): Metadata {
+  return pageMeta(params.locale, '/procedimentos',
+    { pt: 'Comprar, construir e registar em Cabo Verde: procedimentos', en: 'Buying, building and registering in Cabo Verde: procedures', nl: 'Kopen, bouwen en registreren in Kaapverdië: procedures' },
+    { pt: 'Guias passo a passo: comprar terreno e construir, comprar casa e registar uma empresa em Cabo Verde. Indicativo, com fontes.', en: 'Step-by-step guides: buy land and build, buy a home and register a company in Cabo Verde. Indicative, with sources.', nl: 'Stapsgewijze gidsen: grond kopen en bouwen, een woning kopen en een bedrijf registreren in Kaapverdië. Indicatief, met bronnen.' });
+}
 
 // Official São Vicente offices that the procedures point to. Verified public
 // bodies — kept visually distinct from the commercial directory (a government

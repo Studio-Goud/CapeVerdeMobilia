@@ -1,7 +1,15 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { t, tr, proCategoryLabel, type Locale, type TL } from '@/i18n';
 import { fetchProfessionals, type ProProfile } from '@/lib/data';
 import { PageTitle, TrustBadge, Card, EmptyState, Pill, SeededBadge } from '@/components/ui';
+import { pageMeta } from '@/lib/seo';
+
+export function generateMetadata({ params }: { params: { locale: Locale } }): Metadata {
+  return pageMeta(params.locale, '/profissionais',
+    { pt: 'Profissionais e empresas em São Vicente, Cabo Verde', en: 'Professionals and businesses in São Vicente, Cabo Verde', nl: 'Professionals en bedrijven in São Vicente, Kaapverdië' },
+    { pt: 'Advogados, construção civil, ar condicionado, limpeza, gás e mais em São Vicente. Contacte diretamente ou reclame o seu negócio.', en: 'Lawyers, construction, air conditioning, cleaning, gas and more in São Vicente. Contact directly or claim your business.', nl: 'Advocaten, bouw, airco, schoonmaak, gas en meer in São Vicente. Neem direct contact op of claim je bedrijf.' });
+}
 
 const AREAS = ['', 'São Vicente', 'Santiago', 'Sal', 'Santo Antão'];
 const one = (v: string | string[] | undefined): string | undefined => (Array.isArray(v) ? v[0] : v);

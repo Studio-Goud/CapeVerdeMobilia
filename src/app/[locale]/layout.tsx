@@ -17,10 +17,9 @@ export function generateStaticParams(): { locale: Locale }[] {
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
   const l = isLocale(params.locale) ? params.locale : 'pt';
   const ogLocale = l === 'pt' ? 'pt_PT' : l === 'en' ? 'en_GB' : 'nl_NL';
-  return {
-    openGraph: { locale: ogLocale },
-    alternates: { languages: { pt: '/pt', en: '/en', nl: '/nl' } },
-  };
+  // Per-page canonical + hreflang are set on each page via altLangs(); a blanket
+  // one here would wrongly point every subpage at the homepage.
+  return { openGraph: { locale: ogLocale } };
 }
 
 export default function LocaleLayout({
