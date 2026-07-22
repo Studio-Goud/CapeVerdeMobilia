@@ -116,6 +116,12 @@ export default async function MaterialsPage({
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {shown.map((s: SupplierView) => (
           <Card key={s.id}>
+            {s.thumbnail && (
+              <div className="-mx-4 -mt-4 mb-3 aspect-[16/10] overflow-hidden rounded-t-xl bg-slate-100">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={s.thumbnail} alt={s.name} className="h-full w-full object-cover" loading="lazy" />
+              </div>
+            )}
             <div className="flex items-start justify-between gap-2">
               <h2 className="font-semibold text-slate-900">{s.name}</h2>
               {s.verified
