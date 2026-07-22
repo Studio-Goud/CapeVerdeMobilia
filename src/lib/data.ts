@@ -12,7 +12,7 @@ interface ListingRow {
   id: string; slug: string; kind: string; title: TL; description: TL | null;
   price_amount: number | null; price_on_request: boolean; is_featured: boolean;
   document_status: string; island: string | null; municipality: string | null; thumbnail: string | null;
-  owner: string | null; latitude: number | null; longitude: number | null; photos: string[] | null;
+  owner: string | null; latitude: number | null; longitude: number | null; photos: string[] | null; phone: string | null;
   published_at: string | null; created_at: string; last_verified_at: string | null; risk_notes: TL | null;
   property: Listing['property']; land: Listing['land'];
 }
@@ -25,7 +25,7 @@ function rowToListing(r: ListingRow): Listing {
     title: r.title, description: r.description ?? EMPTY_TL,
     priceAmount: r.price_amount, priceOnRequest: r.price_on_request, isFeatured: r.is_featured,
     documentStatus: r.document_status, island: r.island ?? '', municipality: r.municipality ?? '',
-    owner: r.owner, latitude: r.latitude, longitude: r.longitude, photos: r.photos,
+    owner: r.owner, latitude: r.latitude, longitude: r.longitude, photos: r.photos, phone: r.phone,
     thumbnail: r.thumbnail || PLACEHOLDER, publishedAt: r.published_at ?? r.created_at,
     lastVerifiedAt: r.last_verified_at, riskNotes: r.risk_notes, property: r.property, land: r.land,
   };

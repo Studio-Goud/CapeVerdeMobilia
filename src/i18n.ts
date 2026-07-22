@@ -426,6 +426,7 @@ export interface Listing {
   priceAmount: number | null; priceOnRequest: boolean; isFeatured: boolean;
   documentStatus: string; island: string; municipality: string; thumbnail: string;
   owner?: string | null; latitude?: number | null; longitude?: number | null; photos?: string[] | null;
+  phone?: string | null;  // direct contact for seeded/service adverts with no owner account
   publishedAt: string; lastVerifiedAt: string | null; riskNotes: TL | null;
   property: { type: string; bedrooms: number | null; bathrooms: number | null; builtAreaSqm: number | null; plotAreaSqm: number | null } | null;
   land: { type: string; areaSqm: number | null; zoning: TL | null; buildable: boolean } | null;

@@ -5,7 +5,7 @@ import { fetchListingBySlug, fetchListings } from '@/lib/data';
 import { JsonLd } from '@/components/JsonLd';
 import { listingJsonLd } from '@/lib/jsonld';
 import { altLangs } from '@/lib/seo';
-import { OfficialTag, ListingCard, SectionHead } from '@/components/ui';
+import { OfficialTag, ListingCard, SectionHead, QuoteContact } from '@/components/ui';
 import { LeadForm } from '@/components/LeadForm';
 import { SaveButton } from '@/components/SaveButton';
 import { MapExplorer } from '@/components/MapExplorer';
@@ -18,6 +18,7 @@ const RENT_TITLE: TL = { pt: 'Pedir para arrendar', en: 'Request to rent', nl: '
 const SIMILAR: TL = { pt: 'Imóveis semelhantes', en: 'Similar properties', nl: 'Vergelijkbaar aanbod' };
 const LOCATION: TL = { pt: 'Localização', en: 'Location', nl: 'Locatie' };
 const MAP_SOON: TL = { pt: 'Localização aproximada', en: 'Approximate location', nl: 'Locatie bij benadering' };
+const QUOTE_TITLE: TL = { pt: 'Peça orçamento', en: 'Request a quote', nl: 'Vraag een offerte' };
 
 export async function generateMetadata({ params }: { params: { locale: Locale; slug: string } }): Promise<Metadata> {
   const l = await fetchListingBySlug(params.slug);
@@ -40,6 +41,7 @@ export default async function ListingDetailPage({ params }: { params: { locale: 
   const similar = (await fetchListings()).filter((o) => o.island === l.island && o.slug !== l.slug).slice(0, 3);
   const loc = coordsFor(l);
   const gallery = l.photos && l.photos.length > 0 ? l.photos : [l.thumbnail];
+  const contactName = tr(l.title, locale).split(' — ')[0].trim();
 
   return (
     <div className="grid gap-8 lg:grid-cols-3">
@@ -134,8 +136,17 @@ export default async function ListingDetailPage({ params }: { params: { locale: 
           <p className="mt-3 text-[11px] text-slate-400">{t(locale, 'listing.commercialNote')}</p>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-4">
-          <h2 className="text-sm font-semibold text-slate-700">{t(locale, 'listing.contactVisit')}</h2>
-          <LeadForm locale={locale} listingId={l.id} recipient={l.owner} source="listing" />
+          {l.phone ? (
+            <>
+              <h2 className="text-sm font-semibold text-slate-700">{tr(QUOTE_TITLE, locale)}</h2>
+              <div className="mt-2"><QuoteContact locale={locale} phone={l.phone} businessName={contactName} /></div>
+            </>
+          ) : (
+            <>
+              <h2 className="text-sm font-semibold text-slate-700">{t(locale, 'listing.contactVisit')}</h2>
+              <LeadForm locale={locale} listingId={l.id} recipient={l.owner} source="listing" />
+            </>
+          )}
         </div>
       </aside>
     </div>
