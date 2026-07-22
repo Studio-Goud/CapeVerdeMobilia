@@ -34,10 +34,17 @@ Grote controle uitgevoerd (4 parallelle audits). Opgelost:
 - **Toegankelijkheid**: `<html lang>` per taal, taalwissel op mobiel, coral-contrast, tap-target hamburger, "A enviar…"-states.
 - **Favicon**: tab-icoon toonde een leeg blauw vlak (kapotte 192- + apple-touch-PNG's die de correcte SVG overschreven); nu vector-SVG als primair tab-icoon + geregenereerde PNG's (D + koraal-zon).
 
+## 🔎 SEO / GEO (live)
+Structured data (JSON-LD: Organization + WebSite/zoekbox, LocalBusiness per professional,
+RealEstateListing per woning), dynamische sitemap (alle profielen/advertenties/procedures),
+per-pagina hreflang + canonical, keyword-titels, directory-zoekbalk, `llms.txt`.
+Playbooks in de repo: `SEO_GROWTH_PLAN.md`, `SEO_KEYWORD_MAP.md`, `SEO_OFFSITE_PACK.md`,
+`MARKETING_OUTREACH_ADS.md`. Volgende stap: categorie-/eiland-landingspagina's bouwen.
+
 ## 🗄️ Migraties
-0001–0018 zijn gedraaid. **0019 + 0020 nog te draaien** (Supabase → SQL Editor):
-`0019_claimable_profiles.sql` (claimbaar telefoonboek) en daarna
-`0020_seed_sao_vicente.sql` (25 échte São Vicente-bedrijven, gebrond). Zie `MIGRATIONS.md`.
+0001–0021 zijn gedraaid (telefoonboek + São Vicente-seed + Bomclima). **0022 nog te draaien**
+(`0022_publications_seo.sql`): 5 gebronde info-artikelen (kopen, NIF, cITI/cIPI, erfrecht,
+condomínio). Zie `MIGRATIONS.md`.
 
 ## ⚠️ Alleen jij kunt dit doen
 1. **Migraties 0019 + 0020 draaien** in Supabase → SQL Editor (telefoonboek + São Vicente-seed live).
