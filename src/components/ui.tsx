@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import {
   type Locale, type Listing, type VerificationLevel, type UIKey,
-  t, tr, formatPrice, docLabel, verifLabel,
+  t, tr, formatPrice, docLabel, verifLabel, whatsappLink, quoteMessage, isMobileCV,
 } from '@/i18n';
 import { isSupabaseConfigured } from '@/lib/supabase/env';
 import { Wordmark } from './Wordmark';
@@ -59,6 +59,36 @@ export function SourceLine({ locale, name, url, date }: {
         : label}
       {date ? ` · ${date}` : ''}
     </p>
+  );
+}
+
+/** Contact actions for a directory business. WhatsApp (mobiles only) carries a
+ *  message the recipient reads as coming through Djarvista; a call link always
+ *  shows. Both make the platform's role visible to both sides. */
+export function QuoteContact({ locale, phone, businessName }: {
+  locale: Locale; phone: string; businessName: string;
+}): JSX.Element {
+  const mobile = isMobileCV(phone);
+  return (
+    <div className="space-y-2">
+      {mobile && (
+        <a
+          href={whatsappLink(quoteMessage(locale, businessName), phone)}
+          target="_blank" rel="noopener noreferrer"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#25D366] px-3 py-2 text-sm font-semibold text-white transition hover:brightness-95"
+        >
+          <span aria-hidden>💬</span>{t(locale, 'contact.whatsapp')}
+        </a>
+      )}
+      <a
+        href={`tel:${phone}`}
+        className={cn('flex w-full items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition',
+          mobile ? 'border border-slate-200 text-slate-700 hover:border-brand hover:text-brand' : 'bg-brand text-white hover:bg-brand-dark')}
+      >
+        <span aria-hidden>📞</span>{t(locale, 'contact.call')} · {phone}
+      </a>
+      <p className="text-xs text-slate-400">{t(locale, 'contact.viaNote')}</p>
+    </div>
   );
 }
 

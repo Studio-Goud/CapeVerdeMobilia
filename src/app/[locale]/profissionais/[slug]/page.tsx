@@ -5,7 +5,7 @@ import { t, tr, type Locale, type TL, verifLabel } from '@/i18n';
 import { REVIEWS } from '@/content';
 import { fetchProfessionalBySlug, fetchReviews, type ProProfile, type ReviewView } from '@/lib/data';
 import { isSupabaseConfigured } from '@/lib/supabase/env';
-import { PageTitle, Card, Pill, TrustBadge, SectionHead, SeededBadge, SourceLine } from '@/components/ui';
+import { PageTitle, Card, Pill, TrustBadge, SectionHead, SeededBadge, SourceLine, QuoteContact } from '@/components/ui';
 import { LeadForm } from '@/components/LeadForm';
 import { ReviewForm } from '@/components/ReviewForm';
 import { ClaimBusiness } from '@/components/ClaimBusiness';
@@ -211,15 +211,22 @@ export default async function ProfessionalDetailPage({
         <aside className="space-y-6">
           <Card>
             <h2 className="mb-3 text-lg font-semibold text-slate-900">{t(locale, 'listing.contactVisit')}</h2>
-            {pro.phone && (
-              <p className="mb-3 text-sm text-slate-600">
-                {pro.seeded ? t(locale, 'claim.contactDirect') : tr(CONTACT_PHONE, locale)}:{' '}
-                <a href={`tel:${pro.phone}`} className="font-medium text-brand hover:underline">{pro.phone}</a>
-              </p>
+            {pro.seeded ? (
+              <div className="space-y-3">
+                {pro.phone && <QuoteContact locale={locale} phone={pro.phone} businessName={pro.displayName} />}
+                <p className="text-xs text-slate-400">{t(locale, 'claim.leadsAfterClaim')}</p>
+              </div>
+            ) : (
+              <>
+                {pro.phone && (
+                  <p className="mb-3 text-sm text-slate-600">
+                    {tr(CONTACT_PHONE, locale)}:{' '}
+                    <a href={`tel:${pro.phone}`} className="font-medium text-brand hover:underline">{pro.phone}</a>
+                  </p>
+                )}
+                <LeadForm locale={locale} proSlug={pro.slug} recipient={pro.userId} source="pro" />
+              </>
             )}
-            {pro.seeded
-              ? <p className="text-xs text-slate-400">{t(locale, 'claim.leadsAfterClaim')}</p>
-              : <LeadForm locale={locale} proSlug={pro.slug} recipient={pro.userId} source="pro" />}
           </Card>
 
           {pro.seeded && (
