@@ -1,8 +1,8 @@
 // Structured-data (schema.org) builders. Feed the results to <JsonLd data=…/>.
 // Rich results for Google + machine-readable facts for AI/generative engines
 // (GEO): who Djarvista is, each business, and each property listing.
-import { tr, type Locale, type Listing, type TL } from '@/i18n';
-import type { ProProfile } from '@/lib/data';
+import { tr, type Locale, type Listing, type TL, type Procedure } from '@/i18n';
+import type { ProProfile, InfoItem } from '@/lib/data';
 
 const BASE = 'https://www.djarvista.com';
 
@@ -104,6 +104,47 @@ export function collectionPageJsonLd(opts: {
       })),
     },
   };
+}
+
+/** A step-by-step procedure as a HowTo (rich-result candidate in Google). */
+export function howToJsonLd(proc: Procedure, locale: Locale): Record<string, unknown> {
+  const url = `${BASE}/${locale}/procedimentos/${proc.slug}`;
+  const data: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    '@id': `${url}#howto`,
+    name: tr(proc.title, locale),
+    description: tr(proc.summary, locale),
+    inLanguage: locale,
+    step: proc.steps.map((s) => ({
+      '@type': 'HowToStep',
+      position: s.sortOrder,
+      name: tr(s.title, locale),
+      text: tr(s.description, locale) + (s.detail ? ` ${tr(s.detail, locale)}` : ''),
+    })),
+  };
+  if (proc.estimatedDays) data.totalTime = `P${proc.estimatedDays}D`;
+  return data;
+}
+
+/** An official-information article as an Article, published by the Organization. */
+export function articleJsonLd(item: InfoItem, locale: Locale): Record<string, unknown> {
+  const url = `${BASE}/${locale}/info/${item.slug}`;
+  const data: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    '@id': `${url}#article`,
+    headline: tr(item.title, locale),
+    inLanguage: locale,
+    mainEntityOfPage: url,
+    author: { '@type': 'Organization', name: 'Djarvista', '@id': `${BASE}/#organization` },
+    publisher: { '@id': `${BASE}/#organization` },
+    isPartOf: { '@id': `${BASE}/#website` },
+  };
+  if (item.summary) data.description = tr(item.summary, locale).slice(0, 300);
+  if (item.publishedAt) data.datePublished = item.publishedAt;
+  if (item.updatedAt) data.dateModified = item.updatedAt;
+  return data;
 }
 
 /** A property advert as a RealEstateListing. */

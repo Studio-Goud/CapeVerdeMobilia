@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { t, tr, formatDate, type Locale } from '@/i18n';
 import { fetchPublicationBySlug, type InfoItem } from '@/lib/data';
+import { JsonLd } from '@/components/JsonLd';
+import { articleJsonLd, breadcrumbJsonLd } from '@/lib/jsonld';
 import { altLangs } from '@/lib/seo';
 
 export async function generateMetadata({ params }: { params: { locale: Locale; slug: string } }): Promise<Metadata> {
@@ -32,6 +34,12 @@ export default async function InfoDetailPage({ params }: { params: { locale: Loc
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
+      <JsonLd data={breadcrumbJsonLd([
+        { name: 'Djarvista', url: `/${locale}` },
+        { name: t(locale, 'nav.info'), url: `/${locale}/info` },
+        { name: tr(item.title, locale), url: `/${locale}/info/${item.slug}` },
+      ])} />
+      <JsonLd data={articleJsonLd(item, locale)} />
       <Link href={`/${locale}/info`} className="text-sm font-medium text-brand hover:underline">
         {`← ${t(locale, 'nav.info')}`}
       </Link>
