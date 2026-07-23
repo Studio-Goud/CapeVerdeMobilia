@@ -82,6 +82,28 @@ export async function deleteListing(id: string): Promise<string | null> {
   return error ? error.message : null;
 }
 
+export interface RecentSignup {
+  id: string;
+  name: string;
+  company: string | null;
+  role: string;
+  verification_level: string;
+  created_at: string;
+}
+
+/** Recent registrations, newest first. Admin-only view; profiles are world-readable (RLS). */
+export async function fetchRecentSignups(limit = 100): Promise<RecentSignup[] | null> {
+  const supa = getBrowserSupabase();
+  if (!supa) return null;
+  const { data, error } = await supa
+    .from('profiles')
+    .select('id, name, company, role, verification_level, created_at')
+    .order('created_at', { ascending: false })
+    .limit(limit);
+  if (error) return null;
+  return (data ?? []) as RecentSignup[];
+}
+
 export async function fetchMyFavorites(): Promise<Listing[] | null> {
   const ctx = await uid();
   if (!ctx) return null;
