@@ -38,10 +38,16 @@ het **Portugees** (pt-PT); Kriolu is spreektaal, geen schrijftaal - alle content
 
 ### Branch- & deploy-model (belangrijk)
 
-- **Productie = default branch** `claude/cape-verde-proptech-govtech-fg9zjw` (Vercel deployt
-  hiervandaan). Er is GEEN `main`.
-- Ontwikkelen op feature-branch `claude/status-md-review-kn89v9`, dan **PR → merge naar de
-  default branch → Vercel deployt** automatisch. Dat is "live gaan".
+- **Productie = `main`.** Vercel → Project → Settings → Environments → Production →
+  Branch Tracking staat op `main`, dus www.djarvista.com deployt vanaf `main`. `main` bevat
+  alles.
+- De oude branch `claude/cape-verde-proptech-govtech-fg9zjw` is **legacy** en mag genegeerd /
+  later opgeruimd worden (was de vorige productie-branch).
+- **Ontwikkelen**: vertak vanaf `main` → **PR → merge naar `main` → Vercel deployt**
+  automatisch. Dat is "live gaan".
+- Cosmetisch: de GitHub *default branch* kan nog op de oude branch staan; dat raakt de live
+  site niet, want Vercel volgt de expliciete Production Branch `main`. (Omzetten kan via
+  GitHub → Settings → General → Default branch, maar is niet nodig.)
 - **Migraties draait de gebruiker handmatig** in Supabase → SQL Editor (idempotent). De app
   degradeert netjes (demo-fallback) voor nog niet gedraaide migraties.
 
