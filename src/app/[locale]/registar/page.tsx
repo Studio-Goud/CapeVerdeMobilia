@@ -32,7 +32,8 @@ export default function RegisterPage({ params }: { params: { locale: Locale } })
     setBusy(false);
     if (res.error) { setError(res.error); return; }
     if (res.needsConfirm) { setNotice(tr(CHECK_EMAIL, locale)); return; }
-    router.push(`/${locale}/painel`);
+    // Send businesses straight to completing their public profile; individuals to the dashboard.
+    router.push(role === 'business' ? `/${locale}/profissionais/novo` : `/${locale}/painel`);
   }
 
   const roleCard = (r: Role): JSX.Element => (
