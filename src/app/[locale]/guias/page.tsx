@@ -31,14 +31,8 @@ const COPY = {
   },
 } satisfies Record<string, TL>;
 
-// Topics researched and queued for publication (honest roadmap, not yet live).
-const SOON: TL[] = [
-  { pt: 'Licenças de construção e o processo de construir', en: 'Building permits and the process of building', nl: 'Bouwvergunningen en het bouwproces' },
-  { pt: 'Comprar imóvel: o processo legal e os estrangeiros/diáspora', en: 'Buying property: the legal process and foreigners/diaspora', nl: 'Vastgoed kopen: het juridische proces en buitenlanders/diaspora' },
-  { pt: 'Comprar terreno e registo predial', en: 'Buying land and property registration', nl: 'Grond kopen en kadasterregistratie' },
-  { pt: 'Câmaras municipais e serviços do Estado (e-gov)', en: 'Municipalities and State services (e-gov)', nl: 'Gemeenten en overheidsdiensten (e-gov)' },
-  { pt: 'Abrir e licenciar uma empresa', en: 'Starting and licensing a business', nl: 'Een bedrijf oprichten en licentiëren' },
-];
+// All researched topics are now published; new topics will queue here as prepared.
+const SOON: TL[] = [];
 
 export default function GuidesHubPage({ params }: { params: { locale: Locale } }): JSX.Element {
   const { locale } = params;
@@ -71,19 +65,21 @@ export default function GuidesHubPage({ params }: { params: { locale: Locale } }
         ))}
       </div>
 
-      <div className="mt-10">
-        <SectionHead title={tr(COPY.soon, locale)} />
-        <p className="mb-3 text-sm text-slate-600">{tr(COPY.soonNote, locale)}</p>
-        <ul className="flex flex-wrap gap-2">
-          {SOON.map((s) => (
-            <li key={tr(s, 'pt')}>
-              <span className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-600">
-                <Pill tone="slate">{tr(COPY.soon, locale)}</Pill>{tr(s, locale)}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {SOON.length > 0 && (
+        <div className="mt-10">
+          <SectionHead title={tr(COPY.soon, locale)} />
+          <p className="mb-3 text-sm text-slate-600">{tr(COPY.soonNote, locale)}</p>
+          <ul className="flex flex-wrap gap-2">
+            {SOON.map((s) => (
+              <li key={tr(s, 'pt')}>
+                <span className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-600">
+                  <Pill tone="slate">{tr(COPY.soon, locale)}</Pill>{tr(s, locale)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
