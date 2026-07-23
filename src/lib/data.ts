@@ -173,8 +173,9 @@ export async function fetchReviews(proSlug: string): Promise<ReviewView[]> {
 // ---------------------------------------------------------------------------
 export interface ProProfile {
   id: string; userId: string | null; slug: string; displayName: string;
-  headline: TL; bio: TL | null; category: string | null;
+  headline: TL; bio: TL | null; category: string | null; specialization: string | null;
   serviceAreas: string[]; priceIndication: TL | null; phone: string | null;
+  whatsapp: string | null; email: string | null; address: string | null;
   verificationLevel: VerificationLevel; ratingAvg: number | null; ratingCount: number;
   seeded: boolean; sourceName: string | null; sourceUrl: string | null; sourcedAt: string | null;
   // Operator ("verified by Djarvista") trust level for seeded/vouched businesses that
@@ -183,8 +184,8 @@ export interface ProProfile {
 }
 interface ProRow {
   id: string; user_id: string | null; slug: string; display_name: string;
-  headline: TL; bio: TL | null; category: string | null; service_areas: string[] | null;
-  price_indication: TL | null; phone: string | null;
+  headline: TL; bio: TL | null; category: string | null; specialization?: string | null; service_areas: string[] | null;
+  price_indication: TL | null; phone: string | null; whatsapp?: string | null; email?: string | null; address?: string | null;
   source_name?: string | null; source_url?: string | null; sourced_at?: string | null;
   verified_level?: string | null;
   profiles: { verification_level: VerificationLevel } | { verification_level: VerificationLevel }[] | null;
@@ -194,8 +195,9 @@ interface ProRow {
 function demoToProProfile(p: (typeof PROFESSIONALS)[number]): ProProfile {
   return {
     id: p.id, userId: null, slug: p.slug, displayName: p.displayName, headline: p.headline,
-    bio: null, category: null, serviceAreas: p.serviceAreas, priceIndication: p.priceIndication,
-    phone: null, verificationLevel: p.verificationLevel, ratingAvg: p.ratingAvg, ratingCount: p.ratingCount,
+    bio: null, category: null, specialization: null, serviceAreas: p.serviceAreas, priceIndication: p.priceIndication,
+    phone: null, whatsapp: null, email: null, address: null,
+    verificationLevel: p.verificationLevel, ratingAvg: p.ratingAvg, ratingCount: p.ratingCount,
     seeded: false, sourceName: null, sourceUrl: null, sourcedAt: null, verifiedLevel: null,
   };
 }
@@ -239,8 +241,9 @@ export async function fetchProfessionals(area?: string): Promise<ProProfile[]> {
     const s = stats.get(r.slug);
     return {
       id: r.id, userId: r.user_id, slug: r.slug, displayName: r.display_name, headline: r.headline,
-      bio: r.bio, category: r.category, serviceAreas: r.service_areas ?? [], priceIndication: r.price_indication,
-      phone: r.phone, verificationLevel: verifOf(r), ratingAvg: s ? s.avg : null, ratingCount: s ? s.count : 0,
+      bio: r.bio, category: r.category, specialization: r.specialization ?? null, serviceAreas: r.service_areas ?? [], priceIndication: r.price_indication,
+      phone: r.phone, whatsapp: r.whatsapp ?? null, email: r.email ?? null, address: r.address ?? null,
+      verificationLevel: verifOf(r), ratingAvg: s ? s.avg : null, ratingCount: s ? s.count : 0,
       seeded: r.user_id === null, sourceName: r.source_name ?? null, sourceUrl: r.source_url ?? null, sourcedAt: r.sourced_at ?? null,
       verifiedLevel: (r.verified_level as VerificationLevel) ?? null,
     };
@@ -262,8 +265,9 @@ export async function fetchProfessionalBySlug(slug: string): Promise<ProProfile 
   const s = stats.get(r.slug);
   return {
     id: r.id, userId: r.user_id, slug: r.slug, displayName: r.display_name, headline: r.headline,
-    bio: r.bio, category: r.category, serviceAreas: r.service_areas ?? [], priceIndication: r.price_indication,
-    phone: r.phone, verificationLevel: verifOf(r), ratingAvg: s ? s.avg : null, ratingCount: s ? s.count : 0,
+    bio: r.bio, category: r.category, specialization: r.specialization ?? null, serviceAreas: r.service_areas ?? [], priceIndication: r.price_indication,
+    phone: r.phone, whatsapp: r.whatsapp ?? null, email: r.email ?? null, address: r.address ?? null,
+    verificationLevel: verifOf(r), ratingAvg: s ? s.avg : null, ratingCount: s ? s.count : 0,
     seeded: r.user_id === null, sourceName: r.source_name ?? null, sourceUrl: r.source_url ?? null, sourcedAt: r.sourced_at ?? null,
     verifiedLevel: (r.verified_level as VerificationLevel) ?? null,
   };

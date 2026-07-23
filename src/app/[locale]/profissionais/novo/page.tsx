@@ -10,6 +10,22 @@ import { fetchMyProfessional, upsertProfessional, type MyProfessional } from '@/
 
 const ISLANDS = ['São Vicente', 'Santo Antão', 'Santiago', 'Sal', 'Boa Vista', 'Fogo', 'Maio', 'Brava', 'São Nicolau'];
 
+// Branch / category options. `value` is stored in professionals.category (matches
+// the PRO_CATEGORIES used by the directory landing pages). "Other" keeps a free field.
+const CATS: { value: string; label: TL }[] = [
+  { value: 'Advogados', label: { pt: 'Advogados', en: 'Lawyers', nl: 'Advocaten' } },
+  { value: 'Climatização', label: { pt: 'Climatização / Ar condicionado', en: 'Air conditioning / HVAC', nl: 'Airco / klimaat' } },
+  { value: 'Construção civil', label: { pt: 'Construção civil', en: 'Construction', nl: 'Bouw' } },
+  { value: 'Arquitetura', label: { pt: 'Arquitetura', en: 'Architecture', nl: 'Architectuur' } },
+  { value: 'Serralharia', label: { pt: 'Serralharia', en: 'Metalwork', nl: 'Metaalwerk' } },
+  { value: 'Despachante oficial', label: { pt: 'Despachante oficial', en: 'Customs agent', nl: 'Douane-agent' } },
+  { value: 'Limpeza', label: { pt: 'Limpeza', en: 'Cleaning', nl: 'Schoonmaak' } },
+  { value: 'Gás', label: { pt: 'Gás', en: 'Gas', nl: 'Gas' } },
+];
+const CAT_VALUES = CATS.map((c) => c.value);
+const CAT_SELECT: TL = { pt: 'Selecione a categoria…', en: 'Select a category…', nl: 'Kies een categorie…' };
+const CAT_OTHER: TL = { pt: 'Outro (especificar)', en: 'Other (specify)', nl: 'Anders (specificeer)' };
+
 // Reusable trilingual field labels / qualifiers.
 const L = {
   displayName: { pt: 'Nome a apresentar', en: 'Display name', nl: 'Weergavenaam' },
@@ -19,6 +35,10 @@ const L = {
   areas: { pt: 'Áreas de serviço', en: 'Service areas', nl: 'Werkgebieden' },
   price: { pt: 'Indicação de preço', en: 'Price indication', nl: 'Prijsindicatie' },
   phone: { pt: 'Telefone', en: 'Phone', nl: 'Telefoon' },
+  specialization: { pt: 'Especialização', en: 'Specialisation', nl: 'Specialisatie' },
+  address: { pt: 'Morada', en: 'Address', nl: 'Adres' },
+  whatsapp: { pt: 'WhatsApp', en: 'WhatsApp', nl: 'WhatsApp' },
+  email: { pt: 'Email de contacto', en: 'Contact email', nl: 'Contact-e-mail' },
 } satisfies Record<string, TL>;
 
 const PT_LBL: TL = { pt: 'Português', en: 'Portuguese', nl: 'Portugees' };
@@ -65,12 +85,13 @@ export default function ProfessionalFormPage({ params }: { params: { locale: Loc
     display_name: '',
     headlinePt: '', headlineEn: '', headlineNl: '',
     bioPt: '', bioEn: '', bioNl: '',
-    category: '',
+    category: '', specialization: '',
     pricePt: '', priceEn: '', priceNl: '',
-    phone: '',
+    phone: '', whatsapp: '', email: '', address: '',
     publish: true,
   });
   const [areas, setAreas] = useState<string[]>([]);
+  const [otherCat, setOtherCat] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [loadedId, setLoadedId] = useState<string | undefined>(undefined);
   const [loadedSlug, setLoadedSlug] = useState('');
@@ -97,13 +118,14 @@ export default function ProfessionalFormPage({ params }: { params: { locale: Loc
         setLoadedSlug(p.slug);
         setIsEdit(true);
         setAreas(p.service_areas);
+        setOtherCat(Boolean(p.category) && !CAT_VALUES.includes(p.category));
         setF({
           display_name: p.display_name,
           headlinePt: p.headline.pt, headlineEn: p.headline.en, headlineNl: p.headline.nl,
           bioPt: p.bio.pt, bioEn: p.bio.en, bioNl: p.bio.nl,
-          category: p.category,
+          category: p.category, specialization: p.specialization,
           pricePt: p.price_indication?.pt ?? '', priceEn: p.price_indication?.en ?? '', priceNl: p.price_indication?.nl ?? '',
-          phone: p.phone,
+          phone: p.phone, whatsapp: p.whatsapp, email: p.email, address: p.address,
           publish: p.status === 'published',
         });
       })
@@ -191,9 +213,13 @@ export default function ProfessionalFormPage({ params }: { params: { locale: Loc
       headline,
       bio,
       category: f.category.trim(),
+      specialization: f.specialization.trim(),
       service_areas: areas,
       price_indication,
       phone: f.phone.trim(),
+      whatsapp: f.whatsapp.trim(),
+      email: f.email.trim(),
+      address: f.address.trim(),
       status: f.publish ? 'published' : 'draft',
     };
 
@@ -270,7 +296,32 @@ export default function ProfessionalFormPage({ params }: { params: { locale: Loc
             </div>
           </fieldset>
 
-          {field('category', ql(L.category, OPTIONAL))}
+          <label className="block text-sm">
+            <span className="text-slate-600">{tr(ql(L.category, RECOMMENDED), locale)}</span>
+            <select
+              value={otherCat ? '__other__' : f.category}
+              onChange={(e) => {
+                const v = e.target.value;
+                if (v === '__other__') { setOtherCat(true); upd('category', ''); }
+                else { setOtherCat(false); upd('category', v); }
+              }}
+              className={input}
+            >
+              <option value="">{tr(CAT_SELECT, locale)}</option>
+              {CATS.map((c) => <option key={c.value} value={c.value}>{tr(c.label, locale)}</option>)}
+              <option value="__other__">{tr(CAT_OTHER, locale)}</option>
+            </select>
+            {otherCat && (
+              <input
+                value={f.category}
+                onChange={(e) => upd('category', e.target.value)}
+                placeholder={tr(CAT_OTHER, locale)}
+                className={`${input} mt-2`}
+              />
+            )}
+          </label>
+
+          {field('specialization', ql(L.specialization, OPTIONAL))}
 
           <fieldset>
             <legend className="text-sm font-medium text-slate-700">{tr(ql(L.areas, OPTIONAL), locale)}</legend>
@@ -293,7 +344,12 @@ export default function ProfessionalFormPage({ params }: { params: { locale: Loc
             </div>
           </fieldset>
 
-          {field('phone', ql(L.phone, OPTIONAL))}
+          <div className="grid gap-3 sm:grid-cols-2">
+            {field('phone', ql(L.phone, RECOMMENDED))}
+            {field('whatsapp', ql(L.whatsapp, OPTIONAL))}
+          </div>
+          {field('email', ql(L.email, OPTIONAL))}
+          {field('address', ql(L.address, OPTIONAL))}
 
           <label className="flex items-center gap-2 text-sm text-slate-700">
             <input type="checkbox" checked={f.publish} onChange={(e) => upd('publish', e.target.checked)} />

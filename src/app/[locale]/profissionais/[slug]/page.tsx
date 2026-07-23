@@ -215,6 +215,7 @@ export default async function ProfessionalDetailPage({
         <aside className="space-y-6">
           <Card>
             <h2 className="mb-3 text-lg font-semibold text-slate-900">{t(locale, 'listing.contactVisit')}</h2>
+            {pro.specialization && <p className="mb-3 text-sm text-slate-500">{pro.specialization}</p>}
             {pro.seeded ? (
               <div className="space-y-3">
                 {pro.phone && <QuoteContact locale={locale} phone={pro.phone} businessName={pro.displayName} />}
@@ -226,6 +227,23 @@ export default async function ProfessionalDetailPage({
                   <p className="mb-3 text-sm text-slate-600">
                     {tr(CONTACT_PHONE, locale)}:{' '}
                     <a href={`tel:${pro.phone}`} className="font-medium text-brand hover:underline">{pro.phone}</a>
+                  </p>
+                )}
+                {pro.whatsapp && (
+                  <p className="mb-3 text-sm text-slate-600">
+                    WhatsApp:{' '}
+                    <a href={`https://wa.me/${pro.whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" className="font-medium text-brand hover:underline">{pro.whatsapp}</a>
+                  </p>
+                )}
+                {pro.email && (
+                  <p className="mb-3 text-sm text-slate-600">
+                    Email:{' '}
+                    <a href={`mailto:${pro.email}`} className="font-medium text-brand hover:underline">{pro.email}</a>
+                  </p>
+                )}
+                {pro.address && (
+                  <p className="mb-3 text-sm text-slate-600">
+                    {tr({ pt: 'Morada', en: 'Address', nl: 'Adres' }, locale)}: <span className="text-slate-700">{pro.address}</span>
                   </p>
                 )}
                 <LeadForm locale={locale} proSlug={pro.slug} recipient={pro.userId} source="pro" />
