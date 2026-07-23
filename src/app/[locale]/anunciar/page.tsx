@@ -306,6 +306,9 @@ export default function AdvertisePage({ params }: { params: { locale: Locale } }
           <Link href={`/${locale}/precos`} className="inline-flex items-center rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-brand hover:text-brand">
             {tr(COPY.ctaPricing as TL, locale)}
           </Link>
+          <Link href={`/${locale}/como-pagar`} className="inline-flex items-center rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-brand hover:text-brand">
+            {tr({ pt: 'Como pagar', en: 'How to pay', nl: 'Hoe betalen' }, locale)}
+          </Link>
         </div>
       </section>
 

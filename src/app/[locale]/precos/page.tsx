@@ -280,9 +280,12 @@ export default function PricingPage({ params }: { params: { locale: Locale } }):
       <section className="mb-10">
         <SectionHead title={tr(COPY.alaCarteHead, locale)} />
         <p className="mb-2 max-w-3xl text-sm text-slate-600">{tr(COPY.alaCarteIntro, locale)}</p>
-        <p className="mb-4 text-sm">
+        <p className="mb-4 flex flex-wrap gap-x-4 gap-y-1 text-sm">
           <Link href={`/${locale}/anunciar`} className="font-semibold text-brand hover:underline">
             {tr({ pt: 'Como funciona a publicidade e o que ganha →', en: 'How advertising works and what you get →', nl: 'Hoe adverteren werkt en wat je krijgt →' }, locale)}
+          </Link>
+          <Link href={`/${locale}/como-pagar`} className="font-semibold text-brand hover:underline">
+            {tr({ pt: 'Como pagar →', en: 'How to pay →', nl: 'Hoe betalen →' }, locale)}
           </Link>
         </p>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
