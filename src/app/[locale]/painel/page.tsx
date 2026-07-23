@@ -188,6 +188,12 @@ export default function DashboardPage({ params }: { params: { locale: Locale } }
               <Card><p className="text-sm text-slate-500">{t(locale, 'dash.empty')}</p></Card>
             ) : biz && biz.listings.length > 0 ? (
               <div className="space-y-2">
+                {boosted.size > 0 && (
+                  <p className="rounded-lg bg-coral-50 px-3 py-2 text-xs text-coral-700">
+                    {t(locale, 'dash.boostPayHint')}{' '}
+                    <Link href={`/${locale}/como-pagar`} className="font-semibold underline">{t(locale, 'nav.howToPay')}</Link>
+                  </p>
+                )}
                 {biz.listings.map((l) => (
                   <Card key={l.id} className="flex flex-wrap items-center gap-3">
                     {/* eslint-disable-next-line @next/next/no-img-element */}

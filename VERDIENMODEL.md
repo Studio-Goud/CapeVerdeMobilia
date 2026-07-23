@@ -121,7 +121,13 @@ Gebouwd (deze iteratie):
 - `/anunciar`: publieke uitleg-pagina (tarief-ladder, voordelen, verificatie-poort,
   chat-gating, cross-referral met guardrails, vastgoed + pedidos). Drietalig, in nav
   (Profissionais-groep) en footer, in sitemap + SEO-meta.
-- `/precos`: gekoppelde-dienst-slot toegevoegd + link naar `/anunciar`.
+- `/precos`: gekoppelde-dienst-slot toegevoegd + link naar `/anunciar` en `/como-pagar`.
+- `/como-pagar`: betaalpagina met twee rails, gekoppeld aan de handmatige goedkeur-lus.
+  Rail lokaal (Vinti4/MKesh/overschrijving naar de CV-rekening) + rail buitenland
+  (kaart/PayPal in EUR voor investeerders/diaspora zonder CV-rekening). De echte
+  betaalgegevens staan in `src/content/payments.ts` (placeholders tot ze ingevuld
+  zijn; lege waarden tonen netjes "brevemente"). Dashboard toont na een
+  Destaque-aanvraag een hint naar `/como-pagar`. Drietalig, in footer + sitemap + SEO.
 
 Nog te bouwen (kandidaten, in volgorde van waarde):
 - De cross-referral "Precisa de instalacao?"-module op de advertentie/dienst-detail
