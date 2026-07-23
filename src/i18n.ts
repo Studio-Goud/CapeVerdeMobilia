@@ -35,6 +35,7 @@ const UI = {
   'nav.pricing': { pt: 'Preços', en: 'Pricing', nl: 'Prijzen' },
   'nav.advertise': { pt: 'Anunciar', en: 'Advertise', nl: 'Adverteren' },
   'nav.howToPay': { pt: 'Como pagar', en: 'How to pay', nl: 'Hoe betalen' },
+  'nav.guides': { pt: 'Guias', en: 'Guides', nl: 'Gidsen' },
   'nav.publishWizard': { pt: 'Publicar em 3 passos', en: 'Publish in 3 steps', nl: 'Plaatsen in 3 stappen' },
   'dash.message': { pt: 'Mensagem', en: 'Message', nl: 'Bericht' },
   'dash.availability': { pt: 'Disponibilidade', en: 'Availability', nl: 'Beschikbaarheid' },

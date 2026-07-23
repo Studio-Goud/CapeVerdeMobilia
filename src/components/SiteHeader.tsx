@@ -35,6 +35,7 @@ function groups(locale: Locale): NavGroup[] {
       { key: 'nav.tenders', href: p('/concursos') },
     ] },
     { key: 'nav.group.gov', items: [
+      { key: 'nav.guides', href: p('/guias') },
       { key: 'nav.info', href: p('/info') },
       { key: 'nav.procedimentos', href: p('/procedimentos') },
       { key: 'nav.verification', href: p('/verificacao') },

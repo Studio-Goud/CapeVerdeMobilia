@@ -72,6 +72,10 @@ const PAGES: Record<string, { title: TL; description: TL }> = {
     title: { pt: 'Como pagar em Cabo Verde: Vinti4, MKesh e cartão - Djarvista', en: 'How to pay in Cabo Verde: Vinti4, MKesh and card - Djarvista', nl: 'Betalen in Kaapverdië: Vinti4, MKesh en kaart - Djarvista' },
     description: { pt: 'Pague o Destaque ou a verificação com Vinti4, MKesh ou transferência em Cabo Verde, ou por cartão e PayPal em euros a partir do estrangeiro. A base é gratuita.', en: 'Pay for Featured or verification with Vinti4, MKesh or transfer in Cabo Verde, or by card and PayPal in euros from abroad. The base is free.', nl: 'Betaal Destaque of verificatie met Vinti4, MKesh of overschrijving in Kaapverdië, of per kaart en PayPal in euro vanuit het buitenland. De basis is gratis.' },
   },
+  '/guias': {
+    title: { pt: 'Guias de Cabo Verde: construir, comprar, impostos, Estado - Djarvista', en: 'Cabo Verde guides: building, buying, taxes, government - Djarvista', nl: 'Kaapverdië-gidsen: bouwen, kopen, belasting, overheid - Djarvista' },
+    description: { pt: 'Guias com fonte e data sobre construção, imóveis, impostos e serviços públicos em Cabo Verde. Informação indicativa, verificável, nunca inventada. Não é aconselhamento jurídico.', en: 'Sourced, dated guides on building, property, taxes and public services in Cabo Verde. Indicative, verifiable, never invented. Not legal advice.', nl: 'Gebronde, gedateerde gidsen over bouwen, vastgoed, belasting en overheidsdiensten in Kaapverdië. Indicatief, verifieerbaar, nooit verzonnen. Geen juridisch advies.' },
+  },
   '/verificacao': {
     title: { pt: 'Confiança e verificação em Cabo Verde', en: 'Trust and verification in Cabo Verde', nl: 'Vertrouwen en verificatie in Kaapverdië' },
     description: { pt: 'Como a Djarvista verifica pessoas e empresas: seis níveis de confiança, com controlo humano. Verificações sensíveis nunca só por IA.', en: 'How Djarvista verifies people and businesses: six trust levels, with human control. Sensitive checks are never AI-only.', nl: 'Hoe Djarvista mensen en bedrijven verifieert: zes vertrouwensniveaus, met menselijke controle. Gevoelige checks nooit alleen door AI.' },

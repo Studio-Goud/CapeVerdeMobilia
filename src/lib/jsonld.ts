@@ -147,6 +147,39 @@ export function articleJsonLd(item: InfoItem, locale: Locale): Record<string, un
   return data;
 }
 
+/** A knowledge-base guide as an FAQPage (rich result + direct AI answer fodder). */
+export function faqPageJsonLd(path: string, items: { question: string; answer: string }[]): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${BASE}${path}#faq`,
+    mainEntity: items.map((it) => ({
+      '@type': 'Question',
+      name: it.question,
+      acceptedAnswer: { '@type': 'Answer', text: it.answer },
+    })),
+  };
+}
+
+/** A knowledge-base guide as an Article with an explicit update date (freshness = authority). */
+export function guideJsonLd(opts: { path: string; headline: string; description: string; updated: string; locale: Locale }): Record<string, unknown> {
+  const url = `${BASE}${opts.path}`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    '@id': `${url}#article`,
+    headline: opts.headline,
+    description: opts.description.slice(0, 300),
+    inLanguage: opts.locale,
+    mainEntityOfPage: url,
+    datePublished: opts.updated,
+    dateModified: opts.updated,
+    author: { '@type': 'Organization', name: 'Djarvista', '@id': `${BASE}/#organization` },
+    publisher: { '@id': `${BASE}/#organization` },
+    isPartOf: { '@id': `${BASE}/#website` },
+  };
+}
+
 /** A property advert as a RealEstateListing. */
 export function listingJsonLd(l: Listing, locale: Locale): Record<string, unknown> {
   const url = `${BASE}/${locale}/imoveis/${l.slug}`;
