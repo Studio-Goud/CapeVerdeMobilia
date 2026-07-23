@@ -15,13 +15,15 @@ import {
   resolveBoost,
   fetchClaimRequests,
   resolveClaim,
+  fetchRecentSignups,
   type AdminVerification,
   type AdminListing,
   type BoostRequestItem,
   type ClaimRequestItem,
+  type RecentSignup,
 } from '@/lib/browserData';
 
-type Tab = 'verifications' | 'listings' | 'boosts' | 'claims';
+type Tab = 'verifications' | 'listings' | 'boosts' | 'claims' | 'signups';
 
 // Verification level accepted by verifLabel - derived, so we avoid `any` and an extra import.
 type VerifLevel = Parameters<typeof verifLabel>[1];
@@ -86,6 +88,19 @@ const L = {
   statusPublished: { pt: 'Publicado', en: 'Published', nl: 'Gepubliceerd' },
   statusDraft: { pt: 'Rascunho', en: 'Draft', nl: 'Concept' },
   dash: { pt: '-', en: '-', nl: '-' },
+  tabSignups: { pt: 'Registos', en: 'Registrations', nl: 'Registraties' },
+  noSignups: { pt: 'Ainda sem registos.', en: 'No registrations yet.', nl: 'Nog geen registraties.' },
+  signupsHint: {
+    pt: 'Quem se registou, do mais recente para o mais antigo. Atualiza automaticamente a cada 20 segundos.',
+    en: 'Who registered, newest first. Auto-refreshes every 20 seconds.',
+    nl: 'Wie zich registreerde, nieuwste eerst. Ververst automatisch elke 20 seconden.',
+  },
+  refreshNow: { pt: 'Atualizar', en: 'Refresh', nl: 'Ververs' },
+  updatedAt: { pt: 'Atualizado', en: 'Updated', nl: 'Bijgewerkt' },
+  totalCount: { pt: 'Total de registos', en: 'Total registrations', nl: 'Totaal registraties' },
+  roleBusiness: { pt: 'Empresa', en: 'Business', nl: 'Bedrijf' },
+  rolePrivate: { pt: 'Particular', en: 'Private', nl: 'Particulier' },
+  roleAdmin: { pt: 'Admin', en: 'Admin', nl: 'Admin' },
 } satisfies Record<string, TL>;
 
 // --- Small button styles -----------------------------------------------------
@@ -94,10 +109,23 @@ const BTN_NEUTRAL = `${BTN_BASE} border-slate-300 text-slate-700 hover:bg-slate-
 const BTN_APPROVE = `${BTN_BASE} border-emerald-300 text-emerald-700 hover:bg-emerald-50`;
 const BTN_DANGER = `${BTN_BASE} border-red-300 text-red-600 hover:bg-red-50`;
 
+function localeTag(locale: Locale): string {
+  return locale === 'nl' ? 'nl-NL' : locale === 'en' ? 'en-GB' : 'pt-PT';
+}
+
 function formatDate(locale: Locale, iso: string): string {
-  const loc = locale === 'nl' ? 'nl-NL' : locale === 'en' ? 'en-GB' : 'pt-PT';
   const d = new Date(iso);
-  return Number.isNaN(d.getTime()) ? iso : new Intl.DateTimeFormat(loc, { dateStyle: 'medium' }).format(d);
+  return Number.isNaN(d.getTime()) ? iso : new Intl.DateTimeFormat(localeTag(locale), { dateStyle: 'medium' }).format(d);
+}
+
+function formatDateTime(locale: Locale, iso: string): string {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? iso : new Intl.DateTimeFormat(localeTag(locale), { dateStyle: 'short', timeStyle: 'short' }).format(d);
+}
+
+function formatClock(locale: Locale, iso: string): string {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? iso : new Intl.DateTimeFormat(localeTag(locale), { timeStyle: 'medium' }).format(d);
 }
 
 export default function AdminPage({ params }: { params: { locale: Locale } }): JSX.Element {
@@ -109,6 +137,8 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
   const [listings, setListings] = useState<AdminListing[] | null>(null);
   const [boosts, setBoosts] = useState<BoostRequestItem[] | null>(null);
   const [claims, setClaims] = useState<ClaimRequestItem[] | null>(null);
+  const [signups, setSignups] = useState<RecentSignup[] | null>(null);
+  const [signupsUpdatedAt, setSignupsUpdatedAt] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
 
@@ -138,13 +168,27 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
     setClaims(rows ?? []);
   }, []);
 
+  const loadSignups = useCallback(async (): Promise<void> => {
+    const rows = await fetchRecentSignups();
+    setSignups(rows ?? []);
+    setSignupsUpdatedAt(new Date().toISOString());
+  }, []);
+
   useEffect(() => {
     if (!ready || !configured || !isAdmin) return;
     if (tab === 'verifications') void loadVerifs();
     else if (tab === 'listings') void loadListings();
     else if (tab === 'claims') void loadClaims();
+    else if (tab === 'signups') void loadSignups();
     else void loadBoosts();
-  }, [ready, configured, isAdmin, tab, loadVerifs, loadListings, loadBoosts, loadClaims]);
+  }, [ready, configured, isAdmin, tab, loadVerifs, loadListings, loadBoosts, loadClaims, loadSignups]);
+
+  // Live auto-refresh while watching the registrations tab.
+  useEffect(() => {
+    if (!ready || !configured || !isAdmin || tab !== 'signups') return undefined;
+    const iv = setInterval(() => { void loadSignups(); }, 20000);
+    return () => clearInterval(iv);
+  }, [ready, configured, isAdmin, tab, loadSignups]);
 
   // --- Actions ---------------------------------------------------------------
   const openDoc = useCallback(async (path: string): Promise<void> => {
@@ -261,6 +305,7 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
         {tabBtn('listings', tr(L.tabListings, locale))}
         {tabBtn('boosts', tr(L.tabBoosts, locale))}
         {tabBtn('claims', tr(L.tabClaims, locale))}
+        {tabBtn('signups', tr(L.tabSignups, locale))}
       </div>
 
       {actionError && (
@@ -270,7 +315,47 @@ export default function AdminPage({ params }: { params: { locale: Locale } }): J
         </div>
       )}
 
-      {tab === 'claims' ? (
+      {tab === 'signups' ? (
+        <section className="space-y-3">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p className="text-xs text-slate-400">{tr(L.signupsHint, locale)}</p>
+            <div className="flex items-center gap-3 text-xs text-slate-400">
+              {signupsUpdatedAt && <span>{tr(L.updatedAt, locale)}: {formatClock(locale, signupsUpdatedAt)}</span>}
+              <button type="button" className={BTN_NEUTRAL} onClick={() => void loadSignups()}>{tr(L.refreshNow, locale)}</button>
+            </div>
+          </div>
+          {signups === null ? (
+            <p className="text-sm text-slate-500">{tr(L.loading, locale)}</p>
+          ) : signups.length === 0 ? (
+            <Card><p className="text-sm text-slate-500">{tr(L.noSignups, locale)}</p></Card>
+          ) : (
+            <>
+              <p className="text-xs text-slate-400">
+                {tr(L.totalCount, locale)}: <span className="font-semibold text-slate-600">{signups.length}</span>
+              </p>
+              <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-card">
+                <ul className="divide-y divide-slate-100">
+                  {signups.map((s) => (
+                    <li key={s.id} className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5">
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-medium text-slate-900">{s.company || s.name || tr(L.dash, locale)}</p>
+                        {s.company && s.name && <p className="truncate text-xs text-slate-400">{s.name}</p>}
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2 text-xs">
+                        <Pill tone={s.role === 'business' ? 'brand' : s.role === 'admin' ? 'coral' : 'slate'}>
+                          {tr(s.role === 'business' ? L.roleBusiness : s.role === 'admin' ? L.roleAdmin : L.rolePrivate, locale)}
+                        </Pill>
+                        <span className="text-slate-400">{verifLabel(locale, s.verification_level as VerifLevel)}</span>
+                        <span className="text-slate-400">{formatDateTime(locale, s.created_at)}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          )}
+        </section>
+      ) : tab === 'claims' ? (
         <section className="space-y-3">
           <p className="text-xs text-slate-400">{tr(L.claimHint, locale)}</p>
           {claims === null ? (
