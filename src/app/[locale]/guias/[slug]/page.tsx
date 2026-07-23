@@ -33,6 +33,11 @@ const L = {
   confirmWith: { pt: 'Confirme com', en: 'Confirm with', nl: 'Bevestig bij' },
   sources: { pt: 'Fontes', en: 'Sources', nl: 'Bronnen' },
   official: { pt: 'oficial', en: 'official', nl: 'officieel' },
+  dName: { pt: 'Câmara', en: 'Council', nl: 'Gemeente' },
+  dIsland: { pt: 'Ilha', en: 'Island', nl: 'Eiland' },
+  dSite: { pt: 'Site', en: 'Site', nl: 'Site' },
+  dContact: { pt: 'Contacto', en: 'Contact', nl: 'Contact' },
+  toConfirm: { pt: 'a confirmar', en: 'to confirm', nl: 'te bevestigen' },
 } satisfies Record<string, TL>;
 
 function Entry({ e, locale }: { e: KbEntry; locale: Locale }): JSX.Element {
@@ -91,6 +96,41 @@ export default function GuideTopicPage({ params }: { params: { locale: Locale; s
       <div className="space-y-6">
         {topic.entries.map((e, i) => <Entry key={i} e={e} locale={locale} />)}
       </div>
+
+      {topic.directory && (
+        <section className="mt-8 border-t border-slate-100 pt-6">
+          <p className="mb-3 text-sm text-slate-600">{tr(topic.directory.caption, locale)}</p>
+          <div className="overflow-x-auto rounded-xl border border-slate-200">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-slate-50 text-xs uppercase text-slate-500">
+                <tr>
+                  <th className="px-3 py-2">{tr(L.dName, locale)}</th>
+                  <th className="px-3 py-2">{tr(L.dIsland, locale)}</th>
+                  <th className="px-3 py-2">{tr(L.dSite, locale)}</th>
+                  <th className="px-3 py-2">{tr(L.dContact, locale)}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topic.directory.items.map((d) => (
+                  <tr key={d.name} className="border-t border-slate-100 align-top">
+                    <td className="px-3 py-2 font-medium text-slate-800">
+                      {d.name}
+                      {d.status === 'verify' && <span className="ml-1 text-[10px] text-amber-600">({tr(L.toConfirm, locale)})</span>}
+                    </td>
+                    <td className="px-3 py-2 text-slate-600">{d.island}</td>
+                    <td className="px-3 py-2">
+                      {d.website
+                        ? <a href={`https://${d.website}`} target="_blank" rel="noopener noreferrer" className="text-brand hover:underline">{d.website}</a>
+                        : <span className="text-slate-400">-</span>}
+                    </td>
+                    <td className="px-3 py-2 text-slate-600">{d.contact ?? '-'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
