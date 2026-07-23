@@ -212,6 +212,7 @@ export function SiteFooter({ locale }: { locale: Locale }): JSX.Element {
             {link('/entrar', 'nav.login')}
             {link('/registar', 'nav.register')}
             {link('/painel', 'nav.dashboard')}
+            {link('/anunciar', 'nav.advertise')}
             {link('/precos', 'nav.pricing')}
             {link('/investir', 'nav.investir')}
             {link('/info/editor', 'info.editorLink')}

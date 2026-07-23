@@ -163,9 +163,18 @@ const A_LA_CARTE: AlaCarte[] = [
     name: { pt: 'Anúncio em destaque', en: 'Featured listing', nl: 'Uitgelichte advertentie' },
     price: { pt: '≈ 800 CVE / semana', en: '≈ 800 CVE / week', nl: '≈ 800 CVE / week' },
     note: {
-      pt: 'Mais visibilidade, sempre rotulado como patrocinado.',
-      en: 'More visibility, always labelled as sponsored.',
-      nl: 'Meer zichtbaarheid, altijd gelabeld als gesponsord.',
+      pt: 'Mais visibilidade na página inicial e no topo, sempre rotulado como patrocinado.',
+      en: 'More visibility on the homepage and at the top, always labelled as sponsored.',
+      nl: 'Meer zichtbaarheid op de homepage en bovenaan, altijd gelabeld als gesponsord.',
+    },
+  },
+  {
+    name: { pt: 'Serviço ligado · instalação', en: 'Linked service · installation', nl: 'Gekoppelde dienst · installatie' },
+    price: { pt: '≈ 2.500 CVE / mês', en: '≈ 2,500 CVE / month', nl: '≈ 2.500 CVE / maand' },
+    note: {
+      pt: 'Seja o instalador sugerido a quem compra o equipamento. Com selo, rotulado e só com consentimento do cliente.',
+      en: 'Be the installer suggested to whoever buys the equipment. Badged, labelled and only with the customer’s consent.',
+      nl: 'Wees de installateur die wordt voorgesteld aan wie de apparatuur koopt. Met label en alleen met toestemming van de klant.',
     },
   },
 ];
@@ -270,8 +279,13 @@ export default function PricingPage({ params }: { params: { locale: Locale } }):
       {/* À la carte micro-fees */}
       <section className="mb-10">
         <SectionHead title={tr(COPY.alaCarteHead, locale)} />
-        <p className="mb-4 max-w-3xl text-sm text-slate-600">{tr(COPY.alaCarteIntro, locale)}</p>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <p className="mb-2 max-w-3xl text-sm text-slate-600">{tr(COPY.alaCarteIntro, locale)}</p>
+        <p className="mb-4 text-sm">
+          <Link href={`/${locale}/anunciar`} className="font-semibold text-brand hover:underline">
+            {tr({ pt: 'Como funciona a publicidade e o que ganha →', en: 'How advertising works and what you get →', nl: 'Hoe adverteren werkt en wat je krijgt →' }, locale)}
+          </Link>
+        </p>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {A_LA_CARTE.map((item) => (
             <Card key={tr(item.name, 'pt')} className="rounded-2xl">
               <div className="flex items-start justify-between gap-2">

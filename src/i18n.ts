@@ -33,6 +33,7 @@ const UI = {
   'nav.contract': { pt: 'Contrato de arrendamento', en: 'Rental contract', nl: 'Huurcontract' },
   'nav.rentals': { pt: 'Arrendar a minha casa', en: 'Rent out my home', nl: 'Mijn woning verhuren' },
   'nav.pricing': { pt: 'Preços', en: 'Pricing', nl: 'Prijzen' },
+  'nav.advertise': { pt: 'Anunciar', en: 'Advertise', nl: 'Adverteren' },
   'nav.publishWizard': { pt: 'Publicar em 3 passos', en: 'Publish in 3 steps', nl: 'Plaatsen in 3 stappen' },
   'dash.message': { pt: 'Mensagem', en: 'Message', nl: 'Bericht' },
   'dash.availability': { pt: 'Disponibilidade', en: 'Availability', nl: 'Beschikbaarheid' },

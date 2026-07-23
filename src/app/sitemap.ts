@@ -8,7 +8,7 @@ const LOCALES = ['pt', 'en', 'nl'];
 const PATHS = [
   '', '/imoveis', '/mapa', '/servicos', '/profissionais', '/materiais',
   '/arrendar', '/contrato', '/assistente', '/projetos', '/concursos',
-  '/info', '/procedimentos', '/verificacao', '/governo', '/investir', '/precos',
+  '/info', '/procedimentos', '/verificacao', '/governo', '/investir', '/precos', '/anunciar',
   '/entrar', '/registar',
 ];
 

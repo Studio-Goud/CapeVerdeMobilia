@@ -64,6 +64,10 @@ const PAGES: Record<string, { title: TL; description: TL }> = {
     title: { pt: 'Preços e planos - Djarvista', en: 'Pricing and plans - Djarvista', nl: 'Prijzen en abonnementen - Djarvista' },
     description: { pt: 'Preços da Djarvista: base gratuita e planos justos para anunciar imóveis e serviços em Cabo Verde. Sem custos escondidos.', en: 'Djarvista pricing: a free base and fair plans to list property and services in Cabo Verde. No hidden costs.', nl: 'Djarvista-prijzen: gratis basis en eerlijke abonnementen om vastgoed en diensten in Kaapverdië te adverteren. Geen verborgen kosten.' },
   },
+  '/anunciar': {
+    title: { pt: 'Anunciar em Cabo Verde: como funciona a publicidade - Djarvista', en: 'Advertise in Cabo Verde: how advertising works - Djarvista', nl: 'Adverteren in Kaapverdië: zo werkt adverteren - Djarvista' },
+    description: { pt: 'A marketplace é gratuita. Anunciar dá-lhe destaque na página inicial e no topo das pesquisas. Veja o que ganha, os passos e os preços indicativos em CVE.', en: 'The marketplace is free. Advertising puts you on the homepage and at the top of search. See what you get, the steps and indicative CVE prices.', nl: 'De marktplaats is gratis. Adverteren zet je op de homepage en bovenaan de zoekresultaten. Zie wat je krijgt, de stappen en indicatieve prijzen in CVE.' },
+  },
   '/verificacao': {
     title: { pt: 'Confiança e verificação em Cabo Verde', en: 'Trust and verification in Cabo Verde', nl: 'Vertrouwen en verificatie in Kaapverdië' },
     description: { pt: 'Como a Djarvista verifica pessoas e empresas: seis níveis de confiança, com controlo humano. Verificações sensíveis nunca só por IA.', en: 'How Djarvista verifies people and businesses: six trust levels, with human control. Sensitive checks are never AI-only.', nl: 'Hoe Djarvista mensen en bedrijven verifieert: zes vertrouwensniveaus, met menselijke controle. Gevoelige checks nooit alleen door AI.' },
