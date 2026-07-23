@@ -32,8 +32,8 @@ yet migrated, so the live site never breaks while you catch up.
 | 0024 | `migrations/0024_listing_contact_phone.sql` | `listings.phone` → "Peça orçamento" WhatsApp/call button on service adverts; sets Bomclima's number. Run **after** 0023 | ✅ done |
 | 0025 | `migrations/0025_seed_3as.sql` | add 3 AS (electrical-materials importer/wholesaler, São Vicente) as a seeded + **verified**, claimable supplier — from its invoice (NIF 275341100) + www.3as.cv. Run **after** 0020 | ✅ done |
 | 0026 | `migrations/0026_featured_and_supplier_image.sql` | homepage "Negócios em destaque": `suppliers.thumbnail` + `suppliers.is_featured` (guarded); feature Bomclima's advert + 3 AS (with storefront image). Run **after** 0025 | ✅ done |
-| 0027 | `migrations/0027_3as_logo_card.sql` | 3 AS card image → official logo banner instead of the storefront photo. Run **after** 0026 | ⏳ **to run** |
-| 0028 | `migrations/0028_replace_em_dashes.sql` | replace em dash "—" with hyphen "-" in stored content (info articles, adverts, profiles) so live text matches the code. Run **after** 0027 | ⏳ **to run** |
+| 0027 | `migrations/0027_3as_logo_card.sql` | 3 AS card image → official logo banner instead of the storefront photo. Run **after** 0026 | ✅ done |
+| 0028 | `migrations/0028_replace_em_dashes.sql` | replace em dash "—" with hyphen "-" in stored content (info articles, adverts, profiles) so live text matches the code. Run **after** 0027 | ✅ done |
 
 ## Roles
 - Make yourself admin (trust/ops + info editor):
